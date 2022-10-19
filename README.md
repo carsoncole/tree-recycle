@@ -1,24 +1,16 @@
-# README
+# Tree Recycle
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Web app is advertise and manage a tree recycling fundraiser.
 
-Things you may want to cover:
 
-* Ruby version
+## Configuration
 
-* System dependencies
+To install:
 
-* Configuration
+`bundle install`
 
-* Database creation
 
-* Database initialization
+### Secrets
 
-* How to run the test suite
+Secrets are maintained in the credentials file.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
