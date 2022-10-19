@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Organization name:
+  = @setting.organization_name
+%p
+  %b Contact name:
+  = @setting.contact_name
+%p
+  %b Contact email:
+  = @setting.contact_email
+%p
+  %b Contact phone:
+  = @setting.contact_phone
+%p
+  %b Description:
+  = @setting.description
+%p
+  %b Pickup date:
+  = @setting.pickup_date
+
+= link_to 'Edit', edit_setting_path(@setting)
+\|
+= link_to 'Back', settings_path

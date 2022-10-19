@@ -1,0 +1,29 @@
+%h1 Listing settings
+
+%table
+  %thead
+    %tr
+      %th Organization name
+      %th Contact name
+      %th Contact email
+      %th Contact phone
+      %th Description
+      %th Pickup date
+      %th
+      %th
+      %th
+
+  %tbody
+    - @settings.each do |setting|
+      %tr
+        %td= setting.organization_name
+        %td= setting.contact_name
+        %td= setting.contact_email
+        %td= setting.contact_phone
+        %td= setting.description
+        %td= setting.pickup_date
+        %td= link_to 'Show', setting
+        %td= link_to 'Edit', edit_setting_path(setting)
+        %td= link_to 'Destroy', setting, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
