@@ -10,9 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_19_214259) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_19_224238) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "reservations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.string "street_1"
+    t.string "street_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "country"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "settings", force: :cascade do |t|
     t.string "organization_name"
@@ -23,6 +40,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_214259) do
     t.date "pickup_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", null: false
+    t.string "encrypted_password", limit: 128, null: false
+    t.string "confirmation_token", limit: 128
+    t.string "remember_token", limit: 128, null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
 end

@@ -1,0 +1,41 @@
+%h1 Listing reservations
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Phone
+      %th Street 1
+      %th Street 2
+      %th City
+      %th State
+      %th Zip
+      %th Country
+      %th Latitude
+      %th Longitude
+      %th
+      %th
+      %th
+
+  %tbody
+    - @reservations.each do |reservation|
+      %tr
+        %td= reservation.name
+        %td= reservation.email
+        %td= reservation.phone
+        %td= reservation.street_1
+        %td= reservation.street_2
+        %td= reservation.city
+        %td= reservation.state
+        %td= reservation.zip
+        %td= reservation.country
+        %td= reservation.latitude
+        %td= reservation.longitude
+        %td= link_to 'Show', reservation
+        %td= link_to 'Edit', edit_reservation_path(reservation)
+        %td= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Reservation', new_reservation_path
