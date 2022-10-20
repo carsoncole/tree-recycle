@@ -16,11 +16,14 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create reservation" do
+    new_reservation_attributes = build :reservation
     assert_difference("Reservation.count") do
-      post reservations_url, params: { reservation: { city: @reservation.city, country: @reservation.country, email: @reservation.email, latitude: @reservation.latitude, longitude: @reservation.longitude, name: @reservation.name, phone: @reservation.phone, state: @reservation.state, street_1: @reservation.street_1, street_2: @reservation.street_2, zip: @reservation.zip } }
+      post reservations_url, params: { reservation: { city: new_reservation_attributes.city, country: new_reservation_attributes.country, email: new_reservation_attributes.email, latitude: new_reservation_attributes.latitude, longitude: new_reservation_attributes.longitude, name: new_reservation_attributes.name, phone: new_reservation_attributes.phone, state: new_reservation_attributes.state, street_1: new_reservation_attributes.street_1, street_2: new_reservation_attributes.street_2, zip: new_reservation_attributes.zip } }
     end
 
-    assert_redirected_to reservation_url(Reservation.last)
+    new_reservation = Reservation.where(email: new_reservation_attributes.email).first
+
+    assert_redirected_to reservation_url(new_reservation)
   end
 
   test "should show reservation" do
