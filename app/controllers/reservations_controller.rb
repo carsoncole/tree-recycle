@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[ show edit update destroy ]
-  before_action :require_login, except: [:show, :new, :create]
+  before_action :set_reservation, only: %i[ show edit form_1 form_2 update destroy ]
+  before_action :require_login, only: %i[ index destroy ]
 
   # GET /reservations or /reservations.json
   def index
@@ -14,10 +14,18 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
     @reservation = Reservation.new
+    render 'form_1'
   end
 
   # GET /reservations/1/edit
   def edit
+  end
+
+  def form_1
+  end
+
+
+  def form_2
   end
 
   # POST /reservations or /reservations.json
@@ -26,7 +34,7 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to reservation_url(@reservation), notice: "Reservation was successfully created." }
+        format.html { redirect_to reservation_form_2_url(@reservation), notice: "Reservation was successfully created." }
         format.json { render :show, status: :created, location: @reservation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -61,7 +69,7 @@ class ReservationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reservation
-      @reservation = Reservation.find(params[:id])
+      @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
     end
 
     # Only allow a list of trusted parameters through.

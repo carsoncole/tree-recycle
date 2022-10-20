@@ -1,39 +1,31 @@
-%p#notice= notice
+.card
+  .card-body
+    %h1.card-title.mb-3 Tree Pickup Reservation
 
-%p
-  %b Name:
-  = @reservation.name
-%p
-  %b Email:
-  = @reservation.email
-%p
-  %b Phone:
-  = @reservation.phone
-%p
-  %b Street 1:
-  = @reservation.street_1
-%p
-  %b Street 2:
-  = @reservation.street_2
-%p
-  %b City:
-  = @reservation.city
-%p
-  %b State:
-  = @reservation.state
-%p
-  %b Zip:
-  = @reservation.zip
-%p
-  %b Country:
-  = @reservation.country
-%p
-  %b Latitude:
-  = @reservation.latitude
-%p
-  %b Longitude:
-  = @reservation.longitude
+    %p
+      %b Name
+      %br
+      = @reservation.name
 
-= link_to 'Edit', edit_reservation_path(@reservation)
-\|
-= link_to 'Back', reservations_path
+    %p
+      %b Street address
+      %br
+      = @reservation.street_1
+
+    %p= link_to "Edit", reservation_form_1_path(@reservation)
+
+
+    %hr
+
+    %p
+      %b Email
+      %br
+      = @reservation.email
+    %p
+      %b Phone
+      %br
+      = @reservation.phone
+
+    %p= link_to "Edit", reservation_form_2_path(@reservation)
+
+

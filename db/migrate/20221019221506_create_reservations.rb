@@ -12,6 +12,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.string :state
       t.string :zip
       t.string :country
+      t.string :notes
       t.decimal :latitude
       t.decimal :longitude
 

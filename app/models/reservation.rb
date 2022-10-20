@@ -1,5 +1,7 @@
 class Reservation < ApplicationRecord
 
+  validates :name, presence: true
+  validates :street_1, presence: true
 
   def initialize(args)
     super
