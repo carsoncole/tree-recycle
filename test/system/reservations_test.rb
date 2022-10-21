@@ -22,8 +22,7 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "Name", with: @reservation.name
     fill_in "Phone", with: @reservation.phone
     fill_in "State", with: @reservation.state
-    fill_in "Street 1", with: @reservation.street_1
-    fill_in "Street 2", with: @reservation.street_2
+    fill_in "Street", with: @reservation.street
     fill_in "Zip", with: @reservation.zip
     click_on "Create Reservation"
 
@@ -43,8 +42,7 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "Name", with: @reservation.name
     fill_in "Phone", with: @reservation.phone
     fill_in "State", with: @reservation.state
-    fill_in "Street 1", with: @reservation.street_1
-    fill_in "Street 2", with: @reservation.street_2
+    fill_in "Street", with: @reservation.street
     fill_in "Zip", with: @reservation.zip
     click_on "Update Reservation"
 

@@ -14,7 +14,7 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
   test "should create reservation in step 1 with name and address" do
     new_reservation_attributes = build :reservation
     assert_difference("Reservation.count") do
-      post reservations_url, params: { reservation: { name: new_reservation_attributes.name, street_1: new_reservation_attributes.street_1 } }
+      post reservations_url, params: { reservation: { name: new_reservation_attributes.name, street: new_reservation_attributes.street } }
     end
 
     new_reservation = Reservation.order(updated_at: :asc).last
@@ -38,7 +38,7 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update reservation" do
-    patch reservation_url(@reservation), params: { reservation: { city: @reservation.city, country: @reservation.country, email: @reservation.email, latitude: @reservation.latitude, longitude: @reservation.longitude, name: @reservation.name, phone: @reservation.phone, state: @reservation.state, street_1: @reservation.street_1, street_2: @reservation.street_2, zip: @reservation.zip } }
+    patch reservation_url(@reservation), params: { reservation: { city: @reservation.city, country: @reservation.country, email: @reservation.email, latitude: @reservation.latitude, longitude: @reservation.longitude, name: @reservation.name, phone: @reservation.phone, state: @reservation.state, street: @reservation.street, zip: @reservation.zip } }
 
     reservation = Reservation.order(updated_at: :asc).last
     assert_redirected_to reservation_path(reservation)

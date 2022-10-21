@@ -1,6 +1,6 @@
 class Reservation < ApplicationRecord
 
-  validates :name, :street_1, presence: true
+  validates :name, :street, presence: true
   geocoded_by :address
   after_validation :geocode
 
@@ -10,6 +10,6 @@ class Reservation < ApplicationRecord
   end
 
   def address
-    [street_1, city, state, country].compact.join(', ')
+    [street, city, state, country].compact.join(', ')
   end
 end

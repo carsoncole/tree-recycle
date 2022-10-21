@@ -19,14 +19,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_224238) do
     t.string "name"
     t.string "email"
     t.string "phone"
-    t.string "street_1"
-    t.string "street_2"
+    t.string "street"
     t.string "city"
     t.string "state"
     t.string "zip"
     t.string "country"
+    t.string "notes"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.boolean "picked_up"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -6,8 +6,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :email
       t.string :phone
-      t.string :street_1
-      t.string :street_2
+      t.string :street
       t.string :city
       t.string :state
       t.string :zip

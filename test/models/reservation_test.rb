@@ -10,7 +10,7 @@ class ReservationTest < ActiveSupport::TestCase
   test "street address validation" do
     reservation = Reservation.new
     assert_not reservation.valid?
-    assert reservation.errors.of_kind?(:street_1, :blank)
+    assert reservation.errors.of_kind?(:street, :blank)
   end
 
 end
