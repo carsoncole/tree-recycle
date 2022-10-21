@@ -1,13 +1,13 @@
 # Tree Recycle
 
-Web app is advertise and manage a tree recycling fundraiser.
+Web application for advertising and managing a tree recycling fundraiser.
 
 Tree Recycle is intended to be simple, well-tested, and easy to maintain.
 
 
 ## Getting Started
 
-Clearance is a Ruby on Rails application
+Tree Recycle is a Ruby on Rails application
 
 ## Configuration
 
