@@ -50,6 +50,7 @@ gem "sassc-rails"
 
 gem "haml-rails", "~> 2.0"
 gem "clearance"
+gem "geocoder"
 
 
 group :development, :test do
