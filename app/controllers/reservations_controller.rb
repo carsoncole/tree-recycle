@@ -2,11 +2,6 @@ class ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[ show edit form_1 form_2 update destroy ]
   before_action :require_login, only: %i[ index destroy ]
 
-  # GET /reservations or /reservations.json
-  def index
-    @reservations = Reservation.all
-  end
-
   # GET /reservations/1 or /reservations/1.json
   def show
   end

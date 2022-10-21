@@ -1,7 +1,6 @@
 class Reservation < ApplicationRecord
 
-  validates :name, presence: true
-  validates :street_1, presence: true
+  validates :name, :street_1, presence: true
 
   def initialize(args)
     super
@@ -9,6 +8,6 @@ class Reservation < ApplicationRecord
   end
 
   def address
-    [street, city, state, country].compact.join(', ')
+    [street_1, city, state, country].compact.join(', ')
   end
 end

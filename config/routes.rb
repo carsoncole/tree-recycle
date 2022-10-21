@@ -3,10 +3,15 @@ Rails.application.routes.draw do
 
   get '/about' => 'about#index', as: 'about'
 
-  resources :reservations do
+  resources :reservations, except: [:index] do
     get 'form-1', as: 'form_1'
     get 'form-2', as: 'form_2'
   end
 
-  resources :settings, only: :index
+  resources :settings, only: [:index]
+
+  namespace :admin do
+    resources :reservations, only: [ :index, :show, :edit ]
+  end
+
 end

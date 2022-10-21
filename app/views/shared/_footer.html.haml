@@ -1,7 +1,14 @@
 %footer.container
   - if signed_in?
-    Signed in as:
-    = current_user.email
-    = button_to 'Sign out', sign_out_path, method: :delete
+    %nav.navbar.fixed-bottom.bg-light
+      .container-fluid
+        %ul.navbar-nav
+          %li.nav-item
+            = button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
+          %li.nav-item.nav-link
+            Signed in as:
+            = current_user.email
+          %li.nav-item
+            = link_to "Reservations", admin_reservations_path, class: 'nav-link'
   - else
     = link_to 'Sign in', sign_in_path

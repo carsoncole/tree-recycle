@@ -3,11 +3,7 @@ require "test_helper"
 class ReservationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @reservation = create :reservation
-  end
-
-  test "should not get index without auth" do
-    get reservations_url
-    assert_response :redirect
+    @user = create :user
   end
 
   test "should get new" do
@@ -55,4 +51,17 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to sign_in_path
   end
+
+  # admin
+
+  test "should get index with auth" do
+    get admin_reservations_url(as: @user)
+    assert_response :success
+  end
+
+  test "should not get index without auth" do
+    get admin_reservations_url
+    assert_response :redirect
+  end
+
 end
