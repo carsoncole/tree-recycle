@@ -1,6 +1,6 @@
 class Admin::ReservationsController < ApplicationController
   before_action :require_login
-  before_action :set_reservation, except: %i[ new index ]
+  before_action :set_reservation, except: %i[ new index map ]
 
 
   def index

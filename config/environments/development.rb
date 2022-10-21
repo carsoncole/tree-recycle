@@ -70,4 +70,10 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
+  Rails.configuration.stripe = {
+    publishable_key: Rails.credentials.development.publishable_key,
+    secret_key: Rails.credentials.development.secret_key
+  }
+
+
 end

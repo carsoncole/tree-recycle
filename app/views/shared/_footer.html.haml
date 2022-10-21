@@ -1,14 +1,16 @@
-%footer.container
-  - if signed_in?
-    %nav.navbar.fixed-bottom.bg-light
-      .container-fluid
-        %ul.navbar-nav
-          %li.nav-item
-            = button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
-          %li.nav-item.nav-link
-            Signed in as:
-            = current_user.email
+.container-fluid
+  %footer
+    %nav.navbar.fixed-bottom.navbar-expand-sm.navbar-dark.bg-dark
+      %ul.navbar-nav.mr-auto
+        - if signed_in?
           %li.nav-item
             = link_to "Reservations", admin_reservations_path, class: 'nav-link'
-  - else
-    = link_to 'Sign in', sign_in_path
+          %li.nav-item
+            = link_to "Map", admin_map_path, class: 'nav-link'
+          %li.nav-item.nav-link
+            = current_user.email
+          %li.nav-item
+            = button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
+        - else
+          %li.nav-item
+            = link_to 'Sign in', sign_in_path

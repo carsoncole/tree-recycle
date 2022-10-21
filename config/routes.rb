@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :reservations, only: [ :index, :show, :edit ]
+    get 'map' => 'reservations#map', as: 'map'
   end
 
 end

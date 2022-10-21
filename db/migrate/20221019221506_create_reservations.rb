@@ -15,6 +15,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.string :notes
       t.decimal :latitude
       t.decimal :longitude
+      t.boolean :picked_up
 
       t.timestamps
     end
