@@ -4,10 +4,6 @@ Web application for advertising and managing a tree recycling fundraiser. People
 
 Tree Recycle is intended to be simple, well-tested, and easy to maintain
 
-## Getting Started
-
-Tree Recycle is a Ruby on Rails application.
-
 ## Requirements
 
 Ruby on Rails 7, Ruby ~> 3.0.0, and PostgreSQL.
@@ -20,11 +16,10 @@ To install:
 bundle install
 ```
 
-Administrators (users) need to be manually created in the database as there is no access to signups through the UI.
-
 ## Use
 
 Reservations is the resource for holding tree pickup reservations and they are created by customers without any necessary login, [TODO] but are retrievable and changeable using a custom link sent to customers upon initial creation and any updates.
 
-Registered users are administrators that can access all of the resources.
+Registered users are administrators that can access all of the resources. Administrators (users) need to be manually created in the database as there is no access to signups through the UI.
+
 
