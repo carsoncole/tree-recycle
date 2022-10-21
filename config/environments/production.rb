@@ -92,4 +92,9 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  Rails.configuration.stripe = {
+    publishable_key: Rails.application.credentials.stripe.development.publishable_key,
+    secret_key: Rails.application.credentials.stripe.development.secret_key
+  }
 end
