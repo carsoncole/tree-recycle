@@ -4,7 +4,7 @@ class Admin::ReservationsController < ApplicationController
 
 
   def index
-    @reservations = Reservation.order(created_at: :asc)
+    @pagy, @reservations = pagy(Reservation.order(created_at: :asc))
   end
 
   def edit

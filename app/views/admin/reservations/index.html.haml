@@ -1,6 +1,6 @@
 %h1 Reservations
 
-%table.table
+%table.table.table-sm
   %thead
     %tr
       %th Name
@@ -37,5 +37,8 @@
         %td= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
+
+
+= pagy_bootstrap_nav(@pagy).html_safe
 
 = link_to 'New Reservation', new_reservation_path

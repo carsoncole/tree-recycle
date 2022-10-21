@@ -52,6 +52,7 @@ gem "haml-rails", "~> 2.0"
 gem "clearance"
 gem "geocoder"
 gem "stripe"
+gem "pagy"
 
 
 group :development, :test do
