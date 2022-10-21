@@ -1,13 +1,16 @@
 # Tree Recycle
 
-Web application for advertising and managing a tree recycling fundraiser.
+Web application for advertising and managing a tree recycling fundraiser. People enter reservations to have trees picked up as well as make an online donation. On the recycling day, the app will output distributed driving reports for groups of drivers to pick up trees from set areas. The app also generates text and email messages to reservees confirming that their tree has been picked up.
 
-Tree Recycle is intended to be simple, well-tested, and easy to maintain.
-
+Tree Recycle is intended to be simple, well-tested, and easy to maintain
 
 ## Getting Started
 
-Tree Recycle is a Ruby on Rails application
+Tree Recycle is a Ruby on Rails application.
+
+## Requirements
+
+Ruby on Rails 7, Ruby ~> 3.0.0, and PostgreSQL.
 
 ## Configuration
 
