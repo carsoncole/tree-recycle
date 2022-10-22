@@ -6,12 +6,31 @@ footer {
   margin-top: 3em;
 }
 
+h1 {
+  margin-bottom: 2em;
+}
+
 a {
   text-decoration: none;
+}
+
+.container.main {
+  padding-bottom: 3em;
 }
 
 table.settings {
   td {
     text-align: right;
   }
+}
+
+table.reservations {
+  td.actions {
+    text-align: right;
+  }
+}
+
+i.icon {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
 }

@@ -1,16 +1,14 @@
 %h1 Reservations
 
-%table.table.table-sm
+%table.table.reservations
   %thead
     %tr
       %th Name
       %th Email
       %th Phone
       %th Street
-      %th City
       %th
-      %th
-      %th
+
 
   %tbody
     - @reservations.each do |reservation|
@@ -19,11 +17,15 @@
         %td= reservation.email
         %td= reservation.phone
         %td= reservation.street
-        %td= reservation.city
 
-        %td= link_to 'Show', admin_reservation_path(reservation)
-        %td= link_to 'Edit', edit_admin_reservation_path(reservation)
-        %td= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' }
+        %td.actions
+          = link_to admin_reservation_path(reservation) do
+            %i.fa-solid.fa-eye.icon
+          = link_to edit_admin_reservation_path(reservation) do
+            %i.fa-solid.fa-pen.icon
+          = link_to reservation, method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
+            %i.fa-solid.fa-trash.icon
+
 
 %br
 = pagy_bootstrap_nav(@pagy).html_safe

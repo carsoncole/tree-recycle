@@ -1,3 +1,5 @@
+require 'faker'
+
 User.create(email: 'admin@example.com', password: 'password')
 
 Setting.first_or_create  do |setting|
@@ -7,4 +9,19 @@ Setting.first_or_create  do |setting|
   setting.contact_name = 'John Doe'
   setting.pickup_date = Date.today + 1.month
   setting.organization_name = 'BSA Troop 100'
+  setting.default_city = "Bainbridge Island"
+  setting.default_state = "Washington"
+  setting.default_country = "United States"
+end
+
+100.times do
+  FactoryBot.create([
+    'reservation',
+    'reservation_with_email',
+    'reservation_with_phone',
+    'reservation_with_phone',
+    'reservation_with_email_and_phone',
+    'reservation_with_email_and_phone',
+    'reservation_with_email_and_phone'
+  ][rand(7)].to_sym)
 end

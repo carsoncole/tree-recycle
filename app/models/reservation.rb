@@ -6,7 +6,9 @@ class Reservation < ApplicationRecord
 
   def initialize(args)
     super
-    self.country = 'United States'
+    self.country = Setting&.first&.default_country if Setting.first
+    self.city = Setting&.first&.default_city if Setting.first
+    self.state = Setting&.first&.default_state if Setting.first
   end
 
   def address

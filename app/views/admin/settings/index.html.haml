@@ -2,7 +2,7 @@
 
 
 .row.justify-content-start
-  .col-8
+  .col-10
     %table.table.settings
 
       %tbody
@@ -30,6 +30,17 @@
         %tr
           %th Pickup date
           %td= @setting.pickup_date
+        %tr
+          %th Default city
+          %td= @setting.default_city
+        %tr
+          %th Default state
+          %td= @setting.default_state
+        %tr
+          %th Default country
+          %td= @setting.default_country
+
+
         %tr
           %th
           %td

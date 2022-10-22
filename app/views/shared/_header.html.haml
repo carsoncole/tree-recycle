@@ -1,5 +1,4 @@
 %header.container-fluid
   %h1
     = image_tag 'frasier.jpg', width: 70
-    = link_to Setting&.first&.site_title ||= "Tree Recycle", root_url
-
+    = link_to (Setting.first ? Setting&.first&.site_title : "Tree Recycle"), root_url

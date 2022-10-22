@@ -1,6 +1,19 @@
 FactoryBot.define do
   factory :reservation do
-    name { "MyString" }
+    name { Faker::Name.name }
     street { Faker::Address.street_address }
+
+    factory :reservation_with_email do
+      email { Faker::Internet.email }
+    end
+
+    factory :reservation_with_phone do
+      phone { Faker::PhoneNumber.cell_phone }
+    end
+
+    factory :reservation_with_email_and_phone do
+      email { Faker::Internet.email }
+      phone { Faker::PhoneNumber.cell_phone }
+    end
   end
 end
