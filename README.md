@@ -16,6 +16,12 @@ To install:
 bundle install
 ```
 
+To load an admin user (admin@example.com/password):
+
+```
+rails db:seed
+```
+
 ## Use
 
 Reservations is the resource for holding tree pickup reservations and they are created by customers without any necessary login, [TODO] but are retrievable and changeable using a custom link sent to customers upon initial creation and any updates.
