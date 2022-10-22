@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_224238) do
     t.string "notes"
     t.decimal "latitude"
     t.decimal "longitude"
-    t.boolean "picked_up"
+    t.datetime "picked_up_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -6,6 +6,7 @@
       %th Name
       %th Email
       %th Phone
+      %th Street
       %th City
       %th
       %th
@@ -20,7 +21,7 @@
         %td= reservation.street
         %td= reservation.city
 
-        %td= link_to 'Show', reservation
+        %td= link_to 'Show', admin_reservation_path(reservation)
         %td= link_to 'Edit', edit_admin_reservation_path(reservation)
         %td= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' }
 
@@ -29,4 +30,3 @@
 
 = pagy_bootstrap_nav(@pagy).html_safe
 
-= link_to 'New Reservation', new_reservation_path

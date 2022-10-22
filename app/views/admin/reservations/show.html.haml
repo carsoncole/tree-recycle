@@ -1,0 +1,56 @@
+.card
+  .card-body
+    %h1.card-title.mb-3 Reservation
+
+    %p
+      %b Name
+      %br
+      = @reservation.name
+
+    %p
+      %b Street
+      %br
+      = @reservation.street
+
+    %p
+      %b City
+      %br
+      = @reservation.city
+
+    %hr
+
+    %p
+      %b Email
+      %br
+      = @reservation.email
+    %p
+      %b Phone
+      %br
+      = @reservation.phone
+
+    - if @reservation.latitude?
+      %hr
+        %p
+          %b Latitude/Longitude
+          %br
+          = @reservation.latitude
+          \/
+          = @reservation.longitude
+
+    %hr
+
+    %p
+      %b Created
+      %br
+      = @reservation.created_at
+
+    - if @reservation.picked_up_at?
+      %p
+        %b
+          Picked up
+          %br
+          = @reservation.picked_up_at
+
+
+
+
