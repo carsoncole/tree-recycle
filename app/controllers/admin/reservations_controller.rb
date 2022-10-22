@@ -10,6 +10,14 @@ class Admin::ReservationsController < ApplicationController
   def edit
   end
 
+  def update
+    if @reservation.update(reservation_params)
+      redirect_to admin_reservation_url(@reservation), notice: "Reservation was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def show
   end
 
@@ -17,5 +25,9 @@ class Admin::ReservationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_reservation
       @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
+    end
+
+    def reservation_params
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude)
     end
 end

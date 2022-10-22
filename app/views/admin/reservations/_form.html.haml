@@ -1,4 +1,4 @@
-= form_for @reservation do |f|
+= form_for @reservation, url: admin_reservation_path(@reservation) do |f|
   - if @reservation.errors.any?
     #error_explanation
       %h2= "#{pluralize(@reservation.errors.count, "error")} prohibited this reservation from being saved:"
