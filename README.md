@@ -24,7 +24,7 @@ Registered users are administrators that can access all of the resources. Admini
 
 ## Seed Data
 
-Seed `db/seeds.db` configuration, reservation, and admin user data can be loaded with
+For testing and trial use, seed configuration, reservation, and admin user data can be loaded with
 
 ```
 rails db:seed
