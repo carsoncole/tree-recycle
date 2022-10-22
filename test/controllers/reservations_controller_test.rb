@@ -61,7 +61,27 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not get index without auth" do
     get admin_reservations_url
-    assert_response :redirect
+    assert_redirected_to sign_in_path
+  end
+
+  test "should get show with auth" do
+    get admin_reservation_url(@reservation, as: @user)
+    assert_response :success
+  end
+
+  test "should not get show without auth" do
+    get admin_reservation_url(@reservation)
+    assert_redirected_to sign_in_path
+  end
+
+  test "should get map with auth" do
+    get admin_map_path(as: @user)
+    assert_response :success
+  end
+
+  test "should not get map without auth" do
+    get admin_map_path
+    assert_redirected_to sign_in_path
   end
 
 end
