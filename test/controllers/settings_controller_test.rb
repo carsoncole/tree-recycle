@@ -1,13 +1,18 @@
 require "test_helper"
 
 class SettingsControllerTest < ActionDispatch::IntegrationTest
-  # setup do
-  #   @setting = setting(:one)
-  # end
+  setup do
+    @user = create(:user)
+  end
 
-  test "should get index" do
-    get settings_url
+  test "should get index with auth" do
+    get admin_settings_url(as: @user)
     assert_response :success
+  end
+
+  test "should not get index with auth" do
+    get admin_settings_url
+    assert_redirected_to sign_in_path
   end
 
   # test "should get new" do

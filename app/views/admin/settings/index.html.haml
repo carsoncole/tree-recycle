@@ -1,29 +1,37 @@
-%h1 Listing settings
+%h1 Settings
 
-%table
-  %thead
-    %tr
-      %th Organization name
-      %th Contact name
-      %th Contact email
-      %th Contact phone
-      %th Description
-      %th Pickup date
-      %th
-      %th
-      %th
 
-  %tbody
-    - @settings.each do |setting|
-      %tr
-        %td= setting.organization_name
-        %td= setting.contact_name
-        %td= setting.contact_email
-        %td= setting.contact_phone
-        %td= setting.description
-        %td= setting.pickup_date
-        %td= link_to 'Show', setting
-        %td= link_to 'Edit', edit_setting_path(setting)
-        %td= link_to 'Destroy', setting, method: :delete, data: { confirm: 'Are you sure?' }
+.row.justify-content-start
+  .col-8
+    %table.table.settings
 
+      %tbody
+        %tr
+          %th Site title
+          %td= @setting.site_title
+        %tr
+          %th Site description
+          %td= @setting.site_description
+        %tr
+          %th Organization name
+          %td= @setting.organization_name
+        %tr
+          %th Contact name
+          %td= @setting.contact_name
+        %tr
+          %th Contact email
+          %td= @setting.contact_email
+        %tr
+          %th Contact phone
+          %td= @setting.contact_phone
+        %tr
+          %th Description
+          %td= @setting.description
+        %tr
+          %th Pickup date
+          %td= @setting.pickup_date
+        %tr
+          %th
+          %td
+            %p= link_to 'Edit', edit_admin_setting_path(@setting)
 %br

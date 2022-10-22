@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :settings
+    resources :settings, except: [ :show ]
     resources :reservations, only: [ :index, :show, :edit, :update ]
     get 'map' => 'reservations#map', as: 'map'
   end

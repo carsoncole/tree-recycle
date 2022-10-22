@@ -4,11 +4,7 @@ class Admin::SettingsController < ApplicationController
 
   # GET /settings or /settings.json
   def index
-    @settings = Setting.all
-  end
-
-  # GET /settings/1 or /settings/1.json
-  def show
+    @setting = Setting.first_or_create
   end
 
   # GET /settings/new
@@ -24,27 +20,19 @@ class Admin::SettingsController < ApplicationController
   def create
     @setting = Setting.new(setting_params)
 
-    respond_to do |format|
-      if @setting.save
-        format.html { redirect_to admin_setting_url(@setting), notice: "Setting was successfully created." }
-        format.json { render :show, status: :created, location: @setting }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @setting.errors, status: :unprocessable_entity }
-      end
+    if @setting.save
+      redirect_to admin_settings_url, notice: "Setting was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /settings/1 or /settings/1.json
   def update
-    respond_to do |format|
-      if @setting.update(setting_params)
-        format.html { redirect_to admin_setting_url(@setting), notice: "Setting was successfully updated." }
-        format.json { render :show, status: :ok, location: @setting }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @setting.errors, status: :unprocessable_entity }
-      end
+    if @setting.update(setting_params)
+      redirect_to admin_settings_url, notice: "Setting was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -61,11 +49,11 @@ class Admin::SettingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_setting
-      @setting = Setting.find(params[:id])
+      @setting = Setting.first_or_create
     end
 
     # Only allow a list of trusted parameters through.
     def setting_params
-      params.require(:setting).permit(:organization_name, :contact_name, :contact_email, :contact_phone, :description, :pickup_date)
+      params.require(:setting).permit(:site_title, :site_description, :organization_name, :contact_name, :contact_email, :contact_phone, :description, :pickup_date)
     end
 end
