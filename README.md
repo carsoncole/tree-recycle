@@ -28,4 +28,11 @@ Reservations is the resource for holding tree pickup reservations and they are c
 
 Registered users are administrators that can access all of the resources. Administrators (users) need to be manually created in the database as there is no access to signups through the UI.
 
+## Seed Data
+
+Seed `db/seeds.db` configuration, reservation, and admin user data can be loaded with
+
+```
+rails db:seed
+```
 
