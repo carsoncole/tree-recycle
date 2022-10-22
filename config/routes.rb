@@ -8,9 +8,8 @@ Rails.application.routes.draw do
     get 'form-2', as: 'form_2'
   end
 
-  resources :settings, only: [:index]
-
   namespace :admin do
+    resources :settings
     resources :reservations, only: [ :index, :show, :edit, :update ]
     get 'map' => 'reservations#map', as: 'map'
   end
