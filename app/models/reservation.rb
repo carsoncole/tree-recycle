@@ -1,8 +1,10 @@
 class Reservation < ApplicationRecord
+  belongs_to :zone, optional: true
+
 
   validates :name, :street, presence: true
   geocoded_by :address
-  after_validation :geocode
+  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
 
   def initialize(args)
     super
