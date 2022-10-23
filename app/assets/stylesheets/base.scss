@@ -30,7 +30,13 @@ table.reservations {
   }
 }
 
-i.icon {
+i {
+  &.icon {
   margin-right: 0.5em;
   margin-left: 0.5em;
+  }
+  &.lg {
+    font-size: 1.5em;
+  }
 }
+
