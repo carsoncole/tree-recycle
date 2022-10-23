@@ -9,7 +9,7 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
     @reservation = Reservation.new
-    render 'form_1'
+    # render 'form_1'
   end
 
   # GET /reservations/1/edit
