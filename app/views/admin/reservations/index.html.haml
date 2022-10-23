@@ -4,9 +4,8 @@
   %thead
     %tr
       %th Name
-      %th Email
-      %th Phone
       %th Street
+      %th Zone
       %th
 
 
@@ -14,9 +13,10 @@
     - @reservations.each do |reservation|
       %tr
         %td= link_to reservation.name, admin_reservation_path(reservation)
-        %td= reservation.email
-        %td= reservation.phone
         %td= reservation.street
+        %td
+          - if reservation.zone_id?
+            = link_to reservation&.zone&.name, admin_reservations_path(zone_id: reservation.zone_id)
 
         %td.actions
           = link_to admin_reservation_path(reservation) do

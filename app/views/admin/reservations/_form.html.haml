@@ -1,4 +1,4 @@
-= form_for @reservation, url: admin_reservation_path(@reservation) do |f|
+= form_for [:admin, @reservation] do |f|
   - if @reservation.errors.any?
     #error_explanation
       %h2= "#{pluralize(@reservation.errors.count, "error")} prohibited this reservation from being saved:"
@@ -6,6 +6,9 @@
         - @reservation.errors.full_messages.each do |message|
           %li= message
 
+  .mb-5
+    = f.label :zone, class: 'form-label'
+    = f.collection_select(:zone_id, Zone.all, :id, :name, { include_blank: true},{ class: 'form-control' })
   .mb-3
     = f.label :name, class: 'form-label'
     = f.text_field :name, class: 'form-control'

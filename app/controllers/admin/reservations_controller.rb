@@ -4,7 +4,11 @@ class Admin::ReservationsController < ApplicationController
 
 
   def index
-    @pagy, @reservations = pagy(Reservation.order(created_at: :asc))
+    if params[:zone_id]
+      @pagy, @reservations = pagy(Reservation.where(zone_id: params[:zone_id]).order(created_at: :asc))
+    else
+      @pagy, @reservations = pagy(Reservation.order(created_at: :asc))
+    end
   end
 
   def edit
@@ -28,6 +32,6 @@ class Admin::ReservationsController < ApplicationController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :zone_id)
     end
 end

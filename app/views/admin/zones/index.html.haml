@@ -1,0 +1,35 @@
+%h1 Zones
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Street
+      %th City
+      %th State
+      %th Distance
+      %th
+      %th
+      %th
+
+  %tbody
+    - @zones.each do |zone|
+      %tr
+        %td= zone.name
+        %td= zone.address
+        %td= zone.city
+        %td= zone.state
+        %td= zone.distance
+        %td.actions
+          = link_to admin_zone_path(zone) do
+            %i.fa-solid.fa-eye.icon
+          = link_to edit_admin_zone_path(zone) do
+            %i.fa-solid.fa-pen.icon
+          = link_to admin_zone_path(zone), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
+            %i.fa-solid.fa-trash.icon
+
+
+%br
+
+= link_to new_admin_zone_path do
+  %i.fa-solid.fa-plus.lg
