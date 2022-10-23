@@ -22,6 +22,8 @@ Reservations is the resource for holding tree pickup reservations and they are c
 
 Registered users are administrators that can access all of the resources. Administrators (users) need to be manually created in the database as there is no access to signups through the UI.
 
+Zones are used to create areas of reservations, for convenient pick ups. Zones are set with a center point and a radius distance in miles. Reservations can also be manually assigned to a Zone.
+
 ## Seed Data
 
 For testing and trial use, seed configuration, reservation, and admin user data can be loaded with
@@ -30,3 +32,6 @@ For testing and trial use, seed configuration, reservation, and admin user data 
 rails db:seed
 ```
 
+## Copyright
+
+Copyright (c) 2022 Carson Cole. See MIT-LICENSE for details.
