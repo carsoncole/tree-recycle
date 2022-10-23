@@ -6,8 +6,6 @@
           %li.nav-item
             = link_to "Reservations", admin_reservations_path, class: 'nav-link'
           %li.nav-item
-            = link_to "Map", admin_map_path, class: 'nav-link'
-          %li.nav-item
             = link_to "Settings", admin_settings_path, class: 'nav-link'
           %li.nav-item
             = link_to "Zones", admin_zones_path, class: 'nav-link'
@@ -17,4 +15,4 @@
             = button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
         - else
           %li.nav-item
-            = link_to 'Sign in', sign_in_path
+            = link_to 'Sign in', sign_in_path, class: 'nav-link'

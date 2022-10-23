@@ -74,14 +74,4 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to sign_in_path
   end
 
-  test "should get map with auth" do
-    get admin_map_path(as: @user)
-    assert_response :success
-  end
-
-  test "should not get map without auth" do
-    get admin_map_path
-    assert_redirected_to sign_in_path
-  end
-
 end

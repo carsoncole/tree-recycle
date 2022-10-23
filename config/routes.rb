@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     resources :settings, except: [ :show ]
     resources :reservations, only: [ :index, :show, :edit, :update ]
     resources :zones
-    get 'map' => 'reservations#map', as: 'map'
   end
 
 end
