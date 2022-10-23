@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_19_224238) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_22_233326) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "admin_zones", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "distance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "reservations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
@@ -28,8 +38,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_224238) do
     t.decimal "latitude"
     t.decimal "longitude"
     t.datetime "picked_up_at"
+    t.bigint "zone_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["zone_id"], name: "index_reservations_on_zone_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -58,6 +70,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_224238) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
+  end
+
+  create_table "zones", force: :cascade do |t|
+    t.string "name"
+    t.string "street"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.boolean "use_street_name"
+    t.decimal "distance"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -14,7 +14,7 @@ Setting.first_or_create  do |setting|
   setting.default_country = "United States"
 end
 
-100.times do
+50.times do
   FactoryBot.create([
     'reservation',
     'reservation_with_email',
@@ -24,4 +24,13 @@ end
     'reservation_with_email_and_phone',
     'reservation_with_email_and_phone'
   ][rand(7)].to_sym)
+end
+
+
+zones = [
+[name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States']
+]
+
+zones.each do |zone|
+  Zone.create(zone)
 end
