@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :settings do
+  factory :setting do
     organization_name { "MyString" }
     contact_name { Faker::Name.name }
     contact_email { Faker::Internet.email }

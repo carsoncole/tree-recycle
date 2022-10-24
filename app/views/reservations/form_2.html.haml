@@ -1,6 +1,8 @@
 
-%h4.mb-5 Tell us how we can contact you if we have questions, send you pickup notifications, and let you know about next year's Tree Recycle.
 
+.row
+  .col-md-8
+    %p.message.mb-5 Your contact details
 
 = form_for @reservation do |f|
   - if @reservation.errors.any?
@@ -10,13 +12,16 @@
         - @reservation.errors.full_messages.each do |message|
           %li= message
 
-  .mb-3
-    = f.label :email, class: 'form-label'
-    = f.email_field :email, class: 'form-control'
-    .form-text For email updates on your reservation and future tree recycle events.
-  .mb-3
-    = f.label :phone, class: 'form-label'
-    = f.text_field :phone, class: 'form-control'
-    .form-text For text updates on your reservation and future tree recycle events.
-  .actions
-    = f.submit 'Save', class: 'btn btn-primary'
+  .row
+    .col-md-5
+      .mb-3
+        = f.label :email, class: 'form-label'
+        = f.email_field :email, class: 'form-control'
+  .row
+    .col-md-4
+      .mb-3
+        = f.label :phone, class: 'form-label'
+        = f.text_field :phone, class: 'form-control'
+  .actions.mt-3
+    = f.submit 'Next', class: 'btn btn-primary btn-lg'
+

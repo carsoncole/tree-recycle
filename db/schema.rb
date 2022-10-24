@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_233326) do
     t.string "zip"
     t.string "country"
     t.string "notes"
+    t.boolean "is_completed"
     t.decimal "latitude"
     t.decimal "longitude"
     t.datetime "picked_up_at"

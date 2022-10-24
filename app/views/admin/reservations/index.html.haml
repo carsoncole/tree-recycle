@@ -1,4 +1,13 @@
-%h1 Reservations
+%h1
+  Reservations
+  - if params[:zone_id]
+    \-
+    = Zone.find(params[:zone_id]).name
+
+%p
+  - Zone.all.each do |zone|
+    %span= link_to zone.name, admin_reservations_path(zone_id: zone.id)
+
 
 %table.table.reservations
   %thead

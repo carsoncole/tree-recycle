@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :settings, except: [ :show ]
+    resources :settings, only: [ :index, :edit, :update ]
     resources :reservations, only: [ :index, :show, :edit, :update ]
     resources :zones
   end

@@ -7,7 +7,7 @@
           %li= message
 
   .row
-    .col-md-8
+    .col-md-6
       .mb-3
         = f.label :name, class: 'form-label'
         = f.text_field :name, class: 'form-control'
@@ -19,10 +19,18 @@
         = f.text_field :notes, class: 'form-control'
         .form-text.text-muted Any special notes about where your tree will be located? Back yard, porch, street corner etc...
   .row.mb-4
-    .col-7
-      .mb-3
-        = f.label :city, "City", class: 'form-label'
-        = f.text_field :city, class: 'form-control', value: @reservation.city
+    .col-md-4
+      = f.label :city, "City", class: 'form-label'
+      = f.text_field :city, class: 'form-control', value: @reservation.city
+
+  .row.mb-3
+    .col-md-4
+      = f.label :email, class: 'form-label'
+      = f.email_field :email, class: 'form-control'
+  .row.mb-3
+    .col-md-4
+      = f.label :phone, class: 'form-label'
+      = f.text_field :phone, class: 'form-control'
 
   .actions.mt-3
     - if @reservation.persisted?
