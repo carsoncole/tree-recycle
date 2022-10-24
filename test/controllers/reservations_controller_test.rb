@@ -27,15 +27,6 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get form 1" do
-    get reservation_form_1_url(@reservation)
-    assert_response :success
-  end
-
-  test "should get form 2" do
-    get reservation_form_1_url(@reservation)
-    assert_response :success
-  end
 
   test "should update reservation" do
     patch reservation_url(@reservation), params: { reservation: { city: @reservation.city, country: @reservation.country, email: @reservation.email, latitude: @reservation.latitude, longitude: @reservation.longitude, name: @reservation.name, phone: @reservation.phone, state: @reservation.state, street: @reservation.street, zip: @reservation.zip } }
