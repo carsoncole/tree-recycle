@@ -1,4 +1,6 @@
 #clearance.sign-in
-  %h2= t(".title")
+  %h1= t(".title")
 
-  = render partial: '/sessions/form'
+  .row
+    .col-md-4
+      = render partial: '/sessions/form'
