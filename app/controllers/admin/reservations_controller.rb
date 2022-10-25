@@ -5,9 +5,11 @@ class Admin::ReservationsController < ApplicationController
 
   def index
     if params[:zone_id]
-      @pagy, @reservations = pagy(Reservation.where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.where(zone_id: params[:zone_id]).order(created_at: :asc))
+    elsif params[:uncompeted]
+      @pagy, @reservations = pagy(Reservation.completed.where(zone_id: params[:zone_id]).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.order(created_at: :asc))
     end
   end
 

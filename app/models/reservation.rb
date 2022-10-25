@@ -2,6 +2,9 @@ class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
 
 
+  scope :completed,  -> { where(is_completed: true) }
+  scope :uncompleted, -> { where.nil(is_completed: false) }
+
   validates :name, :street, presence: true
   geocoded_by :address
   after_validation :geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
