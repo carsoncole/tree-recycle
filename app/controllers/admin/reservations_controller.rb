@@ -25,6 +25,7 @@ class Admin::ReservationsController < ApplicationController
   def show
   end
 
+  #TODO add street to search
   def search
     @pagy, @reservations = pagy(Reservation.where("name ILIKE ?", "%" + Reservation.sanitize_sql_like(params[:search]) + "%"))
     render :index

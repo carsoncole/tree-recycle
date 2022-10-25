@@ -9,10 +9,8 @@
   .col-md-9
   .col-md-3.mb-3
     = form_tag admin_search_path, local: true, method: :get do
-      = text_field_tag 'search', "Search", class: 'form-control'
-
-
-
+      = text_field_tag 'search',"", placeholder: 'Search term', class: 'form-control'
+      = submit_tag 'Search', class: 'btn btn-primary'
 
 %p
   - Zone.all.each do |zone|
