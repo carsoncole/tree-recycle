@@ -9,13 +9,25 @@ class ReservationsTest < ApplicationSystemTestCase
     visit root_url
     click_on "Make a Tree pickup reservation"
 
+    assert_selector "h1", text: "Tree pickup reservation"
     fill_in "Name", with: @reservation.name
     fill_in "Street", with: @reservation.street
-    click_on "Save"
+    fill_in "Tree location", with: "driveway"
+
+    click_on "Next"
 
     fill_in "Email", with: @reservation.email
     fill_in "Phone", with: @reservation.phone
-    click_on "Save"
+    click_on "Next"
+
+    assert_text "Please review your reservation"
+    assert_text @reservation.name
+    assert_text @reservation.street
+
+    click_on "Submit Reservation"
+
+    click_on "Make a Donation"
+    assert_selector "h1", text: "Make a Donation"
   end
 
   # test "visiting the index" do

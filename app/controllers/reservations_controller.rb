@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[ show edit form_1 form_2 update destroy ]
+  before_action :set_reservation, only: %i[ show edit form_1 form_2 submit_reservation update destroy ]
   before_action :require_login, only: %i[ index destroy ]
 
   def show
@@ -34,6 +34,11 @@ class ReservationsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def submit_reservation
+    @reservation.update(is_completed: true)
+    redirect_to reservation_url(@reservation), notice: 'Your reservation is complete'
   end
 
   def destroy

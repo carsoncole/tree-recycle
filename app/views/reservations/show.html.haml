@@ -1,31 +1,43 @@
-.card
-  .card-body
-    %h1.card-title.mb-3 Tree Pickup Reservation
+.row
+  .col-md-8
+    .card
+      .card-body
+        %h1.card-title.mb-3 Tree Pickup Reservation
 
-    %p
-      %b Name
-      %br
-      = @reservation.name
+        %p
+          %b Name
+          %br
+          = @reservation.name
 
-    %p
-      %b Street address
-      %br
-      = @reservation.street
+        %p
+          %b Street address
+          %br
+          = @reservation.street
 
-    %p= link_to "Edit", edit_reservation_path(@reservation)
+        %p= link_to "Edit", edit_reservation_path(@reservation)
 
 
-    %hr
+        %hr
 
-    %p
-      %b Email
-      %br
-      = @reservation.email
-    %p
-      %b Phone
-      %br
-      = @reservation.phone
+        %p
+          %b Email
+          %br
+          = @reservation.email
+        %p
+          %b Phone
+          %br
+          = @reservation.phone
 
-    %p= link_to "Edit", edit_reservation_path(@reservation)
+        %p= link_to "Edit", edit_reservation_path(@reservation)
 
+
+- if @reservation.is_completed
+  - if !@reservation.is_donated
+    .row
+      .col-md-8.mt-4
+        = button_to 'Make a Donation', new_reservation_charge_path(@reservation), method: :get, class: 'btn btn-primary btn-lg'
+- else
+  .row
+    .col-md-8.mt-4
+      = button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'
 

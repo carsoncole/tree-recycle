@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :reservations, except: [:index] do
     get 'form-1', as: 'form_1'
     get 'form-2', as: 'form_2'
+
+    post 'submit-reservation' => 'reservations#submit_reservation', as: 'submit'
+    resources :charges
   end
 
   namespace :admin do
