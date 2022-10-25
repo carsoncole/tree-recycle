@@ -9,12 +9,14 @@
   .col-md-9
   .col-md-3.mb-3
     = form_tag admin_search_path, local: true, method: :get do
-      = text_field_tag 'search',"", placeholder: 'Search term', class: 'form-control'
+      = text_field_tag 'search',"", placeholder: 'Search', class: 'form-control', id: 'search'
       = submit_tag 'Search', class: 'btn btn-primary'
 
-%p
+%p.mb-4
+  = link_to "All", admin_reservations_path
   - Zone.all.each do |zone|
-    %span= link_to zone.name, admin_reservations_path(zone_id: zone.id)
+    = '|'
+    = link_to zone.name, admin_reservations_path(zone_id: zone.id)
 
 
 %table.table.reservations

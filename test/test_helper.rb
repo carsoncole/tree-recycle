@@ -18,9 +18,12 @@ class ActiveSupport::TestCase
 
   def system_test_signin
     @user = create(:user)
-    visit '/sign_in'
+    visit '/'
+    click_on 'Sign in'
     fill_in "Email", with: @user.email
     fill_in "Password", with: @user.password
-    click_on "Sign in"
+    within '#clearance' do
+      click_on "Sign in"
+    end
   end
 end

@@ -8,7 +8,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   test "searching for a reservation" do
     system_test_signin
 
-    fill_in "Search", with: @reservation.name[0..3]
+    fill_in "search", with: @reservation.name[0..3]
     click_on "Search"
     assert_text @reservation.name
   end
