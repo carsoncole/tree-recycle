@@ -1,6 +1,6 @@
 class Admin::ReservationsController < ApplicationController
   before_action :require_login
-  before_action :set_reservation, except: %i[ new index ]
+  before_action :set_reservation, except: %i[ new index search ]
 
 
   def index
@@ -23,6 +23,11 @@ class Admin::ReservationsController < ApplicationController
   end
 
   def show
+  end
+
+  def search
+    @pagy, @reservations = pagy(Reservation.where("name ILIKE ?", "%" + Reservation.sanitize_sql_like(params[:search]) + "%"))
+    render :index
   end
 
   private

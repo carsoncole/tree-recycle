@@ -4,6 +4,16 @@
     \-
     = Zone.find(params[:zone_id]).name
 
+
+.row
+  .col-md-9
+  .col-md-3.mb-3
+    = form_tag admin_search_path, local: true, method: :get do
+      = text_field_tag 'search', "Search", class: 'form-control'
+
+
+
+
 %p
   - Zone.all.each do |zone|
     %span= link_to zone.name, admin_reservations_path(zone_id: zone.id)

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
-  resource :session, controller: "sessions", only: [:create]
+  resource :session, controller: "clearance/sessions", only: [:create]
 
   resources :users, controller: "clearance/users", only: [:create] do
     resource :password,
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :settings, only: [ :index, :edit, :update ]
     resources :reservations, only: [ :index, :show, :edit, :update ]
     resources :zones
+    get 'search' => 'reservations#search', as: 'search'
   end
 
 end
