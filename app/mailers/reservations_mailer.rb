@@ -1,0 +1,2 @@
+class ReservationsMailer < ApplicationMailer
+end
