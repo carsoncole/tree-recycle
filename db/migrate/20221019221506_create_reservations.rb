@@ -18,6 +18,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.decimal :longitude
       t.datetime :picked_up_at
       t.references :zone
+      t.decimal :distance_to_zone
 
       t.timestamps
     end
