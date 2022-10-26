@@ -1,4 +1,13 @@
-%header.container-fluid
-  %h1
-    = image_tag 'frasier.jpg', width: 70
-    = link_to (Setting.first ? Setting&.first&.site_title : "Tree Recycle"), root_url
+%header
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    .container-fluid
+      = link_to "BSA Troop 1564 & 1804 Tree Recycle", root_path, class: 'navbar-brand'
+      %button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+        %span.navbar-toggler-icon
+      .collapse.navbar-collapse#navbarSupportedContent
+        %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+          %li.nav-item
+            = link_to "Make a reservation", new_reservation_path, class: "nav-link", "aria-current": "page"
+          %li.nav-item
+            = link_to "About", about_path, class: "nav-link"
+
