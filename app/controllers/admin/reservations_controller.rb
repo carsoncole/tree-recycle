@@ -1,15 +1,15 @@
 class Admin::ReservationsController < ApplicationController
   before_action :require_login
-  before_action :set_reservation, except: %i[ new index search ]
+  before_action :set_reservation, except: %i[ new index search process_zone process_all_zones]
 
 
   def index
     if params[:zone_id]
-      @pagy, @reservations = pagy(Reservation.completed.where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.order(:street).where(zone_id: params[:zone_id]).order(created_at: :asc))
     elsif params[:uncompeted]
-      @pagy, @reservations = pagy(Reservation.completed.where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.order(:street).where(zone_id: params[:zone_id]).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.completed.order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.order(:street).order(created_at: :asc))
     end
   end
 
@@ -27,10 +27,19 @@ class Admin::ReservationsController < ApplicationController
   def show
   end
 
-  #TODO add street to search
   def search
     @pagy, @reservations = pagy(Reservation.where("name ILIKE ? OR street ILIKE ?", "%" + Reservation.sanitize_sql_like(params[:search]) + "%", "%" + Reservation.sanitize_sql_like(params[:search]) + "%"))
     render :index
+  end
+
+  def process_zone
+    @reservation.process_zone!
+    redirect_to admin_reservations_path
+  end
+
+  def process_all_zones
+    Reservation.process_all_zones!
+    redirect_to admin_reservations_path
   end
 
   private
