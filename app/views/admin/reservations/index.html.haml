@@ -6,6 +6,10 @@
 
 
 .row
+  .col-md-6
+    = button_to "Process ALL Reservation Zones", admin_process_all_zones_path, class: 'btn btn-warning btn-lg'
+
+.row
   .col-md-9
   .col-md-3.mb-3
     = form_tag admin_search_path, local: true, method: :get do
@@ -32,10 +36,18 @@
     - @reservations.each do |reservation|
       %tr
         %td= link_to reservation.name, admin_reservation_path(reservation)
-        %td= reservation.street
+        %td
+          = link_to reservation.street, "https://maps.apple.com/?q=#{reservation.latitude},#{reservation.longitude}", target: '_blank'
+          = link_to "https://www.google.com/maps/place/#{reservation.latitude},#{reservation.longitude}", target: '_blank' do
+            %i.fa-brands.fa-google
+
+
         %td
           - if reservation.zone_id?
-            = link_to reservation&.zone&.name, admin_reservations_path(zone_id: reservation.zone_id)
+            = link_to admin_reservations_path(zone_id: reservation.zone_id) do
+              = reservation&.zone&.name
+              = surround("(", ")") do
+                = pluralize(reservation.distance_to_zone.round(2), "mile")
 
         %td.actions
           = link_to admin_reservation_path(reservation) do
@@ -44,6 +56,8 @@
             %i.fa-solid.fa-pen.icon
           = link_to reservation, method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
             %i.fa-solid.fa-trash.icon
+          = link_to admin_reservation_process_zone_path(reservation), method: :post, data: { "turbo-method": :post } do
+            %i.fa-solid.fa-bolt.icon
 
 
 %br

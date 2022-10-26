@@ -19,4 +19,25 @@ class Reservation < ApplicationRecord
   def address
     [street, city, state, country].compact.join(', ')
   end
+
+  def self.process_all_zones!
+    all.each do |r|
+      r.process_zone!
+    end
+  end
+
+  def process_zone!
+    return unless geocoded?
+
+    Zone.all.each do |z|
+      next if z == zone
+      distance_to_new_zone = self.distance_to(z.coordinates)
+
+      if (zone && distance_to_zone > distance_to_new_zone) || zone.nil?
+        self.zone_id = z.id
+        self.distance_to_zone = distance_to_new_zone
+      end
+    end
+    save
+  end
 end
