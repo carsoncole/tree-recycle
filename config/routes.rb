@@ -26,7 +26,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :settings, only: [ :index, :edit, :update ]
-    resources :reservations, only: [ :index, :show, :edit, :update ]
+    resources :reservations, only: [ :index, :show, :edit, :update ] do
+      post 'process-zone' => 'reservations#process_zone', as: 'process_zone'
+    end
+
+    post 'process-all-zones' => 'reservations#process_all_zones', as: 'process_all_zones'
+
     resources :zones
     get 'search' => 'reservations#search', as: 'search'
   end
