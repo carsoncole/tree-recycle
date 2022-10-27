@@ -1,76 +1,74 @@
-.card
-  .card-body
-    %h1.card-title.mb-3 Reservation
+.row
+  .col-md-8
+    .card
+      .card-body
+        %h1.card-title.mb-3 Reservation
 
-    %p
-      %b Name
-      %br
-      = @reservation.name
-
-    %p
-      %b Street
-      %br
-      = @reservation.street
-
-    %p
-      %b City
-      %br
-      = @reservation.city
-
-    %p
-      %b State
-      %br
-      = @reservation.state
-
-    %p
-      %b Country
-      %br
-      = @reservation.country
-
-
-    %hr
-
-    %p
-      %b Email
-      %br
-      = @reservation.email
-    %p
-      %b Phone
-      %br
-      = @reservation.phone
-
-    - if @reservation.latitude?
-      %hr
-        %p
-          %b Latitude/Longitude
-          %br
-          = @reservation.latitude
-          \/
-          = @reservation.longitude
-
-    %hr
-
-    %p
-      %b Zone
-      %br
-      = @reservation&.zone&.name
+        %table.table.reservation
+          %tr
+            %th Name
+            %td= @reservation.name
+          %tr
+            %th Address
+            %td= @reservation.address
+          %tr
+            %th Street
+            %td= @reservation.street
+          %tr
+            %th House number
+            %td= @reservation.house_number
+          %tr
+            %th Road
+            %td= @reservation.street_name
+          %tr
+            %th City
+            %td= @reservation.city
+          %tr
+            %th State
+            %td= @reservation.state
+          %tr
+            %th Country
+            %td= @reservation.country
+          %tr
+            %th Postal code
+            %td= @reservation.zip
+          %tr
+            %th Latitude
+            %td= @reservation.latitude
+          %tr
+            %th Longitude
+            %td= @reservation.longitude
 
 
-    %hr
-
-    %p
-      %b Created
-      %br
-      = @reservation.created_at
-
-    - if @reservation.picked_up_at?
-      %p
-        %b
-          Picked up
-          %br
-          = @reservation.picked_up_at
+        %table.table.reservation
+          %tr
+            %th Email
+            %td= @reservation.email
+          %tr
+            %th Phone
+            %td= @reservation.phone
 
 
-    = link_to "Edit", edit_admin_reservation_path(@reservation)
+        %table.table.reservation
+          %tr
+            %th Zone
+            %td= @reservation&.zone&.name
+
+        %table.table.reservation
+          %tr
+            %th
+            %td= @reservation.picked_up_at
+
+
+        %table.table.reservation
+          %tr
+            %th Created
+            %td= @reservation.created_at
+          %tr
+            %th Updated
+            %td= @reservation.updated_at
+
+
+        = link_to "Edit", edit_admin_reservation_path(@reservation)
 
 

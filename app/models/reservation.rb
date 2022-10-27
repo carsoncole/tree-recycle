@@ -8,9 +8,9 @@ class Reservation < ApplicationRecord
   scope :completed,  -> { where(is_completed: true) }
   scope :uncompleted, -> { where.nil(is_completed: false) }
 
-  validates :name, :street, presence: true
+  validates :name, :street, :city, :state, :country, presence: true
   geocoded_by :address
-  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
+  after_validation :full_geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
 
   def initialize(args)
     super
@@ -26,6 +26,19 @@ class Reservation < ApplicationRecord
   def self.process_all_zones!
     all.each do |r|
       r.process_zone!
+    end
+  end
+
+  def full_geocode
+    begin
+      results = Geocoder.search(self.address)
+      self.latitude = results.as_json[0]["data"]["lat"]
+      self.longitude = results.as_json[0]["data"]["lon"]
+      self.house_number = results.as_json[0]["data"]["address"]["house_number"]
+      self.street_name = results.as_json[0]["data"]["address"]["road"]
+    rescue
+      geocode
+      puts self.inspect
     end
   end
 

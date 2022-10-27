@@ -5,11 +5,11 @@ class Admin::ReservationsController < ApplicationController
 
   def index
     if params[:zone_id]
-      @pagy, @reservations = pagy(Reservation.completed.order(:street).where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
     elsif params[:uncompeted]
-      @pagy, @reservations = pagy(Reservation.completed.order(:street).where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.completed.order(:street).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).order(created_at: :asc))
     end
   end
 
