@@ -8,6 +8,8 @@ Tree Recycle is intended to be simple, well-tested, and easy to maintain
 
 Ruby on Rails 7, Ruby ~> 3.0.0, and PostgreSQL.
 
+This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.
+
 ## Configuration
 
 To install:
