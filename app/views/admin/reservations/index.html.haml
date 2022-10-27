@@ -5,16 +5,7 @@
     = Zone.find(params[:zone_id]).name
 
 
-.row
-  .col-md-6
-    = button_to "Process ALL Reservation Zones", admin_process_all_zones_path, class: 'btn btn-warning btn-lg'
-
-.row
-  .col-md-9
-  .col-md-3.mb-3
-    = form_tag admin_search_path, local: true, method: :get do
-      = text_field_tag 'search',"", placeholder: 'Search', class: 'form-control', id: 'search'
-      = submit_tag 'Search', class: 'btn btn-primary'
+= render 'search'
 
 %p.mb-4
   = link_to "All", admin_reservations_path

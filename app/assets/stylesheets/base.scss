@@ -19,6 +19,9 @@ a {
 }
 
 table.settings {
+  th {
+    width: 20em;
+  }
   td {
     text-align: right;
   }
@@ -51,3 +54,6 @@ p.message {
   font-size: 1.4em;
 }
 
+.seach-button {
+  display: inline !important;
+}

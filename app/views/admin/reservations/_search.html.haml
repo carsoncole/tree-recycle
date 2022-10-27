@@ -1,0 +1,10 @@
+.row
+  .col-md-4
+  .col-md-8
+    = form_tag admin_search_path, local: true, method: :get do
+      .form-inline.mx-sm-3.mb-3
+        .row
+          .col-md-6.mb-2
+            = text_field_tag 'search',"", placeholder: 'Search', class: 'form-control', id: 'search'
+          .col-md-6.mb-2
+            = submit_tag 'Search', class: 'btn btn-primary search-button'
