@@ -1,0 +1,15 @@
+
+%h1 Confirmed
+
+%p
+  Your trip pickup reservation is confirmed at
+  %br
+  = @reservation.street
+
+- if @reservation.notes.present?
+  %p
+    You also provided these pickup notes:
+    = @reservation.notes
+
+%br
+%p Thank you!
