@@ -107,10 +107,10 @@ streets = [
 
 ]
 
-streets.each do |s|
-  reservation = build(:reservation)
-  Reservation.create(name: reservation.name, street: s, is_completed: true)
-end
+# streets.each do |s|
+#   reservation = build(:reservation)
+#   Reservation.create(name: reservation.name, street: s, is_completed: true)
+# end
 
 zones = [
 [name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
@@ -120,10 +120,15 @@ zones = [
 [name: 'Agate Pass', distance: 0.6, street: '16550 Agate Pass Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Seabold', distance: 0.5, street: '14756 Henderson Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Fletcher Bay', distance: 0.5, street: '12453 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Point White', distance: 0.6, street: '12453 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+[name: 'Point White', distance: 0.6, street: '4160 Palomino Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Manzanita', distance: 0.6, street: '12453 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Manitou Beach', distance: 0.5, street: '10311 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Day Road', distance: 0.6, street: '9229 Day Road', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+[name: 'Meadowmeer/Kuora', distance: 0.6, street: '11246 Fieldstone Ln NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+[name: 'North Town Woods', distance: 0.4, street: '9376 North Town Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+[name: 'Battlepoint', distance: 0.6, street: '10715 Arrow Point Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+[name: 'Lynwood', distance: 0.6, street: '7575 NE Golden Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+[name: 'Blakely', distance: 0.6, street: '4890 Taylor Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Rolling Bay', distance: 0.6, street: '10075 NE Winther Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Commodore', distance: 0.13, street: '1526 Arthur Pl NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States']
 ]
