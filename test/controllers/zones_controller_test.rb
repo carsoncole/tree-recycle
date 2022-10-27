@@ -26,7 +26,7 @@ class ZonesControllerTest < ActionDispatch::IntegrationTest
       post admin_zones_url(as: @user), params: { zone: { street: @zone.street, city: @zone.city, state: @zone.state, distance: @zone.distance, name: @zone.name } }
     end
 
-    assert_redirected_to admin_zone_url(Zone.last)
+    assert_redirected_to admin_zones_url
   end
 
   test "should show zone" do
@@ -41,7 +41,7 @@ class ZonesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update zone" do
     patch admin_zone_url(@zone, as: @user), params: { zone: { street: @zone.street, city: @zone.city, state: @zone.state, distance: @zone.distance, name: @zone.name } }
-    assert_redirected_to admin_zone_url(@zone)
+    assert_redirected_to admin_zones_url
   end
 
   test "should destroy zone" do

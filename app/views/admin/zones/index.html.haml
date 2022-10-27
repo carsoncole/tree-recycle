@@ -1,5 +1,15 @@
 %h1 Zones
 
+
+.row
+  .col-md-6.mb-3
+    .text-right= button_to "Process Reservations => Zones", admin_process_all_zones_path, class: 'btn btn-warning btn-lg'
+
+
+%p.mb-4
+  = link_to new_admin_zone_path do
+    %i.fa-solid.fa-plus.lg
+
 %table.table
   %thead
     %tr
@@ -27,9 +37,3 @@
             %i.fa-solid.fa-pen.icon
           = link_to admin_zone_path(zone), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
             %i.fa-solid.fa-trash.icon
-
-
-%br
-
-= link_to new_admin_zone_path do
-  %i.fa-solid.fa-plus.lg

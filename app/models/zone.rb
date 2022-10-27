@@ -1,3 +1,4 @@
+#TODO create zone reports for use on day of event
 class Zone < ApplicationRecord
   has_many :reservations, dependent: :nullify
 

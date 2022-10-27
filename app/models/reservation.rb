@@ -1,3 +1,6 @@
+#TODO charges need to be added
+#TODO verify addresses
+#TODO store street names separate of street numbers
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
 

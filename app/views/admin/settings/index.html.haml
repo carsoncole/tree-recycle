@@ -1,8 +1,12 @@
 %h1 Settings
 
 
+%p
+  = link_to edit_admin_setting_path(@setting) do
+    %i.fa-solid.fa-pen.icon
+
 .row.justify-content-start
-  .col-10
+  .col-9
     %table.table.settings
 
       %tbody
@@ -40,9 +44,4 @@
           %th Default country
           %td= @setting.default_country
 
-
-        %tr
-          %th
-          %td
-            %p= link_to 'Edit', edit_admin_setting_path(@setting)
 %br

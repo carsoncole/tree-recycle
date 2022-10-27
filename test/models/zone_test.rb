@@ -9,7 +9,7 @@ class ZoneTest < ActiveSupport::TestCase
   end
 
   test "zone coordinates present" do
-    zone = Zone.new(name: 'Zone test', street: '1760 Susan Place NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States' )
+    zone = Zone.new(name: 'Zone test', street: '1760 Susan Place NW', distance: 0.5, city: 'Bainbridge Island', state: 'Washington', country: 'United States' )
     assert zone.valid?
     assert zone.latitude
     assert zone.longitude
