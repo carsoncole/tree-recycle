@@ -1,3 +1,5 @@
+require 'csv'
+
 #TODO charges need to be added
 #TODO verify addresses
 #TODO store street names separate of street numbers
@@ -6,7 +8,7 @@ class Reservation < ApplicationRecord
 
 
   scope :completed,  -> { where(is_completed: true) }
-  scope :uncompleted, -> { where.nil(is_completed: false) }
+  scope :uncompleted, -> { where(is_completed: [nil, false]) }
 
   validates :name, :street, :city, :state, :country, presence: true
   geocoded_by :address
@@ -55,5 +57,12 @@ class Reservation < ApplicationRecord
       end
     end
     save
+  end
+
+  # method to import data from existing tree recycle system csv export
+  def self.import
+    CSV.foreach('tmp/tree_data.csv', headers: true) do |row|
+      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'] )
+    end
   end
 end

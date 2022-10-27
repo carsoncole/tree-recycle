@@ -1,13 +1,13 @@
 class Admin::ReservationsController < ApplicationController
   before_action :require_login
-  before_action :set_reservation, except: %i[ new index search process_zone process_all_zones]
+  before_action :set_reservation, except: %i[ new index search process_all_zones]
 
 
   def index
     if params[:zone_id]
       @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
-    elsif params[:uncompeted]
-      @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
+    elsif params[:uncompleted]
+      @pagy, @reservations = pagy(Reservation.uncompleted.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
     else
       @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).order(created_at: :asc))
     end
@@ -43,7 +43,6 @@ class Admin::ReservationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_reservation
       @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
     end

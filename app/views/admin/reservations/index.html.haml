@@ -12,6 +12,8 @@
   - Zone.all.each do |zone|
     = '|'
     = link_to zone.name, admin_reservations_path(zone_id: zone.id)
+  = '|'
+  = link_to "Uncompleted", admin_reservations_path(uncompleted: true)
 
 
 %table.table.reservations
