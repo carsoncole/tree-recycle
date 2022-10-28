@@ -16,9 +16,9 @@ class Reservation < ApplicationRecord
 
   def initialize(args)
     super
-    self.country = Setting&.first&.default_country if Setting.first
-    self.city = Setting&.first&.default_city if Setting.first
-    self.state = Setting&.first&.default_state if Setting.first
+    self.country = Setting.first_or_create.default_country || 'United States'
+    self.city = Setting&.first&.default_city || 'Bainbridge Island'
+    self.state = Setting&.first&.default_state || 'Washington'
   end
 
   def address
@@ -40,7 +40,6 @@ class Reservation < ApplicationRecord
       self.street_name = results.as_json[0]["data"]["address"]["road"]
     rescue
       geocode
-      puts self.inspect
     end
   end
 
@@ -62,7 +61,7 @@ class Reservation < ApplicationRecord
   # method to import data from existing tree recycle system csv export
   def self.import
     CSV.foreach('tmp/tree_data.csv', headers: true) do |row|
-      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'] )
+      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], is_completed: true, phone: row['phone'], notes: row['comment'] )
     end
   end
 end
