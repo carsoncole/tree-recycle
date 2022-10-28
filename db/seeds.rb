@@ -18,13 +18,9 @@ end
 # 50.times do
 #   FactoryBot.create([
 #     'reservation',
-#     'reservation_with_email',
 #     'reservation_with_phone',
-#     'reservation_with_phone',
-#     'reservation_with_email_and_phone',
-#     'reservation_with_email_and_phone',
-#     'reservation_with_email_and_phone'
-#   ][rand(7)].to_sym)
+#     'reservation_with_phone'
+#   ][rand(3)].to_sym)
 # end
 
 
