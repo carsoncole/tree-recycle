@@ -16,4 +16,14 @@
             = link_to "Make a reservation", new_reservation_path, class: "nav-link", "aria-current": "page"
           %li.nav-item
             = link_to "About", about_path, class: "nav-link"
-
+          - if signed_in?
+            %li.nav-item
+              = link_to "Reservations", admin_reservations_path, class: 'nav-link'
+            %li.nav-item
+              = link_to "Settings", admin_settings_path, class: 'nav-link'
+            %li.nav-item
+              = link_to "Zones", admin_zones_path, class: 'nav-link'
+            %li.nav-item
+              = button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
+          - else
+            = link_to 'Sign in', sign_in_path, class: 'nav-link'
