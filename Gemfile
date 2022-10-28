@@ -49,10 +49,12 @@ gem "sassc-rails"
 # gem "image_processing", "~> 1.2"
 
 gem "haml-rails", "~> 2.0"
-gem "clearance"
-gem "geocoder"
-gem "stripe"
-gem "pagy"
+gem "clearance" #user authentication
+gem "geocoder" #address geocoding with lat/lon
+gem "stripe" #payments
+gem "pagy" #pagination
+# gem 'StreetAddress', :require => "street_address"
+gem 'usps' #address verification
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
