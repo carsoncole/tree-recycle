@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :donations
   root 'home#index'
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -19,6 +20,8 @@ Rails.application.routes.draw do
   resources :reservations, except: [:index] do
     get 'form-1', as: 'form_1'
     get 'form-2', as: 'form_2'
+    get 'address-verification', as: 'address_verification'
+    resources :donations, only: %i[ new create ]
 
     post 'submit-reservation' => 'reservations#submit_reservation', as: 'submit'
     resources :charges
