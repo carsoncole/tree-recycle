@@ -2,7 +2,12 @@
   %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
     .container-fluid
       - site_title = Setting.first_or_create.site_title || 'Tree Recycle'
-      = link_to site_title, root_path, class: 'navbar-brand'
+
+      = link_to root_path, class: 'navbar-brand' do
+        %i.fa-solid.fa-tree.fa-lg
+        = site_title
+
+      end
       %button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
         %span.navbar-toggler-icon
       .collapse.navbar-collapse#navbarSupportedContent

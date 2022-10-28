@@ -1,8 +1,10 @@
 .row
-  .col-md-8
+  .col-md-6
     .card
       .card-body
-        %h1.card-title.mb-3 Tree Pickup Reservation
+        %h1.card-title.mb-3
+          %i.fa-solid.fa-tree
+          Tree pickup reservation
 
         %p
           %b Name
@@ -10,34 +12,50 @@
           = @reservation.name
 
         %p
-          %b Street address
+          %b Address
           %br
-          = @reservation.street
-
-        %p= link_to "Edit", edit_reservation_path(@reservation)
+          = @reservation.address
 
 
-        %hr
+        %p
+          %b Pickup notes
+          %br
+          - if @reservation.notes.blank?
+            %span.text-muted None provided
+          - else
+            = @reservation.notes
+
+        %hr.mt-5
+
 
         %p
           %b Email
           %br
-          = @reservation.email
+          - if @reservation.email.blank?
+            %span.text-muted Not provided
+          - else
+            = @reservation.email
         %p
           %b Phone
           %br
-          = @reservation.phone
+          - if @reservation.phone.blank?
+            %span.text-muted Not provided
+          - else
+            = @reservation.phone
 
-        %p= link_to "Edit", edit_reservation_path(@reservation)
+        %p.text-end
+          = link_to edit_reservation_path(@reservation) do
+            %i.fa-solid.fa-pen.fa-lg
+            = "Edit"
 
 
 - if @reservation.is_completed
   - if !@reservation.is_donated
     .row
-      .col-md-8.mt-4
+      .col-md-8.mt-3
         = button_to 'Make a Donation', new_reservation_charge_path(@reservation), method: :get, class: 'btn btn-primary btn-lg'
 - else
   .row
-    .col-md-8.mt-4
+    .col-md-8.mt-2
       = button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'
 

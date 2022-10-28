@@ -9,20 +9,29 @@
   .row
     .col-md-8
       .mb-3
-        = f.label :name, class: 'form-label'
+        = f.label :your_name, class: 'form-label'
         = f.text_field :name, class: 'form-control'
       .mb-3
-        = f.label :street, "Street", class: 'form-label'
+        = f.label :street_address,  class: 'form-label'
         = f.text_field :street, class: 'form-control'
-      .mb-3
-        = f.label :notes, "Tree location", class: 'form-label'
-        = f.text_field :notes, class: 'form-control'
-        .form-text.text-muted Any special notes about where your tree will be located? Back yard, porch, street corner etc...
+        .form-text.text-muted Please provide a valid house number and street address.
   .row.mb-4
     .col-7
-      .mb-3
+      .mb-5
         = f.label :city, "City", class: 'form-label'
         = f.text_field :city, class: 'form-control', value: @reservation.city
+
+
+  .row
+    .col-md-7
+      .mb-3
+        = f.label :notes, "Where will your tree be?", class: 'form-label'
+        = f.text_field :notes, class: 'form-control'
+        .form-text.text-muted Leave blank if obvious. Otherwise, provide any helpful info for us to be able to find your tree.
+
+
+
+
 
   .actions.mt-3
     - if @reservation.persisted?

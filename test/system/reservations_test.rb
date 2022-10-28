@@ -2,17 +2,17 @@ require "application_system_test_case"
 
 class ReservationsTest < ApplicationSystemTestCase
   setup do
-    @reservation = create(:reservation)
+    @reservation = Reservation.first
   end
 
-  test "creating a reservation" do
+  test "creating a valid reservation" do
     visit root_url
     click_on "Make a Tree pickup reservation"
 
     assert_selector "h1", text: "Tree pickup reservation"
-    fill_in "Name", with: @reservation.name
-    fill_in "Street", with: @reservation.street
-    fill_in "Tree location", with: "driveway"
+    fill_in "reservation_name", with: @reservation.name
+    fill_in "reservation_street", with: @reservation.street
+    fill_in "Where will your tree be?", with: "driveway"
 
     click_on "Next"
 
@@ -26,8 +26,9 @@ class ReservationsTest < ApplicationSystemTestCase
 
     click_on "Submit Reservation"
 
-    click_on "Make a Donation"
-    assert_selector "h1", text: "Make a Donation"
+    assert_selector "h1", text: "Make a donation"
+    choose 'amount-25'
+    click_on "Next"
   end
 
   # test "visiting the index" do

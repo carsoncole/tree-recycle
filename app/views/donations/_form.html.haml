@@ -1,0 +1,26 @@
+= form_tag [:reservation, :donations] do
+
+  .form-check
+    = radio_button :donation, :amount, '$20', id: 'amount-20', class: 'form-check-input'
+    %label.form-check-label $20
+  .form-check
+    = radio_button :donation, :amount, '$25', id: 'amount-25', class: 'form-check-input', checked: true
+    %label.form-check-label $25
+  .form-check
+    = radio_button :donation, :amount, '$30', id: 'amount-30', class: 'form-check-input'
+    %label.form-check-label $30
+  .form-check
+    = radio_button :donation, :amount, '$35', id: 'amount-35', class: 'form-check-input'
+    %label.form-check-label $35
+  .form-check
+    = radio_button :donation, :amount, '$40', id: 'amount-40', class: 'form-check-input'
+    %label.form-check-label $40
+
+  .row
+    .col-md-2
+      .form-group.mt-4
+        %label Custom amount
+        = text_field_tag :custom_donation, "", class: 'form-control'
+
+  .actions.mt-4
+    = submit_tag 'Next', class: 'btn btn-primary btn-lg'

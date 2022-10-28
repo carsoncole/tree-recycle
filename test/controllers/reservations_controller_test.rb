@@ -11,7 +11,7 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create reservation in step 1 with name and address" do
+  test "should create reservation in step 1 with name and address with verification" do
     new_reservation_attributes = build :reservation
     assert_difference("Reservation.count") do
       post reservations_url, params: { reservation: { name: new_reservation_attributes.name, street: new_reservation_attributes.street } }
@@ -19,7 +19,7 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
 
     new_reservation = Reservation.order(updated_at: :asc).last
 
-    assert_redirected_to reservation_form_2_url(new_reservation)
+    assert_redirected_to reservation_address_verification_url(new_reservation)
   end
 
   test "should show reservation" do

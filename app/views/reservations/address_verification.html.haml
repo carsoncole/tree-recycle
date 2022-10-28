@@ -1,0 +1,34 @@
+.row
+  .col-md-8
+    %h3.message We are having trouble figuring out your address.
+
+
+
+- if @verified_street
+
+  = form_for @reservation do |f|
+    .row.mb-5
+      .col-md-6
+        .mb-3
+          = f.text_field :street, value: @verified_street, class: 'form-control'
+        .actions
+          = f.submit 'Use this corrected address', class: 'btn btn-primary btn-lg'
+
+  = form_for @reservation do |f|
+    .row
+      .col-md-6
+        .mb-3
+          = f.text_field :street, class: 'form-control'
+        .actions
+          = f.submit 'Use original address', class: 'btn btn-primary btn-lg'
+- else
+
+%p We can't seem to find that address at all. If you could try once more...
+
+= form_for @reservation do |f|
+  .row
+    .col-md-6
+      .mb-3
+        = f.text_field :street, class: 'form-control'
+      .actions
+        = f.submit 'Submit address', class: 'btn btn-primary btn-lg'

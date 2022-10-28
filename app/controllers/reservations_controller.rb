@@ -1,5 +1,7 @@
+require 'usps'
+
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[ show edit form_1 form_2 submit_reservation update destroy ]
+  before_action :set_reservation, only: %i[ show edit form_1 form_2 address_verification submit_reservation update destroy ]
   before_action :require_login, only: %i[ index destroy ]
 
   def show
@@ -18,11 +20,31 @@ class ReservationsController < ApplicationController
   def form_2
   end
 
+  def address_verification
+    USPS.config.username = Rails.application.credentials.usps.username
+    address = USPS::Address.new(address1: @reservation.street, city: @reservation.city, state: @reservation.state)
+    req = USPS::Request::AddressStandardization.new(address)
+    begin
+      response = req.send!
+      if !address.valid?
+        render :form_2
+      end
+      @verified_street = response.get(address).address1
+    rescue USPS::AddressNotFoundError
+      @address_not_found = true
+    end
+  end
+
   def create
     @reservation = Reservation.new(reservation_params)
 
     if @reservation.save
-      redirect_to reservation_form_2_url(@reservation)
+      if @reservation.geocoded?
+        redirect_to reservation_form_2_url(@reservation)
+      else
+        redirect_to reservation_address_verification_url(@reservation)
+      end
+
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +60,7 @@ class ReservationsController < ApplicationController
 
   def submit_reservation
     @reservation.update(is_completed: true)
-    redirect_to reservation_url(@reservation), notice: 'Your reservation is complete'
+    redirect_to new_reservation_donation_url(@reservation)
   end
 
   def destroy

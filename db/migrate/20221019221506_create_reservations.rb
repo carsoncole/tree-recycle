@@ -12,7 +12,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.string :city
       t.string :state
       t.string :zip
-      t.string :country
+      t.string :country, default: 'United States'
       t.string :notes
       t.boolean :is_completed
       t.boolean :is_donated
