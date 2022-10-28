@@ -1,0 +1,15 @@
+!!!
+%html(lang="en")
+  = render 'shared/head'
+
+  %body
+    = render 'shared/header'
+
+    = render 'shared/flash'
+
+    .container.main
+      .row
+        .col-md-12
+          = yield
+
+    = render 'shared/footer'
