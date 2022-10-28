@@ -66,3 +66,20 @@ table.reservation {
 .navbar-brand {
   font-size: 1.5em;
 }
+
+#reservation {
+  .item {
+    margin-bottom: 2em;
+    line-height: 1.666;
+
+    .field {
+      font-size: 0.9em;
+      color: #999;
+    }
+    .data {
+      font-size: 1.2em;
+      color: #000;
+    }
+
+  }
+}

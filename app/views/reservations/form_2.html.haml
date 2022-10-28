@@ -1,5 +1,5 @@
 .row
-  .col-md-8
+  .col-md-12
     %p.message.mb-5 Your contact details
 
 = form_for @reservation do |f|
@@ -11,12 +11,12 @@
           %li= message
 
   .row
-    .col-md-5
+    .col-md-8
       .mb-3
         = f.label :email, class: 'form-label'
         = f.email_field :email, class: 'form-control'
   .row
-    .col-md-4
+    .col-md-8
       .mb-3
         = f.label :phone, class: 'form-label'
         = f.text_field :phone, class: 'form-control'

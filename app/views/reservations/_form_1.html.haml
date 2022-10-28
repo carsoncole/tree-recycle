@@ -7,7 +7,7 @@
           %li= message
 
   .row
-    .col-md-8
+    .col-md-12
       .mb-3
         = f.label :your_name, class: 'form-label'
         = f.text_field :name, class: 'form-control'
@@ -16,14 +16,14 @@
         = f.text_field :street, class: 'form-control'
         .form-text.text-muted Please provide a valid house number and street address.
   .row.mb-4
-    .col-7
+    .col-md-10
       .mb-5
         = f.label :city, "City", class: 'form-label'
         = f.text_field :city, class: 'form-control', value: @reservation.city
 
 
   .row
-    .col-md-7
+    .col-md-10
       .mb-3
         = f.label :notes, "Where will your tree be?", class: 'form-label'
         = f.text_field :notes, class: 'form-control'
