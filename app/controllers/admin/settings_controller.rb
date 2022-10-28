@@ -1,5 +1,4 @@
-class Admin::SettingsController < ApplicationController
-  before_action :require_login
+class Admin::SettingsController < Admin::AdminController
   before_action :set_setting, only: %i[ edit update ]
 
   # GET /settings or /settings.json

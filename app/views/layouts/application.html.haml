@@ -1,6 +1,7 @@
 !!!
 %html(lang="en")
   = render 'shared/head'
+  = render 'shared/stripe' if controller_name = 'donations'
 
   %body
     = render 'shared/header'
@@ -14,3 +15,6 @@
           = yield
 
     = render 'shared/footer'
+
+
+    = render 'donations/stripe_js'

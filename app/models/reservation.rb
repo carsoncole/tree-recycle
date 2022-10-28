@@ -10,7 +10,7 @@ class Reservation < ApplicationRecord
   scope :completed,  -> { where(is_completed: true) }
   scope :uncompleted, -> { where(is_completed: [nil, false]) }
 
-  validates :name, :street, :city, :state, :country, presence: true
+  validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
   after_validation :full_geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
 

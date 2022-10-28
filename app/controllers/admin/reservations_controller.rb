@@ -1,5 +1,4 @@
-class Admin::ReservationsController < ApplicationController
-  before_action :require_login
+class Admin::ReservationsController < Admin::AdminController
   before_action :set_reservation, except: %i[ new index search process_all_zones]
 
 

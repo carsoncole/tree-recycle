@@ -47,7 +47,7 @@
     - if !@reservation.is_donated
       .row
         .col-md-8.mt-3
-          = button_to 'Make a Donation', new_reservation_charge_path(@reservation), method: :get, class: 'btn btn-primary btn-lg'
+          = button_to 'Make a Donation', new_reservation_donation_path(@reservation), method: :get, class: 'btn btn-primary btn-lg'
   - else
     .row
       .col-md-8.mt-2

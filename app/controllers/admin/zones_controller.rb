@@ -1,5 +1,4 @@
-class Admin::ZonesController < ApplicationController
-  before_action :require_login
+class Admin::ZonesController < Admin::AdminController
   before_action :set_zone, only: %i[ show edit update destroy ]
 
   def index

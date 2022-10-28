@@ -1,62 +1,50 @@
 class DonationsController < ApplicationController
-  before_action :set_donation, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token
 
-  # GET /donations or /donations.json
-  def index
-    @donations = Donation.all
-  end
+  before_action :set_reservation, only: %i[ create new ]
 
-  # GET /donations/1 or /donations/1.json
-  def show
-  end
-
-  # GET /donations/new
   def new
   end
 
-  # GET /donations/1/edit
-  def edit
-  end
-
-  # POST /donations or /donations.json
   def create
-    @donation = donation_params
-    # respond_to do |format|
-    #   if @donation.save
-    #     format.html { redirect_to donation_url(@donation), notice: "Donation was successfully created." }
-    #     format.json { render :show, status: :created, location: @donation }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @donation.errors, status: :unprocessable_entity }
-    #   end
-    # end
-  end
+    if params[:check]
+    else
 
-  # PATCH/PUT /donations/1 or /donations/1.json
-  def update
-    respond_to do |format|
-      if @donation.update(donation_params)
-        format.html { redirect_to donation_url(@donation), notice: "Donation was successfully updated." }
-        format.json { render :show, status: :ok, location: @donation }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @donation.errors, status: :unprocessable_entity }
-      end
+      @session = Stripe::Checkout::Session.create({
+        line_items: [{
+            price: 'price_1Lxwp5AY1LGWbDshKyepVUDL',
+            quantity: 1
+        }],
+        mode: 'payment',
+        client_reference_id: @reservation.id,
+        metadata: {reservation_id: params[:reservation_id]},
+        customer_email: @reservation.email,
+        success_url: reservation_success_url(@reservation),
+        cancel_url: new_reservation_donation_url(@reservation)
+      })
+
+      redirect_to @session.url, allow_other_host: true
+
+      # respond_to do |format|
+      #   format.js
+      # end
     end
   end
 
-  # DELETE /donations/1 or /donations/1.json
-  def destroy
-    @donation.destroy
+  def cash_or_check
+  end
 
-    respond_to do |format|
-      format.html { redirect_to donations_url, notice: "Donation was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  def success
+  end
+
+  def cancel
   end
 
   private
     def donation_params
       params.require(:donation).permit(:amount)
+    end
+    def set_reservation
+      @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
     end
 end

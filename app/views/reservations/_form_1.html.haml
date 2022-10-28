@@ -21,6 +21,11 @@
         = f.label :city, "City", class: 'form-label'
         = f.text_field :city, class: 'form-control', value: @reservation.city
 
+  .row
+    .col-md-8
+      .mb-3
+        = f.label :email, class: 'form-label'
+        = f.email_field :email, class: 'form-control'
 
   .row
     .col-md-10
