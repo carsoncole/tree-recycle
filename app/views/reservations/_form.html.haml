@@ -15,7 +15,7 @@
         = f.label :street_address,  class: 'form-label'
         = f.text_field :street, class: 'form-control', required: true
         .form-text.text-muted Please provide a valid house number and street address.
-  .row.mb-4
+  .row
     .col-md-10
       .mb-5
         = f.label :city, "City", class: 'form-label'
@@ -48,4 +48,4 @@
     - if @reservation.persisted?
       = f.submit 'Save', class: 'btn btn-primary btn-lg'
     - else
-      = f.submit 'Submit Reservation', class: 'btn btn-primary btn-lg'
+      = f.submit 'Register your address', class: 'btn btn-primary btn-lg'

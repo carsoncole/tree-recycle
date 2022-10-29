@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   get "/sign_up" => "clearance/users#new", as: "sign_up"
 
   get '/about' => 'about#index', as: 'about'
+  get '/questions' => 'home#questions', as: 'questions'
+
+  get '/donation' => 'donations#donation_without_reservation', as: 'donation_without_reservation'
+  get '/thank-you-for-your-donation' => 'success#donations', as: 'success'
 
   resources :reservations, except: [:index] do
     get 'address-verification', as: 'address_verification'
