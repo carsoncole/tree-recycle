@@ -70,8 +70,20 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => 'carson.cole@gmail.com',
+    :password             => 'bnszpgnoumtzhhdx',
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
+
   # Rails.configuration.stripe = {
   #   publishable_key: Rails.application.credentials.stripe.development.publishable_key,
   #   secret_key: Rails.application.credentials.stripe.development.secret_key
   # }
 end
+
+
