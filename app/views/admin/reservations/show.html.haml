@@ -67,6 +67,18 @@
           %tr
             %th Updated
             %td= @reservation.updated_at
+          %tr
+            %th Cancelled
+            %td= @reservation.is_cancelled? ? 'Yes' : 'No'
+          %tr
+            %th Confirmed
+            %td= @reservation.is_reservation_completed? ? 'Yes' : 'No'
+          %tr
+            %th Stripe donated
+            %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'
+          %tr
+            %th Cash or check
+            %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
 
 
         = link_to "Edit", edit_admin_reservation_path(@reservation)
