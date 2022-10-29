@@ -14,8 +14,9 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.string :zip
       t.string :country, default: 'United States'
       t.string :notes
-      t.boolean :is_completed
-      t.boolean :is_donated
+      t.boolean :is_cancelled
+      t.boolean :is_reservation_completed
+      t.decimal :stripe_charge_amount
       t.boolean :is_cash_or_check
       t.decimal :latitude
       t.decimal :longitude

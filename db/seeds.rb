@@ -23,7 +23,6 @@ end
 #   ][rand(3)].to_sym)
 # end
 
-
 streets = [
 '1760 Susan Place',
 '14265 Silven Ave NE',
@@ -99,13 +98,11 @@ streets = [
 '661 Al Dorsey Ln NW',
 '8099 NE Bucklin Hill Rd',
 '6895 NE Hanks Ln'
-
-
 ]
 
 # streets.each do |s|
 #   reservation = build(:reservation)
-#   Reservation.create(name: reservation.name, street: s, is_completed: true)
+#   Reservation.create(name: reservation.name, street: s, is_reservation_completed: true)
 # end
 
 zones = [
@@ -128,8 +125,6 @@ zones = [
 [name: 'Rolling Bay', distance: 0.6, street: '10075 NE Winther Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Commodore', distance: 0.13, street: '1526 Arthur Pl NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States']
 ]
-
-
 
 zones.each do |zone|
   Zone.create(zone)

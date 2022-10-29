@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     street { Faker::Address.street_address }
     email { Faker::Internet.email }
-    is_completed { true }
+    is_reservation_completed { true }
 
 
     factory :reservation_with_phone do
@@ -11,7 +11,7 @@ FactoryBot.define do
     end
 
     factory :uncompleted_reservation do
-      is_completed { false }
+      is_reservation_completed { false }
     end
   end
 end
