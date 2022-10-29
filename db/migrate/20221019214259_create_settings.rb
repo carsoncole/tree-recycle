@@ -8,7 +8,7 @@ class CreateSettings < ActiveRecord::Migration[7.0]
       t.string :contact_email
       t.string :contact_phone
       t.text :description
-      t.date :pickup_date
+      t.datetime :pickup_date_and_time
       t.string :default_city
       t.string :default_state
       t.string :default_country
