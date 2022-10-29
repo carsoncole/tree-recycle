@@ -1,5 +1,6 @@
 require 'usps'
 
+#TODO add reservation lookup
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_reservation update destroy ]
 
@@ -57,7 +58,7 @@ class ReservationsController < ApplicationController
 
   def destroy
     @reservation.update(is_cancelled: true)
-    redirect_to reservations_url, notice: "Reservation was successfully cancelled."
+    redirect_to reservation_url(@reservation), notice: "Reservation was successfully cancelled."
   end
 
   private

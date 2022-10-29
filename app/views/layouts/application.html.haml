@@ -1,7 +1,7 @@
 !!!
 %html(lang="en")
   = render 'shared/head'
-  = render 'shared/stripe' if controller_name = 'donations'
+  = render 'shared/stripe' if controller_name == 'donations'
 
   %body
     = render 'shared/header'
