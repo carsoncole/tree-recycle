@@ -1,0 +1,23 @@
+#reservation-header
+  %h1.position-relative
+    %i.fa-solid.fa-tree
+    Tree pickup reservation
+
+  .text-center
+    - if @reservation.is_cancelled?
+
+      .badge.rounded-pill.bg-danger.text-center
+        Cancelled
+
+      %p.text-center=link_to "Make a new reservation", new_reservation_path
+
+    - elsif @reservation.is_reservation_completed?
+      .badge.rounded-pill.bg-warning.text-center.mb-4
+        Confirmed
+
+    - if @reservation.persisted?
+      = link_to edit_reservation_path(@reservation) do
+        %i.fa-solid.fa-pen.fa-lg.icon
+        = "Edit"
+
+  %hr

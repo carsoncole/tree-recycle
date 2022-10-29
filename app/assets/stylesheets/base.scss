@@ -35,8 +35,8 @@ table.reservations {
 
 i {
   &.icon {
-  margin-right: 0.5em;
-  margin-left: 0.5em;
+  margin-right: 0em;
+  margin-left: 1em;
   }
   &.lg {
     font-size: 1.5em;
@@ -81,5 +81,16 @@ table.reservation {
       color: #000;
     }
 
+  }
+
+}
+#reservation-header {
+  h1 {
+    margin-bottom: 0.5em;
+    text-align: center;
+  }
+  .badge {
+    font-size: 1.3em;
+    margin-bottom: 3em;
   }
 }

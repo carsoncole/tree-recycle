@@ -1,14 +1,13 @@
 require 'csv'
 
-#TODO charges need to be added
 #TODO verify addresses
 #TODO store street names separate of street numbers
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
 
 
-  scope :completed,  -> { where(is_completed: true) }
-  scope :uncompleted, -> { where(is_completed: [nil, false]) }
+  scope :completed,  -> { where(is_reservation_completed: true) }
+  scope :uncompleted, -> { where(is_reservation_completed: [nil, false]) }
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
@@ -31,8 +30,16 @@ class Reservation < ApplicationRecord
     end
   end
 
+  def donated?
+    stripe_charge_amount.present? || is_cash_or_check?
+  end
+
   def full_geocode
     begin
+      self.latitude = nil
+      self.longitude = nil
+      self.house_number = nil
+      self.street_name = nil
       results = Geocoder.search(self.address)
       self.latitude = results.as_json[0]["data"]["lat"]
       self.longitude = results.as_json[0]["data"]["lon"]
@@ -61,7 +68,7 @@ class Reservation < ApplicationRecord
   # method to import data from existing tree recycle system csv export
   def self.import
     CSV.foreach('tmp/tree_data.csv', headers: true) do |row|
-      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], is_completed: true, phone: row['phone'], notes: row['comment'] )
+      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], is_reservation_completed: true, phone: row['phone'], notes: row['comment'] )
     end
   end
 end

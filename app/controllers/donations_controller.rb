@@ -1,7 +1,7 @@
 class DonationsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :set_reservation, only: %i[ create new ]
+  before_action :set_reservation, only: %i[ create new cash_or_check ]
 
   def new
   end
@@ -32,6 +32,8 @@ class DonationsController < ApplicationController
   end
 
   def cash_or_check
+    @reservation.update(is_cash_or_check: true)
+    redirect_to reservation_url(@reservation), notice: "You are all set. Your reservation is confirmed."
   end
 
   def success

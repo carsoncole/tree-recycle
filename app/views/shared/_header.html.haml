@@ -15,6 +15,10 @@
           %li.nav-item
             = link_to "Make a reservation", new_reservation_path, class: "nav-link", "aria-current": "page"
           %li.nav-item
+            = link_to "Make a donation", new_reservation_path, class: "nav-link", "aria-current": "page"
+          %li.nav-item
+            = link_to "Look up reservation", new_reservation_path, class: "nav-link", "aria-current": "page"
+          %li.nav-item
             = link_to "About", about_path, class: "nav-link"
           - if signed_in?
             %li.nav-item

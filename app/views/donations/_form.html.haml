@@ -1,8 +1,20 @@
-= form_tag [:reservation, :donations], local: true, data: { turbo:false } do
-  .actions.mt-4
-    = submit_tag 'Make an online donation', class: 'btn btn-primary btn-lg'
+.row
+  .col-md-6
+    .card.mb-4
+      .card-body
+        %h5.card-title Donate online
+        %p.card-text Suggested donation is $25, but you can change this on the donation page.
+        .text-center
+          = image_tag "credit_card.png", class: 'img-fluid'
+        = form_tag [:reservation, :donations], local: true, data: { turbo:false } do
+          .actions.mt-4
+            = submit_tag 'Donate', class: 'btn btn-primary'
 
-
-= form_tag reservation_cash_or_check_path(reservation_id: @reservation.id), local: true, data: { turbo:false } do
-  .actions.mt-4
-    = submit_tag "I'll leave cash or a check with the tree", class: 'btn btn-primary btn-lg'
+  .col-md-6
+    .card.mb-4
+      .card-body
+        %h5.card-title Donate at pick-up
+        %p.card-text To donate at pick-up, place a donation in an envelope and attach it to your tree before 8am on Jan 2023. Make checks payable to BSA Troop 1564 & 1804.
+        = form_tag reservation_cash_or_check_path(reservation_id: @reservation.id), local: true, data: { turbo:false } do
+          .actions.mt-4
+            = submit_tag "Donate at pick-up", class: 'btn btn-primary'

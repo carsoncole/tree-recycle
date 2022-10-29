@@ -1,10 +1,8 @@
 #reservation
 
-  %h1
-    %i.fa-solid.fa-tree
-    Tree pickup reservation
+  = render 'shared/reservation_header'
 
-  .item
+  .item.mt-3
     .field Name
     .data= @reservation.name
 
@@ -21,35 +19,36 @@
       - else
         = @reservation.notes
 
+  .row
+    .col-md-6
+      .item
+        .field Email
+        .data
+          - if @reservation.email.blank?
+            %span.text-muted Not provided
+          - else
+            = @reservation.email
+    .col-md-6
+      .item
+        .field Phone
+        .data
+          - if @reservation.phone.blank?
+            %span.text-muted Not provided
+          - else
+            = @reservation.phone
 
-  .item
-    .field Email
-    .data
-      - if @reservation.email.blank?
-        %span.text-muted Not provided
-      - else
-        = @reservation.email
-  .item
-    .field Phone
-    .data
-      - if @reservation.phone.blank?
-        %span.text-muted Not provided
-      - else
-        = @reservation.phone
+  %hr.mt-0.mb-4
 
-  .item.text-end
-    = link_to edit_reservation_path(@reservation) do
-      %i.fa-solid.fa-pen.fa-lg
-      = "Edit"
+  - unless @reservation.is_cancelled?
+    .item.text-center
+      = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
+        %i.fa-solid.fa-circle-xmark.fa-lg.icon
+        = "Cancel"
 
 
-  - if @reservation.is_completed
-    - if !@reservation.is_donated
-      .row
-        .col-md-8.mt-3
-          = button_to 'Make a Donation', new_reservation_donation_path(@reservation), method: :get, class: 'btn btn-primary btn-lg'
-  - else
+  - unless @reservation.is_reservation_completed? || @reservation.is_cancelled?
     .row
-      .col-md-8.mt-2
-        = button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'
+      .col-md-12.mt-4
+        .text-center= button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'
+
 

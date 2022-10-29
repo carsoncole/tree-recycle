@@ -23,12 +23,13 @@
           = f.submit 'Use original address', class: 'btn btn-primary btn-lg'
 - else
 
-%p We can't seem to find that address at all. If you could try once more...
+  %p We can't seem to find that address at all. If you could try once more...
 
-= form_for @reservation do |f|
-  .row
-    .col-md-6
-      .mb-3
-        = f.text_field :street, class: 'form-control'
-      .actions
-        = f.submit 'Submit address', class: 'btn btn-primary btn-lg'
+  = form_for @reservation do |f|
+    .row
+      .col-md-6
+        .mb-3
+          = f.label :street_address, class: 'form-label'
+          = f.text_field :street, class: 'form-control'
+        .actions
+          = f.submit 'Submit address', class: 'btn btn-primary btn-lg'

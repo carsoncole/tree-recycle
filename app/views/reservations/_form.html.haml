@@ -7,38 +7,45 @@
           %li= message
 
   .row
+    .col-md-12
+      .mb-3
+        = f.label :your_name, class: 'form-label'
+        = f.text_field :name, class: 'form-control', required: true
+      .mb-3
+        = f.label :street_address,  class: 'form-label'
+        = f.text_field :street, class: 'form-control', required: true
+        .form-text.text-muted Please provide a valid house number and street address.
+  .row.mb-4
+    .col-md-10
+      .mb-5
+        = f.label :city, "City", class: 'form-label'
+        = f.text_field :city, class: 'form-control', value: @reservation.city, required: true
+
+  .row
     .col-md-6
       .mb-3
-        = f.label :name, class: 'form-label'
-        = f.text_field :name, class: 'form-control'
+        = f.label :email, class: 'form-label'
+        = f.email_field :email, class: 'form-control', required: true
+
+    .col-md-6
       .mb-3
-        = f.label :street, "Street", class: 'form-label'
-        = f.text_field :street, class: 'form-control'
+        = f.label :phone, class: 'form-label'
+        = f.text_field :phone, class: 'form-control'
+        .form-text.text-muted In case we need to contact you on day of pickup
+
+  .row
+    .col-md-12
       .mb-3
-        = f.label :notes, "Tree location", class: 'form-label'
-        = f.text_field :notes, class: 'form-control'
-        .form-text.text-muted Any special notes about where your tree will be located? Back yard, porch, street corner etc...
-  .row.mb-3
-    .col-md-3
-      = f.label :city, class: 'form-label'
-      = f.text_field :city, class: 'form-control', value: @reservation.city
-  .row.mb-3
-    .col-md-3
-      = f.label :state, class: 'form-label'
-      = f.text_field :state, class: 'form-control', value: @reservation.state
+        = f.label :notes, "Where will your tree be?", class: 'form-label'
+        = f.text_area :notes, class: 'form-control'
+        .form-text.text-muted Leave blank if obvious. Otherwise, provide any helpful info for us to be able to find your tree.
 
 
-  .row.mb-3
-    .col-md-4
-      = f.label :email, class: 'form-label'
-      = f.email_field :email, class: 'form-control'
-  .row.mb-3
-    .col-md-4
-      = f.label :phone, class: 'form-label'
-      = f.text_field :phone, class: 'form-control'
+
+
 
   .actions.mt-3
     - if @reservation.persisted?
       = f.submit 'Save', class: 'btn btn-primary btn-lg'
     - else
-      = f.submit 'Next', class: 'btn btn-primary btn-lg'
+      = f.submit 'Submit Reservation', class: 'btn btn-primary btn-lg'

@@ -1,8 +1,7 @@
 require 'usps'
 
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[ show edit form_1 form_2 address_verification submit_reservation update destroy ]
-  before_action :require_login, only: %i[ index destroy ]
+  before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_reservation update destroy ]
 
   def show
   end
@@ -12,12 +11,6 @@ class ReservationsController < ApplicationController
   end
 
   def edit
-  end
-
-  def form_1
-  end
-
-  def form_2
   end
 
   def address_verification
@@ -37,10 +30,10 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-
+    @reservation.is_reservation_completed = true
     if @reservation.save
       if @reservation.geocoded?
-        redirect_to reservation_form_2_url(@reservation)
+        redirect_to new_reservation_donation_url(@reservation), notice: 'Your reservation is confirmed.'
       else
         redirect_to reservation_address_verification_url(@reservation)
       end
@@ -52,24 +45,19 @@ class ReservationsController < ApplicationController
 
   def update
     if @reservation.update(reservation_params)
-      redirect_to reservation_url(@reservation), notice: @reservation.is_completed? ? "Reservation was successfully updated." : "Please review your reservation"
+      redirect_to reservation_url(@reservation), notice: @reservation.is_reservation_completed? ? "Reservation was successfully updated." : "Please review your reservation"
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def submit_reservation
-    @reservation.update(is_completed: true)
     redirect_to new_reservation_donation_url(@reservation)
   end
 
   def destroy
-    @reservation.destroy
-
-    respond_to do |format|
-      format.html { redirect_to reservations_url, notice: "Reservation was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @reservation.update(is_cancelled: true)
+    redirect_to reservations_url, notice: "Reservation was successfully cancelled."
   end
 
   private
