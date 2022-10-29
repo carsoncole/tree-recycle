@@ -12,11 +12,15 @@ This app requires USPS API access for address verification (https://www.usps.com
 
 ## Configuration
 
+### Installation
 To install:
 
 ```
 bundle install
 ```
+
+### Mailers
+There are standard mailers for confirming a reservation `confirmed_reservation`, and a reminder `TBD`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
 
 ## Use
 
