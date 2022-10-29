@@ -1,35 +1,42 @@
 require "application_system_test_case"
 
 class ReservationsTest < ApplicationSystemTestCase
-  setup do
-    @reservation = Reservation.first
-  end
-
-  test "creating a valid reservation" do
+  test "creating a valid minimal reservation with good address" do
     visit root_url
     click_on "Make a Tree pickup reservation"
 
     assert_selector "h1", text: "Tree pickup reservation"
-    fill_in "reservation_name", with: @reservation.name
-    fill_in "reservation_street", with: @reservation.street
-    fill_in "Where will your tree be?", with: "driveway"
+    fill_in "reservation_name", with: reservations(:one).name
+    fill_in "reservation_street", with: reservations(:one).street
+    fill_in "reservation_email", with: reservations(:one).email
+    click_on "Register your address"
 
-    click_on "Next"
-
-    fill_in "Email", with: @reservation.email
-    fill_in "Phone", with: @reservation.phone
-    click_on "Next"
-
-    assert_text "Please review your reservation"
-    assert_text @reservation.name
-    assert_text @reservation.street
-
-    click_on "Submit Reservation"
-
-    assert_selector "h1", text: "Make a donation"
-    choose 'amount-25'
-    click_on "Next"
+    assert_selector "h1", text: "Please consider a donation"
+    assert_selector "h5", text: "Donate online"
+    assert_selector "h5", text: "Donate at pick-up"
+    click_on "Donate at pick-up"
+    assert_text "You are all set. Your reservation is confirmed."
   end
+
+  test "creating a valid reservation with all info" do
+    visit root_url
+    click_on "Make a Tree pickup reservation"
+
+    assert_selector "h1", text: "Tree pickup reservation"
+    fill_in "reservation_name", with: reservations(:two).name
+    fill_in "reservation_street", with: reservations(:two).street
+    fill_in "reservation_email", with: reservations(:two).email
+    fill_in "reservation_phone", with: reservations(:two).phone
+    fill_in "reservation_notes", with: reservations(:two).notes
+    click_on "Register your address"
+
+    assert_selector "h1", text: "Please consider a donation"
+    assert_selector "h5", text: "Donate online"
+    assert_selector "h5", text: "Donate at pick-up"
+    click_on "Donate at pick-up"
+    assert_text "You are all set. Your reservation is confirmed."
+  end
+
 
   # test "visiting the index" do
   #   visit reservations_url

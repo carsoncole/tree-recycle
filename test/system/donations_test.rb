@@ -5,6 +5,15 @@ class DonationsTest < ApplicationSystemTestCase
   #   @donation = donations(:one)
   # end
 
+  # test "making a donation without a reservation" do
+  #   visit root_url
+
+  #   click_on "Make a donation"
+  #   assert_selector "h1", text: "Please consider a donation"
+  #   assert_text "Our service is free, but your donation provides opportunities"
+  # end
+
+
   # test "visiting the index" do
   #   visit donations_url
   #   assert_selector "h1", text: "Donations"

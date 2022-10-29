@@ -1,11 +1,15 @@
 one:
   name: Carson Cole
   street: 1760 Susan Place NW
+  email: carson@example.com
   city: Bainbridge Island
   state: Washington
 
 two:
   name: Jamie Swartling
   street: 1017 AARON AVE NE
+  email: jamie@example.com
+  phone: 206-555-1212
   city: Bainbridge Island
   state: Washington
+  notes: it'll be in the driveway
