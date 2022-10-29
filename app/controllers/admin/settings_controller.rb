@@ -27,6 +27,6 @@ class Admin::SettingsController < Admin::AdminController
 
     # Only allow a list of trusted parameters through.
     def setting_params
-      params.require(:setting).permit(:site_title, :site_description, :organization_name, :contact_name, :contact_email, :contact_phone, :description, :pickup_date)
+      params.require(:setting).permit(:site_title, :site_description, :organization_name, :contact_name, :contact_email, :contact_phone, :description, :pickup_date_and_time, :is_reservations_open, :is_reservations_editable)
     end
 end

@@ -17,6 +17,12 @@
           %th Site description
           %td= @setting.site_description
         %tr
+          %th Reservations open?
+          %td= @setting.is_reservations_open? ? 'Yes' : 'No'
+        %tr
+          %th Reservations editable?
+          %td= @setting.is_reservations_editable? ? 'Yes' : 'No'
+        %tr
           %th Organization name
           %td= @setting.organization_name
         %tr
@@ -33,7 +39,7 @@
           %td= @setting.description
         %tr
           %th Pickup date
-          %td= @setting.pickup_date
+          %td= @setting.pickup_date_and_time
         %tr
           %th Default city
           %td= @setting.default_city

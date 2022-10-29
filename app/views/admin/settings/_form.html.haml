@@ -12,6 +12,15 @@
   .mb-3
     = f.label :site_description, class: 'form-label'
     = f.text_area :site_description, class: 'form-control'
+  .mb-3.form-check
+    = f.label :is_reservations_open, class: 'form-check-label'
+    = f.check_box :is_reservations_open, class: 'form-check-input'
+  .mb-3.form-check
+    = f.label :is_reservations_editable, class: 'form-check-label'
+    = f.check_box :is_reservations_editable, class: 'form-check-input'
+  .mb-3
+    = f.label :site_description, class: 'form-label'
+    = f.text_area :site_description, class: 'form-control'
   .mb-3
     = f.label :organization_name, class: 'form-label'
     = f.text_field :organization_name, class: 'form-control'
@@ -28,8 +37,8 @@
     = f.label :description, class: 'form-label'
     = f.text_area :description, class: 'form-control'
   .mb-3
-    = f.label :pickup_date, class: 'form-label'
-    = f.date_field :pickup_date, class: 'form-control'
+    = f.label :pickup_date_and_time, class: 'form-label'
+    = f.datetime_select :pickup_date_and_time, class: 'form-control'
   .mb-3
     = f.label :default_city, class: 'form-label'
     = f.text_field :default_city, class: 'form-control'

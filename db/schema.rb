@@ -59,10 +59,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_233326) do
     t.string "contact_email"
     t.string "contact_phone"
     t.text "description"
-    t.date "pickup_date"
+    t.boolean "is_reservations_open", default: true
+    t.boolean "is_reservations_editable", default: false
+    t.datetime "pickup_date_and_time"
     t.string "default_city"
     t.string "default_state"
-    t.string "default_country"
+    t.string "default_country", default: "United States"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
