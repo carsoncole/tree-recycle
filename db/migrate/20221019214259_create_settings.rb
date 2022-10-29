@@ -8,10 +8,12 @@ class CreateSettings < ActiveRecord::Migration[7.0]
       t.string :contact_email
       t.string :contact_phone
       t.text :description
+      t.boolean :is_reservations_open, default: true
+      t.boolean :is_reservations_editable, default: true
       t.datetime :pickup_date_and_time
       t.string :default_city
       t.string :default_state
-      t.string :default_country
+      t.string :default_country, default: 'United States'
 
       t.timestamps
     end
