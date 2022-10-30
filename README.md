@@ -30,6 +30,17 @@ Registered users are administrators that can access all of the resources. Admini
 
 Zones are used to create areas of reservations, for convenient pick ups. Zones are set with a center point and a radius distance in miles. Reservations can also be manually assigned to a Zone.
 
+## Testing
+
+There are Rails minitest tests, including system tests.
+
+For mailers, previews exist for the confirmation and reminder emails. To view in `development`:
+
+```
+http://localhost:3000/rails/mailers/reservations_mailer/confirmed_reservation.html
+```
+
+
 ## Seed Data
 
 For testing and trial use, seed configuration, reservation, and admin user data can be loaded with
