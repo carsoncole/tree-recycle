@@ -10,11 +10,15 @@ class ReservationsMailer < ApplicationMailer
 
   def confirmed_reservation_email
     @reservation = params[:reservation]
+    return if @reservation.is_confirmation_email_sent
     mail(to: @reservation.email, subject: 'Your tree pickup is confirmed')
+    @reservation.update(is_confirmation_email_sent: true)
   end
 
   def pick_up_reminder_email
     @reservation = params[:reservation]
+    return if @reservation.is_reminder_email_sent
     mail(to: @reservation.email, subject: 'Reminder to put out your tree')
+    @reservation.update(is_reminder_email_sent: true)
   end
 end

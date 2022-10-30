@@ -23,6 +23,8 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.datetime :picked_up_at
       t.references :zone
       t.decimal :distance_to_zone
+      t.boolean :is_confirmation_email_sent
+      t.boolean :is_reminder_email_sent
 
       t.timestamps
     end

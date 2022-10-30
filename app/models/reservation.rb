@@ -10,7 +10,7 @@ class Reservation < ApplicationRecord
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
   after_validation :full_geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
-  after_save :send_confirmation_email!, if: -> (obj){ obj.is_reservation_completed and obj.is_reservation_completed_changed? }
+  after_save :send_confirmation_email!, if: -> (obj){ obj.is_reservation_completed and obj.saved_change_to_is_reservation_completed? }
 
   def initialize(args)
     super
@@ -65,7 +65,7 @@ class Reservation < ApplicationRecord
   end
 
   def send_confirmation_email!
-    ReservationsMailer.with(reservation: self).deliver_later
+    ReservationsMailer.with(reservation: self).confirmed_reservation_email.deliver_later
   end
 
   # method to import data from existing tree recycle system csv export
