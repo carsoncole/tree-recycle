@@ -40,6 +40,10 @@ For mailers, previews exist for the confirmation and reminder emails. To view in
 http://localhost:3000/rails/mailers/reservations_mailer/confirmed_reservation.html
 ```
 
+```
+http://localhost:3000/rails/mailers/reservations_mailer/pick_up_reminder_email.html
+```
+
 
 ## Seed Data
 
