@@ -1,6 +1,5 @@
 require 'usps'
 
-#TODO add reservation lookup
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_reservation update destroy ]
 
@@ -14,6 +13,7 @@ class ReservationsController < ApplicationController
   def edit
   end
 
+  #FIXME review purpose of !address.valid?
   def address_verification
     USPS.config.username = Rails.application.credentials.usps.username
     address = USPS::Address.new(address1: @reservation.street, city: @reservation.city, state: @reservation.state)
@@ -31,9 +31,9 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    @reservation.is_reservation_completed = true
     if @reservation.save
       if @reservation.geocoded?
+        @reservation.update(is_reservation_completed: true)
         redirect_to new_reservation_donation_url(@reservation), notice: 'Your reservation is confirmed.'
       else
         redirect_to reservation_address_verification_url(@reservation)
@@ -46,6 +46,7 @@ class ReservationsController < ApplicationController
 
   def update
     if @reservation.update(reservation_params)
+      @reservation.update(is_reservation_completed: true) if !@reservation.is_reservation_completed
       redirect_to reservation_url(@reservation), notice: @reservation.is_reservation_completed? ? "Reservation was successfully updated." : "Please review your reservation"
     else
       render :edit, status: :unprocessable_entity

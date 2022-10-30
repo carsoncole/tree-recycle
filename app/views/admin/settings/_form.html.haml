@@ -18,6 +18,9 @@
   .mb-3.form-check
     = f.label :is_reservations_editable, class: 'form-check-label'
     = f.check_box :is_reservations_editable, class: 'form-check-input'
+  .mb-3.form-check
+    = f.label :is_emailing_enabled, class: 'form-check-label'
+    = f.check_box :is_emailing_enabled, class: 'form-check-input'
   .mb-3
     = f.label :site_description, class: 'form-label'
     = f.text_area :site_description, class: 'form-control'

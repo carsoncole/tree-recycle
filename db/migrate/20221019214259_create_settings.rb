@@ -10,6 +10,7 @@ class CreateSettings < ActiveRecord::Migration[7.0]
       t.text :description
       t.boolean :is_reservations_open, default: true
       t.boolean :is_reservations_editable, default: true
+      t.boolean :is_emailing_enabled, default: false
       t.datetime :pickup_date_and_time
       t.string :default_city
       t.string :default_state

@@ -41,6 +41,9 @@
           %th Pickup date
           %td= @setting.pickup_date_and_time
         %tr
+          %th Emailing enabled?
+          %td= @setting.is_emailing_enabled? ? 'Yes' : 'No'
+        %tr
           %th Default city
           %td= @setting.default_city
         %tr

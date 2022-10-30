@@ -1,0 +1,28 @@
+
+Confirmation
+
+This email is to confirm that we will pick up your tree at <%= @reservation.address %> on <%= Setting.first.pickup_date_and_time.strftime("%B %-d, %Y") %>.
+
+
+On the Day of Collection
+Remove all decorations and tinsel from your tree. Before 8am on the morning of <%= Setting.first.pickup_date_and_time.strftime("%B %-d") %>, place your tree in a visible location at the curb. Scouts will collect your tree between 8am and 4pm and recycle it into mulch. We cannot take wreaths, flocked trees, or artificial trees.
+
+
+Regarding Donations
+Tree recycling is both a community service and a fundraising event for our scout troops. We suggest a donation of $20 to $25 for the collection service.
+
+If you made an online donation, you will receive a receipt from Stripe. You may return to donate online at any time by visiting <%= donation_without_reservation_url %>.
+
+If you elect to donate on the day of collection, we accept checks or cash.
+* make checks payable to BSA Troop 1564
+* place your donation in an envelope
+* place that envelope in a baggie
+* secure the baggie to your tree
+
+
+Making Changes
+You may make a change or cancel your reservation at any time by visiting <%= reservation_url(@reservation) %>.
+
+
+
+Thank You, Troop 1564 & 1804

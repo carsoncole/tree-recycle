@@ -1,7 +1,5 @@
 require 'csv'
 
-#TODO verify addresses
-#TODO store street names separate of street numbers
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
 
@@ -12,6 +10,7 @@ class Reservation < ApplicationRecord
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
   after_validation :full_geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
+  after_save :send_confirmation_email!, if: -> (obj){ obj.is_reservation_completed and obj.is_reservation_completed_changed? }
 
   def initialize(args)
     super
@@ -63,6 +62,10 @@ class Reservation < ApplicationRecord
       end
     end
     save
+  end
+
+  def send_confirmation_email!
+    ReservationsMailer.with(reservation: self).deliver_later
   end
 
   # method to import data from existing tree recycle system csv export

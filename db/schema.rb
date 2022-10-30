@@ -60,7 +60,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_233326) do
     t.string "contact_phone"
     t.text "description"
     t.boolean "is_reservations_open", default: true
-    t.boolean "is_reservations_editable", default: false
+    t.boolean "is_reservations_editable", default: true
+    t.boolean "is_emailing_enabled", default: false
     t.datetime "pickup_date_and_time"
     t.string "default_city"
     t.string "default_state"
