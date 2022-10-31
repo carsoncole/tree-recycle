@@ -13,7 +13,6 @@ h1 {
 
 a {
   text-decoration: none;
-  color: #000;
 }
 
 footer {
@@ -113,3 +112,24 @@ table.reservation {
   margin-bottom: 3em;
 }
 
+#admin-reservation {
+  table {
+    margin-bottom: 2em;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 3em;
+    h1 {
+      margin-bottom: 0;
+    }
+  }
+
+  h2 {
+    border-top: 2px solid #999;
+    padding-top: 0.5em;
+    font-size: 1.5em;
+  }
+  td {
+    text-align: right;
+  }
+}

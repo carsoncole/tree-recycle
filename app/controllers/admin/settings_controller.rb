@@ -13,7 +13,7 @@ class Admin::SettingsController < Admin::AdminController
   # PATCH/PUT /settings/1 or /settings/1.json
   def update
     if @setting.update(setting_params)
-      redirect_to admin_settings_url, notice: "Setting was successfully updated."
+      redirect_to admin_settings_url, notice: "Settings were successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -27,6 +27,6 @@ class Admin::SettingsController < Admin::AdminController
 
     # Only allow a list of trusted parameters through.
     def setting_params
-      params.require(:setting).permit(:site_title, :site_description, :organization_name, :contact_name, :contact_email, :contact_phone, :description, :pickup_date_and_time, :is_reservations_open, :is_reservations_editable, :is_emailing_enabled)
+      params.require(:setting).permit(:site_title, :site_description, :organization_name, :contact_name, :contact_email, :contact_phone, :description, :pickup_date_and_time, :is_reservations_open, :is_reservations_editable, :is_emailing_enabled, :default_city, :default_state, :default_country)
     end
 end

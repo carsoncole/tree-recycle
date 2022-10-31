@@ -1,7 +1,7 @@
 %header
   %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
     .container-fluid
-      - site_title = Setting.first_or_create.site_title || 'Tree Recycle'
+      - site_title = Setting.first_or_create.site_title.present? ?  Setting.first.site_title : 'Tree Recycle'
 
       = link_to root_path, class: 'navbar-brand' do
         %i.fa-solid.fa-tree.fa-lg

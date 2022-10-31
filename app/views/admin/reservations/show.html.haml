@@ -1,92 +1,100 @@
-.row
-  .col-md-8
-    .card
-      .card-body
-        %h1.card-title.mb-3 Reservation
+#admin-reservation
+  .row
+    .col-md-12
+      %header
+        %h1 Tree Pick-Up
+        %p= link_to "Edit", edit_admin_reservation_path(@reservation)
+  .row
+    .col-md-6
+      %h2 Reservation
+      %table.table.reservation
+        %tr
+          %th Name
+          %td= @reservation.name
+        %tr
+          %th Address
+          %td= @reservation.address
+        %tr
+          %th Delivery notes
+          %td= @reservation.notes
+        %tr
+          %th Street
+          %td= @reservation.street
+        %tr
+          %th House number
+          %td= @reservation.house_number
+        %tr
+          %th Road
+          %td= @reservation.street_name
+        %tr
+          %th City
+          %td= @reservation.city
+        %tr
+          %th State
+          %td= @reservation.state
+        %tr
+          %th Country
+          %td= @reservation.country
 
-        %table.table.reservation
-          %tr
-            %th Name
-            %td= @reservation.name
-          %tr
-            %th Address
-            %td= @reservation.address
-          %tr
-            %th Street
-            %td= @reservation.street
-          %tr
-            %th House number
-            %td= @reservation.house_number
-          %tr
-            %th Road
-            %td= @reservation.street_name
-          %tr
-            %th City
-            %td= @reservation.city
-          %tr
-            %th State
-            %td= @reservation.state
-          %tr
-            %th Country
-            %td= @reservation.country
-          %tr
-            %th Postal code
-            %td= @reservation.zip
-          %tr
-            %th Latitude
-            %td= @reservation.latitude
-          %tr
-            %th Longitude
-            %td= @reservation.longitude
-
-
-        %table.table.reservation
-          %tr
-            %th Email
-            %td= @reservation.email
-          %tr
-            %th Phone
-            %td= @reservation.phone
+      %h2 Contact details
+      %table.table.reservation
+        %tr
+          %th Email
+          %td= @reservation.email
+        %tr
+          %th Phone
+          %td= @reservation.phone
 
 
-        %table.table.reservation
-          %tr
-            %th Zone
-            %td= @reservation&.zone&.name
+      %table.table.reservation
+        %tr
+          %th
+          %td= @reservation.picked_up_at
 
-        %table.table.reservation
-          %tr
-            %th
-            %td= @reservation.picked_up_at
+    .col-md-6
+      %h2 Delivery
+      %table.table.reservation
+        %tr
+          %th Street
+          %td= @reservation.street
+        %tr
+          %th Zone
+          %td= @reservation&.zone&.name
+        %tr
+          %th Latitude
+          %td= @reservation.latitude
+        %tr
+          %th Longitude
+          %td= @reservation.longitude
 
-
-        %table.table.reservation
-          %tr
-            %th Created
-            %td= @reservation.created_at
-          %tr
-            %th Updated
-            %td= @reservation.updated_at
-          %tr
-            %th Confirmation email sent?
-            %td= @reservation.is_confirmation_email_sent? ? 'Yes' : 'No'
-          %tr
-            %th Reminder email sent?
-            %td= @reservation.is_reminder_email_sent? ? 'Yes' : 'No'
-          %tr
-            %th Cancelled
-            %td= @reservation.is_cancelled? ? 'Yes' : 'No'
-          %tr
-            %th Confirmed
-            %td= @reservation.is_reservation_completed? ? 'Yes' : 'No'
-          %tr
-            %th Stripe donated
-            %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'
-          %tr
-            %th Cash or check
-            %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
-
-
-        = link_to "Edit", edit_admin_reservation_path(@reservation)
+      %h2 Status
+      %table.table.reservation
+        %tr
+          %th Confirmation email sent?
+          %td= @reservation.is_confirmation_email_sent? ? 'Yes' : 'No'
+        %tr
+          %th Reminder email sent?
+          %td= @reservation.is_reminder_email_sent? ? 'Yes' : 'No'
+        %tr
+          %th Cancelled
+          %td= @reservation.is_cancelled? ? 'Yes' : 'No'
+        %tr
+          %th Confirmed
+          %td= @reservation.is_reservation_completed? ? 'Yes' : 'No'
+        %tr
+          %th Stripe donated
+          %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'
+        %tr
+          %th Cash or check
+          %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
+        %tr
+          %th Picked-up at
+          %td= @reservation.picked_up_at
+        %tr
+          %th Created
+          %td= @reservation.created_at
+        %tr
+          %th Updated
+          %td= @reservation.updated_at
 
 

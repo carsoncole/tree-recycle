@@ -2,9 +2,6 @@
   %footer
     %nav
       %ul.nav.justify-content-center
-        %li.nav-item
-          = link_to questions_path, class: 'nav-link', id: 'question_foter_link' do
-            = "Questions"
-            %i.fa-solid.fa-question
-        %li.nav-item
-          = link_to 'Sign in', sign_in_path, class: 'nav-link'
+        - unless signed_in?
+          %li.nav-item
+            = link_to 'Sign in', sign_in_path, class: 'nav-link'

@@ -6,10 +6,11 @@ User.create(email: 'admin@example.com', password: 'password')
 Setting.first_or_create  do |setting|
   setting.site_title = 'Troop 1564 & 1804 Tree Recycle'
   setting.site_description = "This is the annual Tree Recycle fundraiser for Troop 100. Residents of Anytown, USA can have their Christmas trees recycle by making an online reservation and make an optional donation to support the Troop and it's Scouts."
+  setting.description = 'Bainbridge Island BSA Troops 1564 for boys and 1804 for girls holds an annual Christmas tree recycling fundraiser to support its annual programs, assisting Scouts in attending camps and other outdoor adventures. The Scouts from these Troops are directly involved in picking up the trees and arranging for them to be recycled by composting.'
   setting.contact_email = 'admin@example.com'
   setting.contact_name = 'John Doe'
   setting.pickup_date_and_time = Date.today + 1.month
-  setting.organization_name = 'BSA Troop 100'
+  setting.organization_name = 'BSA Troop 1564 & 1804'
   setting.default_city = "Bainbridge Island"
   setting.default_state = "Washington"
   setting.default_country = "United States"

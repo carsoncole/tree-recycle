@@ -1,11 +1,12 @@
 !!!
 %html(lang="en")
-  = render 'shared/admin_head'
+  = render 'shared/head'
   %body
     = render 'shared/header'
 
     = render 'shared/flash'
 
-    = yield
+    .container-fluid
+      = yield
 
     = render 'shared/footer'

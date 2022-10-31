@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   end
 
   def questions
+    @setting = Setting.first
   end
 
 end
