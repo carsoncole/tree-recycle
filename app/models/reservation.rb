@@ -23,6 +23,10 @@ class Reservation < ApplicationRecord
     [street, city, state, country].compact.join(', ')
   end
 
+  def short_address
+    [street, city, state].compact.join(', ')
+  end
+
   def self.process_all_zones!
     all.each do |r|
       r.process_zone!

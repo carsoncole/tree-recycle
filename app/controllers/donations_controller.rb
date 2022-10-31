@@ -29,6 +29,8 @@ class DonationsController < ApplicationController
           quantity: 1
       }],
       mode: 'payment',
+      client_reference_id: '1212121',
+      customer_email: 'carson@cole.com',
       success_url: success_url,
       cancel_url: root_url
     })

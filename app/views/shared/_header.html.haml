@@ -15,11 +15,11 @@
           %li.nav-item
             = link_to "Make a reservation", new_reservation_path, class: "nav-link", "aria-current": "page"
           %li.nav-item
-            = link_to "Make a donation", donation_without_reservation_path, class: "nav-link", "aria-current": "page"
+            = link_to "Make a donation", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link", "aria-current": "page"
           %li.nav-item
             = link_to questions_path, class: "nav-link", "aria-current": "page", id: 'question_header_link' do
-              %i.fa-solid.fa-circle-question
-              = "Question"
+              = "Questions"
+              %i.fa-solid.fa-question
           %li.nav-item
             = link_to "About", about_path, class: "nav-link"
           - if signed_in?

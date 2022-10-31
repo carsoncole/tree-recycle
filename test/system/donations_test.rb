@@ -1,17 +1,13 @@
 require "application_system_test_case"
 
 class DonationsTest < ApplicationSystemTestCase
-  # setup do
-  #   @donation = donations(:one)
-  # end
+  test "making a donation without a reservation" do
+    visit root_url
 
-  # test "making a donation without a reservation" do
-  #   visit root_url
-
-  #   click_on "Make a donation"
-  #   assert_selector "h1", text: "Please consider a donation"
-  #   assert_text "Our service is free, but your donation provides opportunities"
-  # end
+    click_on "Make a donation"
+    assert_selector "h1", text: "Please consider a donation"
+    assert_text "Our service is free, but your donation provides opportunities"
+  end
 
 
   # test "visiting the index" do

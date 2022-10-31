@@ -1,6 +1,9 @@
+
 #reservation
 
   = render 'shared/reservation_header'
+
+  %hr
 
   .item.mt-3
     .field Name
@@ -8,7 +11,7 @@
 
   .item
     .field Address
-    .data#reservation-address= @reservation.address
+    .data#reservation-address= @reservation.short_address
 
 
   .item
@@ -39,11 +42,7 @@
 
   %hr.mt-0.mb-4
 
-  - unless @reservation.is_cancelled?
-    .item.text-center
-      = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
-        %i.fa-solid.fa-circle-xmark.fa-lg.icon
-        = "Cancel"
+
 
 
   - unless @reservation.is_reservation_completed? || @reservation.is_cancelled?
