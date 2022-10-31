@@ -47,7 +47,12 @@ class ReservationsController < ApplicationController
   def update
     if @reservation.update(reservation_params)
       @reservation.update(is_reservation_completed: true) if !@reservation.is_reservation_completed
-      redirect_to reservation_url(@reservation), notice: @reservation.is_reservation_completed? ? "Reservation was successfully updated." : "Please review your reservation"
+      message = if @reservation.is_reservation_completed?
+        "Reservation was successfully updated and is confirmed for pick up."
+      else
+        "Please review your reservation"
+      end
+      redirect_to new_reservation_donation_url(@reservation), notice: message
     else
       render :edit, status: :unprocessable_entity
     end

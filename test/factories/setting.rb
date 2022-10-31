@@ -5,6 +5,6 @@ FactoryBot.define do
     contact_email { Faker::Internet.email }
     contact_phone { Faker::PhoneNumber.cell_phone }
     description { "MyText" }
-    pickup_date { "2022-10-19" }
+    pickup_date_and_time { "2022-10-19" }
   end
 end

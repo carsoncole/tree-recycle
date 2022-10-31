@@ -6,16 +6,16 @@ class ReservationsTest < ApplicationSystemTestCase
     click_on "Make a Tree pickup reservation"
 
     assert_selector "h1", text: "Tree pickup reservation"
-    fill_in "reservation_name", with: reservations(:one).name
-    fill_in "reservation_street", with: reservations(:one).street
-    fill_in "reservation_email", with: reservations(:one).email
+    fill_in "reservation_name", with: reservations(:good_address).name
+    fill_in "reservation_street", with: reservations(:good_address).street
+    fill_in "reservation_email", with: reservations(:good_address).email
     click_on "Register your address"
 
     assert_selector "h1", text: "Please consider a donation"
     assert_selector "h5", text: "Donate online"
     assert_selector "h5", text: "Donate at pick-up"
     click_on "Donate at pick-up"
-    assert_text "You are all set. Your reservation is confirmed."
+    assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
 
   test "creating a valid reservation with all info" do
@@ -34,9 +34,52 @@ class ReservationsTest < ApplicationSystemTestCase
     assert_selector "h5", text: "Donate online"
     assert_selector "h5", text: "Donate at pick-up"
     click_on "Donate at pick-up"
-    assert_text "You are all set. Your reservation is confirmed."
+    assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
 
+  test "creating an invalid unknown street reservation with all info" do
+    visit root_url
+    click_on "Make a Tree pickup reservation"
+
+    assert_selector "h1", text: "Tree pickup reservation"
+    fill_in "reservation_name", with: reservations(:invalid_unknown_street).name
+    fill_in "reservation_street", with: reservations(:invalid_unknown_street).street
+    fill_in "reservation_email", with: reservations(:invalid_unknown_street).email
+    click_on "Register your address"
+    sleep 2
+
+    assert_text "We are having trouble figuring out your address."
+    click_on "Register your address"
+
+    assert_text "Reservation was successfully updated and is confirmed for pick up."
+    assert_selector "h1", text: "Please consider a donation"
+
+    click_on "Donate at pick-up"
+    assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
+  end
+
+  test "creating a reservation that has a better address" do
+    visit root_url
+    click_on "Make a Tree pickup reservation"
+
+    assert_selector "h1", text: "Tree pickup reservation"
+    fill_in "reservation_name", with: reservations(:better_address_found).name
+    fill_in "reservation_street", with: reservations(:better_address_found).street
+    fill_in "reservation_email", with: reservations(:better_address_found).email
+    click_on "Register your address"
+
+    sleep 2
+
+    assert_text "We are having trouble figuring out your address."
+    click_on "Use this corrected address"
+
+    assert_text "Reservation was successfully updated and is confirmed for pick up."
+    assert_selector "h1", text: "Please consider a donation"
+
+    click_on "Donate at pick-up"
+    assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
+    assert_text "1760 SUSAN PL NW, Bainbridge Island, Washington, United States"
+  end
 
   # test "visiting the index" do
   #   visit reservations_url

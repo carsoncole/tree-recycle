@@ -6,7 +6,7 @@
     %i.fa-solid.fa-pen.icon
 
 .row.justify-content-start
-  .col-9
+  .col-8
     %table.table.settings
 
       %tbody
@@ -16,12 +16,6 @@
         %tr
           %th Site description
           %td= @setting.site_description
-        %tr
-          %th Reservations open?
-          %td= @setting.is_reservations_open? ? 'Yes' : 'No'
-        %tr
-          %th Reservations editable?
-          %td= @setting.is_reservations_editable? ? 'Yes' : 'No'
         %tr
           %th Organization name
           %td= @setting.organization_name
@@ -38,11 +32,35 @@
           %th Description
           %td= @setting.description
         %tr
-          %th Pickup date
+          %th Recycle pick-up date/start time
           %td= @setting.pickup_date_and_time
         %tr
           %th Emailing enabled?
-          %td= @setting.is_emailing_enabled? ? 'Yes' : 'No'
+          %td
+            - if @setting.is_emailing_enabled?
+              %i.fa-solid.fa-toggle-on
+            - else
+              %i.fa-solid.fa-toggle-off
+
+.row
+  .col-md-8
+    %h2 Reservations
+    %table.table.settings
+      %tbody
+        %tr
+          %th Reservations open?
+          %td
+            - if @setting.is_reservations_open?
+              %i.fa-solid.fa-toggle-on
+            - else
+              %i.fa-solid.fa-toggle-off
+        %tr
+          %th Reservations editable?
+          %td
+            - if @setting.is_reservations_editable?
+              %i.fa-solid.fa-toggle-on
+            - else
+              %i.fa-solid.fa-toggle-off
         %tr
           %th Default city
           %td= @setting.default_city

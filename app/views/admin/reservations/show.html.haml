@@ -68,6 +68,12 @@
             %th Updated
             %td= @reservation.updated_at
           %tr
+            %th Confirmation email sent?
+            %td= @reservation.is_confirmation_email_sent? ? 'Yes' : 'No'
+          %tr
+            %th Reminder email sent?
+            %td= @reservation.is_reminder_email_sent? ? 'Yes' : 'No'
+          %tr
             %th Cancelled
             %td= @reservation.is_cancelled? ? 'Yes' : 'No'
           %tr

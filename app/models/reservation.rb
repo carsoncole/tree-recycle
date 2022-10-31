@@ -1,5 +1,5 @@
 require 'csv'
-
+#OPTIMIZE improve zone assignments
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
 

@@ -1,4 +1,4 @@
-one:
+good_address:
   name: Carson Cole
   street: 1760 Susan Place NW
   email: carson@example.com
@@ -13,3 +13,17 @@ two:
   city: Bainbridge Island
   state: Washington
   notes: it'll be in the driveway
+
+invalid_unknown_street:
+  name: Jamie Swartling
+  street: 100 Unknown
+  email: jamie@example.com
+  city: Bainbridge Island
+  state: Washington
+
+better_address_found:
+  name: John Doe
+  street: 1760 su san pl
+  email: john@example.com
+
+

@@ -31,7 +31,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update setting" do
     @setting = create(:setting)
-    patch admin_setting_url @setting, as: @user, params: { setting: { contact_email: 'test@example.com', contact_name: @setting.contact_name, contact_phone: @setting.contact_phone, description: @setting.description, organization_name: @setting.organization_name, pickup_date: @setting.pickup_date } }
+    patch admin_setting_url @setting, as: @user, params: { setting: { contact_email: 'test@example.com', contact_name: @setting.contact_name, contact_phone: @setting.contact_phone, description: @setting.description, organization_name: @setting.organization_name, pickup_date_and_time: @setting.pickup_date_and_time } }
     assert_redirected_to admin_settings_url
   end
 

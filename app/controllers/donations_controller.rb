@@ -35,11 +35,9 @@ class DonationsController < ApplicationController
     redirect_to @session.url, allow_other_host: true
   end
 
-
-
   def cash_or_check
     @reservation.update(is_cash_or_check: true)
-    redirect_to reservation_url(@reservation), notice: "You are all set. Your reservation is confirmed."
+    redirect_to reservation_url(@reservation), notice: "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
 
   def success
