@@ -1,5 +1,5 @@
 class Admin::ReservationsController < Admin::AdminController
-  before_action :set_reservation, except: %i[ new index search process_all_zones]
+  before_action :set_reservation, except: %i[ new index search process_all_zones map]
 
 
   def index
@@ -24,6 +24,9 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def show
+  end
+
+  def map
   end
 
   def search
