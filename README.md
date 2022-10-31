@@ -19,6 +19,14 @@ To install:
 bundle install
 ```
 
+Create users in the console who will have administrator access.
+
+```
+User.create(email: 'admin email', password: 'admin password')
+```
+
+Administrator settings information should be filled out as the information is used throughout the application.
+
 ### Mailers
 There are standard mailers for confirming a reservation `confirmed_reservation`, and a reminder `TBD`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
 

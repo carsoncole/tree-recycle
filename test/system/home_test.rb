@@ -10,9 +10,6 @@ class HomeTest < ApplicationSystemTestCase
 
     click_on "question_header_link"
     assert_selector "h1", text: "Have a question?"
-
-    click_on "question_foter_link"
-    assert_selector "h1", text: "Have a question?"
   end
 
 end

@@ -32,7 +32,7 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     patch reservation_url(@reservation), params: { reservation: { city: @reservation.city, country: @reservation.country, email: @reservation.email, latitude: @reservation.latitude, longitude: @reservation.longitude, name: @reservation.name, phone: @reservation.phone, state: @reservation.state, street: @reservation.street, zip: @reservation.zip } }
 
     reservation = Reservation.order(updated_at: :asc).last
-    assert_redirected_to reservation_path(reservation)
+    assert_redirected_to new_reservation_donation_path(reservation)
   end
 
   test "should not destroy reservation" do
