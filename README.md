@@ -39,7 +39,7 @@ Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.e
 EDITOR=vim rails credentials:edit
 ```
 
-See the sample credentials file `credentials_sample.yml` for all of the necessary secrets.
+See the sample credentials file `config/credentials_sample.yml` for all of the necessary secrets.
 
 
 ## Use
