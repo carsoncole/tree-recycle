@@ -38,6 +38,10 @@ Registered users are administrators that can access all of the resources. Admini
 
 Zones are used to create areas of reservations, for convenient pick ups. Zones are set with a center point and a radius distance in miles. Reservations can also be manually assigned to a Zone.
 
+## Mapping
+
+Reservations are grouped by admin-defined zones with a center point and a set radius. In all cases, each reservation will be grouped into the Zone that is nearest to it. This approach is not without problems as its possible that reservations that border multiple zones, may not be grouped the most efficiently.
+
 ## Testing
 
 There are Rails minitest tests, including system tests.

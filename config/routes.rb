@@ -44,7 +44,9 @@ Rails.application.routes.draw do
 
     post 'process-all-zones' => 'reservations#process_all_zones', as: 'process_all_zones'
     get 'map' => 'reservations#map', as: 'map'
-    resources :zones
+    resources :zones do
+      get 'map' => 'zones#map', as: 'map'
+    end
     get 'search' => 'reservations#search', as: 'search'
   end
 

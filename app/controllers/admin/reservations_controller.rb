@@ -27,6 +27,7 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def map
+    @reservations = Reservation.geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
   end
 
   def search

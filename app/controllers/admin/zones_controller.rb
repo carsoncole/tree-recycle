@@ -1,5 +1,5 @@
 class Admin::ZonesController < Admin::AdminController
-  before_action :set_zone, only: %i[ show edit update destroy ]
+  before_action :set_zone, only: %i[ show edit update destroy map ]
 
   def index
     @zones = Zone.all
@@ -39,9 +39,17 @@ class Admin::ZonesController < Admin::AdminController
     redirect_to admin_zones_url, notice: "Zone was successfully destroyed."
   end
 
+  def map
+    @zone_reservations = Reservation.geocoded.where(zone: @zone).map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+    redirect_to admin_zones_path, notice: 'No reservations in that Zone.' unless @zone_reservations.any?
+    average_lat = @zone_reservations.map {|l| l[0]}.sum / @zone_reservations.length
+    average_lon = @zone_reservations.map {|l| l[1]}.sum / @zone_reservations.length
+    @zone_center_reservation = [average_lat, average_lon]
+  end
+
   private
     def set_zone
-      @zone = Zone.find(params[:id])
+      @zone = Zone.find(params[:id] || params[:zone_id])
     end
 
     def zone_params

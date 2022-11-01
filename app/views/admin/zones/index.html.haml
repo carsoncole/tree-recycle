@@ -14,6 +14,7 @@
   %thead
     %tr
       %th Name
+      %th Count
       %th Street
       %th City
       %th State
@@ -25,7 +26,11 @@
   %tbody
     - @zones.each do |zone|
       %tr
-        %td= zone.name
+        %td
+          = zone.name
+          = link_to admin_zone_map_path(zone) do
+            %i.fa-brands.fa-google
+        %td= zone.reservations.count
         %td= zone.address
         %td= zone.city
         %td= zone.state
