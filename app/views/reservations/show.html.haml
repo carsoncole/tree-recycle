@@ -45,7 +45,7 @@
 
 
 
-  - unless @reservation.is_reservation_completed? || @reservation.is_cancelled?
+  - unless @reservation.is_confirmed? || @reservation.is_cancelled?
     .row
       .col-md-12.mt-4
         .text-center= button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'

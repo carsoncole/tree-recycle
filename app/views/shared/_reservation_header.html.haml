@@ -14,7 +14,7 @@
 
       =link_to "Make a new reservation", new_reservation_path
 
-    - elsif @reservation.is_reservation_completed?
+    - elsif @reservation.is_confirmed?
       .badge.rounded-pill.bg-warning.text-center.mb-4
         Confirmed
 

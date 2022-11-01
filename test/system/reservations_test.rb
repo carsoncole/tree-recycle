@@ -78,7 +78,49 @@ class ReservationsTest < ApplicationSystemTestCase
 
     click_on "Donate at pick-up"
     assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
-    assert_text "1760 SUSAN PL NW, Bainbridge Island, Washington, United States"
+    assert_text "1760 SUSAN PL NW, Bainbridge Island, Washington"
+  end
+
+  test "reservations are closed" do
+    visit root_url
+    click_on "Make a reservation"
+    assert_text "Provide the address where the tree will be located and any helpful notes"
+
+    Setting.first.update(is_reservations_open: false)
+
+    click_on "Make a reservation"
+    within("#flash") do
+      assert_text "Reservations are CLOSED."
+      click_on "Contact us"
+    end
+    assert_selector 'h1', text: 'Have a question?'
+  end
+
+  test "reservations are no longer editable" do
+    visit reservation_url(reservations(:good_address))
+    click_on 'Edit'
+    assert_selector 'h1', text: 'Editing reservation'
+
+    Setting.first.update(is_reservations_open: false)
+
+    visit reservation_url(reservations(:good_address))
+    click_on 'Edit'
+    within("#flash") do
+      assert_text "Reservations are no longer changeable."
+      click_on "Contact us"
+    end
+    assert_selector 'h1', text: 'Have a question?'
+  end
+
+  test "reservations are no longer cancelable" do
+    visit reservation_url(reservations(:good_address))
+    Setting.first.update(is_reservations_open: false)
+    click_on "Cancel"
+    within("#flash") do
+      assert_text "Reservations are no longer changeable."
+      click_on "Contact us"
+    end
+    assert_selector 'h1', text: 'Have a question?'
   end
 
   # test "visiting the index" do

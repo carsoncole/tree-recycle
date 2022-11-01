@@ -7,10 +7,12 @@ class ReservationsController < ApplicationController
   end
 
   def new
+    redirect_to root_url, alert: "Reservations are CLOSED. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
     @reservation = Reservation.new
   end
 
   def edit
+    redirect_to reservation_url(@reservation), alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
   end
 
   #FIXME review purpose of !address.valid?
@@ -33,7 +35,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
       if @reservation.geocoded?
-        @reservation.update(is_reservation_completed: true)
+        @reservation.update(is_confirmed: true)
         redirect_to new_reservation_donation_url(@reservation), notice: 'Your reservation is confirmed.'
       else
         redirect_to reservation_address_verification_url(@reservation)
@@ -45,9 +47,10 @@ class ReservationsController < ApplicationController
   end
 
   def update
+    redirect_to root_url, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
     if @reservation.update(reservation_params)
-      @reservation.update(is_reservation_completed: true) if !@reservation.is_reservation_completed
-      message = if @reservation.is_reservation_completed?
+      @reservation.update(is_confirmed: true) if !@reservation.is_confirmed
+      message = if @reservation.is_confirmed?
         "Reservation was successfully updated and is confirmed for pick up."
       else
         "Please review your reservation"
@@ -63,8 +66,12 @@ class ReservationsController < ApplicationController
   end
 
   def destroy
-    @reservation.update(is_cancelled: true)
-    redirect_to reservation_url(@reservation), notice: "Reservation was successfully cancelled."
+    if Reservation.open?
+      @reservation.update(is_cancelled: true)
+      redirect_to reservation_url(@reservation), notice: "Reservation was successfully cancelled."
+    else
+      redirect_to reservation_url(@reservation), alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
+    end
   end
 
   private

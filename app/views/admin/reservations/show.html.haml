@@ -80,7 +80,7 @@
           %td= @reservation.is_cancelled? ? 'Yes' : 'No'
         %tr
           %th Confirmed
-          %td= @reservation.is_reservation_completed? ? 'Yes' : 'No'
+          %td= @reservation.is_confirmed? ? 'Yes' : 'No'
         %tr
           %th Stripe donated
           %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'

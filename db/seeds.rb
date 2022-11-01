@@ -9,6 +9,7 @@ Setting.first_or_create  do |setting|
   setting.description = 'Bainbridge Island BSA Troops 1564 for boys and 1804 for girls holds an annual Christmas tree recycling fundraiser to support its annual programs, assisting Scouts in attending camps and other outdoor adventures. The Scouts from these Troops are directly involved in picking up the trees and arranging for them to be recycled by composting.'
   setting.contact_email = 'admin@example.com'
   setting.contact_name = 'John Doe'
+  setting.contact_phone = '206-555-1212'
   setting.pickup_date_and_time = Date.today + 1.month
   setting.organization_name = 'BSA Troop 1564 & 1804'
   setting.default_city = "Bainbridge Island"
@@ -101,10 +102,10 @@ streets = [
 '6895 NE Hanks Ln'
 ]
 
-# streets.each do |s|
-#   reservation = build(:reservation)
-#   Reservation.create(name: reservation.name, street: s, is_reservation_completed: true)
-# end
+streets.each do |s|
+  reservation = build(:reservation)
+  Reservation.create(name: reservation.name, street: s, is_confirmed: true, email: reservation.email)
+end
 
 zones = [
 [name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],

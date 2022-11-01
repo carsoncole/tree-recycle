@@ -4,6 +4,7 @@ good_address:
   email: carson@example.com
   city: Bainbridge Island
   state: Washington
+  is_confirmed: true
 
 two:
   name: Jamie Swartling
