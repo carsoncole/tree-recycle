@@ -9,8 +9,6 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get admin_reservations_url(as: @user)
     assert_response :success
-
-    assert_select "h1", 'Reservations'
   end
 
   test "should not get index without auth" do
