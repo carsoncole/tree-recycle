@@ -1,5 +1,8 @@
-%h1 Zones
-
+%h1
+  Zones
+  .additional_info
+    = surround("(", ")") do
+      = @zones.count
 
 .row
   .col-md-6.mb-3
