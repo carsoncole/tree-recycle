@@ -27,8 +27,20 @@ User.create(email: 'admin email', password: 'admin password')
 
 Administrator settings information should be filled out as the information is used throughout the application.
 
+
 ### Mailers
 There are standard mailers for confirming a reservation `confirmed_reservation`, and a reminder `TBD`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
+
+### Custom Credentials
+
+Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to hold all necessary access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
+
+```
+EDITOR=vim rails credentials:edit
+```
+
+See the sample credentials file `credentials_sample.yml` for all of the necessary secrets.
+
 
 ## Use
 
