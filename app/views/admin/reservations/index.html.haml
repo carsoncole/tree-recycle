@@ -3,6 +3,9 @@
   - if params[:zone_id]
     \-
     = Zone.find(params[:zone_id]).name
+  .additional_info
+    = surround("(", ")") do
+      = @reservations.count
 
 
 = render 'search'

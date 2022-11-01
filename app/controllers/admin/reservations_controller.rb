@@ -4,11 +4,11 @@ class Admin::ReservationsController < Admin::AdminController
 
   def index
     if params[:zone_id]
-      @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.confirmed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
     elsif params[:uncompleted]
-      @pagy, @reservations = pagy(Reservation.uncompleted.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.unconfirmed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.completed.order(:street_name, :house_number).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.confirmed.order(:street_name, :house_number).order(created_at: :asc))
     end
   end
 

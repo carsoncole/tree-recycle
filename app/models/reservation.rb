@@ -4,8 +4,8 @@ class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
 
 
-  scope :completed,  -> { where(is_confirmed: true) }
-  scope :uncompleted, -> { where(is_confirmed: [nil, false]) }
+  scope :confirmed,  -> { where(is_confirmed: true) }
+  scope :unconfirmed, -> { where(is_confirmed: [nil, false]) }
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
