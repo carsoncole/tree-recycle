@@ -29,7 +29,9 @@ Administrator settings information should be filled out as the information is us
 
 
 ### Mailers
-There are standard mailers for confirming a reservation `confirmed_reservation`, and a reminder `TBD`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
+There are standard mailers for confirming a reservation `confirmed_reservation_email`, and a reminder `pick_up_reminder_email`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
+
+There is an admin setting `Emailing enabled?` that controls whether emails are sent out. To avoid sending mailers twice to a recipient, reservations will be toggled true for either `is_confirmation_email_sent: true` or `:is_reminder_email_sent: true`.
 
 ### Custom Credentials
 
