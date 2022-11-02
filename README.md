@@ -28,6 +28,20 @@ User.create(email: 'admin email', password: 'admin password')
 Administrator settings information should be filled out as the information is used throughout the application.
 
 
+#### Heroku
+This has been tested for use on Heroku.
+
+#### Configuration
+
+Create a new app. In Config Vars, add the Rails master key for decrypting the credentials to `RAILS_MASTER KEY`. For Heroku, there is `Procfile` which has instructions to migrate the database on every deploy.
+
+To sign-in, you will need to create an admin user through the console.
+
+```
+% heroku console
+> User.create(email: 'john.doe@example.com', password: [password])
+```
+
 ### Mailers
 There are standard mailers for confirming a reservation `confirmed_reservation_email`, and a reminder `pick_up_reminder_email`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
 
