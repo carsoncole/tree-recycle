@@ -6,11 +6,15 @@ class Reservation < ApplicationRecord
 
   scope :confirmed,  -> { where(is_confirmed: true) }
   scope :unconfirmed, -> { where(is_confirmed: [nil, false]) }
+  scope :picked_up, -> { where(is_picked_up: true) }
+  scope :not_picked_up, -> { where(is_picked_up: [nil, false]) }
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
   after_validation :full_geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
   after_save :send_confirmation_email!, if: -> (obj){ obj.is_confirmed and obj.saved_change_to_is_confirmed? }
+  after_validation :set_picked_up_at!, if: ->(obj){ obj.is_picked_up? and obj.is_picked_up_changed? }
+  after_validation :clear_picked_up_at!, if: ->(obj){ !obj.is_picked_up? and obj.is_picked_up_changed? }
 
   def initialize(args)
     super
@@ -42,7 +46,7 @@ class Reservation < ApplicationRecord
   end
 
   def picked_up?
-    is_picked_up ? 'Yes' : 'No'
+    is_picked_up? ? true : false
   end
 
   def full_geocode
@@ -85,5 +89,21 @@ class Reservation < ApplicationRecord
     CSV.foreach('tmp/tree_data.csv', headers: true) do |row|
       Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], is_confirmed: true, phone: row['phone'], notes: row['comment'] )
     end
+  end
+
+  def coordinates
+    if geocoded?
+      [latitude, longitude]
+    end
+  end
+
+  private
+
+  def set_picked_up_at!
+    self.picked_up_at = Time.now
+  end
+
+  def clear_picked_up_at!
+    self.picked_up_at = nil
   end
 end

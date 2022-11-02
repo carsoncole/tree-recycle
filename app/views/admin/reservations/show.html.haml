@@ -75,11 +75,11 @@
         %tr
           %th Picked-up?
           %td
-            = link_to admin_reservation_path(@reservation, reservation: { is_picked_up: @reservation.is_picked_up? ? 'false' : 'true'} ), data: { turbo_method: "patch" } do
+            = link_to admin_reservation_path(@reservation, reservation: { is_picked_up: @reservation.is_picked_up? ? 'false' : 'true'} ), data: { turbo_method: "patch" }, id: 'reservation-picked-up-toggle' do
               - if @reservation.is_picked_up?
-                %i.fa-solid.fa-square-check
+                %i.fa-solid.fa-square-check#picked_up_true
               - else
-                %i.fa-regular.fa-square
+                %i.fa-regular.fa-square#picked_up_false
         %tr
           %th Picked-up at
           %td= @reservation.picked_up_at

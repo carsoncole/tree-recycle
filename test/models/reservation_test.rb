@@ -13,4 +13,24 @@ class ReservationTest < ActiveSupport::TestCase
     assert reservation.errors.of_kind?(:street, :blank)
   end
 
+  test "geocoding of new reservations" do
+    reservation = build(:reservation, street: '1760 Susan Pl NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States')
+    assert_not reservation.geocoded?
+
+    reservation.save
+    assert reservation.geocoded?
+  end
+
+  test "setting and clearing of picked_up_at" do
+    reservation = create(:reservation)
+
+    assert_not reservation.is_picked_up
+    assert_not reservation.picked_up_at
+
+    reservation.update(is_picked_up: true)
+    assert reservation.picked_up_at
+
+    reservation.update(is_picked_up: false)
+    assert_not reservation.picked_up_at
+  end
 end

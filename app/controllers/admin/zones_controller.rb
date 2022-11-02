@@ -43,7 +43,7 @@ class Admin::ZonesController < Admin::AdminController
 # http://maps.apple.com/?daddr=1600+Amphitheatre+Pkwy,+Mountain+View+CA
 
   def map
-    @zone_reservations = Reservation.geocoded.where(zone: @zone).map{|r| [ "<a href=" + admin_reservation_url(r) + ">" + r.name + "</a>" + "<br />" + r.street +  "<br />" + "<a href='http://maps.apple.com/?daddr=" + r.address + "'>Map</a><br />" + (r.picked_up? ? 'Ready' : 'Done'), r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+    @zone_reservations = Reservation.geocoded.where(zone: @zone).map{|r| [ "<a href=" + admin_reservation_url(r) + ">" + r.name + "</a>" + "<br />" + r.street +  "<br />" + "<a href='http://maps.apple.com/?daddr=" + r.address + "'>Directions</a><br />" + (r.picked_up? ? 'Picked up' : 'Ready'), r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
     redirect_to admin_zones_path, notice: 'No reservations in that Zone.' unless @zone_reservations.any?
     average_lat = @zone_reservations.map {|l| l[1]}.sum / @zone_reservations.length
     average_lon = @zone_reservations.map {|l| l[2]}.sum / @zone_reservations.length

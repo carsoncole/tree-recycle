@@ -13,4 +13,27 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     assert_text @reservation.name
   end
 
+  test "toggling picked_up? and setting of picked_up_at" do
+    system_test_signin
+
+    within '#main-navbar' do
+      click_on 'Reservations'
+    end
+
+    click_on @reservation.name
+
+    assert_not @reservation.picked_up_at
+    assert_selector '#picked_up_false'
+
+    # click the box => set the picked up time
+    click_on 'reservation-picked-up-toggle'
+
+    assert_selector '#picked_up_true'
+    assert @reservation.reload.picked_up_at
+
+    # click the box again => clear the picked up time
+    click_on 'reservation-picked-up-toggle'
+    assert_selector '#picked_up_false'
+    assert_not @reservation.reload.picked_up_at
+  end
 end
