@@ -56,6 +56,8 @@ Zones are used to create areas of reservations, for convenient pick ups. Zones a
 
 Reservations are grouped by admin-defined zones with a center point and a set radius. In all cases, each reservation will be grouped into the Zone that is nearest to it. This approach is not without problems as its possible that reservations that border multiple zones, may not be grouped the most efficiently.
 
+Maps of all pickups within a zone are available in `Zones` in the adminstration section of the application. Clicking on each pickup on the map will show if its been picked up and has a link to directions to the pick-up.
+
 ![Screenshot](app/assets/images/map.png)
 
 ## Testing
