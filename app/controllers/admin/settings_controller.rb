@@ -13,7 +13,7 @@ class Admin::SettingsController < Admin::AdminController
   # PATCH/PUT /settings/1 or /settings/1.json
   def update
     if @setting.update(setting_params)
-      redirect_to admin_settings_url, notice: "Settings were successfully updated."
+      redirect_to admin_settings_url
     else
       render :edit, status: :unprocessable_entity
     end
