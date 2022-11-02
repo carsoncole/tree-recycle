@@ -3,20 +3,19 @@
 - if @setting
   %p= @setting.description
 
+  %p.mb-4
+    = @setting.description
 
-  %p.mb-5
-    Remove all decorations and tinsel from your tree. Before
-    = @setting&.pickup_date_and_time&.strftime('%k:%M %p')
-    on the morning of
-    = @setting&.pickup_date_and_time&.strftime("%B %-d")
-    place your tree in a visible location at the curb. Scouts will collect your tree between 8am and 4pm and recycle it into mulch. We cannot take wreaths, flocked trees, or artificial trees.
 
+  %H5 On the day of pick-up
+  %p.mb-4
+    = @setting.on_day_of_pickup_instructions
 
   %h5 Date of pick-up
-  .mb-4= @setting&.pickup_date_and_time&.strftime('%B %d, %Y')
+  .mb-4= @setting&.pickup_date_and_time&.strftime('%B %e, %Y')
 
   %h5 Trees should be ready for pickup starting at
-  .mb-4= @setting&.pickup_date_and_time&.strftime('%k:%M %p')
+  .mb-4= @setting&.pickup_date_and_time&.strftime('%l:%M %p')
 
   %h5= link_to 'Have a question?', questions_path
 
