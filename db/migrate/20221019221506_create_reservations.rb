@@ -20,6 +20,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.boolean :is_cash_or_check
       t.decimal :latitude
       t.decimal :longitude
+      t.boolean :is_picked_up
       t.datetime :picked_up_at
       t.references :zone
       t.decimal :distance_to_zone

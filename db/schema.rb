@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_233326) do
     t.boolean "is_cash_or_check"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.boolean "is_picked_up"
     t.datetime "picked_up_at"
     t.bigint "zone_id"
     t.decimal "distance_to_zone"

@@ -49,6 +49,9 @@
       %table.table.reservation
         %tr
           %th
+          %td= @reservation.is_picked_up
+        %tr
+          %th
           %td= @reservation.picked_up_at
 
     .col-md-6
@@ -70,6 +73,17 @@
       %h2 Status
       %table.table.reservation
         %tr
+          %th Picked-up?
+          %td
+            = link_to admin_reservation_path(@reservation, reservation: { is_picked_up: @reservation.is_picked_up? ? 'false' : 'true'} ), data: { turbo_method: "patch" } do
+              - if @reservation.is_picked_up?
+                %i.fa-solid.fa-square-check
+              - else
+                %i.fa-regular.fa-square
+        %tr
+          %th Picked-up at
+          %td= @reservation.picked_up_at
+        %tr
           %th Confirmation email sent?
           %td= @reservation.is_confirmation_email_sent? ? 'Yes' : 'No'
         %tr
@@ -87,9 +101,7 @@
         %tr
           %th Cash or check
           %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
-        %tr
-          %th Picked-up at
-          %td= @reservation.picked_up_at
+
         %tr
           %th Created
           %td= @reservation.created_at

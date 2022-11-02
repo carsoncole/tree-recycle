@@ -41,6 +41,10 @@ class Reservation < ApplicationRecord
     stripe_charge_amount.present? || is_cash_or_check?
   end
 
+  def picked_up?
+    is_picked_up ? 'Yes' : 'No'
+  end
+
   def full_geocode
     begin
       self.latitude = nil
