@@ -1,8 +1,7 @@
 # Tree Recycle
 
-Web application for advertising and managing a tree recycling fundraiser. People enter reservations to have trees picked up as well as make an online donation. On the recycling day, the app will output distributed driving reports for groups of drivers to pick up trees from set areas. The app also generates text and email messages to reservees confirming that their tree has been picked up.
+The Tree Recycle application is a customizable public website that does the jobs of taking tree recycle pick-up reservations and donations, sending out confirmations and a reminder on the pick-up date. On the administrative side, the application organizes reservations into pickup zones, and integrating with Google and Apple Maps to show pickup locations.
 
-Tree Recycle is intended to be simple, well-tested, and easy to maintain
 
 ## Requirements
 
