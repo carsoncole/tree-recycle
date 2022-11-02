@@ -33,7 +33,9 @@ This has been tested for use on Heroku.
 
 #### Configuration
 
-Create a new app. In Config Vars, add the Rails master key for decrypting the credentials to `RAILS_MASTER KEY`. For Heroku, there is `Procfile` which has instructions to migrate the database on every deploy.
+Create a new app in Heroku. On the Heroku Config Vars page, add the Rails master key for decrypting the credentials to `RAILS_MASTER KEY`.
+
+The included `Procfile` has instructions to migrate the database on every deploy.
 
 To sign-in, you will need to create an admin user through the console.
 
