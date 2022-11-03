@@ -22,6 +22,7 @@ class DonationsController < ApplicationController
     redirect_to @session.url, allow_other_host: true
   end
 
+  #FIXME donation_without_reservation needs reviewing/fixing
   def donation_without_reservation
     @session = Stripe::Checkout::Session.create({
       line_items: [{
