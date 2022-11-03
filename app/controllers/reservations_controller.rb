@@ -1,5 +1,6 @@
 require 'usps'
 
+#TODO need archiving process
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_reservation update destroy ]
 

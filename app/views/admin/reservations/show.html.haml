@@ -57,7 +57,9 @@
           %td= @reservation.street
         %tr
           %th Zone
-          %td= link_to @reservation&.zone&.name, admin_zone_map_path(@reservation.zone)
+          %td
+            - if @reservation.zone
+              = link_to @reservation&.zone&.name, admin_zone_map_path(@reservation.zone)
         / %tr
         /   %th Latitude
         /   %td= @reservation.latitude
