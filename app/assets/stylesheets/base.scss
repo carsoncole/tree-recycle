@@ -60,6 +60,19 @@ i {
   .intro {
     font-size: 1.5em;
   }
+  h3 {
+    font-size: 1.2em;
+  }
+  .important-date {
+    margin-bottom: 2em;
+    h3 {
+      font-size: 1.1em;
+      color: #aaa;
+    }
+    .badge {
+      font-size: 1.2em;
+    }
+  }
 }
 
 p.message {

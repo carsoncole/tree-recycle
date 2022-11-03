@@ -3,11 +3,9 @@ class HomeController < ApplicationController
   end
 
   def about
-    @setting = Setting.first
   end
 
   def questions
-    @setting = Setting.first
   end
 
 end

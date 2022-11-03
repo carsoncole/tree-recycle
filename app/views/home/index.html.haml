@@ -2,11 +2,17 @@
 
   .text-center= image_tag "tree.png"
 
-  %p.intro Recycle your Christmas tree
-
-  %p Pick-up day is January 11, 2023. The deadline for reservations is 6pm on January 10.
+  %p.mt-1.mb-5.text-center= link_to "Tree pickup reservation", new_reservation_path, class: 'btn btn-primary btn-lg'
 
 
-  %p All donations go towards supporting BSA Boys Troop 1564 and Girls Troop 1804 of the American Legion Colin Hyde Post #172.
+  .row
+    .col-md-6.text-center.important-date
+      %h3 Pick-up Day
+      .badge.text-bg-dark= setting&.pickup_date_and_time&.strftime('%B %e, %Y')
 
-  %p.mt-5.text-center= link_to "Make a Tree pickup reservation", new_reservation_path, class: 'btn btn-primary btn-lg'
+    .col-md-6.text-center.important-date
+      %h3 Sign-up Deadline
+      .badge.text-bg-dark= setting&.sign_up_deadline_at&.strftime('%l:%M %p on %B %e, %Y')
+
+
+
