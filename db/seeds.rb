@@ -11,19 +11,12 @@ Setting.first_or_create  do |setting|
   setting.contact_name = 'John Doe'
   setting.contact_phone = '206-555-1212'
   setting.pickup_date_and_time = Date.today + 1.month
+  setting.signup_deadline_at = Date.today + 1.month - 1.day
   setting.organization_name = 'BSA Troop 1564 & 1804'
   setting.default_city = "Bainbridge Island"
   setting.default_state = "Washington"
   setting.default_country = "United States"
 end
-
-# 50.times do
-#   FactoryBot.create([
-#     'reservation',
-#     'reservation_with_phone',
-#     'reservation_with_phone'
-#   ][rand(3)].to_sym)
-# end
 
 streets = [
 '1760 Susan Place',
