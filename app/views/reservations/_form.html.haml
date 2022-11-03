@@ -19,7 +19,7 @@
     .col-md-10
       .mb-4
         = f.label :city, "City", class: 'form-label'
-        = f.text_field :city, class: 'form-control', value: @reservation.city, required: true
+        = f.text_field :city, class: 'form-control', value: @reservation.city, disabled: true
 
   .row
     .col-md-6
