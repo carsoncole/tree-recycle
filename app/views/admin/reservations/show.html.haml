@@ -5,8 +5,9 @@
         %h1 Tree Pick-Up
         %p.mb-1= link_to "Edit", edit_admin_reservation_path(@reservation)
 
-        .text-center
+        .text-center.mb-2
           = reservation_status(@reservation)
+
   .row
     .col-md-6
       %h2 Reservation
@@ -116,11 +117,10 @@
           %th Cash or check
           %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
 
-        %tr
-          %th Created
-          %td= @reservation.created_at.strftime('%m/%d/%Y %I:%M%p')
-        %tr
-          %th Updated
-          %td= @reservation.updated_at.strftime('%m/%d/%Y %I:%M%p')
-
+      %h2 Log
+      %table.table.reservation
+        - @logs.each do |log|
+          %tr
+            %td.text-start= log.created_at.strftime('%c')
+            %td= log.message
 

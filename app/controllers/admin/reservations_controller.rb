@@ -24,6 +24,7 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def show
+    @logs = @reservation.logs
   end
 
   def map

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_03_035802) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_162030) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_035802) do
     t.string "distance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.uuid "reservation_id", null: false
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_logs_on_reservation_id"
   end
 
   create_table "reservations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -101,4 +109,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_035802) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "logs", "reservations"
 end

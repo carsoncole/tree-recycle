@@ -2,6 +2,7 @@ require 'csv'
 #OPTIMIZE improve zone assignments
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
+  has_many :logs, dependent: :destroy
 
 
   scope :confirmed,  -> { where(is_confirmed: true) }
@@ -11,13 +12,17 @@ class Reservation < ApplicationRecord
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
-  after_validation :full_geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
-  after_save :send_confirmation_email!, if: -> (obj){ obj.is_confirmed and obj.saved_change_to_is_confirmed? }
-  after_validation :set_picked_up_at!, if: ->(obj){ obj.is_picked_up? and obj.is_picked_up_changed? }
-  after_validation :clear_picked_up_at!, if: ->(obj){ !obj.is_picked_up? and obj.is_picked_up_changed? }
-  after_validation :set_is_missing_at!, if: ->(obj){ obj.is_missing? and obj.is_missing_changed? }
-  after_validation :clear_is_missing_at!, if: ->(obj){ !obj.is_missing? and obj.is_missing_changed? }
-  after_validation :clear_is_missing!, if: ->(obj){ obj.is_missing? and obj.is_picked_up }
+  after_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? }
+  after_save :send_confirmation_email!, if: -> (obj){ obj.is_confirmed && obj.saved_change_to_is_confirmed? }
+  after_validation :set_picked_up_at!, if: ->(obj){ obj.is_picked_up? && obj.is_picked_up_changed? }
+  after_validation :clear_picked_up_at!, if: ->(obj){ !obj.is_picked_up? && obj.is_picked_up_changed? }
+  after_validation :set_is_missing_at!, if: ->(obj){ obj.is_missing? && obj.is_missing_changed? }
+  after_validation :clear_is_missing_at!, if: ->(obj){ !obj.is_missing? && obj.is_missing_changed? }
+  after_validation :clear_is_missing!, if: ->(obj){ obj.is_missing? && obj.is_picked_up }
+  after_create :log_creation!
+  after_update :log_cancellation!, if: ->(obj){ obj.is_cancelled? && obj.saved_change_to_is_cancelled? }
+  after_update :log_picked_up!, if: ->(obj){ obj.is_picked_up? && obj.saved_change_to_is_picked_up? }
+  after_update :log_missing!, if: ->(obj){ obj.is_missing? && obj.saved_change_to_is_missing? }
 
   def initialize(args)
     super
@@ -120,6 +125,22 @@ class Reservation < ApplicationRecord
 
   def clear_is_missing!
     self.is_missing, self.is_missing_at = nil, nil
+  end
+
+  def log_creation!
+    logs.create(message: 'Reservation created')
+  end
+
+  def log_cancellation!
+    logs.create(message: 'Reservation cancelled')
+  end
+
+  def log_picked_up!
+    logs.create(message: 'Tree picked up')
+  end
+
+  def log_missing!
+    logs.create(message: 'Pickup attempted. Tree not found.')
   end
 
 end

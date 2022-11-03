@@ -46,6 +46,4 @@ class ReservationTest < ActiveSupport::TestCase
     reservation.update(is_missing: false)
     assert_not reservation.is_missing_at
   end
-
-
 end
