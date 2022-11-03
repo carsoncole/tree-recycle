@@ -6,20 +6,7 @@
         %p.mb-1= link_to "Edit", edit_admin_reservation_path(@reservation)
 
         .text-center
-          - if @reservation.is_cancelled?
-            .badge.rounded-pill.bg-danger.text-center
-              Cancelled
-          - elsif @reservation.is_picked_up?
-            .badge.rounded-pill.bg-danger.text-center
-              Picked up
-          - elsif @reservation.is_missing?
-            .badge.rounded-pill.bg-danger.text-center
-              Missing
-          - elsif @reservation.is_confirmed?
-            .badge.rounded-pill.bg-warning.text-center
-              Confirmed
-
-
+          = reservation_status(@reservation)
   .row
     .col-md-6
       %h2 Reservation
@@ -97,6 +84,16 @@
                 %i.fa-solid.fa-square-check#missing_true
               - else
                 %i.fa-regular.fa-square#missing_false
+        %tr
+          %th Cancelled?
+          %td
+            = link_to admin_reservation_path(@reservation, reservation: { is_cancelled: @reservation.is_cancelled? ? 'false' : 'true'} ), data: { turbo_method: "patch" }, id: 'reservation-cancelled-toggle' do
+              - if @reservation.is_cancelled?
+                %i.fa-solid.fa-square-check#cancelled_true
+              - else
+                %i.fa-regular.fa-square#cancelled_false
+
+
 
       %h2 Misc
       %table.table.reservation

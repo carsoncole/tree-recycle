@@ -51,6 +51,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :zone_id, :is_picked_up, :is_missing)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :zone_id, :is_picked_up, :is_missing, :is_cancelled)
     end
 end

@@ -143,3 +143,38 @@ table.reservation {
   color: #aaa;
   font-size: 0.5em;
 }
+
+.reservation-status-badge {
+  width: 8em;
+  text-align: center;
+  border-radius: 0.375em;
+  background-color: rgb(255,193,7);
+  padding: 0.35em 0.65em;
+  color: #fff;
+  display: inline-block;
+  vertical-align: baseline;
+  line-height: 1;
+  font-size: 0.75em;
+  font-weight: 700;
+  &.primary {
+    background-color: #cfe2ff;
+    color: #084298;
+    border-color: #b6d4fe;
+  }
+  &.info {
+    background-color: #cff4fc;
+    border-color: #cff4fc;
+    color: #055160;
+  }
+  &.danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+  }
+  &.warning {
+    background-color: #fff3cd;
+    color: #664d03;
+    border-color: #ffecb5;
+  }
+
+}

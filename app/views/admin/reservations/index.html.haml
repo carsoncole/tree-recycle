@@ -23,7 +23,7 @@
   %thead
     %tr
       %th Name
-      %th.text-center Picked up
+      %th
       %th Street
       %th Zone
       %th
@@ -33,9 +33,7 @@
     - @reservations.each do |reservation|
       %tr
         %td= link_to reservation.name, admin_reservation_path(reservation)
-        %td.text-center
-          - if reservation.picked_up?
-            %i.fa-solid.fa-check
+        %td= reservation_status(reservation)
         %td
           = link_to reservation.street, "https://maps.apple.com/?q=#{reservation.latitude},#{reservation.longitude}", target: '_blank'
           = link_to "https://www.google.com/maps/place/#{reservation.latitude},#{reservation.longitude}", target: '_blank' do
