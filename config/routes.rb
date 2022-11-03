@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get '/questions' => 'home#questions', as: 'questions'
 
   get '/donation' => 'donations#donation_without_reservation', as: 'donation_without_reservation'
-  get '/thank-you-for-your-donation' => 'success#donations', as: 'success'
+  get '/thank-you-for-your-donation' => 'donations#success', as: 'success'
 
   resources :reservations, except: [:index] do
     get 'address-verification', as: 'address_verification'

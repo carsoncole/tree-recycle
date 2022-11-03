@@ -1,7 +1,7 @@
 class DonationsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :set_reservation, only: %i[ create new cash_or_check ]
+  before_action :set_reservation, only: %i[ create new cash_or_check success]
 
   def new
   end
