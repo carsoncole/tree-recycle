@@ -15,6 +15,9 @@ class Reservation < ApplicationRecord
   after_save :send_confirmation_email!, if: -> (obj){ obj.is_confirmed and obj.saved_change_to_is_confirmed? }
   after_validation :set_picked_up_at!, if: ->(obj){ obj.is_picked_up? and obj.is_picked_up_changed? }
   after_validation :clear_picked_up_at!, if: ->(obj){ !obj.is_picked_up? and obj.is_picked_up_changed? }
+  after_validation :set_is_missing_at!, if: ->(obj){ obj.is_missing? and obj.is_missing_changed? }
+  after_validation :clear_is_missing_at!, if: ->(obj){ !obj.is_missing? and obj.is_missing_changed? }
+  after_validation :clear_is_missing!, if: ->(obj){ obj.is_missing? and obj.is_picked_up }
 
   def initialize(args)
     super
@@ -106,4 +109,17 @@ class Reservation < ApplicationRecord
   def clear_picked_up_at!
     self.picked_up_at = nil
   end
+
+  def set_is_missing_at!
+    self.is_missing_at = Time.now
+  end
+
+  def clear_is_missing_at!
+    self.is_missing_at = nil
+  end
+
+  def clear_is_missing!
+    self.is_missing, self.is_missing_at = nil, nil
+  end
+
 end

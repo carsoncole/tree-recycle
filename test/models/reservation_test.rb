@@ -33,4 +33,19 @@ class ReservationTest < ActiveSupport::TestCase
     reservation.update(is_picked_up: false)
     assert_not reservation.picked_up_at
   end
+
+  test "setting and clearing of is_missing_at" do
+    reservation = create(:reservation)
+
+    assert_not reservation.is_missing
+    assert_not reservation.is_missing_at
+
+    reservation.update(is_missing: true)
+    assert reservation.is_missing_at
+
+    reservation.update(is_missing: false)
+    assert_not reservation.is_missing_at
+  end
+
+
 end
