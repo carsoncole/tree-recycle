@@ -44,6 +44,19 @@ To sign-in, you will need to create an admin user through the console.
 ```
 
 ### Mailers
+Mailers must be configured for sending out emails. Each environment file containts ActionMailer configuration settings. The default is using Gmail, and can be used by simply updating the credentials file with the account username and password or application password.
+
+The mailer itself should be updated to default to the sending address:
+
+
+application_mailer.rb
+```
+class ApplicationMailer < ActionMailer::Base
+  default from: "from@example.com"
+  layout "mailer"
+end
+```
+
 There are standard mailers for confirming a reservation `confirmed_reservation_email`, and a reminder `pick_up_reminder_email`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
 
 There is an admin setting `Emailing enabled?` that controls whether emails are sent out. Also, to avoid sending mailers twice to a recipient, reservations are checked for the attributes and values `is_confirmation_email_sent: false`, `:is_reminder_email_sent: false`, before sending and toggled `true` once sent.
