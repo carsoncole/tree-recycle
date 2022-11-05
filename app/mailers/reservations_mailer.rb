@@ -1,3 +1,4 @@
+#TODO add cancellation mail
 class ReservationsMailer < ApplicationMailer
   after_action :stop_delivery_if_disabled
 

@@ -2,13 +2,15 @@ require "application_system_test_case"
 
 class ReservationsTest < ApplicationSystemTestCase
   test "creating a valid minimal reservation with good address" do
+    reservation = build(:reservation_with_good_address)
+
     visit root_url
-    click_on "Make a Tree pickup reservation"
+    click_on "Reserve a tree pickup"
 
     assert_selector "h1", text: "Tree pickup reservation"
-    fill_in "reservation_name", with: reservations(:good_address).name
-    fill_in "reservation_street", with: reservations(:good_address).street
-    fill_in "reservation_email", with: reservations(:good_address).email
+    fill_in "reservation_name", with: reservation.name
+    fill_in "reservation_street", with: reservation.street
+    fill_in "reservation_email", with: reservation.email
     click_on "Register your address"
 
     assert_selector "h1", text: "Please consider a donation"
@@ -19,15 +21,17 @@ class ReservationsTest < ApplicationSystemTestCase
   end
 
   test "creating a valid reservation with all info" do
+    reservation = build(:reservation_with_good_address)
+
     visit root_url
-    click_on "Make a Tree pickup reservation"
+    click_on "Reserve a tree pickup"
 
     assert_selector "h1", text: "Tree pickup reservation"
-    fill_in "reservation_name", with: reservations(:two).name
-    fill_in "reservation_street", with: reservations(:two).street
-    fill_in "reservation_email", with: reservations(:two).email
-    fill_in "reservation_phone", with: reservations(:two).phone
-    fill_in "reservation_notes", with: reservations(:two).notes
+    fill_in "reservation_name", with: reservation.name
+    fill_in "reservation_street", with: reservation.street
+    fill_in "reservation_email", with: reservation.email
+    fill_in "reservation_phone", with: reservation.phone
+    fill_in "reservation_notes", with: reservation.notes
     click_on "Register your address"
 
     assert_selector "h1", text: "Please consider a donation"
@@ -38,13 +42,15 @@ class ReservationsTest < ApplicationSystemTestCase
   end
 
   test "creating an invalid unknown street reservation with all info" do
+    reservation = build(:reservation)
+
     visit root_url
-    click_on "Make a Tree pickup reservation"
+    click_on "Reserve a tree pickup"
 
     assert_selector "h1", text: "Tree pickup reservation"
-    fill_in "reservation_name", with: reservations(:invalid_unknown_street).name
-    fill_in "reservation_street", with: reservations(:invalid_unknown_street).street
-    fill_in "reservation_email", with: reservations(:invalid_unknown_street).email
+    fill_in "reservation_name", with: reservation.name
+    fill_in "reservation_street", with: 'gobbly gook'
+    fill_in "reservation_email", with: reservation.email
     click_on "Register your address"
     sleep 2
 
@@ -60,12 +66,12 @@ class ReservationsTest < ApplicationSystemTestCase
 
   test "creating a reservation that has a better address" do
     visit root_url
-    click_on "Make a Tree pickup reservation"
+    click_on "Reserve a tree pickup"
 
     assert_selector "h1", text: "Tree pickup reservation"
-    fill_in "reservation_name", with: reservations(:better_address_found).name
-    fill_in "reservation_street", with: reservations(:better_address_found).street
-    fill_in "reservation_email", with: reservations(:better_address_found).email
+    fill_in "reservation_name", with: 'John Doe'
+    fill_in "reservation_street", with: '1760 su san pl'
+    fill_in "reservation_email", with: 'john@example.com'
     click_on "Register your address"
 
     sleep 2
@@ -97,30 +103,28 @@ class ReservationsTest < ApplicationSystemTestCase
   end
 
   test "reservations are no longer editable" do
-    visit reservation_url(reservations(:good_address))
+    reservation = create(:reservation_with_coordinates)
+    visit reservation_url(reservation)
     click_on 'Edit'
     assert_selector 'h1', text: 'Editing reservation'
 
     Setting.first.update(is_reservations_open: false)
 
-    visit reservation_url(reservations(:good_address))
-    click_on 'Edit'
-    within("#flash") do
-      assert_text "Reservations are no longer changeable."
-      click_on "Contact us"
+    visit reservation_url(reservation)
+    within '#reservation-header' do
+      has_no_link? 'Edit'
     end
-    assert_selector 'h1', text: 'Have a question?'
   end
 
   test "reservations are no longer cancelable" do
-    visit reservation_url(reservations(:good_address))
+    reservation = create(:reservation_with_coordinates)
+    visit reservation_url(reservation)
+    has_link? 'Cancel'
+
     Setting.first.update(is_reservations_open: false)
-    click_on "Cancel"
-    within("#flash") do
-      assert_text "Reservations are no longer changeable."
-      click_on "Contact us"
+    within '#reservation-header' do
+      has_no_link? 'Cancel'
     end
-    assert_selector 'h1', text: 'Have a question?'
   end
 
   # test "visiting the index" do

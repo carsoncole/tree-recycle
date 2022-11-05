@@ -97,7 +97,7 @@ streets = [
 
 streets.each do |s|
   reservation = build(:reservation)
-  Reservation.create(name: reservation.name, street: s, is_confirmed: true, email: reservation.email)
+  Reservation.create(name: reservation.name, street: s, email: reservation.email)
 end
 
 zones = [

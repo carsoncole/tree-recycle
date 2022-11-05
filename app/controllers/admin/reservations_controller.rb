@@ -4,11 +4,18 @@ class Admin::ReservationsController < Admin::AdminController
 
   def index
     if params[:zone_id]
-      @pagy, @reservations = pagy(Reservation.confirmed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
-    elsif params[:uncompleted]
-      @pagy, @reservations = pagy(Reservation.unconfirmed.order(:street_name, :house_number).where(zone_id: params[:zone_id]).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.order(:street_name, :house_number).where(zone_id: params[:zone_id]))
+    elsif params[:picked_up]
+      @pagy, @reservations = pagy(Reservation.picked_up.order(:street_name, :house_number))
+    elsif params[:cancelled]
+      @pagy, @reservations = pagy(Reservation.cancelled.order(:street_name, :house_number))
+    elsif params[:missing]
+      @pagy, @reservations = pagy(Reservation.missing.order(:street_name, :house_number))
+    elsif params[:all]
+      @pagy, @reservations = pagy(Reservation.order(:street_name, :house_number).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.confirmed.order(:street_name, :house_number).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.pending_pickup.order(:street_name, :house_number))
+
     end
   end
 
@@ -52,6 +59,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :zone_id, :is_picked_up, :is_missing, :is_cancelled)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :zone_id, :status)
     end
 end

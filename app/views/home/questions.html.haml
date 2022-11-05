@@ -1,11 +1,14 @@
 #question
   %h1 Have a question?
 
-  %p Feel free to call or contact us by email if your questions are not answered below:
+  - if setting&.contact_email.present? || setting&.contact_phone.present?
+    %p Call or contact us by email if your questions are not answered below:
 
   %ul.mb-5
-    %li= setting&.contact_email
-    %li= setting&.contact_phone
+    - if setting&.contact_email.present?
+      %li= setting&.contact_email
+    - if setting&.contact_phone.present?
+      %li= setting&.contact_phone
 
 
   .row

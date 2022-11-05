@@ -2,62 +2,98 @@ require "application_system_test_case"
 
 class Admin::ReservationsTest < ApplicationSystemTestCase
   setup do
-    @reservation = create(:reservation)
+    @reservation = create(:reservation_with_coordinates)
   end
 
-  test "searching for a reservation" do
+  test "editing a reservation" do
     system_test_signin
+    visit admin_reservation_path(@reservation)
+    click_on 'Edit'
+    fill_in 'Phone', with: '2065551212'
+    fill_in 'Notes', with: 'Customer called and said they moved the tree to the driveway'
+    click_on 'Save'
 
-    fill_in "search", with: @reservation.name[0..3]
-    click_on "Search"
-    assert_text @reservation.name
-  end
-
-  test "toggling picked_up? and setting of picked_up_at" do
-    system_test_signin
-
-    within '#main-navbar' do
-      click_on 'Reservations'
+    within '#reservation' do
+      assert_text 'Customer called and said they moved the tree to the driveway'
     end
 
-    click_on @reservation.name
-
-    assert_not @reservation.picked_up_at
-    assert_selector '#picked_up_false'
-
-    # click the box => set the picked up time
-    click_on 'reservation-picked-up-toggle'
-
-    assert_selector '#picked_up_true'
-    assert @reservation.reload.picked_up_at
-
-    # click the box again => clear the picked up time
-    click_on 'reservation-picked-up-toggle'
-    assert_selector '#picked_up_false'
-    assert_not @reservation.reload.picked_up_at
+    within '#contact-details' do
+      assert_text '2065551212'
+    end
   end
 
-  test "toggling picked_up? and setting of picked_up_at" do
+  test "changing status to missing" do
     system_test_signin
+    visit admin_reservation_path(@reservation)
 
-    within '#main-navbar' do
-      click_on 'Reservations'
+    within '#reservation-status' do
+      assert_text 'Pending pickup'
     end
 
-    click_on @reservation.name
+    within '#status' do
+      select 'Missing', from: 'reservation-status-dropdown'
+      click_on 'Update status'
+    end
 
-    assert_not @reservation.is_missing_at
-    assert_selector '#missing_false'
+    within '#reservation-status' do
+      assert_text 'Missing'
+    end
 
-    # click the box => set the picked up time
-    click_on 'reservation-missing-toggle'
+    click_on 'View Log'
+    within '#reservation-log' do
+      assert_text 'Pickup attempted. Tree not found.'
+    end
+  end
 
-    assert_selector '#missing_true'
-    assert @reservation.reload.is_missing_at
+  test "changing status to picked_up" do
+    system_test_signin
+    visit admin_reservation_path(@reservation)
 
-    # click the box again => clear the picked up time
-    click_on 'reservation-missing-toggle'
-    assert_selector '#missing_false'
-    assert_not @reservation.reload.is_missing_at
+    within '#status' do
+      select 'Picked Up', from: 'reservation-status-dropdown'
+      click_on 'Update status'
+    end
+
+    within '#reservation-status' do
+      assert_text 'Picked Up'
+    end
+
+    click_on 'View Log'
+    within '#reservation-log' do
+      assert_text 'Tree picked up'
+    end
+  end
+
+  test "changed status to cancelled" do
+    system_test_signin
+    visit admin_reservation_path(@reservation)
+
+    within '#status' do
+      select 'Cancelled', from: 'reservation-status-dropdown'
+      click_on 'Update status'
+    end
+
+    within '#reservation-status' do
+      assert_text 'Cancelled'
+    end
+
+    click_on 'View Log'
+    within '#reservation-log' do
+      assert_text 'Reservation cancelled'
+    end
+  end
+
+  test "changing reservation zone" do
+    system_test_signin
+    create_list(:zone, 3)
+
+    visit admin_reservation_path(@reservation)
+    assert_selector '#zone-name', text: ''
+
+    click_on 'Edit'
+    select Zone.first.name, from: 'zone-dropdown'
+    click_on 'Save'
+
+    assert_selector '#zone-name', text: Zone.first.name
   end
 end

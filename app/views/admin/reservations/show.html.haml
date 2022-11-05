@@ -3,102 +3,87 @@
     .col-md-12
       %header
         %h1 Tree Pick-Up
-        %p.mb-1= link_to "Edit", edit_admin_reservation_path(@reservation)
+        %p.mb-1= link_to "Edit", edit_admin_reservation_path(@reservation), id: 'edit-link'
 
-        .text-center.mb-2
+        .text-center.mb-2#reservation-status
           = reservation_status(@reservation)
+
+
+        = turbo_frame_tag @reservation do
+          .div
+            = link_to "View Log", admin_reservation_logs_path(@reservation)
 
   .row
     .col-md-6
-      %h2 Reservation
-      %table.table.reservation
-        %tr
-          %th Name
-          %td= @reservation.name
-        %tr
-          %th Address
-          %td= @reservation.address
-        %tr
-          %th Delivery notes
-          %td= @reservation.notes
-        %tr
-          %th Street
-          %td= @reservation.street
-        %tr
-          %th House number
-          %td= @reservation.house_number
-        %tr
-          %th Road
-          %td= @reservation.street_name
-        %tr
-          %th City
-          %td= @reservation.city
-        %tr
-          %th State
-          %td= @reservation.state
-        %tr
-          %th Country
-          %td= @reservation.country
+      #reservation
+        %h2 Reservation
+        %table.table.reservation
+          %tr
+            %th Name
+            %td= @reservation.name
+          %tr
+            %th Address
+            %td= @reservation.address
+          %tr
+            %th Delivery notes
+            %td= @reservation.notes
+          %tr
+            %th Street
+            %td= @reservation.street
+          %tr
+            %th House number
+            %td= @reservation.house_number
+          %tr
+            %th Road
+            %td= @reservation.street_name
+          %tr
+            %th City
+            %td= @reservation.city
+          %tr
+            %th State
+            %td= @reservation.state
+          %tr
+            %th Country
+            %td= @reservation.country
 
-      %h2 Contact details
-      %table.table.reservation
-        %tr
-          %th Email
-          %td= @reservation.email
-        %tr
-          %th Phone
-          %td= @reservation.phone
+      #contact-details
+        %h2 Contact details
+        %table.table.reservation
+          %tr
+            %th Email
+            %td= @reservation.email
+          %tr
+            %th Phone
+            %td= @reservation.phone
 
     .col-md-6
-      %h2 Delivery
-      %table.table.reservation
-        %tr
-          %th Street
-          %td= @reservation.street
-        %tr
-          %th Zone
-          %td
-            - if @reservation.zone
-              = link_to @reservation&.zone&.name, admin_zone_map_path(@reservation.zone)
-        / %tr
-        /   %th Latitude
-        /   %td= @reservation.latitude
-        / %tr
-        /   %th Longitude
-        /   %td= @reservation.longitude
+      #delivery
+        %h2 Delivery
+        %table.table.reservation
+          %tr
+            %th Street
+            %td= @reservation.street
+          %tr
+            %th Zone
+            %td#zone-name
+              - if @reservation.zone
+                = link_to @reservation&.zone&.name, admin_zone_map_path(@reservation.zone)
+          / %tr
+          /   %th Latitude
+          /   %td= @reservation.latitude
+          / %tr
+          /   %th Longitude
+          /   %td= @reservation.longitude
 
-      %h2 Pick-up Status
-      %table.table.reservation
-        %tr
-          %th Picked-up?
-          %td
-            = @reservation.picked_up_at&.strftime('%m/%d/%Y %I:%M%p')
-            = link_to admin_reservation_path(@reservation, reservation: { is_picked_up: @reservation.is_picked_up? ? 'false' : 'true'} ), data: { turbo_method: "patch" }, id: 'reservation-picked-up-toggle' do
-              - if @reservation.is_picked_up?
-                %i.fa-solid.fa-square-check#picked_up_true
-              - else
-                %i.fa-regular.fa-square#picked_up_false
-        %tr
-          %th Missing?
-          %td
-            = @reservation.is_missing_at&.strftime('%m/%d/%Y %I:%M%p')
-            = link_to admin_reservation_path(@reservation, reservation: { is_missing: @reservation.is_missing? ? 'false' : 'true'} ), data: { turbo_method: "patch" }, id: 'reservation-missing-toggle' do
-              - if @reservation.is_missing?
-                %i.fa-solid.fa-square-check#missing_true
-              - else
-                %i.fa-regular.fa-square#missing_false
-        %tr
-          %th Cancelled?
-          %td
-            = link_to admin_reservation_path(@reservation, reservation: { is_cancelled: @reservation.is_cancelled? ? 'false' : 'true'} ), data: { turbo_method: "patch" }, id: 'reservation-cancelled-toggle' do
-              - if @reservation.is_cancelled?
-                %i.fa-solid.fa-square-check#cancelled_true
-              - else
-                %i.fa-regular.fa-square#cancelled_false
+      #status
+        %h2 Pick-up Status
 
+        = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
+          .form-group.mb-2
+            = f.select :status, options_for_select(Reservation.statuses.map {|key, value| [key.titleize, Reservation.statuses.key(value)]}, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+          = f.submit 'Update status', class: 'btn btn-primary'
 
-
-      %h2 Misc
+      %h2.mt-4 Misc
       %table.table.reservation
         %tr
           %th Confirmation email sent?
@@ -107,22 +92,10 @@
           %th Reminder email sent?
           %td= @reservation.is_reminder_email_sent? ? 'Yes' : 'No'
         %tr
-          %th Cancelled
-          %td= @reservation.is_cancelled? ? 'Yes' : 'No'
-        %tr
-          %th Confirmed
-          %td= @reservation.is_confirmed? ? 'Yes' : 'No'
-        %tr
           %th Stripe donated
           %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'
         %tr
           %th Cash or check
           %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
 
-      %h2 Log
-      %table.table.reservation
-        - @logs.each do |log|
-          %tr
-            %td.text-start= log.created_at.strftime('%c')
-            %td= log.message
 

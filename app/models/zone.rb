@@ -5,13 +5,14 @@ class Zone < ApplicationRecord
   validates :name, :street, :city, :country, :distance, presence: true
 
   geocoded_by :address
-  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.street_changed? }
+  after_validation :geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?)}
 
   def initialize(args)
     super
-    self.country = 'United States'
-    self.city = Setting&.first&.default_city if Setting.first
-    self.state = Setting&.first&.default_state if Setting.first
+    self.country ||= 'United States'
+    self.city ||= Setting&.first&.default_city if Setting.first
+    self.state ||= Setting&.first&.default_state if Setting.first
+    self.distance ||= 1
   end
 
   def address

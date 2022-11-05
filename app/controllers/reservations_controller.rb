@@ -36,7 +36,6 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
       if @reservation.geocoded?
-        @reservation.update(is_confirmed: true)
         redirect_to new_reservation_donation_url(@reservation), notice: 'Your reservation is confirmed.'
       else
         redirect_to reservation_address_verification_url(@reservation)
@@ -50,8 +49,8 @@ class ReservationsController < ApplicationController
   def update
     redirect_to root_url, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
     if @reservation.update(reservation_params)
-      @reservation.update(is_confirmed: true) if !@reservation.is_confirmed
-      message = if @reservation.is_confirmed?
+      @reservation.pending_pickup! if !@reservation.pending_pickup?
+      message = if @reservation.pending_pickup?
         "Reservation was successfully updated and is confirmed for pick up."
       else
         "Please review your reservation"
@@ -68,7 +67,7 @@ class ReservationsController < ApplicationController
 
   def destroy
     if Reservation.open?
-      @reservation.update(is_cancelled: true)
+      @reservation.cancelled!
       redirect_to reservation_url(@reservation), notice: "Reservation was successfully cancelled."
     else
       redirect_to reservation_url(@reservation), alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?

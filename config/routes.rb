@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :settings, only: [ :index, :edit, :update ]
     resources :reservations, only: [ :index, :show, :edit, :update ] do
+      get 'logs' => 'logs#index', as: 'logs'
       post 'process-zone' => 'reservations#process_zone', as: 'process_zone'
     end
 

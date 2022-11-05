@@ -8,16 +8,9 @@
 
   .text-center
     = reservation_status(@reservation)
-    - if @reservation.is_cancelled?
-      / .badge.rounded-pill.bg-danger.text-center
-      /   Cancelled
-
+    - if @reservation.cancelled?
       =link_to "Make a new reservation", new_reservation_path
-
-    - elsif @reservation.is_confirmed?
-      / .badge.rounded-pill.bg-warning.text-center.mb-4
-      /   Confirmed
-
+    - elsif @reservation.pending_pickup? && @reservation.persisted?
       = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
         %i.fa-solid.fa-pencil
         Edit

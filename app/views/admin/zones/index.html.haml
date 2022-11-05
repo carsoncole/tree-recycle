@@ -10,10 +10,10 @@
 
 
 %p.mb-4
-  = link_to new_admin_zone_path do
+  = link_to new_admin_zone_path, id: 'new-zone-link' do
     %i.fa-solid.fa-plus.lg
 
-%table.table
+%table.table#zones-table
   %thead
     %tr
       %th Name

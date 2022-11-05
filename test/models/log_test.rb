@@ -2,7 +2,7 @@ require "test_helper"
 
 class LogTest < ActiveSupport::TestCase
   def setup
-    @reservation = create(:reservation)
+    @reservation = create(:reservation_with_coordinates)
   end
 
   test "log creation on new reservations" do
@@ -16,22 +16,28 @@ class LogTest < ActiveSupport::TestCase
 
   test "log creation on cancellation" do
     assert_difference("Log.count", 1) do
-      @reservation.update(is_cancelled: true)
+      @reservation.cancelled!
     end
     assert_equal @reservation.logs.last.message, "Reservation cancelled"
   end
 
   test "log creation on picked up" do
     assert_difference("Log.count", 1) do
-      @reservation.update(is_picked_up: true)
+      @reservation.picked_up!
     end
     assert_equal @reservation.logs.last.message, "Tree picked up"
   end
 
   test "log creation on missing" do
     assert_difference("Log.count", 1) do
-      @reservation.update(is_missing: true)
+      @reservation.missing!
     end
     assert_equal @reservation.logs.last.message, "Pickup attempted. Tree not found."
+  end
+
+  test "log creation should not occur on change to pending pickup since its the default" do
+    assert_difference("Log.count", 0) do
+      @reservation.pending_pickup!
+    end
   end
 end

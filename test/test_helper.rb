@@ -25,5 +25,6 @@ class ActiveSupport::TestCase
     within '#clearance' do
       click_on "Sign in"
     end
+    sleep 0.25 # tests were occasionally failing without this
   end
 end

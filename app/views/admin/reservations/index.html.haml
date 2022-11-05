@@ -11,12 +11,18 @@
 = render 'search'
 
 %p.mb-4
-  = link_to "All", admin_reservations_path
+  = link_to "All", admin_reservations_path(all: true)
+  = '|'
+  = link_to "Pending pickup", admin_reservations_path
+  = '|'
+  = link_to "Picked up", admin_reservations_path(picked_up: true)
+  = '|'
+  = link_to "Missing", admin_reservations_path(missing: true)
+  = '|'
+  = link_to "Cancelled", admin_reservations_path(cancelled: true)
   - Zone.all.each do |zone|
     = '|'
     = link_to zone.name, admin_reservations_path(zone_id: zone.id)
-  = '|'
-  = link_to "Uncompleted", admin_reservations_path(uncompleted: true)
 
 
 %table.table.reservations
@@ -48,13 +54,13 @@
                 = pluralize(reservation.distance_to_zone.round(2), "mile")
 
         %td.actions
-          = link_to admin_reservation_path(reservation) do
+          = link_to admin_reservation_path(reservation), class: 'view-reservation-button' do
             %i.fa-solid.fa-eye.icon
           = link_to edit_admin_reservation_path(reservation) do
             %i.fa-solid.fa-pen.icon
-          = link_to reservation, method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
+          = link_to reservation, method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
             %i.fa-solid.fa-trash.icon
-          = link_to admin_reservation_process_zone_path(reservation), method: :post, data: { "turbo-method": :post } do
+          = link_to admin_reservation_process_zone_path(reservation), method: :post, id: "process-zone-button-#{reservation.id}", data: { "turbo-method": :post } do
             %i.fa-solid.fa-bolt.icon
 
 

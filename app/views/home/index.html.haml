@@ -1,6 +1,13 @@
 #home
+  %h2.text-center.mb-2
+    BSA Bainbridge Island
+    %br
+    Troop 1564 & 1804
 
-  .text-center= image_tag "tree.png"
+  .text-center
+    = image_tag "tree.png", width: 300, class: 'img-fluid'
+
+  %h1 Tree Recycle
 
   %p.mt-1.mb-5.text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg'
 
@@ -8,11 +15,13 @@
   .row
     .col-md-6.text-center.important-date
       %h3 Pick-up Day
-      .badge.text-bg-dark= setting&.pickup_date_and_time&.strftime('%B %e, %Y')
+      - if setting&.pickup_date_and_time
+        .badge.text-bg-dark= nice_date(setting&.pickup_date_and_time)
 
     .col-md-6.text-center.important-date
       %h3 Sign-up Deadline
-      .badge.text-bg-dark= setting&.sign_up_deadline_at&.strftime('%l:%M %p on %B %e, %Y')
-
-
-
+      - if setting&.sign_up_deadline_at
+        .badge.text-bg-dark
+          = nice_time(setting&.sign_up_deadline_at)
+          on
+          = nice_date(setting&.sign_up_deadline_at)

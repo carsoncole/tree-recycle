@@ -1,13 +1,16 @@
 module ReservationsHelper
   def reservation_status(reservation)
-    status = if reservation.is_picked_up
+    return unless reservation.persisted?
+    status = if reservation.picked_up?
         ['Picked Up', 'info']
-      elsif reservation.is_cancelled
+      elsif reservation.cancelled?
         ['Cancelled', 'danger']
-      elsif reservation.is_missing
+      elsif reservation.missing?
         ['Missing', 'warning']
+      elsif reservation.pending_pickup?
+        ['Pending pickup', 'primary']
       else
-        ['Pending', 'primary']
+        ['No status', 'danger']
       end
     out = ''
     out << "<div class='reservation-status-badge #{status[1]}'>#{status[0]}</div>"

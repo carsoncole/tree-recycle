@@ -1,9 +1,9 @@
-= form_for @setting, url: admin_setting_path(@setting) do |f|
-  - if @setting.errors.any?
+= form_for setting, url: admin_setting_path(setting) do |f|
+  - if setting.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@setting.errors.count, "error")} prohibited this setting from being saved:"
+      %h2= "#{pluralize(setting.errors.count, "error")} prohibited this setting from being saved:"
       %ul
-        - @setting.errors.full_messages.each do |message|
+        - setting.errors.full_messages.each do |message|
           %li= message
   .mb-3
     = f.label :site_title, class: 'form-label'
