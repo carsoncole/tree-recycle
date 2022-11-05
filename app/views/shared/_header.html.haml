@@ -1,7 +1,7 @@
 %header
   %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark#main-navbar
     .container-fluid
-      - site_title = Setting.first_or_create.site_title.present? ?  Setting.first.site_title : 'Tree Recycle'
+      - site_title = setting.site_title.present? ?  setting.site_title : 'Tree Recycle'
 
       = link_to root_path, class: 'navbar-brand' do
         %i.fa-solid.fa-tree.fa-lg
@@ -31,5 +31,10 @@
               = link_to "Zones", admin_zones_path, class: 'nav-link'
             %li.nav-item
               = link_to "Map", admin_map_path, class: 'nav-link'
-            %li.nav-item
-              = button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
+
+        %ul.navbar-nav.my-2.my-lg-0
+          - if signed_in?
+            %li.nav-item= button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
+          - else
+            %li.nav-item= link_to 'Sign in', sign_in_path, class: 'nav-link'
+
