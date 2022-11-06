@@ -1,10 +1,11 @@
 require 'csv'
+#TODO add indices on db
 #OPTIMIZE improve zone assignments
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
   has_many :logs, dependent: :destroy
 
-  enum :status, %i( pending_pickup picked_up missing cancelled )
+  enum :status, { pending_pickup: 0, picked_up: 1, missing: 2, cancelled: 3, archived: 99 }
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
@@ -91,6 +92,20 @@ class Reservation < ApplicationRecord
   def coordinates
     if geocoded?
       [latitude, longitude]
+    end
+  end
+
+  # sends hello email to ARCHIVED reservations that have not been previously sent this email.
+  def self.send_hello_email!
+    archived.each do |archived_reservation|
+      UserMailer.with(reservation: archived_reservation).hello_email.deliver_now
+    end
+  end
+
+  # sends last call email to ARCHIVED reservations that have not been previously sent this email.
+  def self.send_last_call_email!
+    archived.each do |archived_reservation|
+      UserMailer.with(reservation: archived_reservation).last_call_email.deliver_now
     end
   end
 

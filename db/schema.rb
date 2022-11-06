@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_04_053308) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_06_194426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -51,11 +51,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_04_053308) do
     t.decimal "longitude"
     t.bigint "zone_id"
     t.decimal "distance_to_zone"
-    t.boolean "is_confirmation_email_sent"
-    t.boolean "is_reminder_email_sent"
+    t.boolean "is_confirmed_reservation_email_sent"
+    t.boolean "is_pick_up_reminder_email_sent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
+    t.boolean "is_hello_email_sent"
+    t.boolean "is_last_call_email_sent"
     t.index ["zone_id"], name: "index_reservations_on_zone_id"
   end
 

@@ -16,12 +16,12 @@
     .col-md-6.text-center.important-date
       %h3 Pick-up Day
       - if setting&.pickup_date_and_time
-        .badge.text-bg-dark= nice_date(setting&.pickup_date_and_time)
+        .date= nice_date(setting&.pickup_date_and_time)
 
     .col-md-6.text-center.important-date
       %h3 Sign-up Deadline
       - if setting&.sign_up_deadline_at
-        .badge.text-bg-dark
-          = nice_time(setting&.sign_up_deadline_at)
-          on
+        .date
+          = succeed(", ") do
+            = nice_time(setting&.sign_up_deadline_at)
           = nice_date(setting&.sign_up_deadline_at)

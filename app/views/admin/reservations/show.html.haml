@@ -80,17 +80,17 @@
 
         = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
           .form-group.mb-2
-            = f.select :status, options_for_select(Reservation.statuses.map {|key, value| [key.titleize, Reservation.statuses.key(value)]}, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+            = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
           = f.submit 'Update status', class: 'btn btn-primary'
 
       %h2.mt-4 Misc
       %table.table.reservation
         %tr
           %th Confirmation email sent?
-          %td= @reservation.is_confirmation_email_sent? ? 'Yes' : 'No'
+          %td= @reservation.is_confirmed_reservation_email_sent? ? 'Yes' : 'No'
         %tr
           %th Reminder email sent?
-          %td= @reservation.is_reminder_email_sent? ? 'Yes' : 'No'
+          %td= @reservation.is_pick_up_reminder_email_sent? ? 'Yes' : 'No'
         %tr
           %th Stripe donated
           %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'

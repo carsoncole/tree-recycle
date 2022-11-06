@@ -12,7 +12,9 @@ class Admin::ReservationsController < Admin::AdminController
     elsif params[:missing]
       @pagy, @reservations = pagy(Reservation.missing.order(:street_name, :house_number))
     elsif params[:all]
-      @pagy, @reservations = pagy(Reservation.order(:street_name, :house_number).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.not_archived.order(:street_name, :house_number).order(created_at: :asc))
+    elsif params[:archived]
+      @pagy, @reservations = pagy(Reservation.archived.order(:street_name, :house_number).order(created_at: :asc))
     else
       @pagy, @reservations = pagy(Reservation.pending_pickup.order(:street_name, :house_number))
 
@@ -32,6 +34,7 @@ class Admin::ReservationsController < Admin::AdminController
 
   def show
     @logs = @reservation.logs
+    @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
   end
 
   def map

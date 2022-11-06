@@ -5,8 +5,12 @@ module ApplicationHelper
     @setting ||= Setting.first_or_create
   end
 
+  def nice_long_date(date)
+    date&.strftime('%A, %B %e, %Y')
+  end
+
   def nice_date(date)
-    date&.strftime('%b %e, %Y')
+    date&.strftime('%B %e, %Y')
   end
 
   def nice_time(datetime)

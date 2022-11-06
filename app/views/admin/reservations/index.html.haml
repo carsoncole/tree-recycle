@@ -20,6 +20,8 @@
   = link_to "Missing", admin_reservations_path(missing: true)
   = '|'
   = link_to "Cancelled", admin_reservations_path(cancelled: true)
+  = '|'
+  = link_to "Archived", admin_reservations_path(archived: true)
   - Zone.all.each do |zone|
     = '|'
     = link_to zone.name, admin_reservations_path(zone_id: zone.id)

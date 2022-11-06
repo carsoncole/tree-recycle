@@ -10,6 +10,12 @@ class ReservationsController < ApplicationController
   def new
     redirect_to root_url, alert: "Reservations are CLOSED. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
     @reservation = Reservation.new
+    if params[:reservation_id]
+      old_reservation = Reservation.find(params[:reservation_id])
+      @reservation.street = old_reservation.street
+      @reservation.email = old_reservation.email
+      @reservation.name = old_reservation.name
+    end
   end
 
   def edit
