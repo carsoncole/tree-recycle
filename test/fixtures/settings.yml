@@ -1,2 +1,4 @@
 default_setting:
   is_reservations_open: true
+  is_emailing_enabled: true
+  pickup_date_and_time: '2023-01-07 08:00:00'
