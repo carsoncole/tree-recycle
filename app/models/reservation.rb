@@ -1,5 +1,4 @@
 require 'csv'
-#TODO add indices on db
 #OPTIMIZE improve zone assignments
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
