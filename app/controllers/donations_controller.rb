@@ -14,7 +14,7 @@ class DonationsController < ApplicationController
       }],
       mode: 'payment',
       client_reference_id: @reservation.id,
-      metadata: {reservation_id: params[:reservation_id]},
+      metadata: {reservation_id: @reservation.id},
       customer_email: @reservation.email,
       success_url: reservation_success_url(@reservation),
       cancel_url: new_reservation_donation_url(@reservation)
