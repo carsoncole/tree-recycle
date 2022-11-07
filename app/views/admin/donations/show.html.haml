@@ -4,8 +4,8 @@
 .table-responsive
   %table.table
     %tr
-      %th Reservation ID
-      %td= @donation.reservation_id
+      %th Reservation
+      %td= link_to @donation.reservation_id, admin_reservation_path(reservation_id: @donation.reservation_id) if @donation.reservation_id
     %tr
       %th Amount
       %td= number_to_currency(@donation.amount)
