@@ -89,8 +89,9 @@ class Reservation < ApplicationRecord
 
   # method to import data from existing tree recycle system csv export
   def self.import
+    Setting.first.update(is_emailing_enabled: false)
     CSV.foreach('tmp/tree_data.csv', headers: true) do |row|
-      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'] )
+      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'], status: 'archived' )
     end
   end
 
