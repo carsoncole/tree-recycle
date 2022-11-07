@@ -4,11 +4,7 @@
 
     %p Your support goes a long way towards our program and directly assisting Scouts in participating in outdoor activities.
 
-.row
-  .col-md-12.mb-4
-    %p You will get a receipt directly from Stripe regarding your donation. You are all set! We'll see you on pick-up day.
-
-
-.row
-  .col-md-12.mb-4
-    %p= link_to "Return to your tree pick-up reservation", reservation_path(id: @reservation.id)
+- if @reservation
+  .row
+    .col-md-12.mb-4
+      %p= link_to "Return to your tree pick-up reservation", reservation_path(id: @reservation.id)

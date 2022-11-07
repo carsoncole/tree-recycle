@@ -1,7 +1,7 @@
 class DonationsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :set_reservation, only: %i[ create new cash_or_check success]
+  before_action :set_reservation, only: %i[ create new cash_or_check]
 
   def new
   end
@@ -30,8 +30,6 @@ class DonationsController < ApplicationController
           quantity: 1
       }],
       mode: 'payment',
-      client_reference_id: '1212121',
-      customer_email: 'carson@cole.com',
       success_url: success_url,
       cancel_url: root_url
     })
@@ -52,6 +50,9 @@ class DonationsController < ApplicationController
   end
 
   def success
+    if params[:reservation_id] || params[:id]
+      @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
+    end
   end
 
   def cancel

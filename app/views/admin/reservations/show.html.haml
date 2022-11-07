@@ -87,7 +87,10 @@
       %table.table.reservation
         - @donations.each do |donation|
           %tr
-            %td= donation.amount
+            %th= link_to 'Donation Receipt', admin_donations_path(donation)
+            %td= donation.payment_status.capitalize if donation.payment_status
+            %td= nice_short_date_time(donation.created_at)
+            %td= number_to_currency(donation.amount)
 
       %h2.mt-4 Misc
       %table.table.reservation

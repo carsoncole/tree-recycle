@@ -2,11 +2,11 @@ require "test_helper"
 
 class DonationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @reservation = Reservation.first
+    @reservation = create(:reservation_with_coordinates)
   end
 
   test "should get new" do
-    get new_reservation_donation_url(@reservation)
+    get new_reservation_donation_url(reservation_id: @reservation.id)
     assert_response :success
   end
 

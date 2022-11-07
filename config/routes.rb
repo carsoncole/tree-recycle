@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   post 'stripe-webhook' => "donations#stripe_webhook"
 
   namespace :admin do
+    resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :reservations, only: [ :index, :show, :edit, :update ] do
       get 'logs' => 'logs#index', as: 'logs'

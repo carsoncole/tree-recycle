@@ -1,7 +1,2 @@
 .container-fluid
   %footer
-    %nav
-      %ul.nav.justify-content-center
-        - unless signed_in?
-          %li.nav-item
-            = link_to 'Sign in', sign_in_path, class: 'nav-link'

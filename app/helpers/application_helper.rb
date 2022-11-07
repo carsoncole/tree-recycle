@@ -20,4 +20,8 @@ module ApplicationHelper
   def nice_date_time(datetime)
     datetime&.strftime('%l:%M %p %b %e, %Y')
   end
+
+  def nice_short_date_time(datetime)
+    datetime&.strftime('%H:%M %F')
+  end
 end

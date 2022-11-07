@@ -26,8 +26,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_07_151603) do
   end
 
   create_table "donations", force: :cascade do |t|
-    t.uuid "reservation_id", null: false
-    t.decimal "amount"
+    t.uuid "reservation_id"
+    t.string "checkout_session_id"
+    t.decimal "amount", default: "0.0"
+    t.string "status"
+    t.string "payment_status"
+    t.string "receipt_url"
+    t.string "email"
+    t.boolean "is_receipt_email_sent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reservation_id"], name: "index_donations_on_reservation_id"

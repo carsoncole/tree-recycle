@@ -1,4 +1,4 @@
-# Preview all emails at http://localhost:3000/rails/mailers/reservations_mailer
+# Preview all emails at http://localhost:3000/rails/mailers/
 class ReservationsMailerPreview < ActionMailer::Preview
 
   def confirmed_reservation_email

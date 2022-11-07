@@ -1,0 +1,21 @@
+%h1 Admin::Donations#show
+
+
+.table-responsive
+  %table.table
+    %tr
+      %th Reservation ID
+      %td= @donation.reservation_id
+    %tr
+      %th Amount
+      %td= number_to_currency(@donation.amount)
+
+    %tr
+      %th Email
+      %td= @donation.email
+    %tr
+      %th Checkout Session ID
+      %td= @donation.checkout_session_id
+    / %tr
+    /   %th Reciept
+    /   %td= @donation.receipt_url
