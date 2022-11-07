@@ -16,6 +16,16 @@
     %tr
       %th Checkout Session ID
       %td= @donation.checkout_session_id
-    / %tr
-    /   %th Reciept
-    /   %td= @donation.receipt_url
+    %tr
+      %th Donated
+      %td= nice_date_time @donation.created_at
+    %tr
+      %th Status
+      %td= @donation.status
+    %tr
+      %th Payment status
+      %td= @donation.payment_status
+    %tr
+      %th Receipt emailed?
+      %td= @donation.is_receipt_email_sent?
+
