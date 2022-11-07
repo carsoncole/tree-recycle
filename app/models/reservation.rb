@@ -2,6 +2,7 @@ require 'csv'
 #OPTIMIZE improve zone assignments
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
+  has_many :donations
   has_many :logs, dependent: :destroy
 
   enum :status, { pending_pickup: 0, picked_up: 1, missing: 2, cancelled: 3, archived: 99 }

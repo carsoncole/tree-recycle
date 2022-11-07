@@ -43,6 +43,14 @@ class DonationsController < ApplicationController
     redirect_to reservation_url(@reservation), notice: "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
 
+  def stripe_webhook
+    event = Stripe::Event.retrieve(params[:id])
+    StripeCharge.new(event).process
+    render nothing: true, status: 201
+  rescue Stripe::APIConnectionError, Stripe::StripeError
+    render nothing: true, status: 400
+  end
+
   def success
   end
 

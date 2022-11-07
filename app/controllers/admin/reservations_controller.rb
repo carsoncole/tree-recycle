@@ -1,3 +1,5 @@
+
+#TODO create manually reservation entry proces
 class Admin::ReservationsController < Admin::AdminController
   before_action :set_reservation, except: %i[ new index search process_all_zones map]
 
@@ -35,6 +37,7 @@ class Admin::ReservationsController < Admin::AdminController
   def show
     @logs = @reservation.logs
     @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
+    @donations = @reservation.donations
   end
 
   def map

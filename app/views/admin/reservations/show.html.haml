@@ -83,6 +83,12 @@
             = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
           = f.submit 'Update status', class: 'btn btn-primary'
 
+      %h2.mt-4 Donations
+      %table.table.reservation
+        - @donations.each do |donation|
+          %tr
+            %td= donation.amount
+
       %h2.mt-4 Misc
       %table.table.reservation
         %tr
