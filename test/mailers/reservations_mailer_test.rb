@@ -86,4 +86,17 @@ class ReservationsMailerTest < ActionMailer::TestCase
     assert_equal "Reminder to put out your tree", email.subject
     assert email.html_part.body.to_s.include? 'This is a reminder that we will pick up your tree at'
   end
+
+  test "delivery of email on confirmed email" do
+    assert_emails 1 do
+      reservation = create(:reservation_with_coordinates, no_emails: false)
+    end
+  end
+
+  test "delivery of email on cancelled reservation" do
+    reservation = create(:reservation_with_coordinates, is_confirmed_reservation_email_sent: true)
+    assert_emails 1 do
+      reservation.cancelled!
+    end
+  end
 end

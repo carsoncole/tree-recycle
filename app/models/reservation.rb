@@ -9,7 +9,9 @@ class Reservation < ApplicationRecord
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
   after_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?)}
-  after_save :send_confirmation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status? }
+
+  after_create :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? }
+  after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.saved_change_to_status? && obj.cancelled? }
 
   after_create :log_creation!
   after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
@@ -77,8 +79,12 @@ class Reservation < ApplicationRecord
     save
   end
 
-  def send_confirmation_email!
+  def send_confirmed_reservation_email!
     ReservationsMailer.with(reservation: self).confirmed_reservation_email.deliver_later
+  end
+
+  def send_cancelled_reservation_email!
+    ReservationsMailer.with(reservation: self).cancelled_reservation_email.deliver_later
   end
 
   # method to import data from existing tree recycle system csv export

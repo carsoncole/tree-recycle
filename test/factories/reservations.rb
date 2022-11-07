@@ -4,6 +4,7 @@ FactoryBot.define do
     street { Faker::Address.street_address }
     email { Faker::Internet.email }
     status { 0 }
+    no_emails { true }
 
     factory :reservation_with_good_address do
       street { '215 Ericksen Ave NE' }
