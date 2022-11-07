@@ -1,8 +1,8 @@
 #home
   %h2.text-center.mb-2
-    BSA Bainbridge Island
+    Bainbridge Island
     %br
-    Troop 1564 & 1804
+    BSA Troop 1564 & Troop 1804
 
   .text-center
     = image_tag "tree.png", width: 300, class: 'img-fluid'
@@ -25,3 +25,5 @@
           = succeed(", ") do
             = nice_time(setting&.sign_up_deadline_at)
           = nice_date(setting&.sign_up_deadline_at)
+  .text-center
+    = image_tag "bsa-logo.png", width: '120', id: 'bsa-logo'
