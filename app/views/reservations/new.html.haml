@@ -7,11 +7,11 @@
     %p.text-muted.mb-4 We start pickups at 8am, so have the tree ready, with all decorations removed as they would not be compostable.
 
 
-= #render 'form'
+= render 'form'
 
 
-= form_for @reservation, url: upload_path do |f|
+/ = form_for @reservation, url: upload_path do |f|
 
-  = f.label :file, "Upload CSV File"
-  = f.file_field :file, class: 'form-control-file', required: true
-  = f.button :submit, class: 'btn btn-primary'
+/   = f.label :file, "Upload CSV File"
+/   = f.file_field :file, class: 'form-control-file', required: true
+/   = f.button :submit, class: 'btn btn-primary'

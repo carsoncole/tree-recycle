@@ -67,11 +67,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def upload
-    Reservation.import(params[:reservation][:file])
-    redirect_to reservations_path #=> or where you want
-  end
-
   def submit_reservation
     redirect_to new_reservation_donation_url(@reservation)
   end
@@ -83,6 +78,11 @@ class ReservationsController < ApplicationController
     else
       redirect_to reservation_url(@reservation), alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
     end
+  end
+
+  def upload
+    Reservation.import(params[:reservation][:file])
+    redirect_to reservations_path #=> or where you want
   end
 
   private

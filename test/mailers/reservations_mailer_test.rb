@@ -78,7 +78,7 @@ class ReservationsMailerTest < ActionMailer::TestCase
   end
 
   test "delivery of email on cancelled reservation" do
-    reservation = create(:reservation_with_coordinates, is_confirmed_reservation_email_sent: true)
+    reservation = create(:reservation_with_coordinates)
     assert_emails 1 do
       reservation.cancelled!
     end

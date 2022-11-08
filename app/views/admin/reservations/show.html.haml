@@ -97,12 +97,6 @@
       %h2.mt-4 Misc
       %table.table.reservation
         %tr
-          %th Confirmation email sent?
-          %td= @reservation.is_confirmed_reservation_email_sent? ? 'Yes' : 'No'
-        %tr
-          %th Reminder email sent?
-          %td= @reservation.is_pick_up_reminder_email_sent? ? 'Yes' : 'No'
-        %tr
           %th Stripe donated
           %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'
         %tr
