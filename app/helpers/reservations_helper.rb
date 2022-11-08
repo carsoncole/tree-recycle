@@ -9,6 +9,8 @@ module ReservationsHelper
         ['Missing', 'warning']
       elsif reservation.pending_pickup?
         ['Pending pickup', 'primary']
+      elsif reservation.archived?
+        ['Archived', 'info']
       else
         ['No status', 'danger']
       end

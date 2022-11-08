@@ -9,7 +9,7 @@ class Reservation < ApplicationRecord
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
-  after_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?)}
+  after_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
 
   after_create :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? }
   after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.saved_change_to_status? && obj.cancelled? }
@@ -91,8 +91,8 @@ class Reservation < ApplicationRecord
   # method to import data from existing tree recycle system csv export
   def self.import
     Setting.first.update(is_emailing_enabled: false)
-    CSV.foreach('tmp/tree_data.csv', headers: true) do |row|
-      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'], status: 'archived' )
+    CSV.foreach('public/tree_data.csv', headers: true) do |row|
+      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'], latitude: row['lat'], longitude: row['lng'], house_number: row['house'], street_name: row['street'], route_name: row['route'], status: 'archived' )
     end
   end
 

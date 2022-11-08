@@ -77,11 +77,13 @@
 
       #status
         %h2 Pick-up Status
-
-        = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
-          .form-group.mb-2
-            = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
-          = f.submit 'Update status', class: 'btn btn-primary'
+        - if @reservation.archived?
+          = reservation_status(@reservation)
+        - else
+          = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
+            .form-group.mb-2
+              = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+            = f.submit 'Update status', class: 'btn btn-primary'
 
       %h2.mt-4 Donations
       %table.table.reservation
