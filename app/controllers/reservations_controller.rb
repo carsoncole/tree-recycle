@@ -67,6 +67,11 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def upload
+    Reservation.import(params[:reservation][:file])
+    redirect_to reservations_path #=> or where you want
+  end
+
   def submit_reservation
     redirect_to new_reservation_donation_url(@reservation)
   end
@@ -86,6 +91,6 @@ class ReservationsController < ApplicationController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :notes)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :notes, :file)
     end
 end
