@@ -9,26 +9,50 @@ Ruby on Rails 7, Ruby ~> 3.0.0, and PostgreSQL.
 
 This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.
 
-## Configuration
+## Installation
 
-### Installation
-To install:
+This is a Ruby on Rails 7, Ruby 3.0+ application. You will need to have an server instance that has both Rails and Ruby installed.
+
+### Database - PostgreSQL
+
+Currently configured for PostgreSQL, but the `database.yml` can be configured for a different database.
+
+The database can be created with `rails db:setup`, which will do all of `db:create`, `db:schema:load`, `db:seed`. The seeds file contains sample data is is not need when you go into production. Or you can simply delete/create the data through the UI.
+
+
+### Email notifications
+
+Configure each environment with mail settings. environment file containts ActionMailer configuration settings. The default settings are with Gmail, but this can be changed to any SMTP provider. Credentials are managed in the Rails credentials file.
 
 ```
-bundle install
+config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => Rails.application.credentials.mailer.production.username,
+    :password             => Rails.application.credentials.mailer.production.password,
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
 ```
 
-Create users in the console who will have administrator access.
+The mailer itself should be updated to default to the sending address:
 
+application_mailer.rb
 ```
-User.create(email: 'admin email', password: 'admin password')
+class ApplicationMailer < ActionMailer::Base
+  default from: "from@example.com"
+  layout "mailer"
+end
 ```
 
-Administrator settings information should be filled out as the information is used throughout the application.
+### Setup
+
+To start up the application locally, do `bundle install` and 'rails s'.
 
 
-#### Heroku
-This has been tested for use on Heroku.
+### Heroku
+The following instruction apply to installations on Heroku.
 
 #### Configuration
 
@@ -43,23 +67,6 @@ To sign-in, you will need to create an admin user through the console.
 > User.create(email: 'john.doe@example.com', password: [password])
 ```
 
-### Mailers
-Mailers must be configured for sending out emails. Each environment file containts ActionMailer configuration settings. The default is using Gmail, and can be used by simply updating the credentials file with the account username and password or application password.
-
-The mailer itself should be updated to default to the sending address:
-
-
-application_mailer.rb
-```
-class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
-  layout "mailer"
-end
-```
-
-There are standard mailers for confirming a reservation `confirmed_reservation_email`, and a reminder `pick_up_reminder_email`. These mailer message templates utilize information from the settings, such as the pick-up date, so test and review before triggering a mass mailing and make changes as necessary.
-
-There is an admin setting `Emailing enabled?` that controls whether emails are sent out.
 
 ### Custom Credentials
 
@@ -74,11 +81,20 @@ See the sample credentials file `config/credentials_sample.yml` for all of the n
 
 ## Use
 
+Create users in the console who will have administrator access.
+
+```
+User.create(email: 'admin email', password: 'admin password')
+```
+
 Reservations is the resource for holding tree pickup reservations and they are created by customers without any necessary login, [TODO] but are retrievable and changeable using a custom link sent to customers upon initial creation and any updates.
 
 Registered users are administrators that can access all of the resources. Administrators (users) need to be manually created in the database as there is no access to signups through the UI.
 
 Zones are used to create areas of reservations, for convenient pick ups. Zones are set with a center point and a radius distance in miles. Reservations can also be manually assigned to a Zone.
+
+There is an admin setting `Emailing enabled?` that controls whether emails are sent out.
+
 
 ## Mapping
 
