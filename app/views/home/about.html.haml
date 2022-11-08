@@ -1,13 +1,11 @@
 %h1 About
 
-
-
 - if setting
-  %p= setting.description
+  %p.mb-4
+    = setting.description
 
 
-
-  %H4 Details
+  %H5 On the day of pickup
   %p.mb-4
     = setting.on_day_of_pickup_instructions
 
