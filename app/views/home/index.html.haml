@@ -1,27 +1,27 @@
 #home
-  %h2.text-center.mb-2
-    Bainbridge Island
-    %br
-    BSA Troop 1564 & Troop 1804
+  %h1
+    .top-line
+      .year 2023
+      .bainbridge Bainbridge Island
+    .bottom-line
+      .tree Tree
+      .recycle Recycle
 
-  .text-center
-    = image_tag "tree.png", width: 300, class: 'img-fluid'
-
-  %h1 Tree Recycle
 
   %p.mt-1.mb-5.text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg'
 
 
   .row
     .col-md-6.text-center.important-date
-      %h3 Pick-up
-      - if setting&.pickup_date_and_time
-        .date= nice_date_time(setting&.pickup_date_and_time)
-
-    .col-md-6.text-center.important-date
       %h3 Sign-up Deadline
       - if setting&.sign_up_deadline_at
         .date
           = nice_date_time(setting&.sign_up_deadline_at)
+    .col-md-6.text-center.important-date
+      %h3 Pick-up
+      - if setting&.pickup_date_and_time
+        .date= nice_date_time(setting&.pickup_date_and_time)
+
+
   .text-center
     = image_tag "bsa-logo.png", width: '120', id: 'bsa-logo'

@@ -1,7 +1,87 @@
+$scout-red: #CE1126;
+$scout-blue: #003F87;
+
 header {
   margin-bottom: 3em;
 }
 
+
+#home {
+
+  background: image-url('tree-2.png');
+  background-opacity: 0.4;
+  background-repeat: no-repeat;
+  background-size: 160px;
+  background-position: right top;
+
+
+  h3 {
+    font-size: 1em;
+  }
+  .important-date {
+    margin-bottom: 2em;
+    h3 {
+      font-size: 1.1em;
+      color: #aaa;
+    }
+    .badge {
+      font-size: 1.1em;
+    }
+    .date {
+      font-weight: 700;
+      border-top: 2px solid #aaa;
+      padding-top: 0.5em;
+    }
+  }
+
+  .aedf {
+      -webkit-transform:rotate(20deg);
+    -moz-transform: rotate(20deg);
+    -ms-transform: rotate(20deg);
+    -o-transform: rotate(20deg);
+    transform: rotate(20deg);
+  }
+
+
+  h1 {
+    opacity: 1 !important;
+    .top-line {
+      line-height: 0.9;
+      .year {
+        font-size: 1.2em;
+        font-weight: 200;
+        line-height: 0.9;
+        display: inline-block;
+        margin: 0;
+        padding: 0 0 0 1em;
+        color: $scout-blue;
+      }
+      .bainbridge {
+        font-size: 1.2em;
+        font-weight: 200;
+        line-height: 0.9;
+        display: inline-block;
+        color: $scout-red;
+      }
+    }
+    .tree {
+      font-weight: 800;
+      font-size: 2.2em;
+      line-height: 0.9;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+    .recycle {
+      font-weight: 300;
+      font-size: 2.2em;
+      line-height: 0.9;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
 
 #bsa-logo {
   margin: 0 auto 2em auto;
@@ -55,41 +135,6 @@ i {
 #map {
   height: 800px;
   width: 1200px;
-}
-
-#home {
-  .intro {
-    font-size: 1.5em;
-  }
-  h1 {
-    font-size: 5em;
-    font-weight: 300;
-    text-align: center;
-    margin-bottom: 0.25em;
-  }
-  h2 {
-    font-size: 2.5em;
-    font-weight: 300;
-
-  }
-  h3 {
-    font-size: 1em;
-  }
-  .important-date {
-    margin-bottom: 2em;
-    h3 {
-      font-size: 1.1em;
-      color: #aaa;
-    }
-    .badge {
-      font-size: 1.1em;
-    }
-    .date {
-      font-weight: 700;
-      border-top: 2px solid #aaa;
-      padding-top: 0.5em;
-    }
-  }
 }
 
 p.message {
