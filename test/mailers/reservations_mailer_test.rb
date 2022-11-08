@@ -29,8 +29,8 @@ class ReservationsMailerTest < ActionMailer::TestCase
     assert email.html_part.body.to_s.include? 'If this cancellation is in error, please create a new reservation.'
   end
 
-  test "hello email" do
-    reservation = create(:reservation_with_coordinates)
+  test "hello email to archived" do
+    reservation = create(:reservation_with_coordinates, status: 'archived')
     email = ReservationsMailer.with(reservation: reservation).hello_email
 
     assert_emails 1 do
@@ -43,8 +43,8 @@ class ReservationsMailerTest < ActionMailer::TestCase
     assert email.html_part.body.to_s.include? 'We are sending a friendly reminder that the Scouts of Bainbridge Island Troop 1564'
   end
 
-  test "last call email" do
-    reservation = create(:reservation_with_coordinates)
+  test "last call email to archived" do
+    reservation = create(:reservation_with_coordinates, status: 'archived')
     email = ReservationsMailer.with(reservation: reservation).last_call_email
 
     assert_emails 1 do
