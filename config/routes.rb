@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'home#index'
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -40,6 +41,12 @@ Rails.application.routes.draw do
   end
 
   post 'stripe-webhook' => "donations#stripe_webhook"
+
+  namespace :driver do
+    resources :zones, only: %i( index show )
+    get 'home' => 'home#index', as: 'home'
+  end
+
 
   namespace :admin do
     resources :donations, only: [ :index, :show ]

@@ -83,7 +83,7 @@ header {
 
   }
   .sub-line {
-    font-size: 1em;
+    font-size: 0.9em;
     color: #aaa;
     line-height: 1.1;
     margin-bottom: 2em;
@@ -93,6 +93,7 @@ header {
 
 #bsa-logo {
   margin: 0 auto 2em auto;
+  opacity: 0.5;
 }
 
 h1 {

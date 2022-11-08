@@ -1,0 +1,12 @@
+!!!
+%html(lang="en")
+  = render 'shared/head'
+  %body
+    = render 'shared/driver_header'
+
+    = render 'shared/flash'
+
+    .container-fluid
+      = yield
+
+    = render 'shared/footer'

@@ -1,0 +1,28 @@
+#driver-zones
+  %h1= @zone.name
+
+  .table-responsive
+    %table.table.table-striped.driver-zones
+      %thead
+        %tr
+          %th.buttons Status
+          %th.house House
+          %th.street Street
+
+          %th.notes Notes
+          %th.name Name
+          %th.phone Phone
+          %th.zone Zone
+      %tbody
+        - @reservations.each do |reservation|
+          %tr
+            %td.buttons
+              = button_to "Picked", "", class: 'btn btn-success'
+              = button_to "Missing", "", class: 'btn btn-sm btn-danger'
+            %td.house= reservation.house_number
+            %td.street= reservation.street_name
+
+            %td.notes= reservation.notes
+            %td.name= reservation.name
+            %td.phone= reservation.phone
+            %td.zone= reservation.zone.name

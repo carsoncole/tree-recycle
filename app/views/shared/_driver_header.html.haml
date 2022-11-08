@@ -1,0 +1,21 @@
+%header
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-primary#main-navbar
+    .container-fluid
+      - site_title = 'Tree Driver'
+
+      = link_to driver_home_path, class: 'navbar-brand' do
+        %i.fa-solid.fa-tree.fa-lg
+        = site_title
+
+      %button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+        %span.navbar-toggler-icon
+      .collapse.navbar-collapse#navbarSupportedContent
+        %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+
+          %li.nav-item
+            = link_to "Zones", driver_zones_path, class: 'nav-link'
+          / %li.nav-item
+          /   = link_to "Map", admin_map_path, class: 'nav-link'
+
+        %ul.navbar-nav.my-2.my-lg-0
+          %li.nav-item
