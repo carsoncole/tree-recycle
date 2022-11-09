@@ -22,20 +22,14 @@
               %i.fa-solid.fa-question
           %li.nav-item
             = link_to "About", about_path, class: "nav-link"
-          - if signed_in?
-            %li.nav-item
-              = link_to "Reservations", admin_reservations_path, class: 'nav-link'
-            %li.nav-item
-              = link_to "Donations", admin_donations_path, class: 'nav-link'
-            %li.nav-item
-              = link_to "Settings", admin_settings_path, class: 'nav-link'
-            %li.nav-item
-              = link_to "Zones", admin_zones_path, class: 'nav-link'
-            %li.nav-item
-              = link_to "Map", admin_map_path, class: 'nav-link'
+
 
         %ul.navbar-nav.my-2.my-lg-0
           - if signed_in?
+            %li.nav-item
+              = link_to "Admin", admin_root_path, class: "btn btn-outline-light btn-site"
+            %li.nav-item
+              = link_to "Drivers", driver_root_path, class: 'btn btn-outline-light btn-site'
             %li.nav-item= button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
           - else
             %li.nav-item= link_to 'Sign in', sign_in_path, class: 'nav-link'

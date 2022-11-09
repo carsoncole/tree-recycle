@@ -1,6 +1,9 @@
 #TODO create zone reports for use on day of event
 class Zone < ApplicationRecord
+  default_scope { order(name: :asc) }
+
   has_many :reservations, dependent: :nullify
+  belongs_to :team, optional: true
 
   validates :name, :street, :city, :country, :distance, presence: true
 
@@ -24,5 +27,4 @@ class Zone < ApplicationRecord
       [latitude, longitude]
     end
   end
-
 end

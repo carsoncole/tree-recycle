@@ -6,20 +6,21 @@
 .row
   .col-md-3
   .col-md-6
-    %table.table
-      %thead
-        %tr
-          %th
-            %i.fa-solid.fa-map
-          %th.text-center
-            %i.fa-solid.fa-list-ul
-          %th.text-center
-            %i.fa-solid.fa-list-check
-          %th
-            %i.fa-solid.fa-truck
-      - @zones.each do |zone|
-        %tr
-          %td= link_to zone.name, [:driver, zone]
-          %td.text-center= zone.reservations.count
-          %td.text-center= zone.reservations.pending_pickup.count
-          %td John, Mary, Lisa
+    .table-responsive
+      %table.table
+        %thead
+          %tr
+            %th
+              %i.fa-solid.fa-map
+            %th.text-center
+              %i.fa-solid.fa-list-ul
+            %th.text-center
+              %i.fa-solid.fa-list-check
+            %th
+              %i.fa-solid.fa-truck
+        - @zones.each do |zone|
+          %tr
+            %td= link_to zone.name, [:driver, zone]
+            %td.text-center= zone.reservations.count
+            %td.text-center= zone.reservations.pending_pickup.count
+            %td John, Mary, Lisa

@@ -1,0 +1,27 @@
+%h1 Drivers
+
+.table-responsive
+  %table.table#admin-drivers
+    %thead
+      %tr
+        %th Name
+        %th Team
+        %th Email
+        %th Phone
+        %th
+
+    %tbody
+      - @drivers.each do |driver|
+        %tr
+          %td.name= driver.name
+          %td.team= driver.team.name
+          %td.email= driver.email
+          %td.phone= driver.phone
+          %td
+            = link_to 'Show', admin_driver_path(driver)
+            = link_to 'Edit', edit_admin_driver_path(driver)
+            = link_to 'Destroy', admin_driver_path(driver), method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Driver', new_admin_driver_path

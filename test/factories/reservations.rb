@@ -14,9 +14,5 @@ FactoryBot.define do
       latitude { 47.6259654 }
       longitude { -122.517533 }
     end
-
-    factory :reservation_with_phone do
-      phone { Faker::PhoneNumber.cell_phone }
-    end
   end
 end

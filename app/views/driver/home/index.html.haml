@@ -1,2 +1,23 @@
-%h1 Driver::Home#index
-%p Find me in app/views/driver/home/index.html.haml
+.row.mb-5
+  .col-md-3
+  .col-md-6
+    %h1.mb-0 Welcome Drivers!
+    %p This is your place for getting up-to-date info.
+
+
+.row
+  .col-md-3
+  .col-md-6
+    #stats
+      We have
+      %span.number= pluralize(Reservation.pending_pickup.count, "tree")
+      to pick up and so far we've picked up
+      %span.number
+        = succeed(".") do
+          = pluralize(number_with_delimiter(Reservation.picked_up.count), "tree")
+
+
+    %p.mt-5
+      = link_to "Teams", driver_teams_path
+      \|
+      = link_to "Zones", driver_zones_path

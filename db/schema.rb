@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_08_045036) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_09_032556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-
-  create_table "admin_zones", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "city"
-    t.string "state"
-    t.string "distance"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "donations", force: :cascade do |t|
     t.uuid "reservation_id"
@@ -37,6 +27,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_045036) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reservation_id"], name: "index_donations_on_reservation_id"
+  end
+
+  create_table "drivers", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.string "email"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_drivers_on_team_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_045036) do
     t.text "description"
     t.text "on_day_of_pickup_instructions"
     t.boolean "is_reservations_open", default: true
-    t.boolean "is_emailing_enabled", default: false
+    t.boolean "is_emailing_enabled", default: true
     t.datetime "pickup_date_and_time"
     t.string "default_city"
     t.string "default_state"
@@ -92,6 +92,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_045036) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "sign_up_deadline_at"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -118,6 +124,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_045036) do
     t.decimal "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "team_id"
   end
 
   add_foreign_key "donations", "reservations"

@@ -1,0 +1,28 @@
+.row
+  .col-md-3
+  .col-md-6
+    %h1= @team.name
+
+.row.mb-4
+  .col-md-3
+  .col-md-6
+    %h3 Drivers
+    .table-responsive
+      %table.table
+        - @drivers.each do |driver|
+          %tr
+            %td= driver.name
+            %td= link_to driver.phone, "tel:#{driver.phone}"
+            %td= driver.email
+
+.row
+  .col-md-3
+  .col-md-6
+    %h3 Zones
+    .table-responsive
+      %table.table
+        - @zones.each do |zone|
+          %tr
+            %td= link_to zone.name, [:driver, zone]
+            %td
+            %td

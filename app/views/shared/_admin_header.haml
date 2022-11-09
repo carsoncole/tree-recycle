@@ -1,0 +1,42 @@
+%header
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-danger#main-navbar
+    .container-fluid
+      - site_title = 'Admin'
+
+      = link_to driver_home_path, class: 'navbar-brand' do
+        %i.fa-solid.fa-tree.fa-lg
+        = site_title
+
+      %button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+        %span.navbar-toggler-icon
+      .collapse.navbar-collapse#navbarSupportedContent
+        %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+
+
+          - if signed_in?
+
+            %li.nav-item
+              = link_to "Reservations", admin_reservations_path, class: 'nav-link'
+            %li.nav-item
+              = link_to "Donations", admin_donations_path, class: 'nav-link'
+            %li.nav-item
+              = link_to "Teams", admin_teams_path, class: 'nav-link'
+            %li.nav-item
+              = link_to "Zones", admin_zones_path, class: 'nav-link'
+            %li.nav-item
+              = link_to "Drivers", admin_drivers_path, class: 'nav-link'
+            %li.nav-item
+              = link_to "Map", admin_map_path, class: 'nav-link'
+            %li.nav-item
+              = link_to admin_settings_path, class: 'nav-link' do
+                %i.fa-solid.fa-gear.fa-lg
+        %ul.navbar-nav.my-2.my-lg-0
+          %li.nav-item
+            = link_to "Main", root_path, class: 'btn btn-outline-light btn-site'
+          %li.nav-item
+            = link_to "Drivers", driver_root_path, class: 'btn btn-outline-light btn-site'
+          %li.nav-item
+            - if signed_in?
+              %li.nav-item= button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
+            - else
+              %li.nav-item= link_to 'Sign in', sign_in_path, class: 'nav-link'

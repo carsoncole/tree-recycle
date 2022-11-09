@@ -43,12 +43,17 @@ Rails.application.routes.draw do
   post 'stripe-webhook' => "donations#stripe_webhook"
 
   namespace :driver do
+    root 'home#index'
     resources :zones, only: %i( index show )
+    resources :teams, only: %i( index show )
     get 'home' => 'home#index', as: 'home'
   end
 
 
   namespace :admin do
+    root 'reservations#index'
+    resources :teams
+    resources :drivers
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :reservations, only: [ :index, :show, :edit, :update ] do

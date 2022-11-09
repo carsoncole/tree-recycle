@@ -17,6 +17,7 @@
   %thead
     %tr
       %th Name
+      %th Team
       %th Count
       %th Street
       %th City
@@ -33,6 +34,7 @@
           = zone.name
           = link_to admin_zone_map_path(zone) do
             %i.fa-brands.fa-google
+        %td= zone&.team&.name
         %td= zone.reservations.count
         %td= zone.address
         %td= zone.city

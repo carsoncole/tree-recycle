@@ -6,11 +6,11 @@
     .bottom-line
       .tree Tree
       .recycle Recycle
-  .sub-line
+  .sub-line.mb-5
     Recycling Bainbridge Christmas trees since 1997
 
 
-  %p.mt-1.mb-5.text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg'
+  %p.mt-1.mb-5.text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg mt-3 mb-3'
 
 
   .row
@@ -24,6 +24,3 @@
       - if setting&.pickup_date_and_time
         .date= nice_date_time(setting&.pickup_date_and_time)
 
-
-  .text-center
-    = image_tag "bsa-logo.png", width: '120', id: 'bsa-logo'

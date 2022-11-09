@@ -1,7 +1,7 @@
 %header
   %nav.navbar.navbar-expand-lg.navbar-dark.bg-primary#main-navbar
     .container-fluid
-      - site_title = 'Tree Driver'
+      - site_title = 'Driver'
 
       = link_to driver_home_path, class: 'navbar-brand' do
         %i.fa-solid.fa-tree.fa-lg
@@ -12,10 +12,24 @@
       .collapse.navbar-collapse#navbarSupportedContent
         %ul.navbar-nav.me-auto.mb-2.mb-lg-0
 
+
+          %li.nav-item
+            = link_to "Home", driver_home_path, class: 'nav-link'
           %li.nav-item
             = link_to "Zones", driver_zones_path, class: 'nav-link'
+          %li.nav-item
+            = link_to "Teams", driver_teams_path, class: 'nav-link'
           / %li.nav-item
           /   = link_to "Map", admin_map_path, class: 'nav-link'
 
         %ul.navbar-nav.my-2.my-lg-0
           %li.nav-item
+            = link_to "Main", root_path, class: 'btn btn-outline-light btn-site'
+          - if signed_in?
+            %li.nav-item
+              = link_to "Admin", admin_root_path, class: "btn btn-outline-light btn-site"
+          %li.nav-item
+            - if signed_in?
+              %li.nav-item= button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
+            - else
+              %li.nav-item= link_to 'Sign in', sign_in_path, class: 'nav-link'

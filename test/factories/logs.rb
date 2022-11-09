@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :log do
-    reservation { nil }
+    message { Faker::Lorem.sentence }
   end
 end

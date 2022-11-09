@@ -1,5 +1,6 @@
 require 'csv'
 #OPTIMIZE improve zone assignments
+#FIXME sending of confirmation email on create/update of pending status
 class Reservation < ApplicationRecord
   belongs_to :zone, optional: true
   has_many :donations
@@ -105,49 +106,25 @@ class Reservation < ApplicationRecord
   # sends hello email to ARCHIVED reservations that have not been previously sent this email.
   def self.send_hello_email!
     archived.each do |archived_reservation|
-      UserMailer.with(reservation: archived_reservation).hello_email.deliver_now
+      UserMailer.with(reservation: archived_reservation).hello_email.deliver_later
     end
   end
 
   # sends last call email to ARCHIVED reservations that have not been previously sent this email.
   def self.send_last_call_email!
     archived.each do |archived_reservation|
-      UserMailer.with(reservation: archived_reservation).last_call_email.deliver_now
+      UserMailer.with(reservation: archived_reservation).last_call_email.deliver_later
     end
   end
 
   private
 
-  def set_picked_up_at!
-    self.picked_up_at = Time.now
-  end
-
-  def clear_picked_up_at!
-    self.picked_up_at = nil
-  end
-
-  def set_is_missing_at!
-    self.is_missing_at = Time.now
-  end
-
-  def clear_is_missing_at!
-    self.is_missing_at = nil
-  end
-
-  def clear_is_missing!
-    self.is_missing, self.is_missing_at = nil, nil
-  end
-
-  def clear_is_picked_up!
-    self.is_picked_up, self.picked_up_at = nil, nil
-  end
-
   def log_creation!
     logs.create(message: 'Reservation created')
   end
 
-  def log_cancellation!
-    logs.create(message: 'Reservation cancelled')
+  def log_pending_pickup!
+    logs.create(message: 'Tree is pending pickup')
   end
 
   def log_picked_up!
@@ -158,8 +135,8 @@ class Reservation < ApplicationRecord
     logs.create(message: 'Pickup attempted. Tree not found.')
   end
 
-  def log_pending_pickup!
-    logs.create(message: 'Tree is pending pickup')
+  def log_cancellation!
+    logs.create(message: 'Reservation cancelled')
   end
 
 end

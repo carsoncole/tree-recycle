@@ -1,0 +1,14 @@
+.row
+  .col-md-3
+  .col-md-6
+    %h1 Teams
+
+.row
+  .col-md-3
+  .col-md-6
+    .table-responsive
+      %table.table#driver-teams
+        - @teams.each do |team|
+          %tr
+            %td= link_to team.name, driver_team_path(team)
+

@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class Admin::SearchTest < ApplicationSystemTestCase
   setup do
-    @reservation = create(:reservation)
+    @reservation = create(:reservation_with_coordinates)
   end
 
   test "searching for a reservation" do
