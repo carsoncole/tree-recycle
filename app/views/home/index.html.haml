@@ -10,11 +10,13 @@
     Recycling Bainbridge Christmas trees since 1997
 
 
-  .pickup_date
+
+
+  .text-center.pickup_date
     = nice_date(setting&.pickup_date_and_time)
 
 
-  .text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary mt-3', id: 'reservation-button'
+  .text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary', id: 'reservation-button'
 
 
   .row
