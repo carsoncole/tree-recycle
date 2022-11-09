@@ -6,21 +6,22 @@
     .bottom-line
       .tree Tree
       .recycle Recycle
-  .sub-line.mb-5
+  .sub-line
     Recycling Bainbridge Christmas trees since 1997
 
 
-  %p.mt-1.mb-5.text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg mt-3 mb-3'
+  .pickup_date
+    = nice_date(setting&.pickup_date_and_time)
+
+
+  .text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary mt-3', id: 'reservation-button'
 
 
   .row
-    .col-md-6.text-center.important-date
-      %h3 Sign-up Deadline
+    .col-md-2
+    .col-md-8.text-center.important-date
+      Reservations close on
       - if setting&.sign_up_deadline_at
-        .date
-          = nice_date_time(setting&.sign_up_deadline_at)
-    .col-md-6.text-center.important-date
-      %h3 Pick-up
-      - if setting&.pickup_date_and_time
-        .date= nice_date_time(setting&.pickup_date_and_time)
+        = nice_date_time(setting&.sign_up_deadline_at)
+
 
