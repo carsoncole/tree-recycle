@@ -1,6 +1,16 @@
 .row
-  .col-md-8
-    %h3.message We are having trouble figuring out your address.
+  .col-md-12
+    .text-center
+      %i.fa-solid.fa-question.fa-lg.address-verification-map
+      %i.fa-solid.fa-map-location.fa-lg.address-verification-map
+      %i.fa-solid.fa-question.fa-lg.address-verification-map
+    %h3.message.mb-4
+      We are having trouble figuring out your address and
+      - if @address_not_found
+        can't seem to find your address.
+      - elsif @multiple_addresses_found
+        there seems to be multiple similar addresses.
+      We need your official USPS address. Put any additional information you can put in the notes.
 
 
 
@@ -23,13 +33,22 @@
           = f.submit 'Use original address', class: 'btn btn-primary btn-lg'
 - else
 
-  %p We can't seem to find that address at all. If you could try once more...
+  %p.mb-4 If you could try one last time and make any adjustments. We'll take your address as you provide it and do our best to find it and/or contact you on pickup day.
 
   = form_for @reservation do |f|
     .row
-      .col-md-6
+      .col-md-12
         .mb-3
           = f.label :street_address, class: 'form-label'
           = f.text_field :street, class: 'form-control'
+        .mb-3
+          = f.label :notes, class: 'form-label'
+          = f.text_area :notes, class: 'form-control'
+        .mb-3
+          = f.label :city, class: 'form-label'
+          = f.text_field :city, class: 'form-control', disabled: true
+        .mb-3
+          = f.label :state, class: 'form-label'
+          = f.text_field :state, class: 'form-control', disabled: true
         .actions
           = f.submit 'Register your address', class: 'btn btn-primary btn-lg'

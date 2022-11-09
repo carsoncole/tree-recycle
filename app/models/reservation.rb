@@ -6,13 +6,13 @@ class Reservation < ApplicationRecord
   has_many :donations
   has_many :logs, dependent: :destroy
 
-  enum :status, { pending_pickup: 0, picked_up: 1, missing: 2, cancelled: 3, archived: 99 }
+  enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
   after_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
 
-  after_create :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? }
+  after_save :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status?}
   after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.saved_change_to_status? && obj.cancelled? }
 
   after_create :log_creation!

@@ -11,11 +11,19 @@
               Confirmation
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
-              This email is to confirm that we will pick up your tree at
-              = @reservation.short_address
-              on
+              This email is to confirm that we will be picking up your tree on
               = succeed(".") do
                 = Setting&.first&.pickup_date_and_time&.strftime("%B %-d, %Y")
+
+            %table(width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 30px")
+              %tr
+                %td
+                  %table(cellspacing="0" cellpadding="0")
+                    %tr
+                      %td(syle="border-radius: 2px" bgcolor="#CE1126" width="100%" style='text-align:center;')
+                        %div(style="padding: 12px 15px; border: 1px solid #CE1126;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 16px; color: #ffffff !important;text-align:center;font-weight:bold;display: inline-block;")
+                          = @reservation.short_address
+
 
             %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; margin: 0; padding: 0;")
               On the Day of Collection

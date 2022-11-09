@@ -16,7 +16,7 @@ class ReservationsMailerTest < ActionMailer::TestCase
     # assert_equal ["me@example.com"], email.from
     assert_equal [reservation.email], email.to
     assert_equal "Your tree pickup is confirmed", email.subject
-    assert email.html_part.body.to_s.include? 'This email is to confirm that we will pick up your tree at'
+    assert email.html_part.body.to_s.include? 'This email is to confirm that we will be picking up your tree on'
   end
 
   test "cancelled reservation email" do
@@ -77,7 +77,7 @@ class ReservationsMailerTest < ActionMailer::TestCase
 
   test "delivery of email on confirmed email" do
     assert_emails 1 do
-      reservation = create(:reservation_with_coordinates, no_emails: false)
+      reservation = create(:reservation_with_coordinates)
     end
   end
 
@@ -86,5 +86,15 @@ class ReservationsMailerTest < ActionMailer::TestCase
     assert_emails 1 do
       reservation.cancelled!
     end
+  end
+
+  test "confirmed email non-delivery with bad address" do
+    assert_emails 0 do
+      @reservation = create(:reservation_with_bad_address)
+    end
+    assert_emails 1 do
+      @reservation.pending_pickup!
+    end
+
   end
 end

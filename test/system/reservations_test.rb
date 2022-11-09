@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class ReservationsTest < ApplicationSystemTestCase
   test "creating a valid minimal reservation with good address" do
-    reservation = build(:reservation_with_good_address)
+    reservation = build(:reservation)
 
     visit root_url
     click_on "Reserve a tree pickup"
@@ -21,7 +21,7 @@ class ReservationsTest < ApplicationSystemTestCase
   end
 
   test "creating a valid reservation with all info" do
-    reservation = build(:reservation_with_good_address)
+    reservation = build(:reservation)
 
     visit root_url
     click_on "Reserve a tree pickup"

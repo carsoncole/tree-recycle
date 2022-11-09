@@ -33,15 +33,21 @@ class ReservationsController < ApplicationController
         render :form_2
       end
       @verified_street = response.get(address).address1
+    rescue USPS::MultipleAddressError
+      @multiple_addresses_found = true
     rescue USPS::AddressNotFoundError
+      @address_not_found = true
+    rescue
       @address_not_found = true
     end
   end
 
   def create
     @reservation = Reservation.new(reservation_params)
+
     if @reservation.save
       if @reservation.geocoded?
+        @reservation.pending_pickup!
         redirect_to new_reservation_donation_url(@reservation), notice: 'Your reservation is confirmed.'
       else
         redirect_to reservation_address_verification_url(@reservation)
@@ -54,8 +60,9 @@ class ReservationsController < ApplicationController
 
   def update
     redirect_to root_url, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
+
     if @reservation.update(reservation_params)
-      @reservation.pending_pickup! if !@reservation.pending_pickup?
+      @reservation.pending_pickup! if @reservation.unconfirmed?
       message = if @reservation.pending_pickup?
         "Reservation was successfully updated and is confirmed for pick up."
       else

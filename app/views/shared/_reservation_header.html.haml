@@ -18,3 +18,7 @@
       = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
         %i.fa-solid.fa-times
         Cancel
+
+  .text-center
+    .address
+      = @reservation.address

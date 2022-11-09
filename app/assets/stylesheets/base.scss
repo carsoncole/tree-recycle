@@ -202,6 +202,17 @@ table.reservation {
     padding-left: 0.5em;
 
   }
+
+  .address {
+    background-color: $scout-red;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    display: inline-block;
+    padding: 0.7em 1em;
+    margin: 2em auto 1em auto;
+  }
+
 }
 
 #flash {
@@ -303,4 +314,9 @@ table#admin-drivers {
     font-size: 1.1em;
     font-weight: 600;
   }
+}
+.address-verification-map {
+  text-align: center;
+  font-size: 4em;
+  margin: 1em 0.2em 1.2em 0.2em;
 }

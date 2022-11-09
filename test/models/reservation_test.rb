@@ -19,7 +19,7 @@ class ReservationTest < ActiveSupport::TestCase
   end
 
   test "geocoding of new reservations" do
-    reservation = build(:reservation_with_good_address)
+    reservation = build(:reservation)
     assert_not reservation.geocoded?
     reservation.save
     assert reservation.geocoded?

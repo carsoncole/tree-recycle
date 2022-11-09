@@ -1,13 +1,13 @@
 FactoryBot.define do
   factory :reservation do
     name { Faker::Name.name }
-    street { Faker::Address.street_address }
+    street { '215 Ericksen Ave NE' }
     email { Faker::Internet.email }
-    status { 0 }
-    no_emails { true }
+    status { 1 }
 
-    factory :reservation_with_good_address do
-      street { '215 Ericksen Ave NE' }
+    factory :reservation_with_bad_address do
+      street { Faker::Address.street_name }
+      status { 0 }
     end
 
     factory :reservation_with_coordinates do
