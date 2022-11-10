@@ -4,17 +4,19 @@
   %thead
     %tr
       %th Name
+      %th Leader
       %th
-      %th
-      %th
+
 
   %tbody
     - @teams.each do |team|
       %tr
         %td= team.name
-        %td= link_to 'Show', admin_team_path(team)
-        %td= link_to 'Edit', edit_admin_team_path(team)
-        %td= link_to 'Destroy', admin_team_path(team), method: :delete, data: { confirm: 'Are you sure?' }
+        %td= team&.leader&.name
+        %td
+          = link_to 'Show', admin_team_path(team)
+          = link_to 'Edit', edit_admin_team_path(team)
+          = link_to 'Destroy', admin_team_path(team), method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
