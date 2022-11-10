@@ -1,5 +1,7 @@
 #TODO create route reports for use on day of event
 class Route < ApplicationRecord
+  include Geocodable
+
   default_scope { order(name: :asc) }
 
   has_many :reservations, dependent: :nullify
@@ -19,13 +21,4 @@ class Route < ApplicationRecord
     self.distance ||= 1
   end
 
-  def address
-    [street, city, state, country].compact.join(', ')
-  end
-
-  def coordinates
-    if geocoded?
-      [latitude, longitude]
-    end
-  end
 end

@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_065415) do
     t.datetime "updated_at", null: false
     t.bigint "leader_id"
     t.string "street"
+    t.string "city"
     t.string "state"
     t.string "country"
     t.decimal "latitude"

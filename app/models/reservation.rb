@@ -2,6 +2,8 @@ require 'csv'
 #OPTIMIZE improve route assignments
 #FIXME sending of confirmation email on create/update of pending status
 class Reservation < ApplicationRecord
+  include Geocodable
+
   belongs_to :route, optional: true
   has_many :donations
   has_many :logs, dependent: :destroy
@@ -33,10 +35,6 @@ class Reservation < ApplicationRecord
 
   def self.open?
     Setting.first_or_create.is_reservations_open?
-  end
-
-  def address
-    [street, city, state, country].compact.join(', ')
   end
 
   def short_address
@@ -97,12 +95,6 @@ class Reservation < ApplicationRecord
     Setting.first.update(is_emailing_enabled: false)
     CSV.foreach(file.path, headers: true) do |row|
       Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'], latitude: row['lat'], longitude: row['lng'], house_number: row['house'], street_name: row['street'], route_name: row['route'], status: 'archived' )
-    end
-  end
-
-  def coordinates
-    if geocoded?
-      [latitude, longitude]
     end
   end
 
