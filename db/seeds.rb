@@ -18,6 +18,14 @@ Setting.first_or_create  do |setting|
   setting.default_country = "United States"
 end
 
+
+(1..16).each do
+  Driver.create(name: Faker::Name.name, team_id: rand(5) +1, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone)
+end
+
+
+
+
 streets = [
 '1760 Susan Place',
 '14265 Silven Ave NE',
