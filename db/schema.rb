@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_10_171436) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_175220) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_171436) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "zone_id"
+    t.index ["name"], name: "index_routes_on_name"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -133,6 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_171436) do
     t.string "country"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.index ["name"], name: "index_zones_on_name"
   end
 
   add_foreign_key "donations", "reservations"
