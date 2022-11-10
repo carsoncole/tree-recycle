@@ -2,8 +2,8 @@ require "test_helper"
 
 class Driver::ReservationsControllerTest < ActionDispatch::IntegrationTest
   test "should get map" do
-    zone = create(:zone)
-    get driver_reservations_map_url(zone_id: zone.id)
+    route = create(:route)
+    get driver_reservations_map_url(route_id: route.id)
     assert_response :success
   end
 

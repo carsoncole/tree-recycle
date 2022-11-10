@@ -83,17 +83,17 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     end
   end
 
-  test "changing reservation zone" do
+  test "changing reservation route" do
     system_test_signin
-    create_list(:zone, 3)
+    create_list(:route, 3)
 
     visit admin_reservation_path(@reservation)
-    assert_selector '#zone-name', text: ''
+    assert_selector '#route-name', text: ''
 
     click_on 'Edit'
-    select Zone.first.name, from: 'zone-dropdown'
+    select Route.first.name, from: 'route-dropdown'
     click_on 'Save'
 
-    assert_selector '#zone-name', text: Zone.first.name
+    assert_selector '#route-name', text: Route.first.name
   end
 end

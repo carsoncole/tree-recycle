@@ -1,5 +1,5 @@
-#TODO create zone reports for use on day of event
-class Zone < ApplicationRecord
+#TODO create route reports for use on day of event
+class Route < ApplicationRecord
   default_scope { order(name: :asc) }
 
   has_many :reservations, dependent: :nullify

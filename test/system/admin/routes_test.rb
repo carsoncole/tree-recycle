@@ -1,40 +1,40 @@
 require "application_system_test_case"
 
-#OPTIMIZE add more zone assignment tests. Not enough
-class Admin::ZonesTest < ApplicationSystemTestCase
+#OPTIMIZE add more route assignment tests. Not enough
+class Admin::RoutesTest < ApplicationSystemTestCase
 
   def setup
-    @zones = [
+    @routes = [
       { name: 'South Island', street: '10701 NE South Beach Dr', lat: 47.574630345403, lon: -122.5087443506282 },
       { name: 'Commodore', street: '1526 Arthur Pl NW', lat: 47.63822191836735, lon: -122.5278680204082  },
       { name: 'Day Road', street: '9229 Day Road', lat: 47.67917440119761, lon:  -122.5272910538922 }
     ]
   end
 
-  test "creating zones that are correctly geocoded" do
+  test "creating routes that are correctly geocoded" do
     system_test_signin
-    click_on 'Zones'
+    click_on 'Routes'
 
     table_row_count = 1
-    assert_equal find('#zones-table').all(:css, 'tr').count, table_row_count
+    assert_equal find('#routes-table').all(:css, 'tr').count, table_row_count
 
-    @zones.each do |z|
-      click_on 'new-zone-link'
+    @routes.each do |z|
+      click_on 'new-route-link'
       fill_in "Name", with: z[:name]
       fill_in "Street", with: z[:street]
       fill_in "City", with: 'Bainbridge Island'
       fill_in "State", with: 'Washington'
       click_on "Save"
       table_row_count += 1
-      assert_text "Zone was successfully created."
-      assert Zone.where(name: z[:name]).first.geocoded?
-      assert_equal find('#zones-table').all(:css, 'tr').count, table_row_count
+      assert_text "Route was successfully created."
+      assert Route.where(name: z[:name]).first.geocoded?
+      assert_equal find('#routes-table').all(:css, 'tr').count, table_row_count
     end
   end
 
-  test "correct zone assignments" do
-    @zones.each do |z|
-      create(:zone, name: z[:name], street: z[:street], latitude: z[:lat], longitude: z[:lon], city: 'Bainbridge Island', state: 'Washington')
+  test "correct route assignments" do
+    @routes.each do |z|
+      create(:route, name: z[:name], street: z[:street], latitude: z[:lat], longitude: z[:lon], city: 'Bainbridge Island', state: 'Washington')
     end
 
     # create a reservation
@@ -48,7 +48,7 @@ class Admin::ZonesTest < ApplicationSystemTestCase
     system_test_signin
     reservation = Reservation.order(created_at: :desc).first
     click_on 'Reservations'
-    click_on "process-zone-button-#{reservation.id}"
+    click_on "process-route-button-#{reservation.id}"
     click_on 'Carson'
     within "#delivery" do
       assert_text "Commodore"

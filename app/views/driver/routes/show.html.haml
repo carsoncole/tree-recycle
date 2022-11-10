@@ -1,11 +1,11 @@
-#driver-zones
+#driver-routes
   %h1
-    = @zone.name
-    = link_to driver_reservations_map_path(zone_id: @zone.id) do
+    = @route.name
+    = link_to driver_reservations_map_path(route_id: @route.id) do
       %i.fa-solid.fa-map
 
   .table-responsive
-    %table.table.table-striped.driver-zones
+    %table.table.table-striped.driver-routes
       %thead
         %tr
           %th.buttons Status
@@ -15,7 +15,7 @@
           %th.notes Notes
           %th.name Name
           %th.phone Phone
-          %th.zone Zone
+          %th.route Route
       %tbody
         - @reservations.each do |reservation|
           %tr
@@ -28,4 +28,4 @@
             %td.notes= reservation.notes
             %td.name= reservation.name
             %td.phone= reservation.phone
-            %td.zone= reservation.zone.name
+            %td.route= reservation.route.name

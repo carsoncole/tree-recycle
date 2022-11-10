@@ -54,7 +54,7 @@ class ReservationsTest < ApplicationSystemTestCase
     click_on "Register your address"
     sleep 2
 
-    assert_text "We are having trouble figuring out your address."
+    assert_text "Ouch! We are having issues and"
     click_on "Register your address"
 
     assert_text "Reservation was successfully updated and is confirmed for pick up."
@@ -76,7 +76,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     sleep 2
 
-    assert_text "We are having trouble figuring out your address."
+    assert_text "Ouch! We are having issues and"
     click_on "Use this corrected address"
 
     assert_text "Reservation was successfully updated and is confirmed for pick up."

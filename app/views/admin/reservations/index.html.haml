@@ -1,8 +1,8 @@
 %h1
   Reservations
-  - if params[:zone_id]
+  - if params[:route_id]
     \-
-    = Zone.find(params[:zone_id]).name
+    = Route.find(params[:route_id]).name
   .additional_info
     = surround("(", ")") do
       = @reservations.count
@@ -22,9 +22,9 @@
   = link_to "Cancelled", admin_reservations_path(cancelled: true)
   = '|'
   = link_to "Archived", admin_reservations_path(archived: true)
-  - Zone.all.each do |zone|
+  - Route.all.each do |route|
     = '|'
-    = link_to zone.name, admin_reservations_path(zone_id: zone.id)
+    = link_to route.name, admin_reservations_path(route_id: route.id)
 
 
 %table.table.reservations
@@ -33,7 +33,7 @@
       %th Name
       %th
       %th Street
-      %th Zone
+      %th Route
       %th
 
 
@@ -49,11 +49,11 @@
 
 
         %td
-          - if reservation.zone_id?
-            = link_to admin_reservations_path(zone_id: reservation.zone_id) do
-              = reservation&.zone&.name
+          - if reservation.route_id?
+            = link_to admin_reservations_path(route_id: reservation.route_id) do
+              = reservation&.route&.name
               = surround("(", ")") do
-                = pluralize(reservation.distance_to_zone.round(2), "mile")
+                = pluralize(reservation.distance_to_route.round(2), "mile")
 
         %td.actions
           = link_to admin_reservation_path(reservation), class: 'view-reservation-button' do
@@ -62,7 +62,7 @@
             %i.fa-solid.fa-pen.icon
           = link_to reservation, method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
             %i.fa-solid.fa-trash.icon
-          = link_to admin_reservation_process_zone_path(reservation), method: :post, id: "process-zone-button-#{reservation.id}", data: { "turbo-method": :post } do
+          = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
             %i.fa-solid.fa-bolt.icon
 
 

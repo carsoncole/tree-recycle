@@ -1,8 +1,8 @@
 require 'csv'
-#OPTIMIZE improve zone assignments
+#OPTIMIZE improve route assignments
 #FIXME sending of confirmation email on create/update of pending status
 class Reservation < ApplicationRecord
-  belongs_to :zone, optional: true
+  belongs_to :route, optional: true
   has_many :donations
   has_many :logs, dependent: :destroy
 
@@ -22,7 +22,7 @@ class Reservation < ApplicationRecord
   after_update :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? }
   after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
   after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
-  after_update :process_zone!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? }
+  after_update :process_route!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? }
 
   def initialize(args)
     super
@@ -43,9 +43,9 @@ class Reservation < ApplicationRecord
     [street, city, state].compact.join(', ')
   end
 
-  def self.process_all_zones!
+  def self.process_all_routes!
     all.each do |r|
-      r.process_zone!
+      r.process_route!
     end
   end
 
@@ -69,16 +69,16 @@ class Reservation < ApplicationRecord
     end
   end
 
-  def process_zone!
+  def process_route!
     return unless geocoded?
 
-    Zone.all.each do |z|
-      next if z == zone
-      distance_to_new_zone = self.distance_to(z.coordinates)
+    Route.all.each do |z|
+      next if z == route
+      distance_to_new_route = self.distance_to(z.coordinates)
 
-      if (zone && distance_to_zone > distance_to_new_zone) || zone.nil?
-        self.zone_id = z.id
-        self.distance_to_zone = distance_to_new_zone
+      if (route && distance_to_route > distance_to_new_route) || route.nil?
+        self.route_id = z.id
+        self.distance_to_route = distance_to_new_route
       end
     end
     save

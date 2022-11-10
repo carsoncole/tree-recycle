@@ -1,7 +1,7 @@
 .row
   .col-md-3
   .col-md-6
-    %h1 Zones
+    %h1 Routes
 
 .row
   .col-md-3
@@ -19,12 +19,12 @@
               %i.fa-solid.fa-list-check
             %th
               %i.fa-solid.fa-truck
-        - @zones.each do |zone|
+        - @routes.each do |route|
           %tr
-            %td= link_to zone.name, [:driver, zone]
+            %td= link_to route.name, [:driver, route]
             %td
-              = link_to driver_reservations_map_path(zone_id: zone.id) do
+              = link_to driver_reservations_map_path(route_id: route.id) do
                 %i.fa-solid.fa-map
-            %td.text-center= zone.reservations.count
-            %td.text-center= zone.reservations.pending_pickup.count
+            %td.text-center= route.reservations.count
+            %td.text-center= route.reservations.pending_pickup.count
             %td John, Mary, Lisa

@@ -1,5 +1,5 @@
-#driver-zones {
-  table.table.driver-zones {
+#driver-routes {
+  table.table.driver-routes {
     table-layout: fixed;
     thead {
       background-color: #000;
@@ -29,7 +29,7 @@
     &.phone {
       width: 10em;
     }
-    &.zone {
+    &.route {
       width: 12em;
     }
     &.street {
@@ -119,7 +119,7 @@
     display: none;
   }
 
-  #driver-zones {
+  #driver-routes {
     table.table thead {
       background-color: #000 !important;
       color: #fff !important;

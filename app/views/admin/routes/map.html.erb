@@ -7,7 +7,7 @@
     // Initialize and add the map
     function initMap() {
 
-        var locations = <%= raw @zone_reservations %>;
+        var locations = <%= raw @route_reservations %>;
 
         // Create the map, centered at gfg_office
         const map = new google.maps.Map(
@@ -15,7 +15,7 @@
 
             // Set the zoom of the map
             zoom: 15,
-            center: new google.maps.LatLng(<%= @zone_center_reservation[0] %>, <%= @zone_center_reservation[1] %>),
+            center: new google.maps.LatLng(<%= @route_center_reservation[0] %>, <%= @route_center_reservation[1] %>),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
         var infowindow = new google.maps.InfoWindow();

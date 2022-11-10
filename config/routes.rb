@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     get 'reservations/search' => 'reservations#search', as: 'reservations_search'
     get 'reservations/map' => 'reservations#map', as: 'reservations_map'
     root 'home#index'
-    resources :zones, only: %i( index show )
+    resources :routes, only: %i( index show )
     resources :teams, only: %i( index show )
     resources :drivers, only: %i( index show )
     get 'home' => 'home#index', as: 'home'
@@ -61,13 +61,13 @@ Rails.application.routes.draw do
     resources :settings, only: [ :index, :edit, :update ]
     resources :reservations, only: [ :index, :show, :edit, :update ] do
       get 'logs' => 'logs#index', as: 'logs'
-      post 'process-zone' => 'reservations#process_zone', as: 'process_zone'
+      post 'process-route' => 'reservations#process_route', as: 'process_route'
     end
 
-    post 'process-all-zones' => 'reservations#process_all_zones', as: 'process_all_zones'
+    post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
-    resources :zones do
-      get 'map' => 'zones#map', as: 'map'
+    resources :routes do
+      get 'map' => 'routes#map', as: 'map'
     end
     get 'search' => 'reservations#search', as: 'search'
   end

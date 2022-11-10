@@ -108,7 +108,7 @@ streets.each do |s|
   Reservation.create(name: reservation.name, street: s, email: reservation.email)
 end
 
-zones = [[name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+routes = [[name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Wing Point', distance: 0.25, street: '811 Cherry Ave', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Winslow', distance: 0.6, street: '305 Madison Ave N', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Port Madison', distance: 0.7, street: '9799 NE Lafayette Ave', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
@@ -127,6 +127,6 @@ zones = [[name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE Sout
 [name: 'Rolling Bay', distance: 0.6, street: '10075 NE Winther Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
 [name: 'Commodore', distance: 0.13, street: '1526 Arthur Pl NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States']]
 
-zones.each do |zone|
-  Zone.create(zone)
+routes.each do |route|
+  Route.create(route)
 end

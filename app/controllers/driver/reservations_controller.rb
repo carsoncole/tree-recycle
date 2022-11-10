@@ -3,6 +3,6 @@ class Driver::ReservationsController < Driver::DriverController
   end
 
   def map
-    @zone = Zone.find(params[:zone_id])
+    @route = Route.find(params[:route_id])
   end
 end

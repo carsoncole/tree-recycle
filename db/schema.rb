@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_10_034937) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_051526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -63,15 +63,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_034937) do
     t.boolean "is_cash_or_check"
     t.decimal "latitude"
     t.decimal "longitude"
-    t.bigint "zone_id"
-    t.decimal "distance_to_zone"
+    t.bigint "route_id"
+    t.decimal "distance_to_route"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.boolean "no_emails"
     t.string "route_name"
+    t.index ["route_id"], name: "index_reservations_on_route_id"
     t.index ["status"], name: "index_reservations_on_status"
-    t.index ["zone_id"], name: "index_reservations_on_zone_id"
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.string "name"
+    t.string "street"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.boolean "use_street_name"
+    t.decimal "distance"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "team_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -111,21 +126,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_034937) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
-  end
-
-  create_table "zones", force: :cascade do |t|
-    t.string "name"
-    t.string "street"
-    t.string "city"
-    t.string "state"
-    t.string "country"
-    t.boolean "use_street_name"
-    t.decimal "distance"
-    t.decimal "latitude"
-    t.decimal "longitude"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "team_id"
   end
 
   add_foreign_key "donations", "reservations"

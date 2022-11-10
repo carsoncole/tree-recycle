@@ -25,18 +25,18 @@
 .row
   .col-md-4
   .col-md-4
-    %h3 Zones
+    %h3 Routes
     %p
       Total pickups:
       XX
     .table-responsive
-      %table.table.driver_zones
-        - @zones.each do |zone|
+      %table.table.driver_routes
+        - @routes.each do |route|
           %tr
-            %td= link_to zone.name, [:driver, zone]
+            %td= link_to route.name, [:driver, route]
             %td.remaining
-              = pluralize(zone.reservations.pending_pickup.count, "pickup")
+              = pluralize(route.reservations.pending_pickup.count, "pickup")
               remaining
             %td.remaining
-              = pluralize(zone.reservations.picked_up.count, "pickup")
+              = pluralize(route.reservations.picked_up.count, "pickup")
               completed

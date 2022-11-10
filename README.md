@@ -1,6 +1,6 @@
 # Tree Recycle
 
-The Tree Recycle application is a customizable public website that does the jobs of taking tree recycle pick-up reservations and donations, sending out confirmations and a reminder on the pick-up date. On the administrative side, the application organizes reservations into pickup zones, and integrating with Google and Apple Maps to show pickup locations.
+The Tree Recycle application is a customizable public website that does the jobs of taking tree recycle pick-up reservations and donations, sending out confirmations and a reminder on the pick-up date. On the administrative side, the application organizes reservations into pickup routes, and integrating with Google and Apple Maps to show pickup locations.
 
 
 ## Requirements
@@ -91,16 +91,16 @@ Reservations is the resource for holding tree pickup reservations and they are c
 
 Registered users are administrators that can access all of the resources. Administrators (users) need to be manually created in the database as there is no access to signups through the UI.
 
-Zones are used to create areas of reservations, for convenient pick ups. Zones are set with a center point and a radius distance in miles. Reservations can also be manually assigned to a Zone.
+Routes are used to create areas of reservations, for convenient pick ups. Routes are set with a center point and a radius distance in miles. Reservations can also be manually assigned to a Route.
 
 There is an admin setting `Emailing enabled?` that controls whether emails are sent out.
 
 
 ## Mapping
 
-Reservations are grouped by admin-defined zones with a center point and a set radius. In all cases, each reservation will be grouped into the Zone that is nearest to it. This approach is not without problems as its possible that reservations that border multiple zones, may not be grouped the most efficiently.
+Reservations are grouped by admin-defined routes with a center point and a set radius. In all cases, each reservation will be grouped into the Route that is nearest to it. This approach is not without problems as its possible that reservations that border multiple routes, may not be grouped the most efficiently.
 
-Maps of all pickups within a zone are available in `Zones` in the adminstration section of the application. Clicking on each pickup on the map will show if its been picked up and has a link to directions to the pick-up.
+Maps of all pickups within a route are available in `Routes` in the adminstration section of the application. Clicking on each pickup on the map will show if its been picked up and has a link to directions to the pick-up.
 
 ![Screenshot](app/assets/images/map.png)
 

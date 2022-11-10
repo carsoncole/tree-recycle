@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :zone do
+  factory :route do
     name { Faker::Address.street_name }
     street { Faker::Address.street_address }
     city { Faker::Address.city }

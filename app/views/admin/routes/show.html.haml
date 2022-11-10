@@ -1,0 +1,28 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @route.name
+%p
+  %b Center address:
+  = @route.address
+%p
+  %b Center city:
+  = @route.city
+%p
+  %b Center state:
+  = @route.state
+%p
+  %b Distance:
+  = @route.distance
+
+%p
+  %b Latitude:
+  = @route.latitude
+%p
+  %b Longitude:
+  = @route.longitude
+
+= link_to 'Edit', edit_admin_route_path(@route)
+\|
+= link_to 'Back', admin_routes_path

@@ -6,6 +6,6 @@ class Driver::TeamsController < Driver::DriverController
   def show
     @team = Team.find(params[:id])
     @drivers = @team.drivers.order(:name)
-    @zones = @team.zones
+    @routes = @team.routes
   end
 end

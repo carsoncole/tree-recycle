@@ -1,24 +1,24 @@
 
 #TODO create manually reservation entry proces
 class Admin::ReservationsController < Admin::AdminController
-  before_action :set_reservation, except: %i[ new index search process_all_zones map]
+  before_action :set_reservation, except: %i[ new index search process_all_routes map]
 
 
   def index
-    if params[:zone_id]
-      @pagy, @reservations = pagy(Reservation.includes(:zone).order(:street_name, :house_number).where(zone_id: params[:zone_id]))
+    if params[:route_id]
+      @pagy, @reservations = pagy(Reservation.includes(:route).order(:street_name, :house_number).where(route_id: params[:route_id]))
     elsif params[:picked_up]
-      @pagy, @reservations = pagy(Reservation.picked_up.includes(:zone).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.picked_up.includes(:route).order(:street_name, :house_number))
     elsif params[:cancelled]
-      @pagy, @reservations = pagy(Reservation.cancelled.includes(:zone).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.cancelled.includes(:route).order(:street_name, :house_number))
     elsif params[:missing]
-      @pagy, @reservations = pagy(Reservation.missing.includes(:zone).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.missing.includes(:route).order(:street_name, :house_number))
     elsif params[:all]
-      @pagy, @reservations = pagy(Reservation.not_archived.includes(:zone).order(:street_name, :house_number).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
     elsif params[:archived]
-      @pagy, @reservations = pagy(Reservation.archived.includes(:zone).order(:street_name, :house_number).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.pending_pickup.includes(:zone).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.pending_pickup.includes(:route).order(:street_name, :house_number))
 
     end
   end
@@ -49,13 +49,13 @@ class Admin::ReservationsController < Admin::AdminController
     render :index
   end
 
-  def process_zone
-    @reservation.process_zone!
+  def process_route
+    @reservation.process_route!
     redirect_to admin_reservations_path
   end
 
-  def process_all_zones
-    Reservation.process_all_zones!
+  def process_all_routes
+    Reservation.process_all_routes!
     redirect_to admin_reservations_path
   end
 
@@ -65,6 +65,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :zone_id, :status)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status)
     end
 end
