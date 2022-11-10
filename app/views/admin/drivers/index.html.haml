@@ -5,7 +5,7 @@
     %thead
       %tr
         %th Name
-        %th Team
+        %th Zone
         %th Email
         %th Phone
         %th
@@ -14,7 +14,7 @@
       - @drivers.each do |driver|
         %tr
           %td.name= driver.name
-          %td.team= driver.team.name
+          %td.zone= driver.zone.name
           %td.email= driver.email
           %td.phone= driver.phone
           %td

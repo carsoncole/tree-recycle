@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :team do
+  factory :zone do
     name { Faker::Name.name }
   end
 end

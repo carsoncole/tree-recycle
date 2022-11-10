@@ -56,6 +56,6 @@ class Admin::RoutesController < Admin::AdminController
     end
 
     def route_params
-      params.require(:route).permit(:name, :street, :city, :state, :country, :distance, :team_id)
+      params.require(:route).permit(:name, :street, :city, :state, :country, :distance, :zone_id)
     end
 end

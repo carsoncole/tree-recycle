@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     get 'reservations/map' => 'reservations#map', as: 'reservations_map'
     root 'home#index'
     resources :routes, only: %i( index show )
-    resources :teams, only: %i( index show )
+    resources :zones, only: %i( index show )
     resources :drivers, only: %i( index show )
     get 'home' => 'home#index', as: 'home'
   end
@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'reservations#index'
-    resources :teams
+    resources :zones
     resources :drivers
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]

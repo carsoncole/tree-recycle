@@ -20,7 +20,7 @@ end
 
 
 (1..16).each do
-  Driver.create(name: Faker::Name.name, team_id: rand(5) +1, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone)
+  Driver.create(name: Faker::Name.name, zone_id: rand(5) +1, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone)
 end
 
 
@@ -130,3 +130,12 @@ routes = [[name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE Sou
 routes.each do |route|
   Route.create(route)
 end
+
+
+zones = [
+  [name: 'Center', street: '8222 NE Carmella Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+  [name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+  [name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
+  [name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States']
+]
+

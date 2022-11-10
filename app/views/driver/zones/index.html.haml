@@ -1,0 +1,19 @@
+.row
+  .col-md-4
+  .col-md-4
+    %h1 Zones
+
+.row
+  .col-md-4
+  .col-md-4
+    .table-responsive
+      %table.table#driver-zones
+        - @zones.each do |zone|
+          %tr
+            %td= link_to zone.name, driver_zone_path(zone)
+            %td
+              - zone.drivers.each do |driver|
+                = link_to driver.name, driver_driver_path(driver)
+                = "|" unless driver == zone.drivers.last
+
+

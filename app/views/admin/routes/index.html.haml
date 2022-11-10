@@ -17,7 +17,7 @@
   %thead
     %tr
       %th Name
-      %th Team
+      %th Zone
       %th Count
       %th Street
       %th City
@@ -34,7 +34,7 @@
           = route.name
           = link_to admin_route_map_path(route) do
             %i.fa-brands.fa-google
-        %td= route&.team&.name
+        %td= route&.zone&.name
         %td= route.reservations.count
         %td= route.address
         %td= route.city

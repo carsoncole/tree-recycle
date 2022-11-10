@@ -1,14 +1,14 @@
 .row
   .col-md-4
   .col-md-4
-    %h1= @team.name
+    %h1= @zone.name
 
 .row.mb-4
   .col-md-4
   .col-md-4
-    %h3 Team lead
-    - if @team.leader
-      %p= link_to @team&.leader&.name, driver_driver_path(@team&.leader)
+    %h3 Zone lead
+    - if @zone.leader
+      %p= link_to @zone&.leader&.name, driver_driver_path(@zone&.leader)
 
 .row.mb-4
   .col-md-4

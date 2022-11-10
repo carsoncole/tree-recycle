@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_10_051526) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_065415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -33,10 +33,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_051526) do
     t.string "name"
     t.string "phone"
     t.string "email"
-    t.bigint "team_id"
+    t.bigint "zone_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_drivers_on_team_id"
+    t.index ["zone_id"], name: "index_drivers_on_zone_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -86,7 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_051526) do
     t.decimal "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "team_id"
+    t.integer "zone_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -109,13 +109,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_051526) do
     t.datetime "sign_up_deadline_at"
   end
 
-  create_table "teams", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "leader_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -126,6 +119,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_051526) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
+  end
+
+  create_table "zones", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "leader_id"
+    t.string "street"
+    t.string "state"
+    t.string "country"
+    t.decimal "latitude"
+    t.decimal "longitude"
   end
 
   add_foreign_key "donations", "reservations"

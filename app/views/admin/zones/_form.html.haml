@@ -1,9 +1,9 @@
-= form_for [:admin, @team] do |f|
-  - if @team.errors.any?
+= form_for [:admin, @zone] do |f|
+  - if @zone.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@team.errors.count, "error")} prohibited this admin_team from being saved:"
+      %h2= "#{pluralize(@zone.errors.count, "error")} prohibited this admin_zone from being saved:"
       %ul
-        - @team.errors.full_messages.each do |message|
+        - @zone.errors.full_messages.each do |message|
           %li= message
 
   .mb-3

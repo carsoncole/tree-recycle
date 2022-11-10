@@ -3,7 +3,7 @@ class Route < ApplicationRecord
   default_scope { order(name: :asc) }
 
   has_many :reservations, dependent: :nullify
-  belongs_to :team, optional: true
+  belongs_to :zone, optional: true
 
   validates :name, :street, :city, :country, :distance, presence: true
 
