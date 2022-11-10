@@ -16,15 +16,16 @@
       width: 4.5em;
     }
     &.notes {
-      width: 15em;
+      width: 12em;
+      overflow-x: scroll;
     }
     &.name {
-      width: 9em;
-      overflow: hidden;
+      width: 10em;
+
       white-space: nowrap;
     }
     &.buttons {
-      width: 14em;
+      width: 21em;
     }
     &.phone {
       width: 10em;
@@ -33,7 +34,7 @@
       width: 12em;
     }
     &.street {
-      width: 17em;
+      width: 16em;
     }
   }
 

@@ -6,6 +6,6 @@ class Driver::RoutesController < Driver::DriverController
 
   def show
     @route = Route.find(params[:id])
-    @reservations = @route.reservations.order(:street_name)
+    @reservations = @route.reservations.pending
   end
 end

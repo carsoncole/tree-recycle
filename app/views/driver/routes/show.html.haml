@@ -1,5 +1,10 @@
 #driver-routes
   %h1
+    - if @route.zone
+      = @route.zone.name
+    - else
+      NO ZONE
+    \/
     = @route.name
     = link_to driver_reservations_map_path(route_id: @route.id) do
       %i.fa-solid.fa-map
@@ -8,7 +13,7 @@
     %table.table.table-striped.driver-routes
       %thead
         %tr
-          %th.buttons Status
+          %th.buttons  Status
           %th.house House
           %th.street Street
 
@@ -18,11 +23,11 @@
           %th.route Route
       %tbody
         - @reservations.each do |reservation|
-          %tr
+          %tr{class: reservation.picked_up? ? 'table-success' : reservation.missing? ? 'table-danger' : nil}
             %td.buttons
-              = button_to "Pending", "", class: 'btn btn-sm btn-info'
-              = button_to "Picked", "", class: 'btn btn-success'
-              = button_to "Missing", "", class: 'btn btn-sm btn-danger'
+              = button_to "Picked Up", [:driver, reservation], class: "btn btn-outline-success #{ reservation.picked_up? ? 'active' : nil}",  params: { status: 'picked_up' }, data: { turbo_confirm: 'Picked up? Are you sure?' }
+              = button_to "Missing", [:driver, reservation], class: "btn btn-outline-danger #{ reservation.missing? ? 'active' : nil }",  params: { status: 'missing' }, data: { turbo_confirm: 'Missing? Are you sure?' }
+              = button_to "Pending Pickup", [:driver, reservation], class: "btn btn-outline-secondary #{ reservation.pending_pickup? ? 'active' : nil }",  params: { status: 'pending_pickup' }, data: { turbo_confirm: 'Reseting to PENDING PICKUP. This will send a notification. Are you sure?' }
             %td.house= reservation.house_number
             %td.street= reservation.street_name
 

@@ -16,11 +16,17 @@
           %li.nav-item
             = link_to "Home", driver_home_path, class: 'nav-link'
           %li.nav-item
-            = link_to "Zones", driver_zones_path, class: 'nav-link'
+            = link_to driver_zones_path, class: 'nav-link' do
+              %i.fa-solid.fa-map
+              Zones
           %li.nav-item
-            = link_to "Routes", driver_routes_path, class: 'nav-link'
+            = link_to driver_routes_path, class: 'nav-link' do
+              %i.fa-solid.fa-road
+              Routes
           %li.nav-item
-            = link_to "Drivers", driver_drivers_path, class: 'nav-link'
+            = link_to driver_drivers_path, class: 'nav-link' do
+              %i.fa-solid.fa-car
+              Drivers
           / %li.nav-item
           /   = link_to "Map", admin_map_path, class: 'nav-link'
 

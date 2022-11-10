@@ -45,7 +45,9 @@ Rails.application.routes.draw do
   namespace :driver do
     get 'reservations/search' => 'reservations#search', as: 'reservations_search'
     get 'reservations/map' => 'reservations#map', as: 'reservations_map'
+
     root 'home#index'
+    resources :reservations, only: %i( update )
     resources :routes, only: %i( index show )
     resources :zones, only: %i( index show )
     resources :drivers, only: %i( index show )

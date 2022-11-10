@@ -1,7 +1,9 @@
 .row
   .col-md-3
   .col-md-6
-    %h1 Routes
+    %h1
+      %i.fa-solid.fa-road
+      Routes
 
 .row
   .col-md-3
@@ -13,6 +15,7 @@
             %th
               %i.fa-solid.fa-map
             %th
+            %th
             %th.text-center
               %i.fa-solid.fa-list-ul
             %th.text-center
@@ -22,6 +25,7 @@
         - @routes.each do |route|
           %tr
             %td= link_to route.name, [:driver, route]
+            %td= route&.zone&.name
             %td
               = link_to driver_reservations_map_path(route_id: route.id) do
                 %i.fa-solid.fa-map

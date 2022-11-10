@@ -4,11 +4,15 @@ require 'csv'
 class Reservation < ApplicationRecord
   include Geocodable
 
+  default_scope { order(:street_name, :house_number) }
+
   belongs_to :route, optional: true
   has_many :donations
   has_many :logs, dependent: :destroy
 
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }
+
+  scope :pending, -> { where.not(status: ['archived', 'unconfirmed'])}
 
   validates :name, :street, :city, :state, :country, :email, presence: true
   geocoded_by :address
