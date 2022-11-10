@@ -16,10 +16,9 @@
         = succeed(".") do
           = pluralize(number_with_delimiter(Reservation.picked_up.count), "tree")
 
+.row
+  .col-md-3
+  .col-md-6
+    %br
+    %br
 
-    %p.mt-5
-      = link_to "Zones", driver_zones_path
-      \|
-      = link_to "Routes", driver_routes_path
-      \|
-      = link_to "Drivers", driver_drivers_path

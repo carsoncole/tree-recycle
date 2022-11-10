@@ -1,9 +1,47 @@
-%p#notice= notice
+#info-page
+  .row
+    .col-md-3
+    .col-md-6
+      %h1= @zone.name
 
-%p
-  %b Name:
-  = @zone.name
 
-= link_to 'Edit', edit_admin_zone_path(@zone)
-\|
-= link_to 'Back', admin_zones_path
+  .row
+    .col-md-3
+    .col-md-6
+      .section.row
+        %h2 Zone leader
+        - if @zone.leader
+          %p= link_to @zone&.leader&.name, driver_driver_path(@zone&.leader)
+
+  .row
+    .col-md-3
+    .col-md-6
+      .section.row
+        %h2 Drivers
+        .table-responsive
+          %table.table.driver_drivers
+            - @drivers.each do |driver|
+              %tr
+                %td= link_to driver.name, driver_driver_path(driver)
+                %td= link_to driver.phone, "tel:#{driver.phone}"
+                %td= driver.email
+
+  .row
+    .col-md-3
+    .col-md-6
+      .section.row
+        %h2 Routes
+        %p
+          Total pickups:
+          = @total_pickups
+        .table-responsive
+          %table.table.driver_routes
+            - @routes.each do |route|
+              %tr
+                %td= link_to route.name, [:driver, route]
+                %td.remaining
+                  = pluralize(route.reservations.pending_pickup.count, "pickup")
+                  remaining
+                %td.remaining
+                  = pluralize(route.reservations.picked_up.count, "pickup")
+                  completed

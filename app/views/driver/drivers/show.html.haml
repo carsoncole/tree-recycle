@@ -1,12 +1,12 @@
 
 .row
-  .col-md-4
-  .col-md-4
+  .col-md-3
+  .col-md-6
     %h1= @driver.name
 
 .row
-  .col-md-4
-  .col-md-4.text-middle
+  .col-md-3
+  .col-md-6.text-middle
     - if @driver.phone.present?
       = link_to "tel:#{@driver.phone}" do
         = @driver.phone

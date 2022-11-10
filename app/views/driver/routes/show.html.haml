@@ -20,6 +20,7 @@
         - @reservations.each do |reservation|
           %tr
             %td.buttons
+              = button_to "Pending", "", class: 'btn btn-sm btn-info'
               = button_to "Picked", "", class: 'btn btn-success'
               = button_to "Missing", "", class: 'btn btn-sm btn-danger'
             %td.house= reservation.house_number

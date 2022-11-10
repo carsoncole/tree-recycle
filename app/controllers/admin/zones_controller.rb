@@ -8,6 +8,9 @@ class Admin::ZonesController < Admin::AdminController
 
   # GET /admin/zones/1 or /admin/zones/1.json
   def show
+    @drivers = @zone.drivers.order(:name)
+    @routes = @zone.routes.order(:name)
+    @total_pickups = @zone.reservations.pending_pickup.count
   end
 
   # GET /admin/zones/new
@@ -38,7 +41,7 @@ class Admin::ZonesController < Admin::AdminController
   def update
     respond_to do |format|
       if @zone.update(zone_params)
-        format.html { redirect_to admin_zone_url(@zone), notice: "Zone was successfully updated." }
+        format.html { redirect_to admin_zones_url, notice: "Zone was successfully updated." }
         format.json { render :show, status: :ok, location: @zone }
       else
         format.html { render :edit, status: :unprocessable_entity }

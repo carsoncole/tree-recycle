@@ -4,15 +4,21 @@
   %thead
     %tr
       %th Name
+      %th Pickups
       %th Leader
+      %th Drivers
+      %th Street
       %th
 
 
   %tbody
     - @zones.each do |zone|
       %tr
-        %td= zone.name
+        %td= link_to zone.name, admin_zone_path(zone)
+        %td= zone.reservations.pending_pickup.count
         %td= zone&.leader&.name
+        %td= zone.drivers.count
+        %td= zone.street
         %td
           = link_to 'Show', admin_zone_path(zone)
           = link_to 'Edit', edit_admin_zone_path(zone)

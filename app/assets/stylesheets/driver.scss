@@ -24,7 +24,7 @@
       white-space: nowrap;
     }
     &.buttons {
-      width: 10em;
+      width: 14em;
     }
     &.phone {
       width: 10em;
@@ -39,10 +39,10 @@
 
   .btn {
     float: left !important;
+    margin-right: 6px;
   }
   .btn-sm {
-    margin-left: 0.3em;
-    margin-top: 0.15em;
+    margin-top: 0.25em;
   }
 
 

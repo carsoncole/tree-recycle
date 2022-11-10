@@ -3,6 +3,7 @@ class Zone < ApplicationRecord
 
   has_many :drivers
   has_many :routes
+  has_many :reservations, through: :routes
   belongs_to :leader, class_name: 'Driver', optional: true
 
   validates :name, presence: true
