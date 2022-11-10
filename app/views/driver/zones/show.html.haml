@@ -1,5 +1,8 @@
 #driver-zones
-  %h1= @zone.name
+  %h1
+    = @zone.name
+    = link_to driver_reservations_map_path(zone_id: @zone.id) do
+      %i.fa-solid.fa-map
 
   .table-responsive
     %table.table.table-striped.driver-zones

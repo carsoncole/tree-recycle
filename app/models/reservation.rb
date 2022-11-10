@@ -12,14 +12,17 @@ class Reservation < ApplicationRecord
   geocoded_by :address
   after_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
 
-  after_save :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status?}
-  after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.saved_change_to_status? && obj.cancelled? }
+  after_create :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? }
+  after_update :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status? }
+  after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.cancelled? && obj.saved_change_to_status? }
 
   after_create :log_creation!
-  after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
-  after_update :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? }
-  after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
+  after_create :log_pending_pickup!, if: ->(obj){ obj.pending_pickup? }
   after_update :log_pending_pickup!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? }
+  after_update :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? }
+  after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
+  after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
+  after_update :process_zone!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? }
 
   def initialize(args)
     super

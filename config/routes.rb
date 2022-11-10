@@ -43,9 +43,12 @@ Rails.application.routes.draw do
   post 'stripe-webhook' => "donations#stripe_webhook"
 
   namespace :driver do
+    get 'reservations/search' => 'reservations#search', as: 'reservations_search'
+    get 'reservations/map' => 'reservations#map', as: 'reservations_map'
     root 'home#index'
     resources :zones, only: %i( index show )
     resources :teams, only: %i( index show )
+    resources :drivers, only: %i( index show )
     get 'home' => 'home#index', as: 'home'
   end
 

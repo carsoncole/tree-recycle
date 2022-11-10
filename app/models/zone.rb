@@ -12,9 +12,10 @@ class Zone < ApplicationRecord
 
   def initialize(args)
     super
+    setting = Setting&.first
     self.country ||= 'United States'
-    self.city = Setting&.first&.default_city.present? ?  Setting&.first&.default_city : 'Bainbridge Island'
-    self.state = Setting&.first&.default_state.present? ?  Setting&.first&.default_state : 'Washington'
+    self.city = setting&.default_city.present? ?  setting&.default_city : 'Bainbridge Island'
+    self.state = setting&.default_state.present? ?  setting&.default_state : 'Washington'
     self.distance ||= 1
   end
 

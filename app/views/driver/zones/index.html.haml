@@ -21,6 +21,9 @@
         - @zones.each do |zone|
           %tr
             %td= link_to zone.name, [:driver, zone]
+            %td
+              = link_to driver_reservations_map_path(zone_id: zone.id) do
+                %i.fa-solid.fa-map
             %td.text-center= zone.reservations.count
             %td.text-center= zone.reservations.pending_pickup.count
             %td John, Mary, Lisa

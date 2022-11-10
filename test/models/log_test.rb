@@ -2,14 +2,14 @@ require "test_helper"
 
 class LogTest < ActiveSupport::TestCase
   def setup
-    @reservation = create(:reservation_with_coordinates)
+    @reservation = create(:reservation_with_coordinates, no_emails: true)
   end
 
   test "log creation on new reservations" do
-    assert_equal @reservation.logs.count, 1
+    assert_equal @reservation.logs.count, 2
     assert_equal @reservation.logs.first.message, "Reservation created"
 
-    assert_difference("Log.all.count", 1) do
+    assert_difference("Log.all.count", 2) do
       reservation = create(:reservation_with_coordinates)
     end
   end
@@ -40,4 +40,25 @@ class LogTest < ActiveSupport::TestCase
       @reservation.pending_pickup!
     end
   end
+
+  test "logging pending pickup email delivery" do
+    reservation = create(:reservation_with_coordinates, status: 0)
+    assert_equal 1, reservation.logs.count # creation log
+    reservation.pending_pickup!
+    assert_equal 2, reservation.logs.count
+    assert_equal 'Tree is pending pickup', reservation.logs.last.message
+    reservation.missing!
+    assert_equal 3, reservation.logs.count
+    reservation.pending_pickup!
+    assert_equal 4, reservation.logs.count
+    assert_equal 'Tree is pending pickup', reservation.logs.last.message
+  end
+
+  test "logging cancellation email delivery" do
+  end
+
+  test "logging donation email delivery" do
+  end
+
+
 end

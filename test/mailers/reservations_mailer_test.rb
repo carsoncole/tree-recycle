@@ -75,10 +75,29 @@ class ReservationsMailerTest < ActionMailer::TestCase
     assert email.html_part.body.to_s.include? 'This is a reminder that we will pick up your tree at'
   end
 
-  test "delivery of email on confirmed email" do
+  test "delivery of emails on status changes" do
     assert_emails 1 do
-      reservation = create(:reservation_with_coordinates)
+      @reservation = create(:reservation_with_coordinates)
     end
+
+    assert_emails 0 do
+      @reservation.unconfirmed!
+    end
+
+    assert_emails 1 do
+      @reservation.pending_pickup!
+    end
+    assert_equal ActionMailer::Base.deliveries.last.subject, "Your tree pickup is confirmed"
+
+    assert_emails 1 do
+      @reservation.cancelled!
+    end
+    assert_equal ActionMailer::Base.deliveries.last.subject, "Your tree pickup reservation is cancelled"
+
+    assert_emails 1 do
+      @reservation.pending_pickup!
+    end
+    assert_equal ActionMailer::Base.deliveries.last.subject, "Your tree pickup is confirmed"
   end
 
   test "delivery of email on cancelled reservation" do

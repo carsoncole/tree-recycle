@@ -1,28 +1,32 @@
 .row
-  .col-md-3
-  .col-md-6
+  .col-md-4
+  .col-md-4
     %h1= @team.name
 
 .row.mb-4
-  .col-md-3
-  .col-md-6
+  .col-md-4
+  .col-md-4
     %h3 Drivers
     .table-responsive
-      %table.table
+      %table.table.driver_drivers
         - @drivers.each do |driver|
           %tr
-            %td= driver.name
+            %td= link_to driver.name, driver_driver_path(driver)
             %td= link_to driver.phone, "tel:#{driver.phone}"
             %td= driver.email
 
 .row
-  .col-md-3
-  .col-md-6
+  .col-md-4
+  .col-md-4
     %h3 Zones
     .table-responsive
-      %table.table
+      %table.table.driver_zones
         - @zones.each do |zone|
           %tr
             %td= link_to zone.name, [:driver, zone]
-            %td
-            %td
+            %td.remaining
+              = pluralize(zone.reservations.pending_pickup.count, "pickup")
+              remaining
+            %td.remaining
+              = pluralize(zone.reservations.picked_up.count, "pickup")
+              completed

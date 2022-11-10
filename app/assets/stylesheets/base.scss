@@ -319,3 +319,19 @@ table#admin-drivers {
   font-size: 4em;
   margin: 1em 0.2em 1.2em 0.2em;
 }
+
+#drivers-table {
+  th {
+    font-weight: 400;
+  }
+}
+
+table.table.driver_zones {
+  td.remaining {
+    width: 12em;
+    text-align: right;
+  }
+}
+.very-large-icon {
+  font-size: 12em;
+}

@@ -32,7 +32,7 @@ class Admin::DriversController < Admin::AdminController
   def update
     respond_to do |format|
       if @driver.update(driver_params)
-        format.html { redirect_to admin_driver_url(@driver), notice: "Driver was successfully updated." }
+        format.html { redirect_to admin_drivers_url, notice: "Driver was successfully updated." }
         format.json { render :show, status: :ok, location: @driver }
       else
         format.html { render :edit, status: :unprocessable_entity }

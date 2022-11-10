@@ -8,24 +8,28 @@ class ReservationsMailer < ApplicationMailer
     @reservation = params[:reservation]
   end
 
+  # redundant, but is a safety check
   def stop_delivery_if_disabled
-    if !setting.is_emailing_enabled && @reservation.no_emails
+    if !setting.is_emailing_enabled
       mail.perform_deliveries = false
     end
   end
 
   def confirmed_reservation_email
+    return if @reservation.no_emails? || !setting.is_emailing_enabled
     mail(to: @reservation.email, subject: 'Your tree pickup is confirmed')
     @reservation.logs.create(message: 'Confirmed reservation email sent.')
   end
 
   def pick_up_reminder_email
+    return if @reservation.no_emails? || !setting.is_emailing_enabled
     mail(to: @reservation.email, subject: 'Reminder to put out your tree')
     @reservation.logs.create(message: 'Pick up reminder email sent.')
   end
 
   # email to prior year reservations
   def hello_email
+    return if @reservation.no_emails? || !setting.is_emailing_enabled
     return unless @reservation.archived? # don't send to current reservations
     mail(to: @reservation.email, subject: "Tree recycling on #{nice_long_date(setting.pickup_date_and_time)}")
     @reservation.logs.create(message: 'Hello email sent.')
@@ -33,6 +37,7 @@ class ReservationsMailer < ApplicationMailer
 
   # email last reminder to prior year reservations
   def last_call_email
+    return if @reservation.no_emails? || !setting.is_emailing_enabled
     return unless @reservation.archived? # don't send to current reservations
     mail(to: @reservation.email, subject: "Tree recycling last reminder for #{nice_long_date(setting.pickup_date_and_time)}")
     @reservation.logs.create(message: 'Last call email sent.')
@@ -40,6 +45,7 @@ class ReservationsMailer < ApplicationMailer
 
   #OPTIMIZE should we record sending of this email?
   def cancelled_reservation_email
+    return if @reservation.no_emails? || !setting.is_emailing_enabled
     mail(to: @reservation.email, subject: "Your tree pickup reservation is cancelled")
     @reservation.logs.create(message: 'Cancelled reservation email sent.')
   end

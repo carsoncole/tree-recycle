@@ -1,0 +1,18 @@
+
+.row
+  .col-md-4
+  .col-md-4
+    %h1= @driver.name
+
+.row
+  .col-md-4
+  .col-md-4.text-middle
+    - if @driver.phone.present?
+      = link_to "tel:#{@driver.phone}" do
+        = @driver.phone
+        %i.fa-solid.fa-phone
+    %br
+    = @driver.email
+    %br
+    = link_to @driver.team.name, driver_team_path(@driver.team) if @driver.team
+
