@@ -5,7 +5,6 @@ class Driver::ReservationsControllerTest < ActionDispatch::IntegrationTest
     zone = create(:zone)
     get driver_reservations_map_url(zone_id: zone.id)
     assert_response :success
-    assert_text zone.name
   end
 
   test "should get search" do
