@@ -7,6 +7,7 @@ class Reservation < ApplicationRecord
   default_scope { order(:street_name, :house_number) }
 
   belongs_to :route, optional: true
+
   has_many :donations
   has_many :logs, dependent: :destroy
 
@@ -28,7 +29,9 @@ class Reservation < ApplicationRecord
   after_update :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? }
   after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
   after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
-  after_update :process_route!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? }
+
+  after_create :route!, if: ->(obj){ obj.geocoded? }
+  after_update :route!, if: ->(obj){ obj.geocoded? && obj.saved_change_to_latitude? }
 
   def initialize(args)
     super
@@ -47,12 +50,16 @@ class Reservation < ApplicationRecord
 
   def self.process_all_routes!
     all.each do |r|
-      r.process_route!
+      r.route!
     end
   end
 
   def donated?
     stripe_charge_amount.present? || is_cash_or_check?
+  end
+
+  def routed?
+    route.present?
   end
 
   def full_geocode
@@ -69,9 +76,10 @@ class Reservation < ApplicationRecord
     rescue
       geocode
     end
+    self.route_id = nil
   end
 
-  def process_route!
+  def route!
     return unless geocoded?
 
     Route.all.each do |z|

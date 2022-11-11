@@ -94,7 +94,15 @@ class ReservationsController < ApplicationController
 
   private
     def set_reservation
-      @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
+      if params[:id]
+        begin
+          @reservation = Reservation.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+          @reservation_missing = true
+        end
+      elsif params[:reservation_id]
+        @reservation = Reservation.find(params[:reservation_id])
+      end
     end
 
     def reservation_params

@@ -5,49 +5,53 @@
 
   %hr
 
-  .item.mt-3
-    .field Name
-    .data= @reservation.name
+  - if @reservation_missing
+    %p.text-center Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup.
 
-  .item
-    .field Address
-    .data#reservation-address= @reservation.short_address
+  - else
+    .item.mt-3
+      .field Name
+      .data= @reservation.name
 
-
-  .item
-    .field Pickup notes
-    .data
-      - if @reservation.notes.blank?
-        %span.text-muted None provided
-      - else
-        = @reservation.notes
-
-  .row
-    .col-md-6
-      .item
-        .field Email
-        .data
-          - if @reservation.email.blank?
-            %span.text-muted Not provided
-          - else
-            = @reservation.email
-    .col-md-6
-      .item
-        .field Phone
-        .data
-          - if @reservation.phone.blank?
-            %span.text-muted Not provided
-          - else
-            = @reservation.phone
-
-  %hr.mt-0.mb-4
+    .item
+      .field Address
+      .data#reservation-address= @reservation.short_address
 
 
+    .item
+      .field Pickup notes
+      .data
+        - if @reservation.notes.blank?
+          %span.text-muted None provided
+        - else
+          = @reservation.notes
 
-
-  - unless @reservation.pending_pickup? || @reservation.cancelled?
     .row
-      .col-md-12.mt-4
-        .text-center= button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'
+      .col-md-6
+        .item
+          .field Email
+          .data
+            - if @reservation.email.blank?
+              %span.text-muted Not provided
+            - else
+              = @reservation.email
+      .col-md-6
+        .item
+          .field Phone
+          .data
+            - if @reservation.phone.blank?
+              %span.text-muted Not provided
+            - else
+              = @reservation.phone
+
+    %hr.mt-0.mb-4
+
+
+
+
+    - unless @reservation.pending_pickup? || @reservation.cancelled?
+      .row
+        .col-md-12.mt-4
+          .text-center= button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'
 
 

@@ -4,6 +4,7 @@ class ReservationTest < ActiveSupport::TestCase
   test "setting of default status" do
     reservation = create(:reservation_with_coordinates)
     assert_equal reservation.status, 'pending_pickup'
+    assert reservation.geocoded?
   end
 
   test "name validation" do
@@ -25,6 +26,16 @@ class ReservationTest < ActiveSupport::TestCase
     assert reservation.geocoded?
   end
 
+  test "re-geocoding on updated reservations" do
+    reservation = create(:reservation_with_coordinates)
+    lat, lon = reservation.latitude, reservation.longitude
+    reservation.update(street: '1760 Susan Place NW')
+    assert_not_equal reservation.latitude, lat
+    assert reservation.geocoded?
+    assert_not_equal lat, reservation.latitude
+    assert_equal reservation.latitude, 47.64001144897959
+  end
+
   test "no geocoding of new reservation with coordinates provided" do
     reservation = build(:reservation_with_coordinates)
     assert reservation.geocoded? # geocoded by default
@@ -33,5 +44,8 @@ class ReservationTest < ActiveSupport::TestCase
     reservation.save
     assert reservation.geocoded? # still geocoded
     assert_equal reservation.latitude, 47.6259654 # this would be reset to nil if geocoded again
+  end
+
+  test "re-routing on updated reservations" do
   end
 end

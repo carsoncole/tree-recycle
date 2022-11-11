@@ -24,8 +24,6 @@ end
 end
 
 
-
-
 streets = [
 '1760 Susan Place',
 '14265 Silven Ave NE',
@@ -108,27 +106,35 @@ streets.each do |s|
   Reservation.create(name: reservation.name, street: s, email: reservation.email)
 end
 
-routes = [[name: 'South Island/Fort Ward', distance: 1.35, street: '10701 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Wing Point', distance: 0.25, street: '811 Cherry Ave', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Winslow', distance: 0.6, street: '305 Madison Ave N', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Port Madison', distance: 0.7, street: '9799 NE Lafayette Ave', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Agate Pass', distance: 0.6, street: '16550 Agate Pass Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Seabold', distance: 0.5, street: '14756 Henderson Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Fletcher Bay', distance: 0.5, street: '12453 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Point White', distance: 0.6, street: '4160 Palomino Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Manzanita', distance: 0.6, street: '12453 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Manitou Beach', distance: 0.5, street: '10311 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Day Road', distance: 0.6, street: '9229 Day Road', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Meadowmeer/Kuora', distance: 0.6, street: '11246 Fieldstone Ln NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'North Town Woods', distance: 0.4, street: '9376 North Town Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Battlepoint', distance: 0.6, street: '10715 Arrow Point Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Lynwood', distance: 0.6, street: '7575 NE Golden Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Blakely', distance: 0.6, street: '4890 Taylor Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Rolling Bay', distance: 0.6, street: '10075 NE Winther Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-[name: 'Commodore', distance: 0.13, street: '1526 Arthur Pl NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States']]
+routes = [
+{ name: 'Battle Point', street: '9091 Olympus Beach Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'Eagledale', street: '10837 Bill Point Bluff NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
+{ name: 'Ferncliff', street: '1017 Aaron Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
+{ name: 'Fletcher Bay', street: '9098 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'Fort Ward', street: '1747 Parade Grounds Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
+{ name: 'High School', street: '9458 Capstan Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
+{ name: 'Island Center', street: '6820 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'Lovgren', street: '9180 NE Lovgreen Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
+{ name: 'Lynwood Center', street: '5919 Blakely Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
+{ name: 'Meadowmeer', street: '8458 NE Meadowmeer Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'New Brooklyn', street: '8245 New Holland Ct', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'Phelps', street: '15740 Euclid Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'Point White', street: '3154 Point White Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
+{ name: 'Port Blakely', street: '4699 NE Mill Heights Cir', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
+{ name: 'Rolling Bay', street: '10799 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
+{ name: 'Rotary', street: '348 Ashbury Ct NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
+{ name: 'Seabold', street: '13871 Manzanita Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+{ name: 'South Beach', street: '9309 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
+{ name: 'Sunrise', street: '10250 NE Lafayette Ave', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
+{ name: 'Wing Point', street: '8477 Ferncliff Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
+{ name: 'Winslow North', street: '657 Annie Rose Ln NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
+{ name: 'Winslow South', street: '400 Harborview Dr SE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
+]
 
 routes.each do |route|
-  Route.create(route)
+  zone = Zone.where(name: route[:zone]).first
+  Route.create(name: route[:name], street: route[:street], city: route[:city], state: route[:state], country: route[:country], zone_id: zone.id)
 end
 
 
@@ -139,3 +145,4 @@ zones = [
   [name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States']
 ]
 
+zones.each {|z| Zone.create(name: z[:name], street: z[:street], city: z[:city], state: z[:state], country: z[:country] )}

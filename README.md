@@ -1,7 +1,8 @@
 # Tree Recycle
 
-The Tree Recycle application is a customizable public website that does the jobs of taking tree recycle pick-up reservations and donations, sending out confirmations and a reminder on the pick-up date. On the administrative side, the application organizes reservations into pickup routes, and integrating with Google and Apple Maps to show pickup locations.
+The Tree Recycle application provides customizable public website that does the multiple jobs of taking tree recycle pick-up reservations and donations, sending out confirmations and a reminder on the pick-up date. On the administrative side, the application organizes reservations into pickup routes, and integrating with Google and Apple Maps to show pickup locations.
 
+This application was originally designed to assist in managing a BSA Scout tree recycling fundraiser, however it could be used by any organization.
 
 ## Requirements
 

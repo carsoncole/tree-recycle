@@ -3,7 +3,6 @@ require "test_helper"
 class RouteTest < ActiveSupport::TestCase
   test "name presence validation" do
     route = build(:route, name: nil)
-
     assert_not route.valid?
     assert route.errors.of_kind?(:name, :blank)
   end
@@ -28,5 +27,15 @@ class RouteTest < ActiveSupport::TestCase
 
     reservation.reload
     assert_not reservation.route
+  end
+
+  test "geocoding on address changes" do
+    route = create(:route)
+    lat, lon = route.latitude, route.longitude
+    route.update(street: '1760 Susan Place')
+    route.reload
+
+    assert_not_equal lat, route.latitude
+    assert_not_equal lon, route.longitude
   end
 end

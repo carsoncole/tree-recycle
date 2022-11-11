@@ -50,7 +50,7 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def process_route
-    @reservation.process_route!
+    @reservation.route!
     redirect_to admin_reservations_path
   end
 

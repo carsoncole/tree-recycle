@@ -1,25 +1,26 @@
 #reservation-header
   %h1.position-relative
     %i.fa-solid.fa-tree
-    - if @reservation.persisted?
+    - if @reservation && @reservation.persisted?
       = link_to "Tree pickup reservation", reservation_path(@reservation)
     - else
       Tree pickup reservation
 
-  .text-center
-    = reservation_status(@reservation)
-    - if @reservation.cancelled?
-      =link_to "Make a new reservation", new_reservation_path
-    - elsif @reservation.pending_pickup? && @reservation.persisted?
-      = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
-        %i.fa-solid.fa-pencil
-        Edit
-
-      = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
-        %i.fa-solid.fa-times
-        Cancel
-
-  - if @reservation.persisted?
+  - unless @reservation_missing
     .text-center
-      .address
-        = @reservation.address
+      = reservation_status(@reservation)
+      - if @reservation.cancelled?
+        =link_to "Make a new reservation", new_reservation_path
+      - elsif @reservation.pending_pickup? && @reservation.persisted?
+        = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
+          %i.fa-solid.fa-pencil
+          Edit
+
+        = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
+          %i.fa-solid.fa-times
+          Cancel
+
+    - if @reservation.persisted?
+      .text-center
+        .address
+          = @reservation.address
