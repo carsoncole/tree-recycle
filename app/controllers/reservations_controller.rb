@@ -33,7 +33,6 @@ class ReservationsController < ApplicationController
       #   render :form_2
       # end
       @verified_street = response.get(address).address1
-      debugger
     rescue USPS::MultipleAddressError
       @multiple_addresses_found = true
     rescue USPS::AddressNotFoundError
