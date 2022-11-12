@@ -1,0 +1,50 @@
+- if @reservation
+  #side-info
+    %h1 Tree Reservation
+
+    .reservation-status
+      = reservation_status(@reservation)
+
+      .reservation-actions
+        - if @reservation.cancelled?
+          =link_to "Make a new reservation", new_reservation_path
+        - elsif @reservation.pending_pickup? && @reservation.persisted?
+          .actions
+          = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
+            %i.fa-solid.fa-pencil
+            Edit
+
+          = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
+            %i.fa-solid.fa-times
+            Cancel
+
+
+
+    .section.address
+      %h2 Address
+
+      - if @reservation.street
+        = @reservation.street
+        %br
+      = @reservation.city
+      = @reservation.state
+
+      - if @reservation.notes.present?
+        %div.mt-3= @reservation.notes
+
+    .section.pickup-details
+      %h2 Pickup details
+      %h3 Date
+      = nice_date(setting.pickup_date_and_time)
+
+      %h3 Pickup-time
+      = nice_time(setting.pickup_date_and_time)
+      \-
+      = nice_time(setting.pickup_date_and_end_time)
+
+    .section.contact-info
+      %h2 Contact
+      = @reservation.email
+      - if @reservation.phone.present?
+        %br
+        = @reservation.phone

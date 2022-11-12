@@ -103,6 +103,7 @@ header {
 }
 
 h1 {
+  font-size: 2em;
   margin-bottom: 1.25em;
   &.donation {
     font-size: 3em;
@@ -220,6 +221,16 @@ table.reservation {
 
 #flash {
   margin-bottom: 3em;
+  .alert {
+    background-color: $scout-red;
+    border-color: $scout-red;
+    color: #fff;
+    text-align: center;
+    padding: 0.6em 1.4em;
+    font-weight: 500;
+    font-size: 1.1em;
+    line-height: 1.66em;
+  }
 }
 
 #admin-reservation {
@@ -352,3 +363,83 @@ table.table.driver_routes {
   }
 }
 
+nav.navbar {
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+  line-height: 1.8;
+  margin-bottom: 5em;
+  &#main-navbar {
+    background-color: $scout-blue;
+  }
+}
+
+#side-info {
+  .section {
+    margin-bottom: 2.5em;
+  }
+  h1 {
+    font-size: 2.2em;
+    margin-bottom: 2em;
+    font-weight: 600;
+  }
+  h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 1em;
+    font-weight: 600;
+    margin: 1em 0 0 0;
+
+  }
+}
+
+.reservation-status {
+  margin-bottom: 2em;
+
+  .reservation-status-badge {
+    width: 10em;
+    text-align: center;
+    border-radius: 0.375em;
+    background-color: rgb(255,193,7);
+    padding: 0.35em 0.65em;
+    color: #fff;
+    display: inline-block;
+    vertical-align: baseline;
+    line-height: 1;
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 1em;
+    &.primary {
+      background-color: #cfe2ff;
+      color: #084298;
+      border-color: #b6d4fe;
+    }
+    &.info {
+      background-color: #cff4fc;
+      border-color: #cff4fc;
+      color: #055160;
+    }
+    &.danger {
+      background-color: #f8d7da;
+      color: #842029;
+      border-color: #f5c2c7;
+    }
+    &.warning {
+      background-color: #fff3cd;
+      color: #664d03;
+      border-color: #ffecb5;
+    }
+
+  }
+  .reservation-actions {
+    margin-bottom: 1em;
+  }
+}
+
+.important-message {
+  padding: 1em 1.5em;
+  border: 2px solid $scout-red;
+  border-left: 1.3em solid $scout-red;
+  border-radius: 0.5em;
+}

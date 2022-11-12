@@ -1,4 +1,9 @@
-= render 'shared/reservation_header'
+/ = render 'shared/reservation_header'
+
+.row
+  .col-md-12
+    %h1 New Reservation
+
 
 .row
   .col-md-12
@@ -9,9 +14,3 @@
 
 = render 'form'
 
-
-/ = form_for @reservation, url: upload_path do |f|
-
-/   = f.label :file, "Upload CSV File"
-/   = f.file_field :file, class: 'form-control-file', required: true
-/   = f.button :submit, class: 'btn btn-primary'

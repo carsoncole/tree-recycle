@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RouteTest < ActiveSupport::TestCase
+class Admin::RouteTest < ActiveSupport::TestCase
   test "name presence validation" do
     route = build(:route, name: nil)
     assert_not route.valid?

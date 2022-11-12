@@ -24,6 +24,7 @@
         .actions
           = f.submit 'Use this corrected address', class: 'btn btn-primary btn-lg'
 
+        = @reservation.inspect
   = form_for @reservation do |f|
     .row
       .col-md-6
@@ -31,6 +32,7 @@
           = f.text_field :street, class: 'form-control'
         .actions
           = f.submit 'Use original address', class: 'btn btn-primary btn-lg'
+        = @reservation.inspect
 - else
 
   %p.mb-4 If you could try one last time and make any adjustments. We'll take your address as you provide it and do our best to find it and/or contact you on pickup day.

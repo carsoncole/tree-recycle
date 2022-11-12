@@ -1,6 +1,6 @@
 #reservation-header
   %h1.position-relative
-    %i.fa-solid.fa-tree
+    / %i.fa-solid.fa-tree
     - if @reservation && @reservation.persisted?
       = link_to "Tree pickup reservation", reservation_path(@reservation)
     - else

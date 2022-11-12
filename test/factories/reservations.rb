@@ -3,7 +3,6 @@ FactoryBot.define do
     name { Faker::Name.name }
     street { '215 Ericksen Ave NE' }
     email { Faker::Internet.email }
-    status { 1 }
 
     factory :reservation_with_bad_address do
       street { Faker::Address.street_name }
@@ -13,6 +12,7 @@ FactoryBot.define do
     factory :reservation_with_coordinates do
       latitude { 47.6259654 }
       longitude { -122.517533 }
+      status { 1 }
     end
   end
 end

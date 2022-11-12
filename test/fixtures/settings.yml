@@ -1,2 +1,3 @@
 default:
   pickup_date_and_time: <%= Time.now + 1.month %>
+  is_emailing_enabled: false

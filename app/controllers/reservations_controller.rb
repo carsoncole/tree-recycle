@@ -29,10 +29,11 @@ class ReservationsController < ApplicationController
     req = USPS::Request::AddressStandardization.new(address)
     begin
       response = req.send!
-      if !address.valid?
-        render :form_2
-      end
+      # if !address.valid?
+      #   render :form_2
+      # end
       @verified_street = response.get(address).address1
+      debugger
     rescue USPS::MultipleAddressError
       @multiple_addresses_found = true
     rescue USPS::AddressNotFoundError
@@ -48,7 +49,7 @@ class ReservationsController < ApplicationController
     if @reservation.save
       if @reservation.geocoded?
         @reservation.pending_pickup!
-        redirect_to new_reservation_donation_url(@reservation), notice: 'Your reservation is confirmed.'
+        redirect_to new_reservation_donation_url(@reservation), notice: 'You are all set! Your pickup reservation is confirmed.'
       else
         redirect_to reservation_address_verification_url(@reservation)
       end

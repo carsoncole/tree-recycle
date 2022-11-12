@@ -11,11 +11,11 @@ module ReservationsHelper
         ['Pending pickup', 'primary']
       elsif reservation.archived?
         ['Archived', 'info']
-      else
-        ['No status', 'danger']
       end
-    out = ''
-    out << "<div class='reservation-status-badge #{status[1]}'>#{status[0]}</div>"
-    out.html_safe
+    if status
+      out = ''
+      out << "<div class='reservation-status-badge #{status[1]}'>#{status[0]}</div>"
+      out.html_safe
+    end
   end
 end

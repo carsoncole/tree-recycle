@@ -16,8 +16,12 @@ class Reservation < ApplicationRecord
   scope :pending, -> { where.not(status: ['archived', 'unconfirmed'])}
 
   validates :name, :street, :city, :state, :country, :email, presence: true
+
   geocoded_by :address
-  after_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
+  # before_validation :upcase_address!
+  before_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
+  after_validation :route!, if: ->(obj){ obj.geocoded? && obj.latitude_changed? }
+
 
   after_create :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? }
   after_update :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status? }
@@ -30,13 +34,12 @@ class Reservation < ApplicationRecord
   after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
   after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
 
-  after_create :route!, if: ->(obj){ obj.geocoded? }
-  after_update :route!, if: ->(obj){ obj.geocoded? && obj.saved_change_to_latitude? }
+
 
   def initialize(args)
     super
     self.country = Setting.first_or_create.default_country || 'United States'
-    self.city = Setting&.first&.default_city.present? ?  Setting&.first&.default_city : 'Bainbridge Island'
+    self.city = Setting&.first&.default_city.present? ?  Setting&.first&.default_city : 'BAINBRIDGE IS'
     self.state = Setting&.first&.default_state.present? ?  Setting&.first&.default_state : 'Washington'
   end
 
@@ -80,18 +83,7 @@ class Reservation < ApplicationRecord
   end
 
   def route!
-    return unless geocoded?
-
-    Route.all.each do |z|
-      next if z == route
-      distance_to_new_route = self.distance_to(z.coordinates)
-
-      if (route && distance_to_route > distance_to_new_route) || route.nil?
-        self.route_id = z.id
-        self.distance_to_route = distance_to_new_route
-      end
-    end
-    save
+    Router.new(self).route!
   end
 
   def send_confirmed_reservation_email!
@@ -125,6 +117,9 @@ class Reservation < ApplicationRecord
   end
 
   private
+  # def upcase_address!
+  #   self.address.upcase
+  # end
 
   def log_creation!
     logs.create(message: 'Reservation created')

@@ -21,6 +21,11 @@ Currently configured for PostgreSQL, but the `database.yml` can be configured fo
 The database can be created with `rails db:setup`, which will do all of `db:create`, `db:schema:load`, `db:seed`. The seeds file contains sample data is is not need when you go into production. Or you can simply delete/create the data through the UI.
 
 
+### Settings
+
+The application derives Reservation, and fundraiser defaults, all of can be configured through the UI in `Admin > Settings`.
+
+
 ### Email notifications
 
 Configure each environment with mail settings. environment file containts ActionMailer configuration settings. The default settings are with Gmail, but this can be changed to any SMTP provider. Credentials are managed in the Rails credentials file.

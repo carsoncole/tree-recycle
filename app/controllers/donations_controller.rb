@@ -53,6 +53,7 @@ class DonationsController < ApplicationController
     if params[:reservation_id] || params[:id]
       @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
     end
+    flash[:notice] = 'Thank you! Your donation is greatly appreciated and goes a long way towards supporting Scouting on Bainbridge Island.'
   end
 
   def cancel

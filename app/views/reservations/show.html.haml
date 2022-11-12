@@ -1,14 +1,16 @@
 
 #reservation
 
-  = render 'shared/reservation_header'
-
-  %hr
-
   - if @reservation_missing
-    %p.text-center Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup.
+    %p.mt-4.text-center Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup.
+
+    %p.text-center= link_to "Make a new reservation", new_reservation_path
+  - elsif @reservation.cancelled?
+    %p.mt-4.text-center= link_to "Make a new reservation", new_reservation_path
 
   - else
+
+    %hr
     .item.mt-3
       .field Name
       .data= @reservation.name

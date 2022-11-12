@@ -6,13 +6,19 @@
   %body
     = render 'shared/header'
 
-    = render 'shared/flash'
-
     .container.main
       .row
-        .col-xl-3
-        .col-xl-6
-          = yield
+        - if [ 'reservations' , 'donations' ].include?(controller_name) && action_name != 'thank-you-for-your-donation'
+          .col-xl-3
+            = render 'shared/side_info'
+          .col-xl-9
+            = render 'shared/flash'
+            = yield
+        - else
+          .col-md-3
+          .col-md-6
+            = render 'shared/flash'
+            = yield
 
     = render 'shared/footer'
 
