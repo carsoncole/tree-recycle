@@ -132,6 +132,15 @@ routes = [
 { name: 'Winslow South', street: '400 Harborview Dr SE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
 ]
 
+
+# Addresses to investigate
+# These addresses all come back with verified capitalized addresses that still don't geocode
+# 10027 NE Point View Dr
+# 6895 NE Hanks Lane
+# 10540 ARROW POINT DR NE / AV / Geocoded
+
+
+
 routes.each do |route|
   zone = Zone.where(name: route[:zone]).first
   Route.create(name: route[:name], street: route[:street], city: route[:city], state: route[:state], country: route[:country], zone_id: zone.id)

@@ -89,12 +89,13 @@ class ReservationTest < ActiveSupport::TestCase
 
     reservation = create(:reservation_with_coordinates)
     route = reservation.route
+    assert_equal "Ferncliff", reservation.route.name
     reservation.update(street: '3083 Point White Dr NE')
     assert reservation.geocoded?
     assert reservation.routed?
     assert_not_equal reservation.route, route
-    assert_equal 'South Beach', reservation.route.name
-    assert_equal "Point White", reservation.route.zone.name
+    assert_equal 'Point White', reservation.route.name, 'wrong route'
+    assert_equal "South", reservation.route.zone.name, 'wrong zone'
   end
 
   # test "10027 NE Point View Dr" do

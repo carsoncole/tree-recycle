@@ -9,29 +9,29 @@
       = link_to edit_admin_setting_path(setting) do
         %i.fa-solid.fa-pen.icon
 
-.row
-  .col-md-2
-  .col-md-8
-    %table.table.settings
-      %tbody
+/ .row
+/   .col-md-2
+/   .col-md-8
+/     %table.table.settings
+/       %tbody
 
-        %tr
-          %th Reservations open?
-          %td
-            = link_to admin_setting_path(setting, setting: { is_reservations_open: setting.is_reservations_open? ? 'false' : 'true'} ), data: { turbo_method: "patch" } do
-              - if setting.is_reservations_open?
-                %i.fa-solid.fa-toggle-on
-              - else
-                %i.fa-solid.fa-toggle-off
+/         %tr
+/           %th Reservations open?
+/           %td
+/             = link_to admin_setting_path(setting, setting: { is_reservations_open: setting.is_reservations_open? ? 'false' : 'true'} ), data: { turbo_method: "patch" } do
+/               - if setting.is_reservations_open?
+/                 %i.fa-solid.fa-toggle-on
+/               - else
+/                 %i.fa-solid.fa-toggle-off
 
-        %tr
-          %th Emailing enabled?
-          %td
-            = link_to admin_setting_path(setting, setting: { is_emailing_enabled: setting.is_emailing_enabled? ? 'false' : 'true'} ), data: { turbo_method: "patch" } do
-              - if setting.is_emailing_enabled?
-                %i.fa-solid.fa-toggle-on
-              - else
-                %i.fa-solid.fa-toggle-off
+/         %tr
+/           %th Emailing enabled?
+/           %td
+/             = link_to admin_setting_path(setting, setting: { is_emailing_enabled: setting.is_emailing_enabled? ? 'false' : 'true'} ), data: { turbo_method: "patch" } do
+/               - if setting.is_emailing_enabled?
+/                 %i.fa-solid.fa-toggle-on
+/               - else
+/                 %i.fa-solid.fa-toggle-off
 
 
 

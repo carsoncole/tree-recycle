@@ -441,5 +441,15 @@ nav.navbar {
   padding: 1em 1.5em;
   border: 2px solid $scout-red;
   border-left: 1.3em solid $scout-red;
+  font-weight: 600;
   border-radius: 0.5em;
+  margin-bottom: 2em;
+}
+.info-table {
+  th {
+    font-weight: 500;
+  }
+  td {
+    text-align: right;
+  }
 }

@@ -56,15 +56,18 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
-    root 'reservations#index'
+    root 'home#index'
+    get 'home' => 'home#index', as: 'home'
     resources :zones
     resources :drivers
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
-    resources :reservations, only: [ :index, :show, :edit, :update ] do
+    resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
     end
+
+    delete 'admin/home/archive-all' => 'home#archive_all', as: 'archive_all'
 
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'

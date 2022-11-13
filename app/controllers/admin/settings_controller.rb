@@ -9,7 +9,11 @@ class Admin::SettingsController < Admin::AdminController
 
   def update
     if helpers.setting.update(setting_params)
-      redirect_to admin_settings_url
+      if setting_params[ :is_emailing_enabled ]
+        redirect_to admin_root_path
+      else
+        redirect_to admin_settings_url
+      end
     else
       render :edit, status: :unprocessable_entity
     end

@@ -11,9 +11,10 @@
 = render 'search'
 
 %p.mb-4
-  = link_to "All", admin_reservations_path(all: true)
-  = '|'
+  %h5 Status
   = link_to "Pending pickup", admin_reservations_path
+  = '|'
+  = link_to "Un-Routed", admin_reservations_path(unrouted: true)
   = '|'
   = link_to "Picked up", admin_reservations_path(picked_up: true)
   = '|'
@@ -22,6 +23,11 @@
   = link_to "Cancelled", admin_reservations_path(cancelled: true)
   = '|'
   = link_to "Archived", admin_reservations_path(archived: true)
+  = '|'
+  = link_to "All", admin_reservations_path(all: true)
+
+%p.mb-4
+  %h5 Routes
   - Route.all.each do |route|
     = '|'
     = link_to route.name, admin_reservations_path(route_id: route.id)
@@ -52,16 +58,18 @@
           - if reservation.route_id?
             = link_to admin_reservations_path(route_id: reservation.route_id) do
               = reservation&.route&.name
-              = surround("(", ")") do
-                = pluralize(reservation.distance_to_route.round(2), "mile")
+              - if reservation.distance_to_route
+                = surround("(", ")") do
+                  = pluralize(reservation.distance_to_route.round(2), "mile")
 
         %td.actions
           = link_to admin_reservation_path(reservation), class: 'view-reservation-button' do
             %i.fa-solid.fa-eye.icon
           = link_to edit_admin_reservation_path(reservation) do
             %i.fa-solid.fa-pen.icon
-          = link_to reservation, method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
-            %i.fa-solid.fa-trash.icon
+          - unless reservation.cancelled?
+            = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
+              %i.fa-solid.fa-trash.icon
           = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
             %i.fa-solid.fa-bolt.icon
 

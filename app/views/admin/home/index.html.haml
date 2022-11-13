@@ -1,0 +1,71 @@
+.container
+  #admin-dashboard
+    %h1 Dashboard
+
+
+    .row
+      .col-md-3
+        %h2 Stats
+        %table.table.info-table#stats-table
+          %tr
+            %th Pending Pickups
+            %td= Reservation.pending_pickup.count
+          %tr
+            %th Picked Up
+            %td= Reservation.picked_up.count
+
+          %tr
+            %th Un-Routed Pickups
+            %td= Reservation.not_archived.unrouted.count
+
+          %tr
+            %th Archived Pickups
+            %td= Reservation.archived.count
+
+      .col-md-4
+        %h2 Operations
+        %table.table.info-table#stats-table
+          %tr
+            %th Reservations
+            %td
+              - if setting.pickup_date_and_time > Time.now
+                - if setting.pickup_date_and_end_time
+                  - if setting.pickup_date_and_end_time < Time.now
+                    Closed
+                  - else
+                    Open
+                - else
+                  Open
+              - else
+                Closed
+          %tr
+            %th Emails
+            %td
+              - if setting.is_emailing_enabled
+                = button_to "Disable", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
+              - else
+                = button_to "Enable", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
+
+          %tr
+            %th Reservations
+            %td= button_to "ARCHIVE ALL", admin_archive_all_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived reservations to be archived'}, class: 'btn btn-danger btn-sm'
+
+          %tr
+            %th Reservations
+            %td= button_to "DESTROY ALL", '/', class: 'btn btn-danger btn-sm'
+
+
+    .row
+      .col-md-3
+        %h2 Pickups
+        %table.table.info-table#stats-table
+          %tr
+            %th Zones
+            %td= link_to Zone.count, admin_zones_path
+          %tr
+            %th Routes
+            %td= link_to Route.count, admin_routes_path
+          %tr
+            %th Drivers
+            %td= link_to Driver.count, admin_drivers_path
+

@@ -20,13 +20,13 @@
     = f.label :on_day_of_pickup_instructions, class: 'form-label'
     = f.text_area :on_day_of_pickup_instructions, class: 'form-control'
     .form-text.text-muted Shown on 'About' page
-  .mb-3.form-check
-    = f.label :is_reservations_open, class: 'form-check-label'
-    = f.check_box :is_reservations_open, class: 'form-check-input'
-    .form-text.text-muted This enables creating, editing and cancelling reservations
-  .mb-3.form-check
-    = f.label :is_emailing_enabled, class: 'form-check-label'
-    = f.check_box :is_emailing_enabled, class: 'form-check-input'
+  / .mb-3.form-check
+  /   = f.label :is_reservations_open, class: 'form-check-label'
+  /   = f.check_box :is_reservations_open, class: 'form-check-input'
+  /   .form-text.text-muted This enables creating, editing and cancelling reservations
+  / .mb-3.form-check
+  /   = f.label :is_emailing_enabled, class: 'form-check-label'
+  /   = f.check_box :is_emailing_enabled, class: 'form-check-input'
   .mb-3
     = f.label :organization_name, class: 'form-label'
     = f.text_field :organization_name, class: 'form-control'

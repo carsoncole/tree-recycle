@@ -9,6 +9,8 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.includes(:route).order(:street_name, :house_number).where(route_id: params[:route_id]))
     elsif params[:picked_up]
       @pagy, @reservations = pagy(Reservation.picked_up.includes(:route).order(:street_name, :house_number))
+    elsif params[:unrouted]
+      @pagy, @reservations = pagy(Reservation.unrouted.order(:street_name, :house_number))
     elsif params[:cancelled]
       @pagy, @reservations = pagy(Reservation.cancelled.includes(:route).order(:street_name, :house_number))
     elsif params[:missing]
@@ -40,6 +42,16 @@ class Admin::ReservationsController < Admin::AdminController
     @donations = @reservation.donations
   end
 
+  def destroy
+    if Reservation.open?
+      @reservation.cancelled!
+      redirect_back(fallback_location: admin_root_path, notice: "Reservation was successfully cancelled.")
+    else
+      redirect_back(fallback_location: admin_root_path, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions.") unless Reservation.open?
+    end
+  end
+
+
   def map
     @reservations = Reservation.geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
   end
@@ -51,7 +63,7 @@ class Admin::ReservationsController < Admin::AdminController
 
   def process_route
     @reservation.route!
-    redirect_to admin_reservations_path
+    redirect_back(fallback_location: admin_root_path)
   end
 
   def process_all_routes
