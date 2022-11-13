@@ -36,7 +36,7 @@
           = link_to admin_route_map_path(route) do
             %i.fa-brands.fa-google
         %td= route&.zone&.name
-        %td= route.reservations.count
+        %td= route.reservations.not_archived.count
         %td= route.address
         %td= route.city
         %td= route.state
