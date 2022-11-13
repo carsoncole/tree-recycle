@@ -21,7 +21,7 @@ class Reservation < ApplicationRecord
   geocoded_by :address
 
   # geocoding and routing
-  before_validation :full_geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
+  before_validation :full_geocode!, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
   after_validation :route!, if: ->(obj){ obj.geocoded? && (obj.latitude_changed? || obj.nil?) }
 
   # email delivery
@@ -65,7 +65,7 @@ class Reservation < ApplicationRecord
     route.present?
   end
 
-  def full_geocode
+  def full_geocode!
     begin
       self.latitude = nil
       self.longitude = nil
