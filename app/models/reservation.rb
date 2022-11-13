@@ -14,7 +14,8 @@ class Reservation < ApplicationRecord
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }
 
   scope :pending, -> { where.not(status: ['archived', 'unconfirmed'])}
-  scope :unrouted, -> { where(route_id: nil).where.not(status: :cancelled ) }
+  scope :unrouted, -> { where(route_id: nil).where.not(status: ['archived', 'cancelled']) }
+  scope :routed, -> { where.not(route_id: nil).where.not(status: ['archived', 'cancelled']) }
 
   validates :name, :street, :city, :state, :country, :email, presence: true
 
