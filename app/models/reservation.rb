@@ -8,7 +8,7 @@ class Reservation < ApplicationRecord
 
   belongs_to :route, optional: true
 
-  has_many :donations
+  has_many :donations, dependent: :nullify
   has_many :logs, dependent: :destroy
 
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }
