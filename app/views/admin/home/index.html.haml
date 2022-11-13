@@ -15,7 +15,7 @@
             %td= Reservation.picked_up.count
           %tr
             %th Routed Pickups
-            %td= Reservation.not_archived.unrouted.count
+            %td= Reservation.not_archived.routed.count
           %tr
             %th Un-Routed Pickups
             %td= Reservation.not_archived.unrouted.count
