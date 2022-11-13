@@ -28,16 +28,10 @@
           %tr
             %th Reservations
             %td
-              - if setting.pickup_date_and_time > Time.now
-                - if setting.pickup_date_and_end_time
-                  - if setting.pickup_date_and_end_time < Time.now
-                    Closed
-                  - else
-                    Open
-                - else
-                  Open
+              - if setting.is_reservations_open
+                = button_to "Disable", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm'
               - else
-                Closed
+                = button_to "Enable", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm'
           %tr
             %th Emails
             %td
