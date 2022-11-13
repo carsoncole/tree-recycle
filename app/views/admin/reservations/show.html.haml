@@ -53,6 +53,13 @@
             %th Email
             %td= @reservation.email
           %tr
+            %th No Emails?
+            %td
+              - if @reservation.no_emails
+                Emailing disabled
+              - else
+                False
+          %tr
             %th Phone
             %td= @reservation.phone
 
