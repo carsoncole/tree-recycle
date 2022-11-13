@@ -6,21 +6,21 @@ class Admin::ReservationsController < Admin::AdminController
 
   def index
     if params[:route_id]
-      @pagy, @reservations = pagy(Reservation.includes(:route).order(:street_name, :house_number).where(route_id: params[:route_id]))
+      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(:street_name, :house_number).where(route_id: params[:route_id]))
     elsif params[:picked_up]
-      @pagy, @reservations = pagy(Reservation.picked_up.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.picked_up.includes(:route).order(:street_name, :house_number))
     elsif params[:unrouted]
-      @pagy, @reservations = pagy(Reservation.unrouted.order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(:street_name, :house_number))
     elsif params[:cancelled]
-      @pagy, @reservations = pagy(Reservation.cancelled.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.cancelled.includes(:route).order(:street_name, :house_number))
     elsif params[:missing]
-      @pagy, @reservations = pagy(Reservation.missing.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.missing.includes(:route).order(:street_name, :house_number))
     elsif params[:all]
       @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
     elsif params[:archived]
       @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.pending_pickup.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.pending_pickup.includes(:route).order(:street_name, :house_number))
 
     end
   end
