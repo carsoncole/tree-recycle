@@ -28,18 +28,17 @@ The application derives Reservation, and fundraiser defaults, all of can be conf
 
 ### Email notifications
 
-Configure each environment with mail settings. environment file containts ActionMailer configuration settings. The default settings are with Gmail, but this can be changed to any SMTP provider. Credentials are managed in the Rails credentials file.
+Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file.
 
 ```
-config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => Rails.application.credentials.mailer.production.username,
-    :password             => Rails.application.credentials.mailer.production.password,
-    :authentication       => "plain",
-    :enable_starttls_auto => true
-  }
+    :address              => Rails.application.credentials.mailer.development.address,
+    :port                 => Rails.application.credentials.mailer.development.port,
+    :user_name            => Rails.application.credentials.mailer.development.user_name,
+    :password             => Rails.application.credentials.mailer.development.password,
+    :authentication       => Rails.application.credentials.mailer.development.authentication,
+    :tls                  => Rails.application.credentials.mailer.development.tls,
+    :enable_starttls_auto => Rails.application.credentials.mailer.development.enable_starttls_auto
 ```
 
 The mailer itself should be updated to default to the sending address:
@@ -51,6 +50,13 @@ class ApplicationMailer < ActionMailer::Base
   layout "mailer"
 end
 ```
+
+The default URL for mail is set in the environment configuration file:
+
+```
+config.action_mailer.default_url_options = { host: 'site@example.com' }
+```
+
 
 ### Setup
 

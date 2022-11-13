@@ -74,18 +74,14 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => Rails.application.credentials.mailer.development.username,
+    :address              => Rails.application.credentials.mailer.development.address,
+    :port                 => Rails.application.credentials.mailer.development.port,
+    :user_name            => Rails.application.credentials.mailer.development.user_name,
     :password             => Rails.application.credentials.mailer.development.password,
-    :authentication       => "plain",
-    :enable_starttls_auto => true
+    :authentication       => Rails.application.credentials.mailer.development.authentication,
+    :tls                  => Rails.application.credentials.mailer.development.tls,
+    :enable_starttls_auto => Rails.application.credentials.mailer.development.enable_starttls_auto
   }
-
-  # Rails.configuration.stripe = {
-  #   publishable_key: Rails.application.credentials.stripe.development.publishable_key,
-  #   secret_key: Rails.application.credentials.stripe.development.secret_key
-  # }
 end
 
 
