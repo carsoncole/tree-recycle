@@ -19,6 +19,11 @@
     = f.label :email, class: 'form-label'
     = f.email_field :email, class: 'form-control'
     .form-text For email updates on your reservation and future tree recycle events.
+
+  .mb-3.form-check
+    = f.check_box :no_emails, class: 'form-control-input'
+    = f.label :no_emails, class: 'form-check-label'
+
   .mb-3
     = f.label :phone, class: 'form-label'
     = f.text_field :phone, class: 'form-control'
