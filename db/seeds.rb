@@ -148,10 +148,10 @@ end
 
 
 zones = [
-  [name: 'Center', street: '8222 NE Carmella Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-  [name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-  [name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States'],
-  [name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States']
+  { name: 'Center', street: '8222 NE Carmella Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+  { name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+  { name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+  { name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' }
 ]
 
 zones.each {|z| Zone.create(name: z[:name], street: z[:street], city: z[:city], state: z[:state], country: z[:country] )}

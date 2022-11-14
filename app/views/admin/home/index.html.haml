@@ -2,29 +2,30 @@
   #admin-dashboard
     %h1 Dashboard
 
-
     .row
       .col-md-3
         %h2 Stats
         %table.table.info-table#stats-table
           %tr
+            %th All Open
+            %td= @not_archived_count
+          %tr
             %th Pending Pickups
-            %td= Reservation.pending_pickup.count
+            %td= @pending_pickups_count
           %tr
             %th Picked Up
-            %td= Reservation.picked_up.count
+            %td= @picked_up_count
           %tr
-            %th Routed Pickups
-            %td= Reservation.not_archived.routed.count
+            %th Routed
+            %td= @routed_pickups_count
           %tr
-            %th Un-Routed Pickups
-            %td= Reservation.not_archived.unrouted.count
+            %th Un-Routed
+            %td= @un_routed_pickups_count
+          %tr
+            %th Archived
+            %td= @archived_count
 
-          %tr
-            %th Archived Pickups
-            %td= Reservation.archived.count
-
-      .col-md-4
+      .col-md-3
         %h2 Operations
         %table.table.info-table#stats-table
           %tr

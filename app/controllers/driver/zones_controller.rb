@@ -1,6 +1,7 @@
 class Driver::ZonesController < Driver::DriverController
   def index
     @zones = Zone.all.order(:name)
+    render 'shared/zones/index'
   end
 
   def show

@@ -3,6 +3,7 @@ class Admin::DriversController < Admin::AdminController
 
   def index
     @drivers = Driver.all
+    render 'shared/drivers/index'
   end
 
   def show

@@ -3,9 +3,12 @@ class Admin::RoutesController < Admin::AdminController
 
   def index
     @routes = Route.all
+    render 'shared/routes/index'
   end
 
   def show
+    @route = Route.find(params[:id])
+    @reservations = @route.reservations.not_archived
   end
 
   def new

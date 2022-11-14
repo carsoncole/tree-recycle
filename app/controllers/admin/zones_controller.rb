@@ -4,6 +4,7 @@ class Admin::ZonesController < Admin::AdminController
   # GET /admin/zones or /admin/zones.json
   def index
     @zones = Zone.all
+    render 'shared/zones/index'
   end
 
   # GET /admin/zones/1 or /admin/zones/1.json
