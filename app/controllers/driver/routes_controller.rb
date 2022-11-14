@@ -2,7 +2,6 @@
 class Driver::RoutesController < Driver::DriverController
   def index
     @routes = Route.all
-    render 'shared/routes/index'
   end
 
   def show

@@ -1,0 +1,22 @@
+.row
+  .col-md-3
+  .col-md-6
+    %h1
+      %i.fa-solid.fa-car
+      Drivers
+
+.row
+  .col-md-3
+  .col-md-6
+    .table-responsive
+      %table.table#drivers-table
+        - @drivers.each do |driver|
+          %tr
+            %th= link_to driver.name, admin_driver_path(driver)
+            %td= link_to driver.zone.name, admin_zone_path(driver.zone)
+            %td= mail_to driver.email
+            %td.text-end
+              = link_to "tel:#{driver.phone}" do
+                = driver.phone
+                - if driver.phone.present?
+                  %i.fa-solid.fa-phone

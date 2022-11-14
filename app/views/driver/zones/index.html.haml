@@ -1,0 +1,27 @@
+.row
+  .col-md-3
+  .col-md-6
+    %h1
+      %i.fa-solid.fa-map
+      Zones
+
+.row
+  .col-md-3
+  .col-md-6
+    .table-responsive
+      %table.table#driver-zones
+        %tr
+          %th
+          %th Routes
+          %th Pickups
+          %th.text-end Leader
+        - @zones.each do |zone|
+          %tr
+            %td= link_to zone.name, driver_zone_path(zone)
+            %td= zone.routes.count
+            %td= zone.reservations.pending_pickup.count
+            %td.text-end
+              - if zone.leader
+                = link_to zone.leader.name, driver_driver_path(zone.leader)
+
+

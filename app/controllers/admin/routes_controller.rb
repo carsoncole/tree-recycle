@@ -3,7 +3,6 @@ class Admin::RoutesController < Admin::AdminController
 
   def index
     @routes = Route.all
-    render 'shared/routes/index'
   end
 
   def show

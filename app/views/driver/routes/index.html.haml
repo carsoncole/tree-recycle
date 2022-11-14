@@ -1,9 +1,3 @@
-- if signed_in?
-  .row
-    .col-md-12
-      .text-end= button_to "Process Reservations => Routes", admin_process_all_routes_path, class: 'btn btn-warning btn-lg'
-      %p.text-end.text-muted Reservations are routed when entered. Reprocessing is necessary if new routes are added.
-
 .row
   .col-md-3
   .col-md-6
@@ -22,12 +16,8 @@
               %i.fa-solid.fa-map
             %th
             %th
-            %th.text-center
-              %i.fa-solid.fa-list-ul
-            %th.text-center
-              %i.fa-solid.fa-list-check
-            %th
-              %i.fa-solid.fa-truck
+            %th.text-center Ttl Pick-ups
+            %th.text-center Picked-up
         - @routes.each do |route|
           %tr
             %td= link_to route.name, [:driver, route]
@@ -35,6 +25,6 @@
             %td
               = link_to driver_reservations_map_path(route_id: route.id) do
                 %i.fa-solid.fa-map
-            %td.text-center= route.reservations.count
             %td.text-center= route.reservations.pending_pickup.count
-            %td John, Mary, Lisa
+            %td.text-center= route.reservations.picked_up.count
+
