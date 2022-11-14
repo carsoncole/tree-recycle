@@ -444,6 +444,7 @@ nav.navbar {
   font-weight: 600;
   border-radius: 0.5em;
   margin-bottom: 2em;
+  background-color: lighten($scout-red, 50%)
 }
 .info-table {
   th {

@@ -1,17 +1,24 @@
 require "application_system_test_case"
 
 class ReservationsTest < ApplicationSystemTestCase
-  test "creating a valid minimal reservation with good address" do
-    reservation = build(:reservation)
+  test "creating a valid reservation with good address and donation at pick-up" do
+    reservation = build_stubbed(:reservation)
 
     visit root_url
     click_on "Reserve a tree pickup"
 
-    assert_selector "h1", text: "Tree pickup reservation"
+    within "#side-info" do
+      assert_selector "h1", text: "Tree Reservation"
+    end
+    within "#new-reservation" do
+      assert_selector "h1", text: "New Reservation"
+    end
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: reservation.street
     fill_in "reservation_email", with: reservation.email
     click_on "Register your address"
+
+    assert_selector "#flash", text: "You are all set! Your pickup reservation is confirmed."
 
     assert_selector "h1", text: "Please consider a donation"
     assert_selector "h5", text: "Donate online"
@@ -20,23 +27,42 @@ class ReservationsTest < ApplicationSystemTestCase
     assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
 
+  test "creating a valid minimal reservation with good address and online donation" do
+    reservation = build_stubbed(:reservation)
+
+    visit root_url
+    click_on "Reserve a tree pickup"
+
+    fill_in "reservation_name", with: reservation.name
+    fill_in "reservation_street", with: reservation.street
+    fill_in "reservation_email", with: reservation.email
+    click_on "Register your address"
+
+    click_on "Donate at pick-up"
+  end
+
   test "creating a valid reservation with all info" do
     reservation = build(:reservation)
 
     visit root_url
     click_on "Reserve a tree pickup"
 
-    assert_selector "h1", text: "Tree pickup reservation"
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: reservation.street
     fill_in "reservation_email", with: reservation.email
     fill_in "reservation_phone", with: reservation.phone
-    fill_in "reservation_notes", with: reservation.notes
+    fill_in "reservation_notes", with: Faker::Lorem.sentences(number: 3).join(" ")
     click_on "Register your address"
 
+    within "#side-info" do
+      assert_selector ".full_name", text: reservation.name
+      assert_selector ".street", text: reservation.street
+      assert_selector ".city", text: reservation.city
+      assert_selector ".state", text: reservation.state
+      assert_selector ".notes", text: reservation.notes
+    end
+
     assert_selector "h1", text: "Please consider a donation"
-    assert_selector "h5", text: "Donate online"
-    assert_selector "h5", text: "Donate at pick-up"
     click_on "Donate at pick-up"
     assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
@@ -47,14 +73,14 @@ class ReservationsTest < ApplicationSystemTestCase
     visit root_url
     click_on "Reserve a tree pickup"
 
-    assert_selector "h1", text: "Tree pickup reservation"
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: 'gobbly gook'
     fill_in "reservation_email", with: reservation.email
     click_on "Register your address"
-    sleep 2
+    sleep 1
 
     assert_text "Ouch! We are having issues and"
+    sleep 0.5
     click_on "Register your address"
 
     assert_text "Reservation was successfully updated and is confirmed for pick up."
@@ -68,13 +94,12 @@ class ReservationsTest < ApplicationSystemTestCase
     visit root_url
     click_on "Reserve a tree pickup"
 
-    assert_selector "h1", text: "Tree pickup reservation"
     fill_in "reservation_name", with: 'John Doe'
     fill_in "reservation_street", with: '1760 su san pl'
     fill_in "reservation_email", with: 'john@example.com'
     click_on "Register your address"
 
-    sleep 2
+    sleep 1
 
     assert_text "Ouch! We are having issues and"
     click_on "Use this corrected address"
@@ -111,71 +136,27 @@ class ReservationsTest < ApplicationSystemTestCase
     Setting.first.update(is_reservations_open: false)
 
     visit reservation_url(reservation)
-    within '#reservation-header' do
-      has_no_link? 'Edit'
+    has_no_link? 'Edit'
+  end
+
+  test "reservations are no longer editable when visiting from mail link" do
+    Setting.first.update(is_reservations_open: false)
+    reservation = create(:reservation_with_coordinates)
+    visit reservation_url(reservation)
+
+    visit reservation_url(reservation)
+    has_no_link? 'Edit'
+    within "#flash" do
+      assert_text "Reservations are no longer changeable."
     end
   end
 
-  test "reservations are no longer cancelable" do
+  test "reservations are no longer cancellable" do
     reservation = create(:reservation_with_coordinates)
     visit reservation_url(reservation)
     has_link? 'Cancel'
 
     Setting.first.update(is_reservations_open: false)
-    within '#reservation-header' do
-      has_no_link? 'Cancel'
-    end
+    has_no_link? 'Cancel'
   end
-
-  # test "visiting the index" do
-  #   visit reservations_url
-  #   assert_selector "h1", text: "Reservations"
-  # end
-
-  # test "should create reservation" do
-  #   visit reservations_url
-  #   click_on "New reservation"
-
-  #   fill_in "City", with: @reservation.city
-  #   fill_in "Country", with: @reservation.country
-  #   fill_in "Email", with: @reservation.email
-  #   fill_in "Latitude", with: @reservation.latitude
-  #   fill_in "Longitude", with: @reservation.longitude
-  #   fill_in "Name", with: @reservation.name
-  #   fill_in "Phone", with: @reservation.phone
-  #   fill_in "State", with: @reservation.state
-  #   fill_in "Street", with: @reservation.street
-  #   fill_in "Zip", with: @reservation.zip
-  #   click_on "Create Reservation"
-
-  #   assert_text "Reservation was successfully created"
-  #   click_on "Back"
-  # end
-
-  # test "should update Reservation" do
-  #   visit reservation_url(@reservation)
-  #   click_on "Edit this reservation", match: :first
-
-  #   fill_in "City", with: @reservation.city
-  #   fill_in "Country", with: @reservation.country
-  #   fill_in "Email", with: @reservation.email
-  #   fill_in "Latitude", with: @reservation.latitude
-  #   fill_in "Longitude", with: @reservation.longitude
-  #   fill_in "Name", with: @reservation.name
-  #   fill_in "Phone", with: @reservation.phone
-  #   fill_in "State", with: @reservation.state
-  #   fill_in "Street", with: @reservation.street
-  #   fill_in "Zip", with: @reservation.zip
-  #   click_on "Update Reservation"
-
-  #   assert_text "Reservation was successfully updated"
-  #   click_on "Back"
-  # end
-
-  # test "should destroy Reservation" do
-  #   visit reservation_url(@reservation)
-  #   click_on "Destroy this reservation", match: :first
-
-  #   assert_text "Reservation was successfully destroyed"
-  # end
 end

@@ -21,20 +21,21 @@
 
     .section.name
       %h2 Name
-      = @reservation.name
+      .full_name= @reservation.name
 
 
     .section.address
       %h2 Address
 
       - if @reservation.street
-        = @reservation.street
+        .street= @reservation.street
         %br
-      = @reservation.city
-      = @reservation.state
+      .city= @reservation.city
+      .state= @reservation.state
 
       - if @reservation.notes.present?
-        %div.mt-3= @reservation.notes
+        %br
+        .notes= @reservation.notes
 
     .section.pickup-details
       %h2 Pickup details
@@ -52,3 +53,4 @@
       - if @reservation.phone.present?
         %br
         = @reservation.phone
+

@@ -19,7 +19,7 @@ class ReservationsController < ApplicationController
   end
 
   def edit
-    redirect_to reservation_url(@reservation), alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
+    redirect_to reservation_url(@reservation)
   end
 
   #FIXME review purpose of !address.valid?

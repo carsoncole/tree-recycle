@@ -21,4 +21,7 @@ class Route < ApplicationRecord
     self.distance ||= 1
   end
 
+  def name_with_zone
+    (zone&.name || 'No Zone') + ' / ' + self&.name
+  end
 end

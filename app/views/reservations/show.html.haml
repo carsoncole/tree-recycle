@@ -1,5 +1,12 @@
 
 #reservation
+  - if !setting.is_reservations_open
+    .important-message
+      Reservations are currently closed and not changeable. Please
+      = link_to "contact us", questions_path
+      if you need to make a change.
+
+
 
   - if @reservation_missing
     %p.mt-4.text-center Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup.
@@ -48,10 +55,7 @@
 
     %hr.mt-0.mb-4
 
-
-
-
-    - unless @reservation.pending_pickup? || @reservation.cancelled?
+    - unless @reservation.pending_pickup? || @reservation.cancelled? || !setting.is_reservations_open?
       .row
         .col-md-12.mt-4
           .text-center= button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'

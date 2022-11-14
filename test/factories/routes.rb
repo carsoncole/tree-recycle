@@ -5,5 +5,9 @@ FactoryBot.define do
     city { 'Bainbridge Island' }
     state { 'Washington' }
     distance { 1 }
+
+    factory :route_with_zone do
+      zone
+    end
   end
 end
