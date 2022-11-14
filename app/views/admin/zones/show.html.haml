@@ -12,7 +12,8 @@
         %h2 Zone leader
         - if @zone.leader
           %p= link_to @zone&.leader&.name, driver_driver_path(@zone&.leader)
-
+        - else
+          %p.text-muted No Zone leader
   .row
     .col-md-3
     .col-md-6

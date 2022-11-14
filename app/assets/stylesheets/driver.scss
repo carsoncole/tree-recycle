@@ -133,3 +133,24 @@
     }
   }
 }
+
+#drivers-table {
+  table-layout: fixed;
+  th,td {
+    white-space: nowrap;
+    overflow-x: scroll;
+    &.name {
+      width: 14em;
+      overflow-x: scroll;
+    }
+    &.email{
+      width: 15em;
+      overflow-x: scroll;
+    }
+    &.phone {
+      text-align: right;
+      width: 12em;
+    }
+
+  }
+}

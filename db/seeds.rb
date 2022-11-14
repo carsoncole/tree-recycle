@@ -155,3 +155,8 @@ zones = [
 ]
 
 zones.each {|z| Zone.create(name: z[:name], street: z[:street], city: z[:city], state: z[:state], country: z[:country] )}
+
+
+(1...20).each do
+  Driver.create(name: Faker::Name.name, phone: Faker::PhoneNumber.cell_phone, email: Faker::Internet.email, zone: Zone.find(rand(4) + 1))
+end
