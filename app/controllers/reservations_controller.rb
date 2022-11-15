@@ -18,7 +18,6 @@ class ReservationsController < ApplicationController
   end
 
   def edit
-    redirect_to reservation_url(@reservation)
   end
 
   #FIXME review purpose of !address.valid?

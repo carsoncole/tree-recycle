@@ -3,10 +3,6 @@ require "application_system_test_case"
 class Driver::HomeTest < ApplicationSystemTestCase
   test "visiting all of the driver header links" do
     visit driver_root_path
-    within "#driver-navbar" do
-      click_on 'Zones'
-    end
-      assert_selector "h1", text: "Zones"
 
     within "#driver-navbar" do
       click_on 'Home'

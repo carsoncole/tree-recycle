@@ -5,8 +5,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     create_list(:reservation_with_coordinates, 13, is_routed: false)
     visit driver_root_path
     assert_selector "h1", text: "Welcome Drivers!"
-
-
+    assert_text "We have 13 trees to pick up and so far we've picked up 0 trees."
   end
 
   test "visiting the driver routes page" do
@@ -31,7 +30,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     within "#driver-zones" do
       assert_selector "tr", count: 26
       assert_selector ".route-zone", count: 4
-      assert_selector ".route-zone", text: zones[1].name
+      assert_selector ".route-zone", text: zones[1].name.upcase
       assert_selector ".route", text: routes[1].name
       assert_selector "#not_archived_#{routes[1].id}", text: "10"
       assert_selector "#not_archived_#{routes[2].id}", text: "0"
@@ -48,10 +47,80 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     assert_selector "h1", text: route.name_with_zone
   end
 
-  test "visiting a route show page with lots of reservations" do
+  test "visiting a route page with lots of reservations" do
     route = create(:route_with_zone)
     reservations = create_list(:reservation_with_coordinates, 20, route: route)
     visit driver_route_path(route)
     assert_selector "h1", text: route.name_with_zone
+    assert_selector "tr", count: 21
+  end
+
+  test "visting a route page and clicking pickups" do
+    zone = create(:zone)
+    route = create(:route_with_coordinates, zone_id: zone.id)
+    reservations = create_list(:reservation_with_coordinates, 20)
+
+    assert_equal 20, Reservation.pending_pickup.count
+
+    visit driver_route_path(route)
+    assert_selector "#btn-not-picked-up-#{reservations[0].id}"
+    assert_selector "#btn-not-picked-up-#{reservations[1].id}"
+    assert_selector "#btn-not-picked-up-#{reservations[2].id}"
+
+    accept_confirm do
+      click_button "btn-not-picked-up-#{reservations[0].id}"
+    end
+    assert_no_selector "#btn-not-picked-up-#{reservations[0].id}"
+    assert_selector "#btn-picked-up-#{reservations[0].id}"
+
+    assert_equal 1, Reservation.picked_up.count
+    assert_equal 19, Reservation.pending_pickup.count
+  end
+
+  test "visting a route page and clicking missing" do
+    zone = create(:zone)
+    route = create(:route_with_coordinates, zone_id: zone.id)
+    reservations = create_list(:reservation_with_coordinates, 20)
+
+    visit driver_route_path(route)
+
+    accept_confirm do
+      click_button "btn-not-missing-#{reservations[0].id}"
+    end
+    assert_no_selector "#btn-not-missing-#{reservations[0].id}"
+
+    assert_equal 1, Reservation.missing.count
+    assert_equal 19, Reservation.pending_pickup.count
+  end
+
+  test "visting a route page and pending pickup" do
+    zone = create(:zone)
+    route = create(:route_with_coordinates, zone_id: zone.id)
+    reservations = create_list(:reservation_with_coordinates, 20)
+
+    visit driver_route_path(route)
+
+    accept_confirm do
+      click_button "btn-not-missing-#{reservations[0].id}"
+    end
+    accept_confirm do
+      click_button "btn-not-missing-#{reservations[1].id}"
+    end
+    sleep 0.25
+    assert_equal 18, Reservation.pending_pickup.count
+    assert_equal 2, Reservation.missing.count
+
+    assert_no_selector "#btn-pending-pickup-#{reservations[0].id}"
+    assert_no_selector "#btn-pending-pickup-#{reservations[1].id}"
+
+    accept_confirm do
+      click_button "btn-missing-#{reservations[0].id}"
+    end
+    accept_confirm do
+      click_button "btn-missing-#{reservations[1].id}"
+    end
+
+    assert_equal 18, Reservation.pending_pickup.count
+    assert_equal 2, Reservation.missing.count
   end
 end

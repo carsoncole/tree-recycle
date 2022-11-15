@@ -14,11 +14,11 @@
         %nav
           %ul.nav.justify-content-end
             %li.nav-item
-              = link_to new_admin_route_path, class: 'nav-link' do
+              = link_to new_admin_route_path, class: 'nav-link', id: 'new-route-link' do
                 %i.fa-solid.fa-plus
                 Route
             %li.nav-item
-              = link_to new_admin_zone_path, class: 'nav-link' do
+              = link_to new_admin_zone_path, class: 'nav-link', id: 'new-zone-link' do
                 %i.fa-solid.fa-plus
                 Zone
 

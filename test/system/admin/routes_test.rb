@@ -15,8 +15,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     system_test_signin
     click_on 'Routes'
 
-    table_row_count = 1
-    assert_equal find('#routes-table').all(:css, 'tr').count, table_row_count
+    assert_equal 1, find('#driver-zones').all(:css, 'tr').count
 
     @routes.each do |z|
       click_on 'new-route-link'
@@ -25,11 +24,15 @@ class Admin::RoutesTest < ApplicationSystemTestCase
       fill_in "City", with: 'Bainbridge Island'
       fill_in "State", with: 'Washington'
       click_on "Save"
-      table_row_count += 1
-      assert_text "Route was successfully created."
+      within "#flash" do
+        assert_text "Route was successfully created."
+      end
       assert Route.where(name: z[:name]).first.geocoded?
-      assert_equal find('#routes-table').all(:css, 'tr').count, table_row_count
+      within "#driver-zones" do
+        assert_text z[:name]
+      end
     end
+    assert_equal 5, find('#driver-zones').all(:css, 'tr').count
   end
 
   test "correct route assignments" do

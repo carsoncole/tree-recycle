@@ -117,7 +117,7 @@ class ReservationsTest < ApplicationSystemTestCase
     click_on "Make a reservation"
     assert_text "Provide the address where the tree will be located and any helpful notes"
 
-    Setting.first.update(is_reservations_open: false)
+    Setting.first_or_create.update(is_reservations_open: false)
 
     click_on "Make a reservation"
     within("#flash") do
@@ -133,21 +133,20 @@ class ReservationsTest < ApplicationSystemTestCase
     click_on 'Edit'
     assert_selector 'h1', text: 'Editing reservation'
 
-    Setting.first.update(is_reservations_open: false)
+    Setting.first_or_create.update(is_reservations_open: false)
 
     visit reservation_url(reservation)
     has_no_link? 'Edit'
   end
 
   test "reservations are no longer editable when visiting from mail link" do
-    Setting.first.update(is_reservations_open: false)
     reservation = create(:reservation_with_coordinates)
-    visit reservation_url(reservation)
+    Setting.first_or_create.update(is_reservations_open: false)
 
     visit reservation_url(reservation)
     has_no_link? 'Edit'
-    within "#flash" do
-      assert_text "Reservations are no longer changeable."
+    within "important-message" do
+      assert_text "Reservations are currently closed and not changeable."
     end
   end
 

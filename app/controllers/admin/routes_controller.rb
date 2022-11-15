@@ -1,10 +1,6 @@
 class Admin::RoutesController < Admin::AdminController
   before_action :set_route, only: %i[ show edit update destroy map ]
 
-  def index
-    @routes = Route.all
-  end
-
   def show
     @route = Route.find(params[:id])
     @reservations = @route.reservations.not_archived
@@ -21,7 +17,7 @@ class Admin::RoutesController < Admin::AdminController
     @route = Route.new(route_params)
 
     if @route.save
-      redirect_to admin_routes_url, notice: "Route was successfully created."
+      redirect_to admin_routing_url, notice: "Route was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
