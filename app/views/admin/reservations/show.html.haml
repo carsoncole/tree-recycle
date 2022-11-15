@@ -96,6 +96,14 @@
             %th Longitude
             %td= @reservation.longitude
 
+          %tr
+            %th Auto routed?
+            %td
+              - if @reservation.is_routed?
+                Yes
+              - else
+                No
+
       #status
         %h2 Pick-up Status
         - if @reservation.archived?

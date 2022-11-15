@@ -38,7 +38,7 @@ class Admin::RoutesController < Admin::AdminController
   def destroy
     @route.destroy
 
-    redirect_to admin_routes_url, notice: "Route was successfully destroyed."
+    redirect_to admin_routing_url, notice: "Route was successfully destroyed."
   end
 
 # https://maps.google.com/maps?ll=-25.344016,131.035417&z=16&t=h&hl=en-US&gl=US&mapclient=apiv3&cid=4469685432667933103

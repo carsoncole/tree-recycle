@@ -9,5 +9,10 @@ FactoryBot.define do
     factory :route_with_zone do
       zone
     end
+
+    factory :route_with_coordinates do
+      latitude { 47.6259654 }
+      longitude { -122.517533 }
+    end
   end
 end

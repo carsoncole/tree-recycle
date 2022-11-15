@@ -10,7 +10,7 @@
   .col-md-6
     #stats
       We have
-      %span.number= pluralize(Reservation.pending_pickup.count, "tree")
+      %span.number#pending-pickup-count= pluralize(Reservation.pending_pickup.count, "tree")
       to pick up and so far we've picked up
       %span.number
         = succeed(".") do

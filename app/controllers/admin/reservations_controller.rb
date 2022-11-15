@@ -77,6 +77,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :is_routed)
     end
 end

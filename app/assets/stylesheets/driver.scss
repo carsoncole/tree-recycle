@@ -165,14 +165,15 @@
 }
 
 #driver-zones {
-  table-layout: fixed;
+  table-layout: 100;
   th,td {
     &.zone {
       font-weight: 800;
       text-transform: uppercase;
+
     }
     &.route {
-      font-weight: 400;
+      min-width: 14em;
     }
     &.data {
       width: 5em;
