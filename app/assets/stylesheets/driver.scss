@@ -136,6 +136,9 @@
 
 #drivers-table {
   table-layout: fixed;
+  th {
+    font-weight: 400
+  }
   th,td {
     white-space: nowrap;
     overflow-x: scroll;
@@ -144,7 +147,7 @@
       overflow-x: scroll;
     }
     &.email{
-      width: 15em;
+      width: 14em;
       overflow-x: scroll;
     }
     &.phone {
@@ -152,7 +155,10 @@
       width: 12em;
     }
     &.zone {
-      width: 10em;
+      width: 9em;
+    }
+    &.action-1 {
+      width: 2.5em;
     }
 
   }
