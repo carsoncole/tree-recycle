@@ -22,7 +22,7 @@ class Reservation < ApplicationRecord
 
   # geocoding and routing
   before_validation :full_geocode!, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
-  after_validation :route!, if: ->(obj){ obj.geocoded? && (obj.latitude_changed? || obj.nil?) }
+  after_validation :route!, if: ->(obj){ obj.geocoded? && obj.is_routed? && (obj.latitude_changed? && (obj.persisted? || obj.route_id.nil?)) }
 
   # email delivery
   after_save :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status? }
@@ -41,6 +41,7 @@ class Reservation < ApplicationRecord
     self.country = Setting.first_or_create.default_country || 'United States'
     self.city = Setting&.first&.default_city.present? ?  Setting&.first&.default_city : 'BAINBRIDGE IS'
     self.state = Setting&.first&.default_state.present? ?  Setting&.first&.default_state : 'Washington'
+    self.is_routed ||= true
   end
 
   def self.open?
