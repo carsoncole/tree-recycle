@@ -2,7 +2,7 @@ class Zone < ApplicationRecord
   include Geocodable
 
   has_many :drivers
-  has_many :routes
+  has_many :routes, dependent: :nullify
   has_many :reservations, through: :routes
   belongs_to :leader, class_name: 'Driver', optional: true
 

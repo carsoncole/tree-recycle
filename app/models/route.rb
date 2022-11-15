@@ -9,6 +9,8 @@ class Route < ApplicationRecord
 
   validates :name, :street, :city, :country, :distance, presence: true
 
+  scope :unzoned, -> { where(zone_id: nil) }
+
   geocoded_by :address
   after_validation :geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?)}
 
