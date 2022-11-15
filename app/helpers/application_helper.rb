@@ -24,4 +24,8 @@ module ApplicationHelper
   def nice_short_date_time(datetime)
     datetime&.strftime('%H:%M %F')
   end
+
+  def admin_view?
+    request.path.include?('/admin')
+  end
 end
