@@ -43,7 +43,6 @@ class ReservationsMailer < ApplicationMailer
     @reservation.logs.create(message: 'Last call email sent.')
   end
 
-  #OPTIMIZE should we record sending of this email?
   def cancelled_reservation_email
     return if @reservation.no_emails? || !setting.is_emailing_enabled
     mail(to: @reservation.email, subject: "Your tree pickup reservation is cancelled")

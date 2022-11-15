@@ -1,4 +1,3 @@
-#TODO create route reports for use on day of event
 class Route < ApplicationRecord
   include Geocodable
 

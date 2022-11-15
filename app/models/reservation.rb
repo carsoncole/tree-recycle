@@ -1,6 +1,5 @@
 require 'csv'
 #OPTIMIZE improve route assignments
-#FIXME sending of confirmation email on create/update of pending status
 class Reservation < ApplicationRecord
   include Geocodable
 

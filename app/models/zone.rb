@@ -12,5 +12,4 @@ class Zone < ApplicationRecord
 
   geocoded_by :address
   after_validation :geocode, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?)}
-
 end

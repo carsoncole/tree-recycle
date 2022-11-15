@@ -1,4 +1,3 @@
-#TODO Stripe webhooks needed
 class StripeChargesServices
   DEFAULT_CURRENCY = 'usd'.freeze
   
