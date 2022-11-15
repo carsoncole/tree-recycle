@@ -157,3 +157,24 @@
 
   }
 }
+
+#driver-zones {
+  table-layout: fixed;
+  th,td {
+    &.zone {
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    &.route {
+      font-weight: 400;
+    }
+    &.data {
+      width: 5em;
+      text-align: center;
+    }
+    &.leader {
+      width: 10em;
+      text-align: right;
+    }
+  }
+}

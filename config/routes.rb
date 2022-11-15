@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     resources :zones, only: %i( index show )
     resources :drivers, only: %i( index show )
     get 'home' => 'home#index', as: 'home'
+    get '/routing' => 'zones#index', as: 'routing'
   end
 
 
@@ -66,6 +67,7 @@ Rails.application.routes.draw do
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
     end
+    get '/routing' => 'zones#index', as: 'routing'
 
     delete 'admin/home/archive-all' => 'home#archive_all', as: 'archive_all'
 
