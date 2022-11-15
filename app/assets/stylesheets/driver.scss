@@ -166,6 +166,9 @@
 
 #driver-zones {
   table-layout: 100;
+  th {
+    font-size: 0.85em;
+  }
   th,td {
     &.zone {
       font-weight: 800;
@@ -173,10 +176,10 @@
 
     }
     &.route {
-      min-width: 14em;
+      min-width: 12.5em;
     }
     &.data {
-      width: 5em;
+      width: 4.6em;
       text-align: center;
     }
     &.leader {
