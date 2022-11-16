@@ -13,34 +13,47 @@
 
   th, td {
     &.house {
-      width: 4.5em;
+      width: 3.2em;
     }
     &.notes {
-      width: 12em;
+      width: 14em;
       overflow-x: scroll;
     }
     &.name {
       width: 10em;
-
       white-space: nowrap;
     }
     &.buttons {
-      width: 21em;
+      width: 14em;
     }
     &.phone {
-      width: 10em;
+      width: 9em;
     }
     &.route {
-      width: 12em;
+      width: 10em;
+      overflow-x: scroll;
     }
     &.street {
-      width: 16em;
+      width: 14em;
+      overflow-x: scroll;
     }
   }
 
-  .btn {
+  td.buttons .btn {
     float: left !important;
-    margin-right: 6px;
+    margin-right: 5px;
+    font-size: 0.8em;
+    &:nth-child {
+      margin-right: 0;
+    }
+    &.missing, &.pending-pickup {
+      font-size: 0.6em;
+      margin-top: 0.4em;
+      padding: 0.3em 0.5em;
+    }
+    &.pending-pickup {
+      margin-right: 0;
+    }
   }
   .btn-sm {
     margin-top: 0.25em;
