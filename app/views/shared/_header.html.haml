@@ -13,9 +13,9 @@
       .collapse.navbar-collapse#navbarSupportedContent
         %ul.navbar-nav.me-auto.mb-2.mb-lg-0
           %li.nav-item
-            = link_to "Make a reservation", new_reservation_path, class: "nav-link", "aria-current": "page"
+            = link_to "New reservation", new_reservation_path, class: "nav-link", "aria-current": "page"
           %li.nav-item
-            = link_to "Make a donation", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link", "aria-current": "page"
+            = link_to "Donate", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link", "aria-current": "page"
           %li.nav-item
             = link_to questions_path, class: "nav-link", "aria-current": "page", id: 'question_header_link' do
               = "Questions"
