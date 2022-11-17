@@ -3,7 +3,7 @@ class Driver::DriverController < ApplicationController
   before_action :set_title
 
   def set_title
-    @site_title = 'Tree Recycle Driver'
+    @site_title = 'Driver'
   end
 
   def is_driver_signed_in?
