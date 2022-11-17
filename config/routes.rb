@@ -43,18 +43,14 @@ Rails.application.routes.draw do
   post 'stripe-webhook' => "donations#stripe_webhook"
 
   namespace :driver do
-    get 'reservations/search' => 'reservations#search', as: 'reservations_search'
-    get 'reservations/map' => 'reservations#map', as: 'reservations_map'
-
     root 'zones#index'
     resources :reservations, only: %i( update )
-    resources :routes, only: %i( index show )
-    resources :zones, only: %i( index show )
+    resources :routes, only: %i( show )
     resources :drivers, only: %i( index show )
-    get 'home' => 'home#index', as: 'home'
     get '/routing' => 'zones#index', as: 'routing'
+    get 'reservations/search' => 'reservations#search', as: 'reservations_search'
+    get 'reservations/map' => 'reservations#map', as: 'reservations_map'
   end
-
 
   namespace :admin do
     root 'home#index'
@@ -73,7 +69,7 @@ Rails.application.routes.draw do
 
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
-    resources :routes do
+    resources :routes, except: [ :index ] do
       get 'map' => 'routes#map', as: 'map'
     end
     get 'search' => 'reservations#search', as: 'search'

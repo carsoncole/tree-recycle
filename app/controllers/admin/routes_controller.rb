@@ -25,7 +25,7 @@ class Admin::RoutesController < Admin::AdminController
 
   def update
     if @route.update(route_params)
-      redirect_to admin_routes_url, notice: "Route was successfully updated."
+      redirect_to admin_routing_url, notice: "Route was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end

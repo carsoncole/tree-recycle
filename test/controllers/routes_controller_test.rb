@@ -7,12 +7,12 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not get index" do
-    get admin_routes_url
+    get admin_routing_url
     assert_redirected_to sign_in_path
   end
 
   test "should get index" do
-    get admin_routes_url(as: @user)
+    get admin_routing_url(as: @user)
     assert_response :success
   end
 
@@ -26,7 +26,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       post admin_routes_url(as: @user), params: { route: { street: @route.street, city: @route.city, state: @route.state, distance: @route.distance, name: @route.name } }
     end
 
-    assert_redirected_to admin_routes_url
+    assert_redirected_to admin_routing_url
   end
 
   test "should show route" do
@@ -41,7 +41,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update route" do
     patch admin_route_url(@route, as: @user), params: { route: { street: @route.street, city: @route.city, state: @route.state, distance: @route.distance, name: @route.name } }
-    assert_redirected_to admin_routes_url
+    assert_redirected_to admin_routing_url
   end
 
   test "should destroy route" do
@@ -49,6 +49,6 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
       delete admin_route_url(@route, as: @user)
     end
 
-    assert_redirected_to admin_routes_url
+    assert_redirected_to admin_routing_url
   end
 end

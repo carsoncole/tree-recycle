@@ -6,11 +6,30 @@ class Driver::DriversTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Drivers"
   end
 
-  test "visting a driver show page" do
+  test "visiting a driver show page without zone" do
     driver = create(:driver)
     visit driver_drivers_path
     click_on driver.name
     assert_selector "h1", text: driver.name
+    assert_text "Zone: Not assigned"
+  end
+
+  test "visiting a driver show page with zone" do
+    zone = create(:zone)
+    driver = create(:driver, zone_id: zone.id)
+    visit driver_drivers_path
+    click_on driver.name
+    assert_selector "h1", text: driver.name
+    assert_text "Zone: #{ driver.zone.name }"
+  end
+
+  test "driver show with all info" do
+    zone = create(:zone)
+    driver = create( :driver, email: Faker::Internet.email, zone_id: zone.id )
+    visit driver_driver_path(driver)
+    assert_text "Zone: #{ driver.zone.name }"
+    assert_text driver.email
+    assert_text driver.phone
   end
 
   test "visiting the drivers page with auth" do
@@ -19,11 +38,11 @@ class Driver::DriversTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Sign in"
 
     visit driver_root_path(params: { key: setting.driver_secret_key })
-    assert_selector "h1", text: "Welcome Drivers!"
+    assert_selector "h1", text: "Routes"
 
     # check that param is no longer needed since key is cookie-stored
     visit driver_root_path
-    assert_selector "h1", text: "Welcome Drivers!"
+    assert_selector "h1", text: "Routes"
 
     # change of key unvalidates existing key
     setting.update(driver_secret_key: 'Faker::Internet.password')
@@ -31,6 +50,6 @@ class Driver::DriversTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Sign in"
 
     visit driver_root_path(params: { key: setting.driver_secret_key } )
-    assert_selector "h1", text: "Welcome Drivers!"
+    assert_selector "h1", text: "Routes"
   end
 end

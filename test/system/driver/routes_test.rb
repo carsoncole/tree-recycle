@@ -1,17 +1,9 @@
 require "application_system_test_case"
 
 class Driver::RoutesTest < ApplicationSystemTestCase
-  test "visiting the driver home page and check totals" do
-    create_list(:reservation_with_coordinates, 13, is_routed: false)
-    visit driver_root_path
-    assert_selector "h1", text: "Welcome Drivers!"
-    assert_text "We have 13 trees to pick up and so far we've picked up 0 trees."
-  end
-
   test "visiting the driver routes page" do
     visit driver_routing_path
     assert_selector "h1", text: "Routes"
-
 
     zones = create_list(:zone_with_coordinates, 4)
     routes = []
@@ -25,24 +17,23 @@ class Driver::RoutesTest < ApplicationSystemTestCase
 
     create_list(:reservation_with_coordinates, 10, is_routed: false)
 
-    visit driver_routing_path
+    within "#driver-nav" do
+      click_on 'Routes'
+    end
 
     within "#driver-zones" do
       assert_selector "tr", count: 26
       assert_selector ".route-zone", count: 4
       assert_selector ".route-zone", text: zones[1].name.upcase
       assert_selector ".route", text: routes[1].name
-      assert_selector "#not_archived_#{routes[1].id}", text: "10"
-      assert_selector "#not_archived_#{routes[2].id}", text: "0"
       assert_selector "#route-name-#{routes[3].id}", text: routes[3].name
-      assert_selector "#total-unrouted-count", text: "10"
       assert_selector ".zone", text: 'UNROUTED'
     end
   end
 
   test "visting a routing page" do
     route= create(:route_with_zone)
-    visit driver_routing_path
+    visit driver_root_path
     click_on route.name
     assert_selector "h1", text: route.name_with_zone
   end
@@ -126,19 +117,21 @@ class Driver::RoutesTest < ApplicationSystemTestCase
 
   test "visiting the driver routes page with auth" do
     setting = create(:setting_with_driver_auth)
-    visit driver_routing_path
+    visit driver_root_path
     assert_selector "h1", text: "Sign in"
 
-    visit driver_routing_path(params: { key: setting.driver_secret_key })
+    visit driver_root_path(params: { key: setting.driver_secret_key })
     assert_selector "h1", text: "Routes"
 
     # check that param is no longer needed since key is cookie-stored
-    visit driver_routing_path
+    within "#driver-nav" do
+      click_on 'Routes'
+    end
     assert_selector "h1", text: "Routes"
 
     # change of key unvalidates existing key
     setting.update(driver_secret_key: 'Faker::Internet.password')
-    visit driver_routing_path
+    visit '/driver'
     assert_selector "h1", text: "Sign in"
 
     visit driver_routing_path(params: { key: setting.driver_secret_key } )

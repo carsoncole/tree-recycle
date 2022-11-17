@@ -1,3 +1,6 @@
+$scout-red: #CE1126;
+$scout-blue: #003F87;
+
 #driver-routes {
   table.table.driver-routes {
     table-layout: fixed;
@@ -217,5 +220,14 @@
       background-color: lighten($scout-red,20%);
       color: #fff;
     }
+  }
+}
+
+#driver-profile {
+  .row {
+    margin-bottom: 1.66em;
+  }
+  h2 {
+    font-size: 1.2em;
   }
 }
