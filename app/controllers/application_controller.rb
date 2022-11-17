@@ -1,10 +1,12 @@
 #TODO maps need to be added to admin/driver pages
-#TODO app titles should be added for main/admin/driver portion of app
-#TODO footer text "Troop XXX" should be in settings
-#TODO site_title in header should be stored in settings
 class ApplicationController < ActionController::Base
   include Clearance::Controller
   include Pagy::Backend
+  before_action :set_title
+
+  def set_title
+    @site_title = Setting.first&.site_title if Setting.first
+  end
 
   def driver_signed_in?
     cookies.permanent[:driver_key] = params[:key] if params[:key]

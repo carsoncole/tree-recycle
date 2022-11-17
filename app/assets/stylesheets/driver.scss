@@ -184,7 +184,7 @@ $scout-blue: #003F87;
   margin-bottom: 1em;
 }
 
-#driver-zones {
+table#driver-zones {
   tr:first-child  {
     font-size: .85em;
   }
@@ -201,10 +201,11 @@ $scout-blue: #003F87;
 
     }
     &.route {
-      min-width: 12.5em;
+      min-width: 12em;
+      overflow-x: scroll;
     }
     &.data {
-      width: 4em;
+      width: 3.5em;
       text-align: center;
     }
     &.leader {
