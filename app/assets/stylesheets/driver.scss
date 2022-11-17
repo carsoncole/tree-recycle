@@ -231,3 +231,9 @@ $scout-blue: #003F87;
     font-size: 1.2em;
   }
 }
+
+.icono {
+  font-size: 10em;
+  color: lighten($scout-blue,20);
+  padding: 1em;
+}
