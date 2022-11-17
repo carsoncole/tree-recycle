@@ -25,31 +25,48 @@
             %th Archived
             %td= @archived_count
 
+
       .col-md-3
-        %h2 Operations
+        %h2 Reservations
         %table.table.info-table#stats-table
           %tr
-            %th Reservations
+            %th
+              Reservations
+              - if setting.is_reservations_open?
+                Open
+              - else
+                Closed
             %td
               - if setting.is_reservations_open
-                = button_to "Disable", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm'
+                = button_to "Close", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm'
               - else
-                = button_to "Enable", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm'
+                = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm'
           %tr
-            %th Emails
+            %td.text-center(colspan="32")
+              = link_to new_reservation_path do
+                %i.fa-strong.fa-plus.fa-lg
+                Manual Reservation
+
+      .col-md-3
+        %h2 Misc
+        %table.table.info-table#stats-table
+          %tr
+            %th
+              Emails
+              - if !setting.is_emailing_enabled
+                Stopped
+              - else
+                Delivering
+
             %td
               - if setting.is_emailing_enabled
-                = button_to "Disable", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
+                = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
               - else
-                = button_to "Enable", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
+                = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
 
           %tr
             %th Reservations
             %td= button_to "ARCHIVE ALL", admin_archive_all_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived reservations to be archived'}, class: 'btn btn-danger btn-sm'
-
-          %tr
-            %th Reservations
-            %td= button_to "DESTROY ALL", '/', class: 'btn btn-danger btn-sm'
 
 
     .row

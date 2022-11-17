@@ -1,5 +1,3 @@
-
-#TODO create manually reservation entry proces
 class Admin::ReservationsController < Admin::AdminController
   before_action :set_reservation, except: %i[ new index search process_all_routes map]
 

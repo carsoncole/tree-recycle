@@ -139,6 +139,10 @@ For testing and trial use, seed configuration, reservation, and admin user data 
 rails db:seed
 ```
 
+## Favicons
+
+You can replace the favicons and Apple touch icons, which are reference in `shared/_head.html.haml`, on the site `https://iconifier.net/index.php?iconified=20221118063655_tree-red-touch-icon.png`.
+
 ## Copyright
 
 Copyright (c) 2022 Carson Cole. See MIT-LICENSE for details.

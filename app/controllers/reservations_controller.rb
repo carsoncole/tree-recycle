@@ -7,7 +7,9 @@ class ReservationsController < ApplicationController
   end
 
   def new
-    redirect_to root_url, alert: "Reservations are CLOSED. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
+    unless signed_in?
+      redirect_to root_url, alert: "Reservations are CLOSED. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
+    end
     @reservation = Reservation.new
     if params[:reservation_id]
       old_reservation = Reservation.find(params[:reservation_id])
@@ -40,6 +42,7 @@ class ReservationsController < ApplicationController
     end
   end
 
+  #OPTIMIZE Add check for reservations.open? unless signed_in
   def create
     @reservation = Reservation.new(reservation_params)
 

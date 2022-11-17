@@ -10,8 +10,14 @@
 
 = render 'search'
 
+
+%p
+  = link_to new_reservation_path do
+    %i.fa-strong.fa-plus.fa-lg
+    Reservation
+
+%h5 Status
 %p.mb-4
-  %h5 Status
   = link_to "Pending pickup", admin_reservations_path
   = '|'
   = link_to "Un-Routed", admin_reservations_path(unrouted: true)
@@ -26,8 +32,8 @@
   = '|'
   = link_to "All", admin_reservations_path(all: true)
 
+%h5 Routes
 %p.mb-4
-  %h5 Routes
   - Route.all.each do |route|
     = '|'
     = link_to route.name, admin_reservations_path(route_id: route.id)

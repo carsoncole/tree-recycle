@@ -27,7 +27,7 @@ $scout-blue: #003F87;
       white-space: nowrap;
     }
     &.buttons {
-      width: 14em;
+      width: 17em;
     }
     &.phone {
       width: 9em;
@@ -40,15 +40,12 @@ $scout-blue: #003F87;
 
   td.buttons .btn {
     float: left !important;
-    margin-right: 5px;
+    margin-right: 6px;
     font-size: 0.8em;
-    &:nth-child {
-      margin-right: 0;
-    }
+    font-weight: 800;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
     &.missing, &.pending-pickup {
-      font-size: 0.6em;
-      margin-top: 0.4em;
-      padding: 0.3em 0.5em;
     }
     &.pending-pickup {
       margin-right: 0;

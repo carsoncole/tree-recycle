@@ -17,11 +17,11 @@
           %th.phone Phone
       %tbody
         - @reservations.each do |reservation|
-          %tr{class: reservation.picked_up? ? 'table-success' : reservation.missing? ? 'table-danger' : nil}
+          %tr{class: reservation.picked_up? ? 'table-primary' : reservation.missing? ? 'table-danger' : nil}
             %td.buttons
-              = button_to "Picked Up", [:driver, reservation], id: reservation.picked_up? ? "btn-picked-up-#{reservation.id}" : "btn-not-picked-up-#{reservation.id}", class: "btn picked-up btn-outline-success #{ reservation.picked_up? ? 'active' : nil}",  params: { status: 'picked_up' }, data: { turbo_confirm: 'Picked up? Are you sure?' }
+              = button_to "Picked Up", [:driver, reservation], id: reservation.picked_up? ? "btn-picked-up-#{reservation.id}" : "btn-not-picked-up-#{reservation.id}", class: "btn picked-up btn-outline-primary #{ reservation.picked_up? ? 'active' : nil}",  params: { status: 'picked_up' }, data: { turbo_confirm: 'Picked up? Are you sure?' }
               = button_to "Missing", [:driver, reservation], id: reservation.missing? ? "btn-missing-#{reservation.id}" : "btn-not-missing-#{reservation.id}", class: "btn missing btn-outline-danger #{ reservation.missing? ? 'active' : nil }",  params: { status: 'missing' }, data: { turbo_confirm: 'Missing? Are you sure?' }
-              = button_to "Pending Pickup", [:driver, reservation], id: reservation.pending_pickup? ? "btn-pending-pickup-#{reservation.id}" : "btn-not-pending-pickup-#{reservation.id}", class: "btn pending-pickup btn-outline-secondary #{ reservation.pending_pickup? ? 'active' : nil }",  params: { status: 'pending_pickup' }, data: { turbo_confirm: 'Reseting to PENDING PICKUP. This will send a notification. Are you sure?' }
+              = button_to "Pending Pickup", [:driver, reservation], id: reservation.pending_pickup? ? "btn-pending-pickup-#{reservation.id}" : "btn-not-pending-pickup-#{reservation.id}", class: "btn pending-pickup btn-outline-success #{ reservation.pending_pickup? ? 'active' : nil }",  params: { status: 'pending_pickup' }, data: { turbo_confirm: 'Reseting to PENDING PICKUP. This will send a notification. Are you sure?' }
             %td.house= reservation.house_number
             %td.street= reservation.street_name
 
