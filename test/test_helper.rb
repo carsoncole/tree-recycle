@@ -25,4 +25,5 @@ class ActiveSupport::TestCase
     end
     sleep 0.25 # tests were occasionally failing without this
   end
+
 end

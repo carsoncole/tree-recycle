@@ -123,4 +123,25 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     assert_equal 18, Reservation.pending_pickup.count
     assert_equal 2, Reservation.missing.count
   end
+
+  test "visiting the driver routes page with auth" do
+    setting = create(:setting_with_driver_auth)
+    visit driver_routing_path
+    assert_selector "h1", text: "Sign in"
+
+    visit driver_routing_path(params: { key: setting.driver_secret_key })
+    assert_selector "h1", text: "Routes"
+
+    # check that param is no longer needed since key is cookie-stored
+    visit driver_routing_path
+    assert_selector "h1", text: "Routes"
+
+    # change of key unvalidates existing key
+    setting.update(driver_secret_key: 'Faker::Internet.password')
+    visit driver_routing_path
+    assert_selector "h1", text: "Sign in"
+
+    visit driver_routing_path(params: { key: setting.driver_secret_key } )
+    assert_selector "h1", text: "Routes"
+  end
 end

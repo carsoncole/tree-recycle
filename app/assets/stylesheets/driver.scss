@@ -160,11 +160,13 @@
       overflow-x: scroll;
     }
     &.phone {
-      text-align: right;
-      width: 12em;
+
+      width: 14em;
     }
     &.zone {
       width: 9em;
+      font-weight: 800;
+      text-transform: uppercase;
     }
     &.action-1 {
       width: 2.5em;

@@ -1,6 +1,6 @@
 class Driver::DriversController < Driver::DriverController
   def index
-    @drivers = Driver.all.order(:name)
+    @zones = Zone.all.includes(:drivers)
   end
 
   def show
