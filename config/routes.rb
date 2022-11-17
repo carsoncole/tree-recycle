@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     get 'reservations/search' => 'reservations#search', as: 'reservations_search'
     get 'reservations/map' => 'reservations#map', as: 'reservations_map'
 
-    root 'home#index'
+    root 'zones#index'
     resources :reservations, only: %i( update )
     resources :routes, only: %i( index show )
     resources :zones, only: %i( index show )

@@ -175,12 +175,23 @@
   }
 }
 
+#driver-nav {
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 #driver-zones {
-  table-layout: 100;
+  tr:first-child  {
+    font-size: .85em;
+  }
   th {
-    font-size: 0.85em;
+
+  }
+  td {
   }
   th,td {
+    font-weight: 800;
     &.zone {
       font-weight: 800;
       text-transform: uppercase;
@@ -190,12 +201,21 @@
       min-width: 12.5em;
     }
     &.data {
-      width: 4.6em;
+      width: 4em;
       text-align: center;
     }
     &.leader {
       width: 10em;
       text-align: right;
+    }
+    &.pending-pickup-count {
+      background-color: lighten(#111111, 30%);
+      font-weight: 800;
+      color: #fff;
+    }
+    &.zone-pending-pickup-count {
+      background-color: lighten($scout-red,20%);
+      color: #fff;
     }
   }
 }

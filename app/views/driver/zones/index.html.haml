@@ -29,12 +29,11 @@
       %table.table#driver-zones
         %tr
           %th
-          %th.data Total
           %th.data Pending
-          %th.data Picked up
+          %th.data Picked
         - @zones.each do |zone|
           %tr
-            %td.route-zone.zone
+            %th.route-zone.zone
               = zone.name
               = link_to '' do
                 %i.fa-solid.fa-map
@@ -43,12 +42,12 @@
                   %i.fa-solid.fa-wrench
                 = link_to admin_zone_path(zone), method: :delete, data: { "turbo-method": :delete } do
                   %i.fa-solid.fa-trash
-            %td.data= zone.reservations.not_archived.count
-            %td.data= zone.reservations.pending_pickup.count
-            %td.data= zone.reservations.picked_up.count
+            / %td.data.not-archived-count= zone.reservations.not_archived.count
+            %td.data.zone-pending-pickup-count= zone.reservations.pending_pickup.count
+            %td.data.picked-up-count= zone.reservations.picked_up.count
           - zone.routes.each do |route|
             %tr
-              %td.route
+              %th.route
                 %span.div{id: "route-name-" + route.id.to_s }= link_to route.name, driver_route_path(route)
                 = link_to '' do
                   %i.fa-solid.fa-map
@@ -57,18 +56,17 @@
                     %i.fa-solid.fa-wrench
                   = link_to admin_route_path(zone), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure?' } do
                     %i.fa-solid.fa-trash
-              %td.data{id: 'not_archived_' + route.id.to_s }= route.reservations.not_archived.count
-              %td.data.pending_pickup= route.reservations.pending_pickup.count
+              / %td.data{id: 'not_archived_' + route.id.to_s }= route.reservations.not_archived.count
+              %td.data.pending_pickup.pending-pickup-count= route.reservations.pending_pickup.count
               %td.data.picked_up= route.reservations.picked_up.count
         - if Route.unzoned.any?
           %tr
-            %td.zone No Zone
-            %td.data
-            %td.data
+            %th.zone No Zone
+            %td.data.zone-pending-pickup-count= Route.unzoned.count
             %td.data
         - Route.unzoned.each do |route|
           %tr
-            %td.route
+            %th.route
               = link_to route.name, driver_route_path(route)
               = link_to '' do
                 %i.fa-solid.fa-map
@@ -77,14 +75,14 @@
                   %i.fa-solid.fa-wrench
                 = link_to admin_route_path(route), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure?' } do
                   %i.fa-solid.fa-trash
-            %td.data.unzoned_not_archived= route.reservations.not_archived.count
-            %td.data.unzoned_pending_pickup= route.reservations.pending_pickup.count
+            / %td.data.unzoned_not_archived= route.reservations.not_archived.count
+            %td.data.unzoned_pending_pickup.pending-pickup-count= route.reservations.pending_pickup.count
             %td.data.unzoned_picked_up= route.reservations.picked_up.count
         - if Reservation.not_archived.unrouted.any?
           %tr
-            %td.zone Unrouted
-            %td.data#total-unrouted-count= Reservation.not_archived.unrouted.count
-            %td.data#total-pending-pickup-count= Reservation.not_archived.unrouted.pending_pickup.count
+            %th.zone Unrouted
+            / %td.data#total-unrouted-count= Reservation.not_archived.unrouted.count
+            %td.data#total-pending-pickup-count.zone-pending-pickup-count= Reservation.not_archived.unrouted.pending_pickup.count
             %td.data#total-picked-up-count= Reservation.not_archived.unrouted.picked_up.count
 
 
