@@ -22,8 +22,13 @@
                 document.getElementById("map"), {
 
             // Set the zoom of the map
-            zoom: 14,
-            center: new google.maps.LatLng(47.64483,-122.54827),
+            <%- if @route %>
+              zoom: 13,
+              center: new google.maps.LatLng(<%= @route.latitude %>, <%= @route.longitude %>),
+            <%- else %>
+              zoom: 12,
+              center: new google.maps.LatLng(47.64483,-122.54827),
+            <%- end %>
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
         var infowindow = new google.maps.InfoWindow();

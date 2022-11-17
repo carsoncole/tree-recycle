@@ -180,11 +180,6 @@ table#driver-zones {
   tr:first-child  {
     font-size: .85em;
   }
-  th {
-
-  }
-  td {
-  }
   th,td {
     font-weight: 800;
     &.zone {
@@ -212,6 +207,10 @@ table#driver-zones {
     &.zone-pending-pickup-count {
       background-color: lighten($scout-red,20%);
       color: #fff;
+    }
+    .fa-map {
+      font-size: 1.4em;
+      margin-left: 0.5em;
     }
   }
 }

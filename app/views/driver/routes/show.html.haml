@@ -23,7 +23,7 @@
               = button_to "Missing", [:driver, reservation], id: reservation.missing? ? "btn-missing-#{reservation.id}" : "btn-not-missing-#{reservation.id}", class: "btn missing btn-outline-danger #{ reservation.missing? ? 'active' : nil }",  params: { status: 'missing' }, data: { turbo_confirm: 'Missing? Are you sure?' }
               = button_to "Pending Pickup", [:driver, reservation], id: reservation.pending_pickup? ? "btn-pending-pickup-#{reservation.id}" : "btn-not-pending-pickup-#{reservation.id}", class: "btn pending-pickup btn-outline-success #{ reservation.pending_pickup? ? 'active' : nil }",  params: { status: 'pending_pickup' }, data: { turbo_confirm: 'Reseting to PENDING PICKUP. This will send a notification. Are you sure?' }
             %td.house= reservation.house_number
-            %td.street= reservation.street_name
+            %td.street= link_to reservation.street_name, driver_reservation_path(reservation)
 
             %td.notes= reservation.notes
             %td.name= reservation.name
