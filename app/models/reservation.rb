@@ -6,6 +6,7 @@ class Reservation < ApplicationRecord
   default_scope { order(:street_name, :house_number) }
 
   belongs_to :route, optional: true
+  has_one :zone, through: :route
 
   has_many :donations, dependent: :nullify
   has_many :logs, dependent: :destroy
