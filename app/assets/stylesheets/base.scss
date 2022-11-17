@@ -2,6 +2,11 @@ $scout-red: #CE1126;
 $scout-blue: #003F87;
 
 
+body {
+  height: 100%;
+  width: 100%;
+}
+
 h1 {
   font-size: 2em;
   font-weight: 800;
@@ -158,8 +163,8 @@ i {
   }
 }
 #map {
-  height: 800px;
-  width: 1200px;
+  height: 600px;
+  width: 100%;
 }
 
 p.message {

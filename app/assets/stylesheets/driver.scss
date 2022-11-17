@@ -10,54 +10,49 @@ $scout-blue: #003F87;
       font-weight: 700;
       font-size: 1.1em;
     }
-  tr {
-    vertical-align: middle;
-  }
+    tr {
+      vertical-align: middle;
+    }
+    th, td {
+      padding: 0.4em 0.6em;
+      &.house {
+        width: 3.2em;
+      }
+      &.notes {
+        width: 14em;
+        overflow-x: scroll;
+      }
+      &.name {
+        width: 10em;
+        white-space: nowrap;
+      }
+      &.buttons {
+        width: 17em;
+      }
+      &.phone {
+        width: 9em;
+      }
+      &.street {
+        width: 15em;
+        overflow-x: scroll;
+      }
+    }
 
-  th, td {
-    &.house {
-      width: 3.2em;
+    td.buttons .btn {
+      float: left !important;
+      margin-right: 6px;
+      font-size: 0.8em;
+      font-weight: 800;
+      padding-left: 0.4em;
+      padding-right: 0.4em;
+      &.pending-pickup {
+        margin-right: 0;
+      }
     }
-    &.notes {
-      width: 14em;
-      overflow-x: scroll;
-    }
-    &.name {
-      width: 10em;
-      white-space: nowrap;
-    }
-    &.buttons {
-      width: 17em;
-    }
-    &.phone {
-      width: 9em;
-    }
-    &.street {
-      width: 14em;
-      overflow-x: scroll;
+    .btn-sm {
+      margin-top: 0.25em;
     }
   }
-
-  td.buttons .btn {
-    float: left !important;
-    margin-right: 6px;
-    font-size: 0.8em;
-    font-weight: 800;
-    padding-left: 0.4em;
-    padding-right: 0.4em;
-    &.missing, &.pending-pickup {
-    }
-    &.pending-pickup {
-      margin-right: 0;
-    }
-  }
-  .btn-sm {
-    margin-top: 0.25em;
-  }
-
-
-  }
-
 }
 
 @media print {
@@ -234,4 +229,10 @@ table#driver-zones {
   font-size: 10em;
   color: lighten($scout-blue,20);
   padding: 1em;
+}
+
+#route-title {
+  text-align: center;
+  font-weight: 800;
+  padding-bottom: 0.7em;
 }

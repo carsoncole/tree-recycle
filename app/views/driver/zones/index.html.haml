@@ -33,7 +33,10 @@
           %th.data Missing
           %th.data Picked
         %tr
-          %th.route-zone.zone All
+          %th.route-zone.zone
+            All
+            = link_to driver_reservations_map_path do
+              %i.fa-solid.fa-map
           %td.data.zone-pending-pickup-count= Reservation.pending_pickup.count
           %td.data.missing-count= Reservation.missing.count
           %td.data= Reservation.picked_up.count
@@ -59,7 +62,7 @@
             %tr
               %th.route
                 %span.div{id: "route-name-" + route.id.to_s }= link_to route.name, driver_route_path(route)
-                = link_to '' do
+                = link_to driver_reservations_map_path(route_id: route.id) do
                   %i.fa-solid.fa-map
                 - if admin_view?
                   = link_to edit_admin_route_path(zone) do

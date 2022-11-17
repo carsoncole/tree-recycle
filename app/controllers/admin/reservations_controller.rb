@@ -51,7 +51,11 @@ class Admin::ReservationsController < Admin::AdminController
 
 
   def map
-    @reservations = Reservation.geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+    if params[:route_id]
+      @reservations = Reservation.pending_pickup.where(route_id: params[:route_id]).geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+    else
+      @reservations = Reservation.pending_pickup.geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+    end
   end
 
   def search

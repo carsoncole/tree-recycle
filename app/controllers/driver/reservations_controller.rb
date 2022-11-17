@@ -3,7 +3,12 @@ class Driver::ReservationsController < Driver::DriverController
   end
 
   def map
-    @route = Route.find(params[:route_id])
+    if params[:route_id]
+      @route = Route.find(params[:route_id])
+      @reservations = Reservation.pending_pickup.where(route: @route ).geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+    else
+      @reservations = Reservation.pending_pickup.geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+    end
   end
 
   def update
