@@ -60,18 +60,21 @@ class ReservationsController < ApplicationController
   end
 
   def update
-    redirect_to root_url, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
+    if Reservation.open?
 
-    if @reservation.update(reservation_params)
-      @reservation.pending_pickup! if @reservation.unconfirmed?
-      message = if @reservation.pending_pickup?
-        "Reservation was successfully updated and is confirmed for pick up."
+      if @reservation.update(reservation_params)
+        @reservation.pending_pickup! if @reservation.unconfirmed?
+        message = if @reservation.pending_pickup?
+          "Reservation was successfully updated and is confirmed for pick up."
+        else
+          "Please review your reservation"
+        end
+        redirect_to new_reservation_donation_url(@reservation), notice: message
       else
-        "Please review your reservation"
+        render :edit, status: :unprocessable_entity
       end
-      redirect_to new_reservation_donation_url(@reservation), notice: message
     else
-      render :edit, status: :unprocessable_entity
+      redirect_to root_url, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions."
     end
   end
 

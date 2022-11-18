@@ -44,12 +44,14 @@ Rails.application.routes.draw do
 
   namespace :driver do
     root 'zones#index'
-    resources :reservations, only: %i( update )
+    get 'reservations/map' => 'reservations#map', as: 'reservations_map'
+    get 'reservations/search' => 'reservations#search', as: 'reservations_search'
+    resources :reservations, only: %i( update show ) do
+      get 'map' => 'reservations#map', as: 'map'
+    end
     resources :routes, only: %i( show )
     resources :drivers, only: %i( index show )
     get '/routing' => 'zones#index', as: 'routing'
-    get 'reservations/search' => 'reservations#search', as: 'reservations_search'
-    get 'reservations/map' => 'reservations#map', as: 'reservations_map'
   end
 
   namespace :admin do
@@ -60,6 +62,7 @@ Rails.application.routes.draw do
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
+      get 'advanced' => 'reservations#show_advanced', as: 'advanced'
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
     end

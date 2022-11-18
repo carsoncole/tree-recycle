@@ -41,6 +41,11 @@
           %td.data.missing-count= Reservation.missing.count
           %td.data= Reservation.picked_up.count
         - @zones.each do |zone|
+          - next if zone.routes.empty?
+          - pending_pickup_count = zone.reservations.pending_pickup.count
+          - missing_count = zone.reservations.missing.count
+          - picked_up_count = zone.reservations.picked_up.count
+          - next if pending_pickup_count == 0 && picked_up_count == 0 && missing_count == 0
           %tr
             %th.route-zone.zone
               = zone.name
@@ -51,9 +56,9 @@
                   %i.fa-solid.fa-wrench
                 = link_to admin_zone_path(zone), method: :delete, data: { "turbo-method": :delete } do
                   %i.fa-solid.fa-trash
-            %td.data.zone-pending-pickup-count= zone.reservations.pending_pickup.count
-            %td.data.missing-count= zone.reservations.missing.count
-            %td.data.picked-up-count= zone.reservations.picked_up.count
+            %td.data.zone-pending-pickup-count= pending_pickup_count
+            %td.data.missing-count= missing_count
+            %td.data.picked-up-count= picked_up_count
           - zone.routes.each do |route|
             - pending_pickup_count = route.reservations.pending_pickup.count
             - picked_up_count = route.reservations.picked_up.count

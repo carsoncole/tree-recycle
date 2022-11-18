@@ -77,7 +77,7 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "reservation_street", with: 'gobbly gook'
     fill_in "reservation_email", with: reservation.email
     click_on "Register your address"
-    sleep 1
+    sleep 1.5
 
     assert_text "Ouch! We are having issues and"
     sleep 0.5
@@ -99,7 +99,7 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "reservation_email", with: 'john@example.com'
     click_on "Register your address"
 
-    sleep 1
+    sleep 1.5
 
     assert_text "Ouch! We are having issues and"
     click_on "Use this corrected address"
@@ -114,12 +114,12 @@ class ReservationsTest < ApplicationSystemTestCase
 
   test "reservations are closed" do
     visit root_url
-    click_on "Make a reservation"
+    click_on "New reservation"
     assert_text "Provide the address where the tree will be located and any helpful notes"
 
     Setting.first_or_create.update(is_reservations_open: false)
 
-    click_on "Make a reservation"
+    click_on "New reservation"
     within("#flash") do
       assert_text "Reservations are CLOSED."
       click_on "Contact us"
@@ -145,9 +145,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     visit reservation_url(reservation)
     has_no_link? 'Edit'
-    within "important-message" do
-      assert_text "Reservations are currently closed and not changeable."
-    end
+    assert_text "Reservations are currently closed and not changeable."
   end
 
   test "reservations are no longer cancellable" do

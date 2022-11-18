@@ -5,9 +5,19 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     @reservation = create(:reservation_with_coordinates)
   end
 
+  test "show basic" do
+    system_test_signin
+    reservation = create(:reservation)
+
+    visit admin_reservation_path(@reservation)
+    assert_selector "h1", text: @reservation.street
+    assert_text "Directions"
+    click_on "Admin View"
+  end
+
   test "editing a reservation" do
     system_test_signin
-    visit admin_reservation_path(@reservation)
+    visit admin_reservation_advanced_path(@reservation)
     click_on 'Edit'
     fill_in 'Phone', with: '2065551212'
     fill_in 'Notes', with: 'Customer called and said they moved the tree to the driveway'
@@ -24,7 +34,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
 
   test "changing status to missing" do
     system_test_signin
-    visit admin_reservation_path(@reservation)
+    visit admin_reservation_advanced_path(@reservation)
 
     within '#reservation-status' do
       assert_text 'Pending pickup'
@@ -47,7 +57,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
 
   test "changing status to picked_up" do
     system_test_signin
-    visit admin_reservation_path(@reservation)
+    visit admin_reservation_advanced_path(@reservation)
 
     within '#status' do
       select 'Picked Up', from: 'reservation-status-dropdown'
@@ -66,7 +76,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
 
   test "changed status to cancelled" do
     system_test_signin
-    visit admin_reservation_path(@reservation)
+    visit admin_reservation_advanced_path(@reservation)
 
     within '#status' do
       select 'Cancelled', from: 'reservation-status-dropdown'
@@ -87,7 +97,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     system_test_signin
     create_list(:route, 3)
 
-    visit admin_reservation_path(@reservation)
+    visit admin_reservation_advanced_path(@reservation)
     assert_selector '#route-name', text: ''
 
     click_on 'Edit'

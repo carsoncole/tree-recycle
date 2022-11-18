@@ -4,7 +4,7 @@ class DonationsTest < ApplicationSystemTestCase
   test "making a donation without a reservation" do
     visit root_url
 
-    click_on "Make a donation"
+    click_on "Donate"
     # assert_selector "h1", text: "Please consider a donation"
     # assert_text "Our service is free, but your donation provides opportunities"
   end

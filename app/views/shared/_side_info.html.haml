@@ -5,18 +5,19 @@
     .reservation-status
       = reservation_status(@reservation)
 
-      .reservation-actions
-        - if @reservation.cancelled?
-          =link_to "Make a new reservation", new_reservation_path
-        - elsif @reservation.pending_pickup? && @reservation.persisted?
-          .actions
-          = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
-            %i.fa-solid.fa-pencil
-            Edit
+      - if setting.is_reservations_open?
+        .reservation-actions
+          - if @reservation.cancelled?
+            =link_to "Make a new reservation", new_reservation_path
+          - elsif @reservation.pending_pickup? && @reservation.persisted?
+            .actions
+            = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
+              %i.fa-solid.fa-pencil
+              Edit
 
-          = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
-            %i.fa-solid.fa-times
-            Cancel
+            = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
+              %i.fa-solid.fa-times
+              Cancel
 
 
     .section.name

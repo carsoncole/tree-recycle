@@ -15,10 +15,10 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     system_test_signin
     click_on 'Routes'
 
-    assert_equal 1, find('#driver-zones').all(:css, 'tr').count
+    assert_equal 2, find('#driver-zones').all(:css, 'tr').count
 
     @routes.each do |z|
-      click_on 'new-route-link'
+      click_on 'Route'
       fill_in "Name", with: z[:name]
       fill_in "Street", with: z[:street]
       fill_in "City", with: 'Bainbridge Island'
@@ -32,7 +32,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
         assert_text z[:name]
       end
     end
-    assert_equal 5, find('#driver-zones').all(:css, 'tr').count
+    assert_equal 6, find('#driver-zones').all(:css, 'tr').count
   end
 
   test "correct route assignments" do
@@ -53,9 +53,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     click_on 'Reservations'
     click_on "process-route-button-#{reservation.id}"
     click_on 'Carson'
-    within "#delivery" do
-      assert_text "Commodore"
-    end
+    assert_text "Commodore"
   end
 
 end

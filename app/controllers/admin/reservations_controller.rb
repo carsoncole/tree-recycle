@@ -28,13 +28,16 @@ class Admin::ReservationsController < Admin::AdminController
 
   def update
     if @reservation.update(reservation_params)
-      redirect_to admin_reservation_url(@reservation)
+      redirect_to admin_reservation_advanced_url(@reservation)
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def show
+  end
+
+  def show_advanced
     @logs = @reservation.logs
     @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
     @donations = @reservation.donations

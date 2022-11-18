@@ -1,0 +1,139 @@
+#admin-reservation
+  .row
+    .col-md-12
+      %header
+        %h1 Tree Pick-Up
+        %p.mb-1
+          = link_to "Edit", edit_admin_reservation_path(@reservation), id: 'edit-link'
+          \|
+          = link_to "Basic view", admin_reservation_path(@reservation)
+
+
+        .text-center.mb-2#reservation-status
+          = reservation_status(@reservation)
+
+
+        = turbo_frame_tag @reservation do
+          .div
+            = link_to "View Log", admin_reservation_logs_path(@reservation)
+
+  .row
+    .col-md-6
+      #reservation
+        %h2 Reservation
+        %table.table.reservation
+          %tr
+            %th Name
+            %td= @reservation.name
+          %tr
+            %th Address
+            %td= @reservation.address
+          %tr
+            %th Delivery notes
+            %td= @reservation.notes
+          %tr
+            %th Street
+            %td= @reservation.street
+          %tr
+            %th House number
+            %td= @reservation.house_number
+          %tr
+            %th Road
+            %td= @reservation.street_name
+          %tr
+            %th City
+            %td= @reservation.city
+          %tr
+            %th State
+            %td= @reservation.state
+          %tr
+            %th Country
+            %td= @reservation.country
+
+      #contact-details
+        %h2 Contact details
+        %table.table.reservation
+          %tr
+            %th Email
+            %td= @reservation.email
+          %tr
+            %th No Emails?
+            %td
+              - if @reservation.no_emails
+                Emailing disabled
+              - else
+                False
+          %tr
+            %th Phone
+            %td= @reservation.phone
+
+    .col-md-6
+      #delivery
+        %h2 Delivery
+        %table.table.reservation
+          %tr
+            %th Street
+            %td= @reservation.street
+          %tr
+            %th Route
+            %td#route-name
+              .mb-2
+                - if @reservation.route
+                  = link_to @reservation&.route&.name, admin_route_map_path(@reservation.route)
+                - else
+                  No Route set
+                \|
+                - if @reservation&.route&.zone
+                  = link_to @reservation.route.zone.name, admin_zone_path(@reservation.route.zone)
+                - else
+                  No Zone selected
+
+              = form_for [:admin, @reservation] do |f|
+                .mb-2
+                  = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
+                = f.submit 'Update Route', class: 'btn btn-primary'
+
+          %tr
+            %th Latitude
+            %td= @reservation.latitude
+          %tr
+            %th Longitude
+            %td= @reservation.longitude
+
+          %tr
+            %th Auto routed?
+            %td
+              - if @reservation.is_routed?
+                Yes
+              - else
+                No
+
+      #status
+        %h2 Pick-up Status
+        - if @reservation.archived?
+          = reservation_status(@reservation)
+        - else
+          = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
+            .form-group.mb-2
+              = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+            = f.submit 'Update status', class: 'btn btn-primary'
+
+      %h2.mt-4 Donations
+      %table.table.reservation
+        - @donations.each do |donation|
+          %tr
+            %th= link_to 'Donation Receipt', admin_donations_path(donation)
+            %td= donation.payment_status.capitalize if donation.payment_status
+            %td= nice_short_date_time(donation.created_at)
+            %td= number_to_currency(donation.amount)
+
+      %h2.mt-4 Misc
+      %table.table.reservation
+        %tr
+          %th Stripe donated
+          %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'
+        %tr
+          %th Cash or check
+          %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
+
+

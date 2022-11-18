@@ -23,17 +23,17 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     end
 
     within "#driver-zones" do
-      assert_selector "tr", count: 26
-      assert_selector ".route-zone", count: 4
-      assert_selector ".route-zone", text: zones[1].name.upcase
+      assert_selector "tr", count: 5
+      assert_selector ".route-zone", count: 2
+      assert_selector ".route-zone", text: zones[0].name.upcase
       assert_selector ".route", text: routes[1].name
-      assert_selector "#route-name-#{routes[3].id}", text: routes[3].name
       assert_selector ".zone", text: 'UNROUTED'
     end
   end
 
   test "visting a routing page" do
     route= create(:route_with_zone)
+    create(:reservation_with_coordinates, route_id: route.id)
     visit driver_root_path
     click_on route.name
     assert_selector "h1", text: route.name_with_zone

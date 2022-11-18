@@ -272,7 +272,8 @@ table.reservation {
   font-size: 0.5em;
 }
 
-.reservation-status-badge {
+
+.reservation-status-badge, .donation-status-badge {
   width: 10em;
   text-align: center;
   border-radius: 0.375em;
@@ -468,3 +469,36 @@ nav.navbar {
   margin-bottom: 2em;
 }
 
+#reservation {
+  h1 {
+    text-align: center;
+    line-height: 1.66em;
+    margin-bottom: 2em;
+  }
+  #direction-links {
+    margin: 0 auto 3em auto;
+    display: inline-block;
+    border: 2px solid lighten(#000, 60%);
+    border-radius: 5px;
+    padding: 0.75em ;
+    text-align: center;
+    .title {
+      font-weight: 800;
+      color: lighten(#000, 60%);
+    }
+    .map-link {
+      font-size: 1.5em;
+      display: inline-block;
+      margin: 0 0.75em 0 0.75em;
+    }
+  }
+  .donation-status-badge {
+    font-size: 1.2em;
+  }
+  #detail {
+    th {
+      width: 7em;
+    }
+  }
+
+}
