@@ -1,5 +1,6 @@
 require "application_system_test_case"
-
+#todo test for show
+#todo test for map
 class Driver::DriversTest < ApplicationSystemTestCase
   test "visiting the drivers page" do
     visit driver_drivers_path
