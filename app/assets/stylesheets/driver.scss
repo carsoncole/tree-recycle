@@ -235,3 +235,30 @@ table#driver-zones {
   font-weight: 800;
   padding-bottom: 0.7em;
 }
+#driver-search {
+  #search-form {
+    margin-bottom: 2em;
+  }
+  #search-results {
+    table.table th,td {
+      &.status {
+        text-align: right;
+        width: 3em;
+      }
+      &.street {
+        overflow-x: scroll;
+      }
+      &.name {
+        width: 10em;
+      }
+    }
+  }
+}
+
+#reservation {
+  #status {
+    text-align: center;
+    font-size: 1.4em;
+    margin-bottom: 2em;
+  }
+}
