@@ -7,22 +7,19 @@ class Reservation < ApplicationRecord
 
   belongs_to :route, optional: true
   has_one :zone, through: :route
-
   has_many :donations, dependent: :nullify
   has_many :logs, dependent: :destroy
 
-  enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }
+  enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
 
   scope :pending, -> { where.not(status: ['archived', 'unconfirmed'])}
   scope :unrouted, -> { where(route_id: nil).where.not(status: ['archived', 'cancelled']) }
   scope :routed, -> { where.not(route_id: nil).where.not(status: ['archived', 'cancelled']) }
 
-  validates :name, :street, :city, :state, :country, :email, presence: true
+  validates :name, :email, presence: true
 
-  geocoded_by :address
+  attribute :is_routed, :boolean, default: true
 
-  # geocoding and routing
-  before_validation :full_geocode!, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
   after_validation :route!, if: ->(obj){ obj.geocoded? && obj.is_routed? && (obj.latitude_changed? && (obj.persisted? || obj.route_id.nil?)) }
 
   # email delivery
@@ -30,27 +27,14 @@ class Reservation < ApplicationRecord
   after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.cancelled? && obj.saved_change_to_status? }
 
   # logging
-  after_create :log_creation!
+  after_save :log_unconfirmed!, if: ->(obj){ obj.unconfirmed? && obj.saved_change_to_status?}
   after_save :log_pending_pickup!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status?}
   after_update :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? }
   after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
   after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
 
-
-  def initialize(args)
-    super
-    self.country = Setting.first_or_create.default_country || 'United States'
-    self.city = Setting&.first&.default_city.present? ?  Setting&.first&.default_city : 'BAINBRIDGE IS'
-    self.state = Setting&.first&.default_state.present? ?  Setting&.first&.default_state : 'Washington'
-    self.is_routed ||= true
-  end
-
   def self.open?
     Setting.first_or_create.is_reservations_open?
-  end
-
-  def short_address
-    [street, city, state].compact.join(', ')
   end
 
   def self.process_all_routes!
@@ -65,23 +49,6 @@ class Reservation < ApplicationRecord
 
   def routed?
     route.present?
-  end
-
-  def full_geocode!
-    begin
-      self.latitude = nil
-      self.longitude = nil
-      self.house_number = nil
-      self.street_name = nil
-      results = Geocoder.search(self.address)
-      self.latitude = results.as_json[0]["data"]["lat"]
-      self.longitude = results.as_json[0]["data"]["lon"]
-      self.house_number = results.as_json[0]["data"]["address"]["house_number"]
-      self.street_name = results.as_json[0]["data"]["address"]["road"]
-    rescue
-      geocode
-    end
-    self.route_id = nil
   end
 
   def route!
@@ -123,12 +90,9 @@ class Reservation < ApplicationRecord
   end
 
   private
-  # def upcase_address!
-  #   self.address.upcase
-  # end
 
-  def log_creation!
-    logs.create(message: 'Reservation created')
+  def log_unconfirmed!
+    logs.create(message: "Reservation unconfirmed")
   end
 
   def log_pending_pickup!
