@@ -12,7 +12,7 @@
       = form_tag driver_reservations_search_path, id: 'search-form', local: true, method: :get do
         .form-inline.mx-sm-3.mb-3
           .row
-            .col-10.mb-2
+            .col-9.mb-2
               = text_field_tag 'search',"", placeholder: 'Search', class: 'form-control', id: 'search'
             .col-2.mb-4
               = submit_tag 'Search', class: 'btn btn-primary search-button'
@@ -22,10 +22,11 @@
     .row
       .col-lg-3
       .col-lg-6
-        %table.table#search-results
-          - @reservations.each do |reservation|
-            %tr
-              %td.name= link_to reservation.name, driver_reservation_path(reservation)
-              %td.street= reservation.street
-              %td.status= reservation_status(reservation)
+        .table-responsive
+          %table.table#search-results
+            - @reservations.each do |reservation|
+              %tr
+                %td.name= link_to reservation.name, driver_reservation_path(reservation)
+                %td.street= reservation.street
+                %td.status= reservation_status(reservation)
 

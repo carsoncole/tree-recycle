@@ -2,55 +2,82 @@ require "application_system_test_case"
 
 #TODO add more tests on routing page on calcs and 'No Zone'
 class Driver::RoutesTest < ApplicationSystemTestCase
-  test "visiting the driver routes page" do
+
+  test "visiting the driver root path and menu links" do
+    visit driver_root_path
+    assert_selector "h1", text: "Routes"
+
+    click_on 'Drivers'
+    assert_selector "h1", text: "Drivers"
+
+    click_on 'Search'
+    assert_selector "h1", text: "Search"
+
+    click_on 'Routes'
+    assert_selector "h1", text: "Routes"
+  end
+
+  test "visiting the driver root path and menu links with auth" do
+    setting_generate_driver_secret_key!
+
+    visit driver_root_path
+    assert_selector "h1", text: "Sign in"
+
+    visit driver_root_path(key: setting.driver_secret_key)
+    assert_selector "h1", text: "Routes"
+
+    click_on 'Drivers'
+    assert_selector "h1", text: "Drivers"
+
+    click_on 'Search'
+    assert_selector "h1", text: "Search"
+
+    click_on 'Routes'
+    assert_selector "h1", text: "Routes"
+
+    setting.update(driver_secret_key: nil)
+
+    click_on 'Drivers'
+    assert_selector "h1", text: "Drivers"
+
+    setting.update(driver_secret_key: 'hello')
+    visit '/driver/search?key=hello'
+    assert_selector "h1", text: "Search"
+  end
+
+  test "formatting of the routes page" do
     visit driver_routing_path
     assert_selector "h1", text: "Routes"
 
-    zones = create_list(:zone_with_coordinates, 4)
-    routes = []
-    zones.each do |zone|
-      routes += create_list(:route_with_coordinates, 5, zone_id: zone.id)
+    within "#driver-routes-table" do
+      assert_selector "tbody tr", count: 1 # row 'ALL'
+      assert_selector "th.zone", text: 'ALL'
     end
 
-    (1..10).each do
-      create(:reservation_with_coordinates, distance_to_route: 1, route_id: routes[1].id)
-    end
-
-    create_list(:reservation_with_coordinates, 10, is_routed: false)
-
-    within "#driver-nav" do
-      click_on 'Routes'
-    end
-
-    within "#driver-zones" do
-      assert_selector "tr", count: 5
-      assert_selector ".route-zone", count: 2
-      assert_selector ".route-zone", text: zones[0].name.upcase
-      assert_selector ".route", text: routes[1].name
-      assert_selector ".zone", text: 'UNROUTED'
-    end
-  end
-
-  test "visting a routing page" do
-    route= create(:route_with_zone)
-    create(:reservation_with_coordinates, route_id: route.id)
-    visit driver_root_path
-    click_on route.name
-    assert_selector "h1", text: route.name_with_zone
-  end
-
-  test "visiting a route page with lots of reservations" do
     route = create(:route_with_zone)
-    reservations = create_list(:reservation_with_coordinates, 20, route: route)
-    visit driver_route_path(route)
-    assert_selector "h1", text: route.name_with_zone
-    assert_selector "tr", count: 21
+    route_without_zone = create(:route)
+    reservations = create_list(:reservation_with_coordinates, 5, route_id: route.id)
+    reservations_without_routed_zones = create_list(:reservation_with_coordinates, 3, route_id: route_without_zone)
+    reservations_without_routes = create_list(:reservation_with_coordinates, 2, is_routed: false)
+
+    click_on 'Routes'
+    save_screenshot 'tmp/screen_1.png'
+    within "#driver-routes-table" do
+      assert_selector "tbody tr", count: 5
+      assert_selector "th.zone", text: route.zone.name.upcase
+      assert_selector "th.route", text: route.name
+      assert_selector "#route-pending-pickup-count", text: '5'
+      assert_selector "th.zone", text: 'UNROUTED'
+      assert_selector "#total-unrouted-pending-pickup-count", text: '2'
+      assert_selector "#total-no-zone-pending-pickup-count", text: '3'
+    end
+
   end
 
   test "visting a route page and clicking pickups" do
     zone = create(:zone)
-    route = create(:route_with_coordinates, zone_id: zone.id)
-    reservations = create_list(:reservation_with_coordinates, 20)
+    route = create(:route, zone_id: zone.id)
+    reservations = create_list(:reservation_with_coordinates, 20,route_id: route.id)
 
     assert_equal 20, Reservation.pending_pickup.count
 
@@ -71,8 +98,8 @@ class Driver::RoutesTest < ApplicationSystemTestCase
 
   test "visting a route page and clicking missing" do
     zone = create(:zone)
-    route = create(:route_with_coordinates, zone_id: zone.id)
-    reservations = create_list(:reservation_with_coordinates, 20)
+    route = create(:route, zone_id: zone.id)
+    reservations = create_list(:reservation_with_coordinates, 20, route_id: route.id)
 
     visit driver_route_path(route)
 
@@ -87,8 +114,8 @@ class Driver::RoutesTest < ApplicationSystemTestCase
 
   test "visting a route page and pending pickup" do
     zone = create(:zone)
-    route = create(:route_with_coordinates, zone_id: zone.id)
-    reservations = create_list(:reservation_with_coordinates, 20)
+    route = create(:route, zone_id: zone.id)
+    reservations = create_list(:reservation_with_coordinates, 20, route_id: route.id)
 
     visit driver_route_path(route)
 
@@ -114,28 +141,5 @@ class Driver::RoutesTest < ApplicationSystemTestCase
 
     assert_equal 18, Reservation.pending_pickup.count
     assert_equal 2, Reservation.missing.count
-  end
-
-  test "visiting the driver routes page with auth" do
-    setting = create(:setting_with_driver_auth)
-    visit driver_root_path
-    assert_selector "h1", text: "Sign in"
-
-    visit driver_root_path(params: { key: setting.driver_secret_key })
-    assert_selector "h1", text: "Routes"
-
-    # check that param is no longer needed since key is cookie-stored
-    within "#driver-nav" do
-      click_on 'Routes'
-    end
-    assert_selector "h1", text: "Routes"
-
-    # change of key unvalidates existing key
-    setting.update(driver_secret_key: 'Faker::Internet.password')
-    visit '/driver'
-    assert_selector "h1", text: "Sign in"
-
-    visit driver_routing_path(params: { key: setting.driver_secret_key } )
-    assert_selector "h1", text: "Routes"
   end
 end

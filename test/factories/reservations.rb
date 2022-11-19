@@ -14,5 +14,9 @@ FactoryBot.define do
       longitude { -122.517533 }
       status { 1 }
     end
+
+    factory :reservation_with_route do
+      route
+    end
   end
 end

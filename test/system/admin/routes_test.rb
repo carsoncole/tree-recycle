@@ -15,7 +15,10 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     system_test_signin
     click_on 'Routes'
 
-    assert_equal 2, find('#driver-zones').all(:css, 'tr').count
+    assert_equal 2, find('#driver-routes-table').all(:css, 'tr').count
+    save_screenshot 'tmp/screenshots/1.png'
+
+    zone_1 = create(:zone)
 
     @routes.each do |z|
       click_on 'Route'
@@ -24,15 +27,31 @@ class Admin::RoutesTest < ApplicationSystemTestCase
       fill_in "City", with: 'Bainbridge Island'
       fill_in "State", with: 'Washington'
       click_on "Save"
+
       within "#flash" do
         assert_text "Route was successfully created."
       end
       assert Route.where(name: z[:name]).first.geocoded?
-      within "#driver-zones" do
-        assert_text z[:name]
+
+      within "#driver-routes-table" do
+        assert_text z[:name], count: 0
       end
     end
-    assert_equal 6, find('#driver-zones').all(:css, 'tr').count
+    assert_equal 2, find('#driver-routes-table').all(:css, 'tr').count # TH, Zone 'ALL'
+
+    reservation = create(:reservation_with_coordinates)
+    assert_equal 2, find('#driver-routes-table').all(:css, 'tr').count # TH, Zone 'ALL'
+
+    route = create(:route_with_zone)
+    reservation = create(:reservation_with_coordinates, route_id: route.id)
+    click_on 'Routes'
+
+    within "#driver-routes-table" do
+      assert_text route.name
+      assert_text route.zone.name.upcase
+    end
+
+    assert_equal 5, find('#driver-routes-table').all(:css, 'tr').count
   end
 
   test "correct route assignments" do

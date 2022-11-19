@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_title
 
   def set_title
-    @site_title = Setting.first&.site_title if Setting.first
+    @site_title = SITE_TITLE
   end
 
   def driver_signed_in?

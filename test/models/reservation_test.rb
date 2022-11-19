@@ -3,30 +3,31 @@ require "test_helper"
 class ReservationTest < ActiveSupport::TestCase
   setup do
     @routes = [
-      { name: 'Battle Point', street: '9091 Olympus Beach Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-      { name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-      { name: 'Eagledale', street: '10837 Bill Point Bluff NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-      { name: 'Ferncliff', street: '1017 Aaron Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
-      { name: 'Fletcher Bay', street: '9098 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-      { name: 'Fort Ward', street: '1747 Parade Grounds Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-      { name: 'High School', street: '9458 Capstan Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
-      { name: 'Island Center', street: '6820 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-      { name: 'Lovgren', street: '9180 NE Lovgreen Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
-      { name: 'Lynwood Center', street: '5919 Blakely Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-      { name: 'Meadowmeer', street: '8458 NE Meadowmeer Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-      { name: 'New Brooklyn', street: '8245 New Holland Ct', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-      { name: 'Phelps', street: '15740 Euclid Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-      { name: 'Point White', street: '3154 Point White Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' }
+    { name: 'Battle Point', street: '9091 Olympus Beach Rd NE', zone: 'West' },
+    { name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', zone: 'West' },
+    { name: 'High School', street: '9458 Capstan Dr NE', zone: 'Center' },
+    { name: 'Lynwood Center', street: '5919 Blakely Ave NE', zone: 'South' }
     ]
 
-      @zones = [
-        { name: 'Center', street: '8222 NE Carmella Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
-        { name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
-        { name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
-        { name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' }
-      ]
+    @zones = [
+    { name: 'Center', street: '7729 Finch Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', latitude: 0.4763398639759036e2, longitude: -0.12253715896385542e3 },
+    { name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States', latitude: 0.4763941859060403e2, longitude: -0.12257140608053692e3 },
+    { name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States', latitude: 0.4759832051756319e2, longitude: -0.12253334751868852e3 },
+    { name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', latitude: 0.476568128848823e2, longitude: -0.1225093191081681e3 }
+    ]
 
   end
+
+  #TODO fixes
+  test "geocoding, logging of new reservations" do
+    # reservation = build(:reservation, zone_id: zone.id, status: :pending_pickup)
+    # assert_not reservation.geocoded?
+    # reservation.save
+    # assert reservation.geocoded?
+    # assert_equal 1, reservation.logs.count
+  end
+
+
 
   test "setting of default unconfirmed status" do
     reservation = create(:reservation)
@@ -85,20 +86,15 @@ class ReservationTest < ActiveSupport::TestCase
 
   test "re-routing and zone on updated reservations" do
     @zones.each {|z| Zone.create(name: z[:name], street: z[:street], city: z[:city], state: z[:state], country: z[:country] )}
-    @routes.each{ |r| create(:route, name: r[:name], street: r[:street], zone_id: Zone.find_by_name(r[:zone]).id) }
+    @routes.each{ |r| Route.create(name: r[:name], street: r[:street], zone_id: Zone.find_by_name(r[:zone]).id) }
 
     reservation = create(:reservation_with_coordinates)
     route = reservation.route
-    assert_equal "Ferncliff", reservation.route.name
-    reservation.update(street: '3083 Point White Dr NE')
+    assert_equal "Battle Point", reservation.route.name
+    reservation.update(street: '9509 NE South Beach Dr')
     assert reservation.geocoded?
     assert reservation.routed?
-    assert_not_equal reservation.route, route
-    assert_equal 'Point White', reservation.route.name, 'wrong route'
+    assert_equal 'South Beach', reservation.route.name, 'wrong route'
     assert_equal "South", reservation.route.zone.name, 'wrong zone'
   end
-
-  # test "10027 NE Point View Dr" do
-    # something wrong with this address as it won't geocode
-  # end
 end

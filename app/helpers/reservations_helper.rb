@@ -32,4 +32,8 @@ module ReservationsHelper
       out.html_safe
     end
   end
+
+  def reservation_zone_route(reservation)
+    (reservation&.zone&.name || 'No Zone') + ' / ' + (reservation&.route&.name || 'No Route')
+  end
 end

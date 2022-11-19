@@ -39,11 +39,11 @@ class Driver::ReservationsControllerTest < ActionDispatch::IntegrationTest
 
     get driver_reservation_url(reservation)
     assert_response :success
-    assert_select "h1", text: reservation.street
+    assert_select "h1", reservation.street
   end
 
   test "should get show with auth" do
-    setting = create(:setting_with_driver_auth)
+    setting_generate_driver_secret_key!
     reservation = create(:reservation_with_coordinates)
 
     get driver_reservation_url(reservation)
@@ -51,6 +51,35 @@ class Driver::ReservationsControllerTest < ActionDispatch::IntegrationTest
 
     get driver_reservation_url(reservation, key: setting.driver_secret_key)
     assert_response :success
-    assert_select "h1", text: reservation.street
+    assert_select "h1", reservation.street
+  end
+
+  test "mapping with reservation" do
+    reservation = create(:reservation_with_coordinates)
+    get driver_reservations_map_path(reservation_id: reservation.id)
+    assert_response :success
+    assert_select '#map-title', reservation.street
+  end
+
+  test "mapping with route" do
+    route = create(:route)
+    reservation = create(:reservation_with_coordinates, route_id: route.id)
+    get driver_reservations_map_path(route_id: route.id)
+    assert_response :success
+    assert_select '#map-title', route.name_with_zone
+  end
+
+  test "mapping with zone" do
+    zone = create(:zone)
+    route = create(:route, zone_id: zone.id)
+    reservation = create(:reservation_with_coordinates, route_id: route.id)
+    get driver_reservations_map_path(zone_id: zone.id)
+    assert_response :success
+    assert_select '#map-title', zone.name
+  end
+
+  test "mapping with all" do
+    get driver_reservations_map_path
+    assert_response :success
   end
 end

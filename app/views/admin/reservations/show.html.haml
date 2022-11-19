@@ -2,9 +2,9 @@
   .row
     .col-lg-3
     .col-lg-6
-      %h1
+      %h1.mb-1
         = @reservation.street
-        = reservation_status(@reservation)
+      #status= reservation_status(@reservation)
 
 
   .row
@@ -25,8 +25,8 @@
           %i.fa-solid.fa-map-location-dot
 
   .row
-    .col-md-2
-    .col-md-8
+    .col-md-3
+    .col-md-6
       %table.table#detail
         %tr
           %th Name
@@ -46,7 +46,7 @@
             %td= link_to @reservation.phone, "tel:#{ @reservation.phone }"
         %tr
           %th Route
-          %td= @reservation&.route&.name
+          %td= reservation_zone_route(@reservation)
         - if donation_status(@reservation)
           %tr
             %th Donation

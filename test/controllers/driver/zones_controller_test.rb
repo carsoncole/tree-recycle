@@ -12,7 +12,7 @@ class Driver::ZonesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get driver root and routing" do
-    setting = create(:setting_with_driver_auth)
+    setting_generate_driver_secret_key!
 
     get driver_routing_url
     assert_redirected_to sign_in_path

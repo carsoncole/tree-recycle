@@ -9,6 +9,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     within "#side-info" do
       assert_selector "h1", text: "Tree Reservation"
+
     end
     within "#new-reservation" do
       assert_selector "h1", text: "New Reservation"

@@ -6,10 +6,10 @@ class LogTest < ActiveSupport::TestCase
   end
 
   test "log creation on new reservations" do
-    assert_equal @reservation.logs.count, 2
-    assert_equal @reservation.logs.first.message, "Reservation created"
+    assert_equal @reservation.logs.count, 1
+    assert_equal "Tree is pending pickup", @reservation.logs.first.message
 
-    assert_difference("Log.all.count", 2) do
+    assert_difference("Log.all.count", 1) do
       reservation = create(:reservation_with_coordinates)
     end
   end

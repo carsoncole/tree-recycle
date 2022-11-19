@@ -34,7 +34,7 @@ class Driver::DriversTest < ApplicationSystemTestCase
   end
 
   test "visiting the drivers page with auth" do
-    setting = create(:setting_with_driver_auth)
+    setting_generate_driver_secret_key!
     visit driver_drivers_path
     assert_selector "h1", text: "Sign in"
 

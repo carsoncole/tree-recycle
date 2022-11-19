@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_16_172740) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_19_024529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -67,12 +67,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_172740) do
     t.decimal "distance_to_route"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "status", default: 0
+    t.integer "status"
     t.boolean "no_emails"
     t.string "route_name"
     t.boolean "is_routed", default: true
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["route_id"], name: "index_reservations_on_route_id"
+    t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"
     t.index ["status"], name: "index_reservations_on_status"
     t.index ["street"], name: "index_reservations_on_street"
     t.index ["street_name", "house_number"], name: "index_reservations_on_street_name_and_house_number"
@@ -92,6 +93,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_172740) do
     t.datetime "updated_at", null: false
     t.integer "zone_id"
     t.decimal "distance_to_zone"
+    t.string "house_number"
+    t.string "street_name"
+    t.boolean "is_zoned", default: true
     t.index ["name"], name: "index_routes_on_name"
   end
 
@@ -140,6 +144,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_172740) do
     t.string "country"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.string "house_number"
+    t.string "street_name"
     t.index ["name"], name: "index_zones_on_name"
   end
 

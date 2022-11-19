@@ -3,6 +3,7 @@ class Admin::ZonesController < Admin::AdminController
 
   def index
     @zones = Zone.all
+    @all_zones = true if params[:all_zones]
   end
 
   def show

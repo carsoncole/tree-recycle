@@ -129,8 +129,18 @@ routes = [
 { name: 'Sunrise', street: '10250 NE Lafayette Ave', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
 { name: 'Wing Point', street: '8477 Ferncliff Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
 { name: 'Winslow North', street: '657 Annie Rose Ln NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
-{ name: 'Winslow South', street: '400 Harborview Dr SE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
+{ name: 'Winslow South', street: '400 Harborview Dr SE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' }
 ]
+
+
+routes_compact = [
+    { name: 'Battle Point', street: '9091 Olympus Beach Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+    { name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
+    { name: 'High School', street: '9458 Capstan Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
+    { name: 'Lynwood Center', street: '5919 Blakely Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
+]
+
+
 
 
 # Addresses to investigate
@@ -148,7 +158,7 @@ end
 
 
 zones = [
-  { name: 'Center', street: '8222 NE Carmella Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+  { name: 'Center', street: '7729 Finch Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
   { name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
   { name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
   { name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' }

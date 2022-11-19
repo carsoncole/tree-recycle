@@ -8,7 +8,7 @@ class Driver::RoutesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get show with auth" do
-    setting = create(:setting_with_driver_auth)
+    setting_generate_driver_secret_key!
     route = create(:route)
 
     get driver_route_url(route)

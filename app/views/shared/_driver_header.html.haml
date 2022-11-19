@@ -1,5 +1,5 @@
 %header.mb-lg-5
-  %nav.navbar.navbar-expand.navbar-dark.bg-primary#driver-navbar.pt-lg-4.pb-lg-4
+  %nav.navbar.navbar-expand.navbar-dark.bg-primary#driver-navbar
     .container
       = link_to driver_root_path, class: 'navbar-brand' do
         %i.fa-solid.fa-tree.fa-lg
@@ -7,8 +7,8 @@
 
 
       %ul.navbar-nav
-        %li.nav-item
-          = link_to "Main", root_path, class: 'btn btn-outline-light btn-site'
+        / %li.nav-item
+        /   = link_to "Main", root_path, class: 'btn btn-outline-light btn-site'
         - if signed_in?
           %li.nav-item
             = link_to "Admin", admin_root_path, class: "btn btn-outline-light btn-site"

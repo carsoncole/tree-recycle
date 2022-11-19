@@ -1,12 +1,20 @@
-<div id='map-title'>
-  <%- if @route %>
+<div class='text-center mb-2'>
+<%- if @route %>
+  <div id='map-title'>
     <%= @route.name_with_zone %>
-    <%= link_to "( < Back )", driver_route_path(@route) %>
-  <%- end %>
-  <%- if @reservation %>
+  </div>
+  <%= link_to "( < Back )", driver_route_path(@route) %>
+<%- elsif @zone %>
+  <div id='map-title'>
+    <%= @zone.name  %>
+  </div>
+  <%= link_to "( <Back )", driver_root_path %>
+<%- elsif @reservation %>
+  <div id='map-title'>
     <%= @reservation.street  %>
-    <%= link_to "( <Back )", driver_reservation_path(@reservation) %>
-  <%- end %>
+  </div>
+  <%= link_to "( <Back )", driver_reservation_path(@reservation) %>
+<%- end %>
 </div>
 
 
@@ -30,11 +38,14 @@
 
             // Set the zoom of the map
             <%- if @route %>
-              zoom: 13,
+              zoom: 14,
               center: new google.maps.LatLng(<%= @route.latitude %>, <%= @route.longitude %>),
             <%- elsif @reservation %>
               zoom: 19,
               center: new google.maps.LatLng(<%= @reservation.latitude %>, <%= @reservation.longitude %>),
+            <%- elsif @zone %>
+              zoom: 14,
+              center: new google.maps.LatLng(<%= @zone.latitude %>, <%= @zone.longitude %>),
             <%- else %>
               zoom: 12,
               center: new google.maps.LatLng(47.64483,-122.54827),

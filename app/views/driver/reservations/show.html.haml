@@ -4,7 +4,6 @@
     .col-lg-6
       %h1.mb-1
         = @reservation.street
-
       #status= reservation_status(@reservation)
 
 
@@ -47,7 +46,7 @@
             %td= link_to @reservation.phone, "tel:#{ @reservation.phone }"
         %tr
           %th Route
-          %td= @reservation&.route&.name
+          %td= reservation_zone_route(@reservation)
         - if donation_status(@reservation)
           %tr
             %th Donation
