@@ -1,7 +1,7 @@
 %header.mb-lg-5
   %nav.navbar.navbar-expand-lg.navbar-dark#main-navbar
     .container
-      - site_title = setting.site_title.present? ?  setting.site_title : 'Tree Recycle'
+      - site_title = SITE_TITLE
 
       = link_to root_path, class: 'navbar-brand' do
         %i.fa-solid.fa-tree.fa-lg
