@@ -79,6 +79,8 @@ To sign-in, you will need to create an admin user through the console.
 > User.create(email: 'john.doe@example.com', password: [password])
 ```
 
+Default application settings should be configured in `config/initializers/constants.rb`.
+
 
 ### Custom Credentials
 
@@ -107,6 +109,11 @@ Routes are used to create areas of reservations, for convenient pick ups. Routes
 
 There is an admin setting `Emailing enabled?` that controls whether emails are sent out.
 
+### Driver
+
+The driver component of the app is at `/driver`. By default, resources under this namespace are open publicly by default, with the risks being that reservation personal information as well as the ability to toggle the status of the pickup. It is suggested that once your app is live, that you enable authenticated accessed by configuring a `Driver secret key` in admin `Settings`. Then access to these resources require the initial request to have the key, but subsequent requests do not, unless the key is reset in the settings.
+
+With a driver secret key of `happy`: `/driver/key=happy`.
 
 ## Mapping
 
