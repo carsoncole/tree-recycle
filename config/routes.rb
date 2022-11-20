@@ -31,12 +31,10 @@ Rails.application.routes.draw do
     post 'cash-or-check' => 'donations#cash_or_check', as: 'cash_or_check'
     get 'donations/success' => 'donations#success', as: 'success'
     get 'donations/cancel' => 'donations#cancel', as: 'cancel'
-    post 'stripe-webhook' => "charges#stripe_webhook"
 
 
     post 'submit-reservation' => 'reservations#submit_reservation', as: 'submit'
 
-    # resources :charges, only: %i[ new create ]
 
   end
 
