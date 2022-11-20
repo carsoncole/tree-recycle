@@ -12,8 +12,11 @@
   %h5 Date of pick-up
   .mb-4= setting&.pickup_date_and_time&.strftime('%B %e, %Y')
 
-  %h5 Trees should be ready for pickup starting at
-  .mb-4= setting&.pickup_date_and_time&.strftime('%l:%M %p')
+  %h5 Trees should be ready for pickup between
+  .mb-4
+    = setting&.pickup_date_and_time&.strftime('%l:%M %p')
+    \-
+    = setting&.pickup_date_and_end_time&.strftime('%l:%M %p')
 
   %h5= link_to 'Have a question?', questions_path
 

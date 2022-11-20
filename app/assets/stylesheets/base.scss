@@ -7,6 +7,10 @@ body {
   width: 100%;
 }
 
+a, #driver-nav a {
+  color: lighten($scout-blue,25%);
+}
+
 h1 {
   font-size: 2em;
   font-weight: 800;
