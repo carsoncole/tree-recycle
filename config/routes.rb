@@ -58,15 +58,13 @@ Rails.application.routes.draw do
     resources :drivers
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
+    delete 'reservations/archive-all' => 'reservations#archive_all', as: 'archive_all'
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
       get 'advanced' => 'reservations#show_advanced', as: 'advanced'
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
     end
     get '/routing' => 'zones#index', as: 'routing'
-
-    delete 'admin/reservations/archive-all' => 'reservations#archive_all', as: 'archive_all'
-
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
     resources :routes, except: [ :index ] do
