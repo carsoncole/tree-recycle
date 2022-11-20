@@ -9,12 +9,12 @@ class Admin::LogTest < ActiveSupport::TestCase
     assert_difference("Log.all.count", 1) do
       @reservation.unconfirmed!
     end
+
     assert_equal "Reservation unconfirmed", @reservation.logs.last.message
   end
 
   test "log on pending pickup" do
-
-    assert_equal 2, @reservation.logs.count # confirmed, confirmed email sent
+    assert_equal 1, @reservation.logs.count # confirmed, confirmed email sent
     assert_equal "Tree is pending pickup", @reservation.logs.first.message
   end
 
