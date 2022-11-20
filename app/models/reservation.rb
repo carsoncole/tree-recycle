@@ -27,11 +27,11 @@ class Reservation < ApplicationRecord
   after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.cancelled? && obj.saved_change_to_status? }
 
   # logging
-  after_save :log_unconfirmed!, if: ->(obj){ obj.unconfirmed? && obj.saved_change_to_status?}
-  after_save :log_pending_pickup!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status?}
-  after_update :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? }
-  after_update :log_cancelled!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
-  after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
+  after_commit :log_unconfirmed!, if: ->(obj){ obj.unconfirmed? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :log_pending_pickup!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :log_cancelled!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? && obj.persisted? }
 
   def self.open?
     Setting.first_or_create.is_reservations_open?

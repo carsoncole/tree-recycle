@@ -6,12 +6,16 @@
 
 
 
+    %p.text-end
+      = link_to edit_admin_setting_path(setting) do
+        %i.fa-solid.fa-pen.icon
+        Edit
 
     .section
       .row
         .col-md-4
           %h3
-            %i.fa-solid.fa-tree
+            / %i.fa-solid.fa-tree
             Reservations
         .col-md-8
           %table.table.settings#stats-table
@@ -28,18 +32,15 @@
             %tr
               %td.text-end(colspan="32")
                 = link_to new_reservation_path do
-                  %i.fa-solid.fa-plus.fa-lg
+                  / %i.fa-solid.fa-plus.fa-lg
                   Manual reservation entry
-
-
-
 
 
     .section
       .row
         .col-md-4
           %h3
-            %i.fa-solid.fa-calendar-days
+            / %i.fa-solid.fa-calendar-days
             Event details
         .col-md-8
           %table.table.settings
@@ -49,9 +50,15 @@
                   Pick-up date start/end time
 
                 %td
-                  = nice_date_time(setting.pickup_date_and_time)
+                  - if setting.pickup_date_and_time.present?
+                    = nice_date_time(setting.pickup_date_and_time)
+                  - else
+                    No start time set
                   %br
-                  = nice_date_time(setting.pickup_date_and_end_time)
+                  - if setting.pickup_date_and_end_time.present?
+                    = nice_date_time(setting.pickup_date_and_end_time)
+                  - else
+                    No end time set
               %tr
                 %th Signup deadline
                 %td= nice_date_time(setting.sign_up_deadline_at)
@@ -60,7 +67,7 @@
       .row
         .col-md-4
           %h3
-            %i.fa-solid.fa-globe
+            / %i.fa-solid.fa-globe
             Website configuration
         .col-md-8
           %table.table.settings
@@ -96,7 +103,7 @@
       .row
         .col-md-4
           %h3
-            %i.fa-solid.fa-map
+            / %i.fa-solid.fa-map
             Mapping
         .col-md-8
           %table.table.settings
@@ -116,7 +123,7 @@
       .row
         .col-md-4
           %h3
-            %i.fa-solid.fa-at
+            / %i.fa-solid.fa-at
             Email notifications
         .col-md-8
           %table.table.settings
@@ -140,7 +147,7 @@
       .row
         .col-md-4
           %h3
-            %i.fa-solid.fa-truck-pickup
+            / %i.fa-solid.fa-truck-pickup
             Driver website
         .col-md-8
           %table.table.settings
@@ -153,17 +160,11 @@
                   No key
 
 
-
-
-    %p
-      = link_to edit_admin_setting_path(setting) do
-        %i.fa-solid.fa-pen.icon
-
     .section
       .row
         .col-md-4
           %h3
-            %i.fa-solid.fa-box-archive
+            / %i.fa-solid.fa-box-archive
             Archive
         .col-md-8
           %table.table.settings

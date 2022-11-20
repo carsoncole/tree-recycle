@@ -38,4 +38,16 @@ class Admin::RouteTest < ActiveSupport::TestCase
     assert_not_equal lat, route.latitude
     assert_not_equal lon, route.longitude
   end
+
+  test "destroying route leaves reservations" do
+    route = create(:route_with_coordinates, is_zoned: false)
+    reservations = create_list(:reservation_with_coordinates, 10, is_routed: false, route: route)
+
+    assert_equal route, reservations[0].route
+    assert_difference "Reservation.count", 0 do
+      route.destroy
+    end
+    assert_equal 10, Reservation.count
+    assert_not route.persisted?
+  end
 end

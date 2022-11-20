@@ -15,7 +15,8 @@ h1 {
   font-size: 2em;
   font-weight: 800;
   margin-bottom: 1.25em;
-  line-height: 1.1em;
+  line-height: 1.4em;
+  vertical-align: middle;
   &.donation {
     font-size: 3em;
   }
@@ -492,7 +493,7 @@ nav.navbar {
     margin-bottom: 2em;
   }
   #direction-links {
-    margin: 0 auto 3em auto;
+    margin: 0 auto 1em auto;
     display: inline-block;
     border: 2px solid lighten(#000, 60%);
     border-radius: 5px;
@@ -519,11 +520,11 @@ nav.navbar {
 
 }
 
-#setting {
+#settings {
   .section {
     border-top: 1px solid #aeaeae;
     padding-top: 1.666em;
-    margin-bottom: 4em;
+    margin-bottom: 5em;
     i {
       margin-right: 0.3em;
     }
@@ -535,5 +536,17 @@ nav.navbar {
   h1 {
     margin-bottom: 3em;
     font-size: 3em;
+  }
+  #driver-routes {
+    table.table.driver-routes {
+      tbody {
+        font-size: 1em !important;
+      }
+      th, td {
+        &.buttons {
+          width: 20em;
+        }
+      }
+    }
   }
 }

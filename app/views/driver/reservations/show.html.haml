@@ -6,6 +6,10 @@
         = @reservation.street
       #status= reservation_status(@reservation)
 
+  .row
+    .colmd-12.text-center
+      %p= link_to "< Back", :back
+
 
   .row
     .col-md-3
@@ -23,6 +27,15 @@
         .title Google Mapped
         = link_to driver_reservation_map_path(@reservation), class: 'map-link' do
           %i.fa-solid.fa-map-location-dot
+
+  .row
+    .col-12.text-center
+      - if @reservation.routed?
+        - if admin_view?
+          %p= link_to @reservation.route.name, admin_route_path(@reservation.route)
+        - else
+          %p= link_to @reservation.route.name, driver_route_path(@reservation.route)
+
 
   .row
     .col-md-3
@@ -52,7 +65,7 @@
             %th Donation
             %td= donation_status(@reservation)
 
-        - if signed_in?
+        - if admin_view?
           %tr
             %th.text-center(colspan="2")= link_to "Admin View", admin_reservation_advanced_path(@reservation)
 
