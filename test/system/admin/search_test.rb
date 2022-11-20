@@ -13,3 +13,4 @@ class Admin::SearchTest < ApplicationSystemTestCase
     assert_text @reservation.name
   end
 end
+
