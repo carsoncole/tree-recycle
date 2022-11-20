@@ -5,7 +5,6 @@
       %i.fa-solid.fa-road
       Routes
 
-
 - if admin_view?
   .row
     .col-md-3
@@ -37,14 +36,8 @@
             %th.data Missing
             %th.data Picked
         %tbody
-          %tr
-            %th.route-zone.zone
-              All
-              = link_to driver_reservations_map_path do
-                %i.fa-solid.fa-map
-            %td.data.zone-pending-pickup-count= Reservation.pending_pickup.count
-            %td.data.missing-count= Reservation.missing.count
-            %td.data= Reservation.picked_up.count
+
+          / Zones
           - @zones.each do |zone|
             - next if zone.routes.empty?
             - pending_pickup_count = zone.reservations.pending_pickup.count
@@ -64,6 +57,8 @@
               %td.data.zone-pending-pickup-count= pending_pickup_count
               %td.data.missing-count= missing_count
               %td.data.picked-up-count= picked_up_count
+
+            / Routes
             - zone.routes.each do |route|
               - pending_pickup_count = route.reservations.pending_pickup.count
               - picked_up_count = route.reservations.picked_up.count
@@ -83,17 +78,19 @@
                   = pending_pickup_count
                 %td.data.missing.missing-count= missing_count
                 %td.data.picked_up= picked_up_count
+
+          / Routed, but un-zoned
           - if Reservation.not_archived.joins(:route).where("routes.zone_id IS ?", nil).any?
             %tr
               %th.zone No Zone
               %td.data.zone-pending-pickup-count#total-no-zone-pending-pickup-count= Reservation.pending_pickup.joins(:route).where("routes.zone_id IS ?", nil).count
               %td.data.missing-count= Reservation.missing.joins(:route).where("routes.zone_id IS ?", nil).count
               %td.data=  Reservation.picked_up.joins(:route).where("routes.zone_id IS ?", nil).count
-            - Route.where("routes.zone_id IS ?", nil).joins(:reservations).where("reservations.status = ?", 99).each do |route|
+            - Route.where("routes.zone_id IS ?", nil).joins(:reservations).where.not("reservations.status = ?", 99).each do |route|
               - pending_pickup_count = route.reservations.pending_pickup.count
               - picked_up_count = route.reservations.picked_up.count
               - missing_count = route.reservations.missing.count
-              - next if pending_pickup_count == 0 && picked_up_count == 0 && missing_count == 0 && @all_zones == false
+              - next pending_pickup_count == 0 && picked_up_count == 0 && missing_count == 0 && !@all_zones
               %tr
                 %th.route
                   = link_to route.name, driver_route_path(route)
@@ -107,15 +104,34 @@
                 %td.data.unzoned_pending_pickup.pending-pickup-count= pending_pickup_count
                 %td.data.missing-count= missing_count
                 %td.data.unzoned_picked_up= picked_up_count
+
+          / ALL
+          %tr.total
+            %th.route-zone.zone
+              All
+              = link_to driver_reservations_map_path do
+                %i.fa-solid.fa-map
+            %td.data.zone-pending-pickup-count= @pending_pickups_count
+            %td.data.missing-count= @missing_count
+            %td.data= @picked_up_count
+
+
+
+          / Without Routes
           - if Reservation.not_archived.unrouted.any?
             - pending_pickup_count = Reservation.not_archived.unrouted.pending_pickup.count
             - picked_up_count = Reservation.not_archived.unrouted.picked_up.count
             - missing_count = Reservation.not_archived.unrouted.missing.count
-            - if (pending_pickup_count != 0 && picked_up_count != 0 && missing_count != 0) || @all_zones == true
-              %tr
-                %th.zone Unrouted
-                %td.data#total-unrouted-pending-pickup-count.zone-pending-pickup-count= pending_pickup_count
-                %td.data.missing-count= missing_count
-                %td.data#total-picked-up-count= picked_up_count
+            - return if pending_pickup_count == 0 && picked_up_count == 0 && missing_count == 0 && !@all_zones
+            %tr
+              %th
+              %td &nbsp;
+              %td
+              %td
+            %tr
+              %th.zone Unrouted
+              %td.data#total-unrouted-pending-pickup-count.zone-pending-pickup-count= pending_pickup_count
+              %td.data.missing-count= missing_count
+              %td.data#total-picked-up-count= picked_up_count
 
 

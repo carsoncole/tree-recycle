@@ -173,6 +173,10 @@ $scout-blue: #003F87;
   }
 }
 
+#driver-navbar {
+  background-color: $scout-blue;
+}
+
 #driver-nav {
   font-weight: 600;
   margin-top: 1em;
@@ -182,13 +186,15 @@ $scout-blue: #003F87;
 table#driver-routes-table {
   thead {
     font-size: 0.85em;
+    tr th {
+      padding-bottom: 1.2em;
+    }
   }
   th,td {
     font-weight: 800;
     &.zone {
       font-weight: 800;
       text-transform: uppercase;
-
     }
     &.route {
       min-width: 12em;

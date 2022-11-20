@@ -10,7 +10,7 @@ class ReservationsMailer < ApplicationMailer
 
   # redundant, but is a safety check
   def stop_delivery_if_disabled
-    if !setting.is_emailing_enabled
+    if !setting.is_emailing_enabled? || @reservation&.no_emails?
       mail.perform_deliveries = false
     end
   end

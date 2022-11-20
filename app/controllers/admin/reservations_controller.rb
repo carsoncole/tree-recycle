@@ -68,6 +68,7 @@ class Admin::ReservationsController < Admin::AdminController
 
   def process_route
     @reservation.route!
+    @reservation.save
     redirect_back(fallback_location: admin_root_path)
   end
 

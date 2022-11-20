@@ -9,6 +9,10 @@ FactoryBot.define do
       status { 0 }
     end
 
+    factory :reservation_with_no_routing do
+      is_routed { false }
+    end
+
     factory :reservation_with_coordinates do
       latitude { 47.6259654 }
       longitude { -122.517533 }

@@ -5,11 +5,14 @@ FactoryBot.define do
     city { 'Bainbridge Island' }
     state { 'Washington' }
     distance { 1 }
-    latitude { 47.6259654 }
-    longitude { -122.517533 }
 
     factory :route_with_zone do
       zone
+    end
+
+    factory :route_with_coordinates do
+      latitude { 47.6259654 }
+      longitude { -122.517533 }
     end
 
     factory :route_without_coordinates do

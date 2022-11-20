@@ -2,7 +2,10 @@ class Admin::ZonesController < Admin::AdminController
   before_action :set_zone, only: %i[ show edit update destroy ]
 
   def index
-    @zones = Zone.all
+    @zones = Zone.includes(:routes).all.order(:name)
+    @pending_pickups_count = Reservation.pending_pickup.routed.count
+    @missing_count = Reservation.missing.count
+    @picked_up_count = Reservation.picked_up.count
     @all_zones = true if params[:all_zones]
   end
 

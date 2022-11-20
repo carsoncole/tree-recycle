@@ -61,9 +61,8 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     reservations_without_routes = create_list(:reservation_with_coordinates, 2, is_routed: false)
 
     click_on 'Routes'
-    save_screenshot 'tmp/screen_1.png'
     within "#driver-routes-table" do
-      assert_selector "tbody tr", count: 5
+      assert_selector "tbody tr", count: 6
       assert_selector "th.zone", text: route.zone.name.upcase
       assert_selector "th.route", text: route.name
       assert_selector "#route-pending-pickup-count", text: '5'

@@ -12,8 +12,7 @@ class Route < ApplicationRecord
 
   after_validation :zone!, if: ->(obj){ obj.geocoded? && obj.is_zoned? && (obj.latitude_changed? && (obj.persisted? || obj.zone_id.nil?)) }
 
-
-  attribute :is_routed, :boolean, default: true
+  attribute :is_zoned, :boolean, default: true
 
   def name_with_zone
     (zone&.name || 'No Zone') + ' / ' + self&.name

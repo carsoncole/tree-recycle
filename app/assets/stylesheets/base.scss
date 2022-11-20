@@ -349,6 +349,12 @@ table#admin-drivers {
 }
 
 
+#settings {
+  form {
+    display: inline-block;
+  }
+}
+
 table.table.driver_routes {
   td.remaining {
     width: 12em;
@@ -469,6 +475,12 @@ nav.navbar {
   margin-bottom: 2em;
 }
 
+#admin-navbar {
+  background-color: $scout-red;
+}
+
+
+
 #reservation {
   h1 {
     text-align: center;
@@ -501,4 +513,23 @@ nav.navbar {
     }
   }
 
+}
+
+#setting {
+  .section {
+    border-top: 1px solid #aeaeae;
+    padding-top: 1.666em;
+    margin-bottom: 4em;
+    i {
+      margin-right: 0.3em;
+    }
+
+  }
+}
+
+@media (min-width: 768px) {
+  h1 {
+    margin-bottom: 3em;
+    font-size: 3em;
+  }
 }

@@ -33,6 +33,7 @@ module Geocodable
         self.longitude = nil
         self.house_number = nil
         self.street_name = nil
+        self.route_id = nil if self.class == Reservation && self.is_routed
         results = Geocoder.search(self.address)
         self.latitude = results.as_json[0]["data"]["lat"]
         self.longitude = results.as_json[0]["data"]["lon"]

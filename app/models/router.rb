@@ -9,8 +9,9 @@ class Router
   end
 
   def route!
-    return unless location.geocoded?
+    return unless location.is_routed?
     location.route_id = nil
+    return unless location.geocoded?
     Route.all.each do |z|
       # puts z.coordinates
       distance_to_new_route = location.distance_to(z.coordinates)
@@ -24,8 +25,9 @@ class Router
   end
 
   def zone!
-    return unless location.geocoded?
+    return unless location.is_zoned?
     location.zone_id = nil
+    return unless location.geocoded?
     Zone.all.each do |z|
       # puts z.coordinates
       distance_to_new_zone = location.distance_to(z.coordinates)

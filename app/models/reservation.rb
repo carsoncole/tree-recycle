@@ -13,8 +13,8 @@ class Reservation < ApplicationRecord
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
 
   scope :pending, -> { where.not(status: ['archived', 'unconfirmed'])}
-  scope :unrouted, -> { where(route_id: nil).where.not(status: ['archived', 'cancelled']) }
-  scope :routed, -> { where.not(route_id: nil).where.not(status: ['archived', 'cancelled']) }
+  scope :unrouted, -> { where(route_id: nil) }
+  scope :routed, -> { where.not(route_id: nil) }
 
   validates :name, :email, presence: true
 
@@ -30,7 +30,7 @@ class Reservation < ApplicationRecord
   after_save :log_unconfirmed!, if: ->(obj){ obj.unconfirmed? && obj.saved_change_to_status?}
   after_save :log_pending_pickup!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status?}
   after_update :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? }
-  after_update :log_cancellation!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
+  after_update :log_cancelled!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? }
   after_update :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? }
 
   def self.open?
@@ -107,7 +107,7 @@ class Reservation < ApplicationRecord
     logs.create(message: 'Pickup attempted. Tree not found.')
   end
 
-  def log_cancellation!
+  def log_cancelled!
     logs.create(message: 'Reservation cancelled')
   end
 

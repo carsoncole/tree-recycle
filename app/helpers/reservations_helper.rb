@@ -11,6 +11,8 @@ module ReservationsHelper
         ['Pending pickup', 'primary']
       elsif reservation.archived?
         ['Archived', 'info']
+      elsif reservation.unconfirmed?
+        ['Unconfirmed', 'info']
       end
     if status
       out = ''

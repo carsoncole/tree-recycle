@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root 'home#index'
+    root 'zones#index'
     get 'home' => 'home#index', as: 'home'
     resources :zones
     resources :drivers

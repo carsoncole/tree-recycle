@@ -10,7 +10,7 @@ class Admin::SettingsController < Admin::AdminController
   def update
     if helpers.setting.update(setting_params)
       if setting_params[ :is_emailing_enabled ] || setting_params[ :is_reservations_open ]
-        redirect_to admin_root_path
+        redirect_to admin_settings_path
       else
         redirect_to admin_settings_url
       end

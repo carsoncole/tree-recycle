@@ -16,7 +16,6 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     click_on 'Routes'
 
     assert_equal 2, find('#driver-routes-table').all(:css, 'tr').count
-    save_screenshot 'tmp/screenshots/1.png'
 
     zone_1 = create(:zone)
 
@@ -51,7 +50,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
       assert_text route.zone.name.upcase
     end
 
-    assert_equal 5, find('#driver-routes-table').all(:css, 'tr').count
+    assert_equal 5, find('#driver-routes-table tbody').all(:css, 'tr').count
   end
 
   test "correct route assignments" do
