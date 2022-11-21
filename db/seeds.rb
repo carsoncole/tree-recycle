@@ -13,9 +13,6 @@ Setting.first_or_create  do |setting|
   setting.pickup_date_and_time = Date.today + 1.month
   setting.sign_up_deadline_at = Date.today + 1.month - 1.day
   setting.organization_name = 'BSA Troop 1564 & 1804'
-  setting.default_city = "Bainbridge Island"
-  setting.default_state = "Washington"
-  setting.default_country = "United States"
 end
 
 

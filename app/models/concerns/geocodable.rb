@@ -6,9 +6,9 @@ module Geocodable
 
     validates :street, :city, :state, :country, presence: true
 
-    attribute :city, :string, default: 'Bainbridge Island'
-    attribute :state, :string, default: 'Washington'
-    attribute :country, :string, default: 'United States'
+    attribute :city, :string, default: DEFAULT_CITY
+    attribute :state, :string, default: DEFAULT_STATE
+    attribute :country, :string, default: DEFAULT_COUNTRY
 
     # geocoding and routing
     before_validation :full_geocode!, if: ->(obj){ obj.address.present? && obj.street_changed? && !(obj.latitude_changed? && obj.longitude_changed?) }
