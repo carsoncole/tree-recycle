@@ -7,9 +7,10 @@ class Admin::RouteTest < ActiveSupport::TestCase
     assert route.errors.of_kind?(:name, :blank)
   end
 
-  test "route coordinates present" do
+  test "route geocoded" do
     route = Route.new(name: 'Route test', street: '1760 Susan Place NW', distance: 0.5, city: 'Bainbridge Island', state: 'Washington', country: 'United States' )
     assert route.valid?
+    sleep 1
     assert route.latitude.present?
     assert route.longitude.present?
   end
