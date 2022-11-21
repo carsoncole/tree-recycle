@@ -44,7 +44,7 @@ header {
 }
 
 footer {
-  display: hidden;
+  display: none;
   margin-top: 4em;
   text-align: center;
   padding: 1em 0;
@@ -540,6 +540,9 @@ nav.navbar {
 }
 
 @media (min-width: 768px) {
+  footer {
+    display: block;
+  }
   h1 {
     margin-bottom: 3em;
     font-size: 3em;
