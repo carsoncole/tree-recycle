@@ -12,14 +12,11 @@ a, #driver-nav a {
 }
 
 h1 {
-  font-size: 1.7em;
+  font-size: 2em;
   font-weight: 800;
   margin-bottom: 1.25em;
-  line-height: 1.5em;
+  line-height: 1.25em;
   vertical-align: middle;
-  &.donation {
-    font-size: 3em
-  }
 }
 
 h2 {
@@ -398,6 +395,7 @@ nav.navbar {
 }
 
 #side-info {
+  display: none;
   .section {
     margin-bottom: 2.5em;
   }
@@ -539,6 +537,8 @@ nav.navbar {
   }
 }
 
+
+
 @media (min-width: 768px) {
   footer {
     display: block;
@@ -560,5 +560,8 @@ nav.navbar {
         }
       }
     }
+  }
+  #side-info {
+    display: block;
   }
 }
