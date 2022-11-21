@@ -213,32 +213,13 @@ table.reservation {
   }
 
 }
-#reservation-header {
-  margin-bottom: 2.5em;
-  h1 {
-    margin-bottom: 0.25em;
-    text-align: center;
-    font-size: 2.5em;
-  }
-  .badge {
-    font-size: 1em;
-  }
-  .reservation-action-link {
-    padding-left: 0.5em;
-
-  }
-
-  .address {
-    background-color: $scout-red;
-    color: #fff;
-    font-weight: 700;
-    text-align: center;
-    display: inline-block;
-    padding: 0.7em 1em;
-    margin: 2em auto 1em auto;
-  }
-
+#view-reservation {
+  text-align: center;
+  margin-bottom: 2em;
+  font-weight: 700;
 }
+
+
 
 #flash {
   margin-bottom: 3em;
@@ -417,7 +398,7 @@ nav.navbar {
 }
 
 .reservation-status {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 
   .reservation-status-badge {
     width: 10em;
@@ -431,7 +412,6 @@ nav.navbar {
     line-height: 1;
     font-size: 1.4em;
     font-weight: 600;
-    margin-bottom: 1em;
     &.primary {
       background-color: #cfe2ff;
       color: #084298;
@@ -457,6 +437,11 @@ nav.navbar {
   .reservation-actions {
     margin-bottom: 1em;
   }
+}
+
+.reservation-actions {
+  margin-bottom: 1.5em;
+
 }
 
 .important-message {
@@ -563,5 +548,11 @@ nav.navbar {
   }
   #side-info {
     display: block;
+  }
+  #view-reservation {
+    display: none;
+  }
+  #reservation .reservation-actions {
+    display: none;
   }
 }
