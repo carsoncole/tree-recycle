@@ -142,6 +142,29 @@ $scout-blue: #003F87;
   }
 }
 
+#contacts {
+  .section {
+    margin-bottom: 3em;
+  }
+  table.table.contacts {
+    table-layout: fixed;
+    th, td {
+      &.name {
+        width: 9.5em;
+      }
+      &.phone {
+        width: 9em;
+      }
+      &.email {
+       width: 12em;
+      }
+      &.zone {
+        width: 7em;
+      }
+    }
+  }
+}
+
 #drivers-table {
   table-layout: fixed;
   th {
@@ -151,7 +174,7 @@ $scout-blue: #003F87;
     white-space: nowrap;
     overflow-x: scroll;
     &.name {
-      width: 14em;
+      width: 11em;
       overflow-x: scroll;
     }
     &.email{
@@ -159,11 +182,10 @@ $scout-blue: #003F87;
       overflow-x: scroll;
     }
     &.phone {
-
-      width: 14em;
+      width: 12em;
     }
     &.zone {
-      width: 9em;
+      width: 8em;
       font-weight: 800;
       text-transform: uppercase;
     }
@@ -180,8 +202,13 @@ $scout-blue: #003F87;
 
 #driver-nav {
   font-weight: 600;
+  font-size: 0.9em;
   margin-top: 1em;
   margin-bottom: 1em;
+  .nav-link {
+    padding-left: 0.55em;
+    padding-right: 0.55em;
+  }
 }
 
 table#driver-routes-table {

@@ -1,0 +1,38 @@
+.container
+  #contacts
+    .row
+      .col-lg-2
+      .col-lg-8
+        %h1
+          %i.fa-solid.fa-phone
+          Contacts
+
+
+    .row.section
+      .col-lg-2
+      .col-lg-8
+        %h2 Main contact
+        .table-responsive-lg
+          %table.table.contacts
+            %tr
+              %td.name= setting.contact_name
+              %td.zone
+              %td.phone= link_to setting.contact_phone, "tel:#{setting.contact_phone}" if setting.contact_phone
+              %td.email= mail_to(setting.contact_email) if setting.contact_email
+
+
+    .row.section
+      .col-lg-2
+      .col-lg-8
+        %h2 Zone leaders
+        .table-responsive-lg
+          %table.table.contacts
+            - @zone_leaders.each do |driver|
+              %tr
+                %td.name= driver.name
+                %td.zone= driver.zone.name
+                %td.phone= link_to driver&.phone, "tel:#{driver&.phone}" if driver&.phone
+                %td.email= mail_to driver&.email if driver&.email
+
+
+

@@ -22,6 +22,12 @@ h1 {
   }
 }
 
+h2 {
+  font-size: 1.4em;
+  line-height: 1.4em;
+  margin-bottom: 1em;
+}
+
 a {
   text-decoration: none;
 }
@@ -38,6 +44,7 @@ header {
 }
 
 footer {
+  display: hidden;
   margin-top: 4em;
   text-align: center;
   padding: 1em 0;
@@ -536,6 +543,8 @@ nav.navbar {
   h1 {
     margin-bottom: 3em;
     font-size: 3em;
+  }
+  h2 {
   }
   #driver-routes {
     table.table.driver-routes {
