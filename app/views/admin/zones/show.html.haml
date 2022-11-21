@@ -9,9 +9,9 @@
     .col-md-3
     .col-md-6
       .section.row
-        %h2 Zone leader
-        - if @zone.leader
-          %p= link_to @zone&.leader&.name, driver_driver_path(@zone&.leader)
+        %h2 Zone leaders
+        - @zone.drivers.leader.each do |leader|
+          %p= link_to leader.name, driver_driver_path(leader)
         - else
           %p.text-muted No Zone leader
   .row

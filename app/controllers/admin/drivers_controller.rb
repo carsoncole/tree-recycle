@@ -56,6 +56,6 @@ class Admin::DriversController < Admin::AdminController
     end
 
     def driver_params
-      params.require(:driver).permit(:name, :email, :phone, :zone_id)
+      params.require(:driver).permit(:name, :email, :phone, :zone_id, :is_leader)
     end
 end

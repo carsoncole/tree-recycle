@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_19_024529) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_21_062428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_19_024529) do
     t.bigint "zone_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_leader"
     t.index ["zone_id"], name: "index_drivers_on_zone_id"
   end
 
@@ -137,7 +138,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_19_024529) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "leader_id"
     t.string "street"
     t.string "city"
     t.string "state"
