@@ -3,6 +3,7 @@ require "test_helper"
 class DonationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @reservation = create(:reservation_with_coordinates)
+    sleep 0.25
   end
 
   test "should get new" do

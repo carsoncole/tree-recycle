@@ -8,7 +8,7 @@ class ReservationsTest < ApplicationSystemTestCase
     click_on "Reserve a tree pickup"
 
     within "#side-info" do
-      assert_selector "h1", text: "Tree Reservation"
+      assert_selector "h1", text: "Summary"
 
     end
     within "#new-reservation" do

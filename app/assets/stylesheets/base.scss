@@ -2,6 +2,24 @@ $scout-red: #CE1126;
 $scout-blue: #003F87;
 
 
+@mixin font-important {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+@mixin panel {
+  background-color: #efefef;
+  margin-bottom: 1.5em;
+  border: 2px solid $scout-blue;
+  padding: 0.5em 1.25em;
+  border-radius: 6px;
+  display: inline-block;
+
+  a {
+    color: $scout-blue;
+  }
+}
+
 body {
   height: 100%;
   width: 100%;
@@ -48,8 +66,6 @@ footer {
   font-size: 0.8em;
   font-weight: 300;
 }
-
-
 
 #home {
   line-height: 1.1;
@@ -196,23 +212,7 @@ table.reservation {
   text-transform: camelcase
 }
 
-#reservation {
-  .item {
-    margin-bottom: 2em;
-    line-height: 1.666;
 
-    .field {
-      font-size: 0.9em;
-      color: #999;
-    }
-    .data {
-      font-size: 1.2em;
-      color: #000;
-    }
-
-  }
-
-}
 #view-reservation {
   text-align: center;
   margin-bottom: 2em;
@@ -387,6 +387,7 @@ nav.navbar {
   }
   h2 {
     font-size: 1.3em;
+    margin-bottom: 0.9em;
     font-weight: 600;
   }
   h3 {
@@ -397,61 +398,37 @@ nav.navbar {
   }
 }
 
-.reservation-status {
-  margin-bottom: 1em;
 
-  .reservation-status-badge {
-    width: 10em;
-    text-align: center;
-    border-radius: 0.375em;
-    background-color: rgb(255,193,7);
-    padding: 0.35em 0.65em;
-    color: #fff;
-    display: inline-block;
-    vertical-align: baseline;
-    line-height: 1;
-    font-size: 1.4em;
-    font-weight: 600;
-    &.primary {
-      background-color: #cfe2ff;
-      color: #084298;
-      border-color: #b6d4fe;
-    }
-    &.info {
-      background-color: #cff4fc;
-      border-color: #cff4fc;
-      color: #055160;
-    }
-    &.danger {
-      background-color: #f8d7da;
-      color: #842029;
-      border-color: #f5c2c7;
-    }
-    &.warning {
-      background-color: #fff3cd;
-      color: #664d03;
-      border-color: #ffecb5;
-    }
 
-  }
-  .reservation-actions {
-    margin-bottom: 1em;
-  }
-}
-
-.reservation-actions {
-  margin-bottom: 1.5em;
-
-}
 
 .important-message {
-  padding: 1em 1.5em;
+  padding: 0.75em 1.5em;
   border: 2px solid $scout-red;
-  border-left: 1.3em solid $scout-red;
-  font-weight: 600;
+  border-left: 1.3em solid #efefef;
   border-radius: 0.5em;
   margin-bottom: 2em;
-  background-color: lighten($scout-red, 50%)
+  line-height: 1.5em;
+  &.primary {
+    background-color: #cfe2ff;
+    color: #084298;
+    border-color: #b6d4fe;
+  }
+  &.info {
+    background-color: #cff4fc;
+    border-color: #cff4fc;
+    color: #055160;
+  }
+  &.danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+  }
+  &.warning {
+    background-color: #fff3cd;
+    color: #664d03;
+    border-color: #ffecb5;
+  }
+  @include font-important;
 }
 .info-table {
   th {
@@ -552,7 +529,5 @@ nav.navbar {
   #view-reservation {
     display: none;
   }
-  #reservation .reservation-actions {
-    display: none;
-  }
 }
+

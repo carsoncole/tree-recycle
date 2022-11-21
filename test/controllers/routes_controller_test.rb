@@ -4,6 +4,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @route = create(:route)
     @user = create(:user)
+    sleep 0.50
   end
 
   test "should not get index" do

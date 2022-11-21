@@ -1,42 +1,27 @@
 - if @reservation
   #side-info
-    %h1 Tree Reservation
+    %h1 Summary
 
-    .reservation-status
-      = reservation_status(@reservation)
+    = render 'reservations/reservation_status'
 
-      - if setting.is_reservations_open?
-        .reservation-actions
-          - if @reservation.cancelled?
-            =link_to "Make a new reservation", new_reservation_path
-          - elsif @reservation.pending_pickup? && @reservation.persisted?
-            .actions
-            = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
-              %i.fa-solid.fa-pencil
-              Edit
-
-            = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
-              %i.fa-solid.fa-times
-              Cancel
+    - if @reservation.name
+      .section.name
+        %h2 Name
+        .full_name= @reservation.name
 
 
-    .section.name
-      %h2 Name
-      .full_name= @reservation.name
+    - if @reservation.street
+      .section.address
+        %h2 Address
 
+        - if @reservation.street
+          .street= @reservation.street
+        .city= @reservation.city
+        .state= @reservation.state
 
-    .section.address
-      %h2 Address
-
-      - if @reservation.street
-        .street= @reservation.street
-        %br
-      .city= @reservation.city
-      .state= @reservation.state
-
-      - if @reservation.notes.present?
-        %br
-        .notes= @reservation.notes
+        - if @reservation.notes.present?
+          %br
+          .notes= @reservation.notes
 
     .section.pickup-details
       %h2 Pickup details
@@ -48,10 +33,12 @@
       \-
       = nice_time(setting.pickup_date_and_end_time)
 
-    .section.contact-info
-      %h2 Contact
-      = @reservation.email
-      - if @reservation.phone.present?
-        %br
-        = @reservation.phone
+    - if @reservation.email
+      .section.contact-info
+        %h2 Contact
+        = @reservation.email
+        - if @reservation.phone.present?
+          %br
+          = @reservation.phone
 
+    = render 'reservations/reservation_actions'

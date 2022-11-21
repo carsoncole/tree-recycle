@@ -37,7 +37,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     visit admin_reservation_advanced_path(@reservation)
 
     within '#reservation-status' do
-      assert_text 'Pending pickup'
+      assert_text 'This reservation is scheduled for pickup'
     end
 
     within '#status' do
@@ -46,7 +46,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     end
 
     within '#reservation-status' do
-      assert_text 'Missing'
+      assert_text 'Your tree could not be found'
     end
 
     click_on 'View Log'
@@ -65,7 +65,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     end
 
     within '#reservation-status' do
-      assert_text 'Picked Up'
+      assert_text 'Your tree has been picked up'
     end
 
     click_on 'View Log'
@@ -84,7 +84,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     end
 
     within '#reservation-status' do
-      assert_text 'Cancelled'
+      assert_text 'Your tree pickup reservation has been Cancelled'
     end
 
     click_on 'View Log'

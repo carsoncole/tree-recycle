@@ -12,6 +12,8 @@ class Reservation < ApplicationRecord
 
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
 
+  enum :heard_about_source, { facebook: 1, nextdoor: 2, roadside_sign: 3, troop_1565_flyer_at_time_of_tree_purchase: 3, word_of_mouth: 4, email_reminder_from_last_year: 5, other: 99 }
+
   scope :pending, -> { where.not(status: ['archived', 'unconfirmed'])}
   scope :unrouted, -> { where(route_id: nil) }
   scope :routed, -> { where.not(route_id: nil) }

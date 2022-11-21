@@ -24,8 +24,9 @@ class Admin::LogTest < ActiveSupport::TestCase
 
   test "log on cancellation" do
     @reservation.cancelled!
-    assert_equal 2, @reservation.logs.count
-    assert_equal "Reservation cancelled", @reservation.logs.last.message
+    sleep 2
+    assert_equal 4, @reservation.logs.count
+    assert_equal "Cancelled reservation email sent.", @reservation.logs.last.message
   end
 
   test "log on missing" do

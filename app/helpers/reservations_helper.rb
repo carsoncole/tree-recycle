@@ -2,13 +2,13 @@ module ReservationsHelper
   def reservation_status(reservation)
     return unless reservation.persisted?
     status = if reservation.picked_up?
-        ['Picked Up', 'info']
+        ['Your tree has been picked up.', 'info']
       elsif reservation.cancelled?
-        ['Cancelled', 'danger']
+        ['Your tree pickup reservation has been Cancelled.', 'danger']
       elsif reservation.missing?
-        ['Missing', 'warning']
+        ['Your tree could not be found.', 'warning']
       elsif reservation.pending_pickup?
-        ['Pending pickup', 'primary']
+        ['This reservation is scheduled for pickup.', 'primary']
       elsif reservation.archived?
         ['Archived', 'info']
       elsif reservation.unconfirmed?
@@ -16,7 +16,7 @@ module ReservationsHelper
       end
     if status
       out = ''
-      out << "<div class='reservation-status-badge #{status[1]}'>#{status[0]}</div>"
+      out << "<div class='important-message #{status[1]}'>#{status[0]}</div>"
       out.html_safe
     end
   end
@@ -30,7 +30,7 @@ module ReservationsHelper
       end
     if status
       out = ''
-      out << "<div class='donation-status-badge #{status[1]}'>#{status[0]}</div>"
+      out << "<div class='#{status[1]}'>#{status[0]}</div>"
       out.html_safe
     end
   end
