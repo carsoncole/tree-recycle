@@ -8,7 +8,6 @@ $scout-blue: #003F87;
 }
 
 #driver-routes {
-
   h1 {
     display: inline-block;
   }
@@ -182,6 +181,9 @@ $scout-blue: #003F87;
 
 #drivers-table {
   table-layout: fixed;
+  tbody {
+    font-size: 1.1em;
+  }
   th {
     font-weight: 400
   }
@@ -231,13 +233,17 @@ $scout-blue: #003F87;
 
 table#driver-routes-table {
   thead {
-    font-size: 0.85em;
+    font-size: 0.9em;
     tr th {
       padding-bottom: 1.2em;
     }
   }
+  tbody {
+    line-height: 2em;
+    font-size: 1.1em;
+  }
   th,td {
-    font-weight: 800;
+    font-weight: 700;
     &.zone {
       font-weight: 800;
       text-transform: uppercase;
@@ -247,7 +253,7 @@ table#driver-routes-table {
       overflow-x: scroll;
     }
     &.data {
-      width: 3.5em;
+      width: 4.5em;
       text-align: center;
     }
     &.leader {

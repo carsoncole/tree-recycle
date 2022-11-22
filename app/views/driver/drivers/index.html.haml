@@ -11,34 +11,35 @@
     .col-md-6
       .table-responsive
         %table.table#drivers-table
-          - @zones.each do |zone|
-            %tr
-              %td.route-zone.zone
-                = zone.name
-              %td
-              %td
-            - zone.drivers.each do |driver|
+          %tbody
+            - @zones.each do |zone|
               %tr
-                %th.name= link_to driver.name, driver_driver_path(driver)
-                %td.phone
-                  = link_to "tel:#{driver.phone}" do
-                    = driver.phone
-                    - if driver.phone.present?
-                      %i.fa-solid.fa-phone
-                %td.email= mail_to driver.email
+                %td.route-zone.zone
+                  = zone.name
+                %td
+                %td
+              - zone.drivers.each do |driver|
+                %tr
+                  %th.name= link_to driver.name, driver_driver_path(driver)
+                  %td.phone
+                    = link_to "tel:#{driver.phone}" do
+                      = driver.phone
+                      - if driver.phone.present?
+                        %i.fa-solid.fa-phone
+                  %td.email= mail_to driver.email
 
-          - if Driver.unzoned.any?
-            %tr
-              %td.zone No Zone
-              %td.data
-              %td.data
-
-            - Driver.unzoned.each do |driver|
+            - if Driver.unzoned.any?
               %tr
-                %th.name= link_to driver.name, driver_driver_path(driver)
-                %td.phone
-                  = link_to "tel:#{driver.phone}" do
-                    = driver.phone
-                    - if driver.phone.present?
-                      %i.fa-solid.fa-phone
-                %td.email= mail_to driver.email
+                %td.zone No Zone
+                %td.data
+                %td.data
+
+              - Driver.unzoned.each do |driver|
+                %tr
+                  %th.name= link_to driver.name, driver_driver_path(driver)
+                  %td.phone
+                    = link_to "tel:#{driver.phone}" do
+                      = driver.phone
+                      - if driver.phone.present?
+                        %i.fa-solid.fa-phone
+                  %td.email= mail_to driver.email

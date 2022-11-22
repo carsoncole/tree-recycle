@@ -1,27 +1,32 @@
-%h1 About
+#about
+  %h1 About
 
-- if setting
-  %p.mb-4
-    = setting.description
+  #organization
+    = image_tag "bsa.png", width: '60', id: 'bsa-logo'
+    = ORGANIZATION_NAME
+
+  - if setting
+    %p.mb-4
+      = setting.description
 
 
-  %H5 On the day of pickup
-  %p.mb-4
-    = setting.on_day_of_pickup_instructions
+    %H5 On the day of pickup
+    %p.mb-4
+      = setting.on_day_of_pickup_instructions
 
-  %h5 Date of pick-up
-  .mb-4= setting&.pickup_date_and_time&.strftime('%B %e, %Y')
+    %h5 Date of pick-up
+    .mb-4= setting&.pickup_date_and_time&.strftime('%B %e, %Y')
 
-  %h5 Trees should be ready for pickup between
-  .mb-4
-    = setting&.pickup_date_and_time&.strftime('%l:%M %p')
-    \-
-    = setting&.pickup_date_and_end_time&.strftime('%l:%M %p')
+    %h5 Trees should be ready for pickup between
+    .mb-4
+      = setting&.pickup_date_and_time&.strftime('%l:%M %p')
+      \-
+      = setting&.pickup_date_and_end_time&.strftime('%l:%M %p')
 
-  %h5= link_to 'Have a question?', questions_path
+    %h5= link_to 'Have a question?', questions_path
 
-- else
-  %p Please configure settings, with the description and date of event.
+  - else
+    %p Please configure settings, with the description and date of event.
 
 
 
