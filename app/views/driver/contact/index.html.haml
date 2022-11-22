@@ -18,8 +18,11 @@
                 General
             %tr
               %td.name= setting.contact_name
-              %td.zone
-              %td.phone= link_to setting.contact_phone, "tel:#{setting.contact_phone}" if setting.contact_phone
+              %td.phone
+                - if setting.contact_phone
+                  = link_to "tel:#{setting.contact_phone}" do
+                    = setting.contact_phone
+
               %td.email= mail_to(setting.contact_email) if setting.contact_email
 
 
@@ -28,9 +31,15 @@
                 Zone leaders
             - @zone_leaders.each do |driver|
               %tr
-                %td.name= driver.name
-                %td.zone= driver.zone.name
-                %td.phone= link_to driver&.phone, "tel:#{driver&.phone}" if driver&.phone
+                %td.name
+                  = driver.name
+                  = surround("(", ")") do
+                    = driver.zone.name
+                %td.phone
+                  - if driver&.phone
+                    = link_to "tel:#{driver&.phone}" do
+                      =driver&.phone
+
                 %td.email= mail_to driver&.email if driver&.email
 
 

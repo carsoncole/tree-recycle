@@ -80,16 +80,13 @@ $scout-blue: #003F87;
   table.table.contacts {
     th, td {
       &.name {
-        min-width: 8em;
+        min-width: 11em;
       }
       &.phone {
         min-width: 9em;
       }
       &.email {
        overflow-x: scroll;
-      }
-      &.zone {
-        min-width: 5em;
       }
     }
   }
@@ -103,18 +100,14 @@ $scout-blue: #003F87;
     font-weight: 400
   }
   th,td {
-    white-space: nowrap;
-    overflow-x: scroll;
     &.name {
-      min-width: 14m;
+      min-width: 9em;
     }
     &.email{
       overflow-x: scroll;
     }
-    &.leader {
-    }
     &.phone {
-      width: 10em;
+      min-width: 9em;
     }
     &.zone {
       font-weight: 800;

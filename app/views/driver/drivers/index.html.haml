@@ -22,10 +22,9 @@
                 %tr
                   %th.name= link_to driver.name, driver_driver_path(driver)
                   %td.phone
-                    = link_to "tel:#{driver.phone}" do
-                      = driver.phone
-                      - if driver.phone.present?
-                        %i.fa-solid.fa-phone
+                    - if driver.phone.present?
+                      = link_to "tel:#{driver.phone}" do
+                        = driver.phone
                   %td.email= mail_to driver.email
 
             - if Driver.unzoned.any?
@@ -38,8 +37,7 @@
                 %tr
                   %th.name= link_to driver.name, driver_driver_path(driver)
                   %td.phone
-                    = link_to "tel:#{driver.phone}" do
-                      = driver.phone
-                      - if driver.phone.present?
-                        %i.fa-solid.fa-phone
+                    - if driver.phone.present?
+                      = link_to "tel:#{driver.phone}" do
+                        = driver.phone
                   %td.email= mail_to driver.email
