@@ -22,5 +22,9 @@ FactoryBot.define do
     factory :reservation_with_route do
       route
     end
+
+    factory :archived_reservation do
+      status { :archived }
+    end
   end
 end
