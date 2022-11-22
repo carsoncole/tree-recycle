@@ -86,16 +86,16 @@ footer {
     .top-line {
       line-height: 0.9;
       .year {
-        font-size: 1.2em;
+        font-size: 1.1em;
         font-weight: 200;
         line-height: 0.9;
         display: inline-block;
         margin: 0;
-        padding: 0 0 0 1em;
+        padding: 0 0 0 0.7em;
         color: $scout-blue;
       }
       .bainbridge {
-        font-size: 1.2em;
+        font-size: 1.1em;
         font-weight: 200;
         line-height: 0.9;
         display: inline-block;
@@ -104,7 +104,7 @@ footer {
     }
     .tree {
       font-weight: 800;
-      font-size: 2.2em;
+      font-size: 2em;
       line-height: 0.9;
       display: inline-block;
       margin: 0;
@@ -112,7 +112,7 @@ footer {
     }
     .recycle {
       font-weight: 300;
-      font-size: 2.2em;
+      font-size: 2em;
       line-height: 0.9;
       display: inline-block;
       margin: 0;

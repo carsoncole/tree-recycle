@@ -23,7 +23,7 @@
   .row
     .col-md-2
     .col-md-8.important-date
-      Reservations close on
+      Reservations close
       - if setting&.sign_up_deadline_at
-        = nice_date_time(setting&.sign_up_deadline_at)
+        = nice_date_time_no_year(setting&.sign_up_deadline_at)
 

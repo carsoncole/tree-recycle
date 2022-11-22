@@ -21,6 +21,10 @@ module ApplicationHelper
     datetime&.strftime("%B %e, %Y @ %l:%M %p")
   end
 
+  def nice_date_time_no_year(datetime)
+    datetime&.strftime("%B %e @ %l:%M %p")
+  end
+
   def nice_short_date_time(datetime)
     datetime&.strftime('%H:%M %F')
   end
