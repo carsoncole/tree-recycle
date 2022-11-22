@@ -6,7 +6,7 @@ class Driver::ReservationsController < Driver::DriverController
 
   def search
     if params[:search]
-      @pagy, @reservations = pagy(Reservation.where("name ILIKE ? OR street ILIKE ?", "%" + Reservation.sanitize_sql_like(params[:search]) + "%", "%" + Reservation.sanitize_sql_like(params[:search]) + "%"))
+      @pagy, @reservations = pagy(Reservation.not_archived.where("name ILIKE ? OR street ILIKE ?", "%" + Reservation.sanitize_sql_like(params[:search]) + "%", "%" + Reservation.sanitize_sql_like(params[:search]) + "%"))
     end
   end
 

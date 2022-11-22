@@ -36,7 +36,7 @@
           %li.nav-item
             = link_to "Main", root_path, class: 'btn btn-outline-light btn-site'
           %li.nav-item
-            = link_to "Drivers", driver_root_path, class: 'btn btn-outline-light btn-site'
+            = link_to "Driver", driver_root_path, class: 'btn btn-outline-light btn-site'
           %li.nav-item
             - if signed_in?
               %li.nav-item= button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'

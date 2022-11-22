@@ -11,7 +11,7 @@ class Driver::ZonesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "Routes"
   end
 
-  test "should get driver root and routing" do
+  test "should get driver root and routing with auth" do
     setting_generate_driver_secret_key!
 
     get driver_routing_url
@@ -21,5 +21,4 @@ class Driver::ZonesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", "Routes"
   end
-
 end

@@ -8,7 +8,7 @@ class Driver::DriversTest < ApplicationSystemTestCase
   end
 
   test "visiting a driver show page without zone" do
-    driver = create(:driver)
+    driver = create(:driver, zone: nil)
     visit driver_drivers_path
     click_on driver.name
     assert_selector "h1", text: driver.name
@@ -16,8 +16,7 @@ class Driver::DriversTest < ApplicationSystemTestCase
   end
 
   test "visiting a driver show page with zone" do
-    zone = create(:zone)
-    driver = create(:driver, zone_id: zone.id)
+    driver = create(:driver)
     visit driver_drivers_path
     click_on driver.name
     assert_selector "h1", text: driver.name
@@ -25,8 +24,7 @@ class Driver::DriversTest < ApplicationSystemTestCase
   end
 
   test "driver show with all info" do
-    zone = create(:zone)
-    driver = create( :driver, email: Faker::Internet.email, zone_id: zone.id )
+    driver = create( :driver, email: Faker::Internet.email)
     visit driver_driver_path(driver)
     assert_text "Zone: #{ driver.zone.name }"
     assert_text driver.email

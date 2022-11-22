@@ -77,7 +77,7 @@ $scout-blue: #003F87;
   .section {
     margin-bottom: 3em;
   }
-  table.table.contacts {
+  table.table#contacts-table {
     th, td {
       &.name {
         min-width: 11em;
@@ -192,22 +192,31 @@ table#driver-zones-table {
 #driver-search {
   #search-form {
     margin-bottom: 2em;
+
+    #search-field, #search-button {
+      display: inline-block !important;
+    }
+    #search-field {
+      width: 75%;
+    }
+    #search-button {
+      width: 20%;
+    }
   }
   table.table#search-results {
-  table-layout: fixed;
-    th,td {
-      &.status {
-        text-align: right;
-        width: 3em;
+      th,td {
+        &.status {
+          text-align: right;
+          width: 3em;
+        }
+        &.street {
+          width: 7em;
+          overflow-x: scroll;
+        }
+        &.name {
+          width: 5em;
+        }
       }
-      &.street {
-        width: 7em;
-        overflow-x: scroll;
-      }
-      &.name {
-        width: 5em;
-      }
-    }
   }
 }
 

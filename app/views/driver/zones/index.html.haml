@@ -110,11 +110,11 @@
             %tr.total
               %th.route-zone.zone
                 All
-                = link_to driver_reservations_map_path do
+                = link_to driver_reservations_map_path, id: 'all-map-link' do
                   %i.fa-solid.fa-map
-              %td.data.zone-pending-pickup-count= @pending_pickups_count
-              %td.data.missing-count= @missing_count
-              %td.data= @picked_up_count
+              %td.data.zone-pending-pickup-count#all-pending-count= @pending_pickups_count
+              %td.data.missing-count#all-missing-count= @missing_count
+              %td.data#all-picked-count= @picked_up_count
 
 
 
