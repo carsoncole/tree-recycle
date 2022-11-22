@@ -23,14 +23,11 @@
           %li.nav-item
             = link_to "About", about_path, class: "nav-link"
 
-
-        %ul.navbar-nav.my-2.my-lg-0
-          - if signed_in?
+        - if signed_in?
+          %ul.navbar-nav.my-2.my-lg-0
             %li.nav-item
               = link_to "Admin", admin_root_path, class: "btn btn-outline-light btn-site"
             %li.nav-item
               = link_to "Drivers", driver_root_path, class: 'btn btn-outline-light btn-site'
             %li.nav-item= button_to 'Sign out', sign_out_path, method: :delete, class: 'btn btn-primary'
-          - else
-            %li.nav-item= link_to 'Sign in', sign_in_path, class: 'nav-link'
 
