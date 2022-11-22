@@ -32,4 +32,12 @@ module ApplicationHelper
   def admin_view?
     request.path.include?('/admin')
   end
+
+  def driver_view?
+    request.path.include?('/driver')
+  end
+
+  def public_view?
+    !admin_view && !driver_view
+  end
 end

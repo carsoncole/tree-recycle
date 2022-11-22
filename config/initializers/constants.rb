@@ -1,4 +1,6 @@
 SITE_TITLE = 'Tree Recycle'
+DRIVER_SITE_TITLE = 'Driver'
+ADMIN_SITE_TITLE = 'Admin'
 ORGANIZATION_NAME = 'Troops 1564 & 1804'
 DEFAULT_CITY = 'Bainbridge Island'
 DEFAULT_STATE = 'Washington'

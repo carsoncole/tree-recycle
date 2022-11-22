@@ -1,5 +1,11 @@
 %head
-  %title= SITE_TITLE
+  %title
+    - if driver_view?
+      = DRIVER_SITE_TITLE
+    - elsif admin_view?
+      = ADMIN_SITE_TITLE
+    - else
+      = SITE_TITLE
   %meta(name="viewport" content="width=device-width,initial-scale=1")
   - if setting.site_description
     %meta{description: setting.site_description}
@@ -7,7 +13,7 @@
   = csp_meta_tag
 
   <!-- CSS only -->
-  - if @site_title == 'Driver'
+  - if driver_view?
     = favicon_link_tag 'driver/apple-touch-icon-57x57.png', rel: 'apple-touch-icon', sizes: '57x57', type: 'image/png'
     = favicon_link_tag 'driver/apple-touch-icon-76x76.png', rel: 'apple-touch-icon', sizes: '76x76', type: 'image/png'
     = favicon_link_tag 'driver/apple-touch-icon-72x72.png', rel: 'apple-touch-icon', sizes: '72x72', type: 'image/png'
