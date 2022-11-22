@@ -28,24 +28,29 @@ $scout-blue: #003F87;
     }
     tr {
       vertical-align: middle;
+      height: 20px;
     }
     th, td {
       &.notes {
-        width: 25em;
+        width: 30em;
+        white-space: wrap;
+        font-size: 0.9em;
+
+      }
+      &.name {
+        width: 14em;
         white-space: nowrap;
         overflow-x: scroll;
       }
-      &.name {
-        width: 10em;
-      }
       &.buttons {
-        width: 18em;
+        width: 24em;
       }
       &.phone {
         width: 9em;
       }
       &.street {
-        width: 14em;
+        width: 17em;
+        white-space: nowrap;
         font-weight: 700;
         overflow-x: scroll;
       }

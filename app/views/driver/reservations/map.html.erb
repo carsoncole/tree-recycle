@@ -1,3 +1,4 @@
+<div class='container'>
 <div class='text-center mb-2'>
 <%- if @route %>
   <div id='map-title'>
@@ -14,6 +15,12 @@
     <%= @reservation.street  %>
   </div>
   <%= link_to "( <Back )", driver_reservation_path(@reservation) %>
+<%- else %>
+  <div id='map-title'>
+    All
+  </div>
+  <%= link_to "( <Back )", driver_root_path %>
+
 <%- end %>
 </div>
 
@@ -70,3 +77,4 @@
         })(marker, i));
     }
 </script>
+</div>

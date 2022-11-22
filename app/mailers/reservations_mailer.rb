@@ -45,7 +45,7 @@ class ReservationsMailer < ApplicationMailer
 
   def cancelled_reservation_email
     return if @reservation.no_emails? || !setting.is_emailing_enabled
-    mail(to: @reservation.email, subject: "Your tree pickup reservation is cancelled")
+    mail(to: @reservation.email, subject: "Your tree pickup reservation has been cancelled")
     @reservation.logs.create(message: 'Cancelled reservation email sent.')
   end
 end
