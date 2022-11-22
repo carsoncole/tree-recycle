@@ -7,7 +7,7 @@ $scout-blue: #003F87;
   }
 }
 
-#driver-routes {
+#driver-route {
   h1 {
     display: inline-block;
   }
@@ -72,6 +72,152 @@ $scout-blue: #003F87;
   }
 
 }
+
+#contacts {
+  .section {
+    margin-bottom: 3em;
+  }
+  table.table.contacts {
+    th, td {
+      &.name {
+        min-width: 8em;
+      }
+      &.phone {
+        min-width: 9em;
+      }
+      &.email {
+       overflow-x: scroll;
+      }
+      &.zone {
+        min-width: 5em;
+      }
+    }
+  }
+}
+
+#drivers-table {
+  tbody {
+    font-size: 1.1em;
+  }
+  th {
+    font-weight: 400
+  }
+  th,td {
+    white-space: nowrap;
+    overflow-x: scroll;
+    &.name {
+      min-width: 14m;
+    }
+    &.email{
+      overflow-x: scroll;
+    }
+    &.leader {
+    }
+    &.phone {
+      width: 10em;
+    }
+    &.zone {
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+  }
+}
+
+#driver-navbar {
+  background-color: $scout-blue;
+}
+
+#driver-nav {
+  font-weight: 600;
+  font-size: 0.9em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  .nav-link {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+  }
+}
+
+
+table#driver-zones-table {
+  thead {
+    font-size: 0.9em;
+    .data {
+      text-align: center;
+    }
+  }
+  tbody {
+    th {
+      min-width: 12em;
+    }
+    th,td {
+      &.zone {
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+      &.data {
+        text-align: center;
+        font-weight: 600;
+      }
+      &.pending-pickup-count {
+        background-color: lighten(#111111, 30%);
+        color: #fff;
+      }
+      &.zone-pending-pickup-count {
+        background-color: lighten($scout-red,20%);
+        color: #fff;
+      }
+      .fa-map {
+        font-size: 1.4em;
+        margin-left: 0.5em;
+      }
+    }
+  }
+}
+
+
+#driver-profile {
+  .row {
+    margin-bottom: 1.66em;
+  }
+  h2 {
+    font-size: 1.2em;
+  }
+}
+
+.icono {
+  font-size: 10em;
+  color: lighten($scout-blue,20);
+  padding: 1em;
+}
+
+#map-title {
+  text-align: center;
+  font-weight: 800;
+}
+
+#driver-search {
+  #search-form {
+    margin-bottom: 2em;
+  }
+  table.table#search-results {
+  table-layout: fixed;
+    th,td {
+      &.status {
+        text-align: right;
+        width: 3em;
+      }
+      &.street {
+        width: 7em;
+        overflow-x: scroll;
+      }
+      &.name {
+        width: 5em;
+      }
+    }
+  }
+}
+
 
 @media print {
   *,
@@ -142,7 +288,7 @@ $scout-blue: #003F87;
     display: none;
   }
 
-  #driver-routes {
+  #driver-route {
     table.table thead {
       background-color: #000 !important;
       color: #fff !important;
@@ -156,172 +302,6 @@ $scout-blue: #003F87;
   }
 }
 
-#contacts {
-  .section {
-    margin-bottom: 3em;
-  }
-  table.table.contacts {
-    table-layout: fixed;
-    th, td {
-      &.name {
-        width: 9.5em;
-      }
-      &.phone {
-        width: 9em;
-      }
-      &.email {
-       width: 12em;
-      }
-      &.zone {
-        width: 7em;
-      }
-    }
-  }
-}
 
-#drivers-table {
-  table-layout: fixed;
-  tbody {
-    font-size: 1.1em;
-  }
-  th {
-    font-weight: 400
-  }
-  th,td {
-    white-space: nowrap;
-    overflow-x: scroll;
-    &.name {
-      width: 10em;
-      overflow-x: scroll;
-    }
-    &.email{
-      width: 14em;
-      overflow-x: scroll;
-    }
-    &.leader {
-      width: 5em;
-    }
-    &.phone {
-      width: 10em;
-    }
-    &.zone {
-      width: 8em;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-    &.action-1 {
-      width: 2.5em;
-    }
 
-  }
-}
 
-#driver-navbar {
-  background-color: $scout-blue;
-}
-
-#driver-nav {
-  font-weight: 600;
-  font-size: 0.9em;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  .nav-link {
-    padding-left: 0.55em;
-    padding-right: 0.55em;
-  }
-}
-
-table#driver-routes-table {
-  thead {
-    font-size: 0.9em;
-    tr th {
-      padding-bottom: 1.2em;
-    }
-  }
-  tbody {
-    line-height: 2em;
-    font-size: 1.1em;
-  }
-  th,td {
-    font-weight: 700;
-    &.zone {
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-    &.route {
-      min-width: 12em;
-      overflow-x: scroll;
-    }
-    &.data {
-      width: 4.5em;
-      text-align: center;
-    }
-    &.leader {
-      width: 10em;
-      text-align: right;
-    }
-    &.pending-pickup-count {
-      background-color: lighten(#111111, 30%);
-      font-weight: 800;
-      color: #fff;
-    }
-    &.zone-pending-pickup-count {
-      background-color: lighten($scout-red,20%);
-      color: #fff;
-    }
-    .fa-map {
-      font-size: 1.4em;
-      margin-left: 0.5em;
-    }
-  }
-}
-
-#driver-profile {
-  .row {
-    margin-bottom: 1.66em;
-  }
-  h2 {
-    font-size: 1.2em;
-  }
-}
-
-.icono {
-  font-size: 10em;
-  color: lighten($scout-blue,20);
-  padding: 1em;
-}
-
-#map-title {
-  text-align: center;
-  font-weight: 800;
-}
-
-#driver-search {
-  #search-form {
-    margin-bottom: 2em;
-  }
-  table.table#search-results {
-  table-layout: fixed;
-    th,td {
-      &.status {
-        text-align: right;
-        width: 3em;
-      }
-      &.street {
-        width: 7em;
-        overflow-x: scroll;
-      }
-      &.name {
-        width: 5em;
-      }
-    }
-  }
-}
-
-#reservation {
-  #status {
-    text-align: center;
-    font-size: 1.4em;
-    margin-bottom: 2em;
-  }
-}

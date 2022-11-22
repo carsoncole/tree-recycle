@@ -529,6 +529,14 @@ nav.navbar {
 }
 
 
+#reservation {
+  #status {
+    text-align: center;
+    font-size: 1.4em;
+    margin-bottom: 2em;
+  }
+}
+
 
 @media (min-width: 768px) {
   footer {
@@ -543,7 +551,7 @@ nav.navbar {
   }
   h2 {
   }
-  #driver-routes {
+  #driver-route {
     table.table.driver-routes {
       tbody {
         font-size: 1em !important;

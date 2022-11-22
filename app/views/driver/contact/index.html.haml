@@ -11,9 +11,11 @@
     .row.section
       .col-lg-3
       .col-lg-6
-        %h2 Main contact
-        .table-responsive-lg
+        .table-responsive
           %table.table.contacts
+            %tr
+              %th(colspan='4')
+                General
             %tr
               %td.name= setting.contact_name
               %td.zone
@@ -21,12 +23,9 @@
               %td.email= mail_to(setting.contact_email) if setting.contact_email
 
 
-    .row.section
-      .col-lg-3
-      .col-lg-6
-        %h2 Zone leaders
-        .table-responsive-lg
-          %table.table.contacts
+            %tr
+              %th(colspan='4')
+                Zone leaders
             - @zone_leaders.each do |driver|
               %tr
                 %td.name= driver.name

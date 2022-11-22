@@ -49,7 +49,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     visit driver_routing_path
     assert_selector "h1", text: "Routes"
 
-    within "#driver-routes-table" do
+    within "#driver-zones-table" do
       assert_selector "tbody tr", count: 1 # row 'ALL'
       assert_selector "th.zone", text: 'ALL'
     end
@@ -61,7 +61,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     reservations_without_routes = create_list(:reservation_with_coordinates, 2, is_routed: false)
 
     click_on 'Routes'
-    within "#driver-routes-table" do
+    within "#driver-zones-table" do
       assert_selector "tbody tr", count: 6
       assert_selector "th.zone", text: route.zone.name.upcase
       assert_selector "th.route", text: route.name
