@@ -8,6 +8,13 @@ $scout-blue: #003F87;
 }
 
 #driver-routes {
+
+  h1 {
+    display: inline-block;
+  }
+  .map-icon {
+    display: inline-block;
+  }
   table.table.driver-routes {
     table-layout: fixed;
     thead {
@@ -59,10 +66,7 @@ $scout-blue: #003F87;
       margin-top: 0.25em;
     }
   }
-  .map-icon {
-    float: right;
-    font-size: 2em;
-  }
+
 }
 
 @media print {

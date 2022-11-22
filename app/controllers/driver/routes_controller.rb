@@ -2,6 +2,6 @@
 class Driver::RoutesController < Driver::DriverController
   def show
     @route = Route.find(params[:id])
-    @reservations = @route.reservations.not_archived
+    @reservations = @route.reservations.pending
   end
 end

@@ -1,10 +1,11 @@
 .container-fluid
   #driver-routes
-    .map-icon
-      = link_to driver_reservations_map_path(route_id: @route.id) do
-        %i.fa-solid.fa-map
+
     %h1
       = @route.name_with_zone
+      .map-icon
+        = link_to driver_reservations_map_path(route_id: @route.id) do
+          %i.fa-solid.fa-map
     .table-responsive-lg
       %table.table.table-striped.driver-routes
         %thead
