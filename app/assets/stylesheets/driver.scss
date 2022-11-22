@@ -180,15 +180,18 @@ $scout-blue: #003F87;
     white-space: nowrap;
     overflow-x: scroll;
     &.name {
-      width: 11em;
+      width: 10em;
       overflow-x: scroll;
     }
     &.email{
       width: 14em;
       overflow-x: scroll;
     }
+    &.leader {
+      width: 5em;
+    }
     &.phone {
-      width: 12em;
+      width: 10em;
     }
     &.zone {
       width: 8em;

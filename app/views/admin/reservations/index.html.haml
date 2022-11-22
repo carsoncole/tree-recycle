@@ -1,84 +1,86 @@
-%h1
-  Reservations
-  - if params[:route_id]
-    \-
-    = Route.find(params[:route_id]).name
-  .additional_info
-    = surround("(", ")") do
-      = @reservations.count
+.container
+  %h1
+    %i.fa-solid.fa-registered
+    Reservations
+    - if params[:route_id]
+      \-
+      = Route.find(params[:route_id]).name
+    .additional_info
+      = surround("(", ")") do
+        = @reservations.count
 
 
-= render 'search'
+  = render 'search'
 
 
-%p
-  = link_to new_reservation_path do
-    %i.fa-strong.fa-plus.fa-lg
-    Reservation
+  %p
+    = link_to new_reservation_path do
+      %i.fa-strong.fa-plus.fa-lg
+      Reservation
 
-%h5 Status
-%p.mb-4
-  = link_to "Pending pickup", admin_reservations_path
-  = '|'
-  = link_to "Un-Routed", admin_reservations_path(unrouted: true)
-  = '|'
-  = link_to "Picked up", admin_reservations_path(picked_up: true)
-  = '|'
-  = link_to "Missing", admin_reservations_path(missing: true)
-  = '|'
-  = link_to "Cancelled", admin_reservations_path(cancelled: true)
-  = '|'
-  = link_to "Archived", admin_reservations_path(archived: true)
-  = '|'
-  = link_to "All", admin_reservations_path(all: true)
-
-%h5 Routes
-%p.mb-4
-  - Route.all.each do |route|
+  %h5 Status
+  %p.mb-4
+    = link_to "Pending pickup", admin_reservations_path
     = '|'
-    = link_to route.name, admin_reservations_path(route_id: route.id)
+    = link_to "Un-Routed", admin_reservations_path(unrouted: true)
+    = '|'
+    = link_to "Picked up", admin_reservations_path(picked_up: true)
+    = '|'
+    = link_to "Missing", admin_reservations_path(missing: true)
+    = '|'
+    = link_to "Cancelled", admin_reservations_path(cancelled: true)
+    = '|'
+    = link_to "Archived", admin_reservations_path(archived: true)
+    = '|'
+    = link_to "All", admin_reservations_path(all: true)
+
+  %h5 Routes
+  %p.mb-4
+    - Route.all.each do |route|
+      = '|'
+      = link_to route.name, admin_reservations_path(route_id: route.id)
 
 
-%table.table.reservations
-  %thead
-    %tr
-      %th Name
-      %th
-      %th Street
-      %th Route
-      %th
-
-
-  %tbody
-    - @reservations.each do |reservation|
+  %table.table.reservations
+    %thead
       %tr
-        %td= link_to reservation.name, admin_reservation_path(reservation)
-        %td= reservation_status(reservation)
-        %td
-          = link_to reservation.street, "https://maps.apple.com/?q=#{reservation.latitude},#{reservation.longitude}", target: '_blank'
-          = link_to "https://www.google.com/maps/place/#{reservation.latitude},#{reservation.longitude}", target: '_blank' do
-            %i.fa-brands.fa-google
+        %th Name
+        %th
+        %th Street
+        %th Route
+        %th
 
 
-        %td
-          - if reservation.route_id?
-            = link_to admin_reservations_path(route_id: reservation.route_id) do
-              = reservation&.route&.name
-              - if reservation.distance_to_route
-                = surround("(", ")") do
-                  = pluralize(reservation.distance_to_route.round(2), "mile")
-
-        %td.actions
-          = link_to admin_reservation_path(reservation), class: 'view-reservation-button' do
-            %i.fa-solid.fa-eye.icon
-          = link_to edit_admin_reservation_path(reservation) do
-            %i.fa-solid.fa-pen.icon
-          - unless reservation.cancelled?
-            = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
-              %i.fa-solid.fa-trash.icon
-          = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
-            %i.fa-solid.fa-bolt.icon
+    %tbody
+      - @reservations.each do |reservation|
+        %tr
+          %td= link_to reservation.name, admin_reservation_path(reservation)
+          %td= reservation_status(reservation)
+          %td
+            = link_to reservation.street, "https://maps.apple.com/?q=#{reservation.latitude},#{reservation.longitude}", target: '_blank'
+            = link_to "https://www.google.com/maps/place/#{reservation.latitude},#{reservation.longitude}", target: '_blank' do
+              %i.fa-brands.fa-google
 
 
-%br
-= pagy_bootstrap_nav(@pagy).html_safe
+          %td
+            - if reservation.route_id?
+              = link_to admin_reservations_path(route_id: reservation.route_id) do
+                = reservation&.route&.name
+                - if reservation.distance_to_route
+                  = surround("(", ")") do
+                    = pluralize(reservation.distance_to_route.round(2), "mile")
+
+          %td.actions
+            = link_to admin_reservation_path(reservation), class: 'view-reservation-button' do
+              %i.fa-solid.fa-eye.icon
+            = link_to edit_admin_reservation_path(reservation) do
+              %i.fa-solid.fa-pen.icon
+            - unless reservation.cancelled?
+              = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
+                %i.fa-solid.fa-trash.icon
+            = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
+              %i.fa-solid.fa-bolt.icon
+
+
+  %br
+  = pagy_bootstrap_nav(@pagy).html_safe

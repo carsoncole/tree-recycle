@@ -12,8 +12,7 @@
         %h2 Zone leaders
         - @zone.drivers.leader.each do |leader|
           %p= link_to leader.name, driver_driver_path(leader)
-        - else
-          %p.text-muted No Zone leader
+
   .row
     .col-md-3
     .col-md-6

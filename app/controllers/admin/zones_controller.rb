@@ -70,6 +70,6 @@ class Admin::ZonesController < Admin::AdminController
 
     # Only allow a list of trusted parameters through.
     def zone_params
-      params.require(:zone).permit(:name, :leader_id, :street, :city, :state, :country)
+      params.require(:zone).permit(:name, :street, :city, :state, :country)
     end
 end

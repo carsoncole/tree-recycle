@@ -1,20 +1,23 @@
-%h1 Donations
+.container
+  %h1
+    %i.fa-solid.fa-credit-card
+    Donations
 
 
-.table-responsive
-  %table.table
-    %tr
-      %th
-      %th Reservation
-      %th Amount
-      %th Status
-      %th Payment status
-      %th
-    - @donations.each do |donation|
+  .table-responsive
+    %table.table
       %tr
-        %td= link_to donation.id, [:admin, donation]
-        %td= link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
-        %td= number_to_currency donation.amount
-        %td= donation&.status&.capitalize
-        %td= donation&.payment_status&.capitalize
-        %td= nice_short_date_time(donation.created_at)
+        %th
+        %th Reservation
+        %th Amount
+        %th Status
+        %th Payment status
+        %th
+      - @donations.each do |donation|
+        %tr
+          %td= link_to donation.id, [:admin, donation]
+          %td= link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
+          %td= number_to_currency donation.amount
+          %td= donation&.status&.capitalize
+          %td= donation&.payment_status&.capitalize
+          %td= nice_short_date_time(donation.created_at)
