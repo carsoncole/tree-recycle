@@ -106,4 +106,11 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
 
     assert_selector '#route-name', text: Route.first.name
   end
+
+  test "reservations not being open yet" do
+    Setting.first_or_create.update(is_reservations_open: false)
+    visit '/'
+    click_on "Reserve a tree pickup"
+    assert_text "Reservations are CLOSED."
+  end
 end
