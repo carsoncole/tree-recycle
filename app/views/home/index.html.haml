@@ -7,6 +7,7 @@
       .tree Tree
       .recycle Recycle
   .sub-line
+    Scout Troops 1564 & 1804.
     Recycling Bainbridge Christmas trees since 1997
 
 
@@ -16,12 +17,12 @@
     = nice_date(setting&.pickup_date_and_time)
 
 
-  .text-center= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary', id: 'reservation-button'
+  .text-center.d-grid.gap-2= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary inline', id: 'reservation-button'
 
 
   .row
     .col-md-2
-    .col-md-8.text-center.important-date
+    .col-md-8.important-date
       Reservations close on
       - if setting&.sign_up_deadline_at
         = nice_date_time(setting&.sign_up_deadline_at)

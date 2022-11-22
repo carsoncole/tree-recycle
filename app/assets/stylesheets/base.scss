@@ -67,7 +67,7 @@ footer {
   font-weight: 300;
 }
 
-#home {
+#home-old {
   line-height: 1.1;
 
   background: image-url('tree-2.png');
@@ -75,16 +75,20 @@ footer {
   background-repeat: no-repeat;
   background-size: 160px;
   background-position: right top;
+}
 
+#home {
 
   h3 {
     font-size: 1em;
   }
   .important-date {
-    margin-top: 0.2em;
+    text-align: center;
     margin-bottom: 7em;
+    line-height: 1.5;
     font-size: 1em;
-    color: #aaa;
+    color: $scout-red;
+    font-weight: 600;
   }
 
   h1 {
@@ -127,10 +131,11 @@ footer {
 
   }
   .sub-line {
-    font-size: 0.9em;
-    color: #aaa;
+    text-align: center;
+    font-size: 1em;
+    color: $scout-red;
     line-height: 1.1;
-    font-weight: 300;
+    font-weight: 200;
     margin-bottom: 7em;
   }
 
@@ -146,7 +151,7 @@ footer {
     font-size: 2em;
     font-weight: 700;
     padding: 0.5em 0.9em;
-    margin-bottom: 0;
+    margin-bottom: 0.5em;
     line-height: 1.1;
   }
 }
