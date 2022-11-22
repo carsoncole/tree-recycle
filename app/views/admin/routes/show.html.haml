@@ -1,32 +1,33 @@
-#driver-routes
-  %h1
-    = @route.name_with_zone
-    = link_to driver_reservations_map_path(route_id: @route.id) do
-      %i.fa-solid.fa-map
+.container-fluid
+  #driver-routes
+    %h1
+      = @route.name_with_zone
+      = link_to driver_reservations_map_path(route_id: @route.id) do
+        %i.fa-solid.fa-map
 
-  .table-responsive
-    %table.table.table-striped.driver-routes
-      %thead
-        %tr
-          %th.buttons  Status
-          %th.house House
-          %th.street Street
+    .table-responsive
+      %table.table.table-striped.driver-routes
+        %thead
+          %tr
+            %th.buttons  Status
+            %th.house House
+            %th.street Street
 
-          %th.notes Notes
-          %th.name Name
-          %th.phone Phone
-          %th.route Route
-      %tbody
-        - @reservations.each do |reservation|
-          %tr{class: reservation.picked_up? ? 'table-success' : reservation.missing? ? 'table-danger' : nil}
-            %td.buttons
-              = button_to "Picked Up", [:driver, reservation], class: "btn btn-outline-success #{ reservation.picked_up? ? 'active' : nil}",  params: { status: 'picked_up' }, data: { turbo_confirm: 'Picked up? Are you sure?' }
-              = button_to "Missing", [:driver, reservation], class: "btn btn-outline-danger #{ reservation.missing? ? 'active' : nil }",  params: { status: 'missing' }, data: { turbo_confirm: 'Missing? Are you sure?' }
-              = button_to "Pending Pickup", [:driver, reservation], class: "btn btn-outline-secondary #{ reservation.pending_pickup? ? 'active' : nil }",  params: { status: 'pending_pickup' }, data: { turbo_confirm: 'Reseting to PENDING PICKUP. This will send a notification. Are you sure?' }
-            %td.house= reservation.house_number
-            %td.street= reservation.street_name
+            %th.notes Notes
+            %th.name Name
+            %th.phone Phone
+            %th.route Route
+        %tbody
+          - @reservations.each do |reservation|
+            %tr{class: reservation.picked_up? ? 'table-success' : reservation.missing? ? 'table-danger' : nil}
+              %td.buttons
+                = button_to "Picked Up", [:driver, reservation], class: "btn btn-outline-success #{ reservation.picked_up? ? 'active' : nil}",  params: { status: 'picked_up' }, data: { turbo_confirm: 'Picked up? Are you sure?' }
+                = button_to "Missing", [:driver, reservation], class: "btn btn-outline-danger #{ reservation.missing? ? 'active' : nil }",  params: { status: 'missing' }, data: { turbo_confirm: 'Missing? Are you sure?' }
+                = button_to "Pending Pickup", [:driver, reservation], class: "btn btn-outline-secondary #{ reservation.pending_pickup? ? 'active' : nil }",  params: { status: 'pending_pickup' }, data: { turbo_confirm: 'Reseting to PENDING PICKUP. This will send a notification. Are you sure?' }
+              %td.house= reservation.house_number
+              %td.street= reservation.street_name
 
-            %td.notes= reservation.notes
-            %td.name= reservation.name
-            %td.phone= reservation.phone
-            %td.route= reservation.route.name
+              %td.notes= reservation.notes
+              %td.name= reservation.name
+              %td.phone= reservation.phone
+              %td.route= reservation.route.name

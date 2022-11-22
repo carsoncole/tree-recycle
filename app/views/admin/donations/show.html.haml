@@ -1,31 +1,32 @@
-%h1 Donation
+.container
+  %h1 Donation
 
 
-.table-responsive
-  %table.table
-    %tr
-      %th Reservation
-      %td= link_to @donation.reservation_id, admin_reservation_path(reservation_id: @donation.reservation_id) if @donation.reservation_id
-    %tr
-      %th Amount
-      %td= number_to_currency(@donation.amount)
+  .table-responsive
+    %table.table
+      %tr
+        %th Reservation
+        %td= link_to @donation.reservation_id, admin_reservation_path(reservation_id: @donation.reservation_id) if @donation.reservation_id
+      %tr
+        %th Amount
+        %td= number_to_currency(@donation.amount)
 
-    %tr
-      %th Email
-      %td= @donation.email
-    %tr
-      %th Checkout Session ID
-      %td= @donation.checkout_session_id
-    %tr
-      %th Donated
-      %td= nice_date_time @donation.created_at
-    %tr
-      %th Status
-      %td= @donation.status
-    %tr
-      %th Payment status
-      %td= @donation.payment_status
-    %tr
-      %th Receipt emailed?
-      %td= @donation.is_receipt_email_sent?
+      %tr
+        %th Email
+        %td= @donation.email
+      %tr
+        %th Checkout Session ID
+        %td= @donation.checkout_session_id
+      %tr
+        %th Donated
+        %td= nice_date_time @donation.created_at
+      %tr
+        %th Status
+        %td= @donation.status
+      %tr
+        %th Payment status
+        %td= @donation.payment_status
+      %tr
+        %th Receipt emailed?
+        %td= @donation.is_receipt_email_sent?
 
