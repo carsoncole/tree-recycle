@@ -33,8 +33,6 @@
               %td.phone
                 = link_to "tel:#{driver.phone}" do
                   = driver.phone
-                  - if driver.phone.present?
-                    %i.fa-solid.fa-phone
               %td.email= mail_to driver.email
               %td.actions-1
                 = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }  do
