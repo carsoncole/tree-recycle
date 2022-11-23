@@ -78,12 +78,11 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "reservation_street", with: 'gobbly gook'
     fill_in "reservation_email", with: reservation.email
     click_on "Register your address"
-    sleep 1.5
+    sleep 1
 
     assert_text "Ouch! We are having issues and"
-    sleep 0.5
     click_on "Register your address"
-
+    sleep 1
     assert_text "Reservation was successfully updated and is confirmed for pick up."
     assert_selector "h1", text: "Please consider a donation"
 
@@ -100,7 +99,7 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "reservation_email", with: 'john@example.com'
     click_on "Register your address"
 
-    sleep 1.5
+    sleep 3
 
     assert_text "Ouch! We are having issues and"
     click_on "Use this corrected address"

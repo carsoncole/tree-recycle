@@ -2,12 +2,11 @@ require "application_system_test_case"
 
 class Admin::ReservationsTest < ApplicationSystemTestCase
   setup do
-    @reservation = create(:reservation_with_coordinates)
+    @reservation = create(:reservation_with_coordinates, is_routed: false)
   end
 
   test "show basic" do
     system_test_signin
-    reservation = create(:reservation)
 
     visit admin_reservation_path(@reservation)
     assert_selector "h1", text: @reservation.street
