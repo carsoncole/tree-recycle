@@ -4,5 +4,5 @@ class Driver < ApplicationRecord
   scope :unzoned, -> { where(zone_id: nil) }
   scope :leader, -> { where(is_leader: true) }
 
-  validates :phone, presence: true
+  validates :name, :phone, presence: true
 end

@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'zones#index'
-    resources :zones
+    resources :zones, except: [ :show ]
     resources :drivers
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]

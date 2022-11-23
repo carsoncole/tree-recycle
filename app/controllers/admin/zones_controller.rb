@@ -9,22 +9,13 @@ class Admin::ZonesController < Admin::AdminController
     @all_zones = true if params[:all_zones]
   end
 
-  def show
-    @drivers = @zone.drivers.order(:name)
-    @routes = @zone.routes.order(:name)
-    @total_pickups = @zone.reservations.pending_pickup.count
-  end
-
-  # GET /admin/zones/new
   def new
     @zone = Zone.new
   end
 
-  # GET /admin/zones/1/edit
   def edit
   end
 
-  # POST /admin/zones or /admin/zones.json
   def create
     @zone = Zone.new(zone_params)
 
@@ -39,7 +30,6 @@ class Admin::ZonesController < Admin::AdminController
     end
   end
 
-  # PATCH/PUT /admin/zones/1 or /admin/zones/1.json
   def update
     respond_to do |format|
       if @zone.update(zone_params)
@@ -52,7 +42,6 @@ class Admin::ZonesController < Admin::AdminController
     end
   end
 
-  # DELETE /admin/zones/1 or /admin/zones/1.json
   def destroy
     @zone.destroy
 
@@ -63,12 +52,10 @@ class Admin::ZonesController < Admin::AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_zone
       @zone = Zone.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def zone_params
       params.require(:zone).permit(:name, :street, :city, :state, :country)
     end

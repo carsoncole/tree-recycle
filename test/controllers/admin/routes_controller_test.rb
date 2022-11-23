@@ -1,10 +1,9 @@
 require "test_helper"
 
-class RoutesControllerTest < ActionDispatch::IntegrationTest
+class Admin::RoutesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @route = create(:route)
+    @route = create(:route_with_coordinates, is_zoned: false)
     @user = create(:user)
-    sleep 0.50
   end
 
   test "should not get index" do
@@ -24,7 +23,7 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create route" do
     assert_difference("Route.count") do
-      post admin_routes_url(as: @user), params: { route: { street: @route.street, city: @route.city, state: @route.state, distance: @route.distance, name: @route.name } }
+      post admin_routes_url(as: @user), params: { route: attributes_for(:route) }
     end
 
     assert_redirected_to admin_routing_url
@@ -35,13 +34,18 @@ class RoutesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should not show route without auth" do
+    get admin_route_url(@route)
+    assert_redirected_to sign_in_path
+  end
+
   test "should get edit" do
     get edit_admin_route_url(@route, as: @user)
     assert_response :success
   end
 
   test "should update route" do
-    patch admin_route_url(@route, as: @user), params: { route: { street: @route.street, city: @route.city, state: @route.state, distance: @route.distance, name: @route.name } }
+    patch admin_route_url(@route, as: @user), params: { route: { name: "New Name" } }
     assert_redirected_to admin_routing_url
   end
 

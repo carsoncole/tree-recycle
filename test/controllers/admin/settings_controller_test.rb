@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SettingsControllerTest < ActionDispatch::IntegrationTest
+class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create(:user)
   end
@@ -14,14 +14,6 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get admin_settings_url
     assert_redirected_to sign_in_path
   end
-
-  # test "should create setting" do
-  #   assert_difference("Setting.count") do
-  #     post settings_url, params: { setting: { contact_email: setting.contact_email, contact_name: setting.contact_name, contact_phone: setting.contact_phone, description: setting.description, organization_name: setting.organization_name, pickup_date: setting.pickup_date } }
-  #   end
-
-  #   assert_redirected_to setting_url(Setting.last)
-  # end
 
   test "should get edit" do
     get edit_admin_setting_url(setting, as: @user)

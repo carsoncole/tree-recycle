@@ -14,15 +14,15 @@ class Driver::ReservationsControllerTest < ActionDispatch::IntegrationTest
 
     reservation_3 = create(:reservation_with_coordinates, name: 'Sam Main', street: '456 Wachner Ave')
 
-    get driver_driver_search_url
+    get driver_search_url
     assert_response :success
 
-    get driver_driver_search_url, params: { search: 'blow' }
+    get driver_search_url, params: { search: 'blow' }
 
     assert_select "tr", count: 2
     assert "Blow", count: 2
 
-    get driver_driver_search_url, params: { search: 'main' }
+    get driver_search_url, params: { search: 'main' }
 
     assert_select "tr", count: 3
     assert "Sam Main"
@@ -30,7 +30,7 @@ class Driver::ReservationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get search with auth" do
-    get driver_driver_search_url
+    get driver_search_url
     assert_response :success
   end
 

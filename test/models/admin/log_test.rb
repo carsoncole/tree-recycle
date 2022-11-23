@@ -23,8 +23,9 @@ class Admin::LogTest < ActiveSupport::TestCase
   end
 
   test "log on cancellation" do
+    sleep 1
     @reservation.cancelled!
-    sleep 2
+    sleep 1
     assert_equal 4, @reservation.logs.count
     assert_equal "Cancelled reservation email sent.", @reservation.logs.last.message
   end

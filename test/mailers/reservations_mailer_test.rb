@@ -23,9 +23,9 @@ class ReservationsMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
 
-    # assert_equal ["me@example.com"], email.from
+    assert_equal ["troop_1564@treerecycle.net"], email.from
     assert_equal [reservation.email], email.to
-    assert_equal "Your tree pickup reservation is cancelled", email.subject
+    assert_equal "Your tree pickup reservation has been cancelled", email.subject
     assert email.html_part.body.to_s.include? 'If this cancellation is in error, please create a new reservation.'
   end
 
@@ -88,7 +88,7 @@ class ReservationsMailerTest < ActionMailer::TestCase
     assert_emails 1 do
       @reservation.cancelled!
     end
-    assert_equal ActionMailer::Base.deliveries.last.subject, "Your tree pickup reservation is cancelled"
+    assert_equal "Your tree pickup reservation has been cancelled", ActionMailer::Base.deliveries.last.subject
 
     assert_emails 1 do
       @reservation.pending_pickup!
