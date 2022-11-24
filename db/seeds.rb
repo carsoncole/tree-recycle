@@ -4,20 +4,52 @@ include FactoryBot::Syntax::Methods
 User.create(email: 'admin@example.com', password: 'password')
 
 Setting.first_or_create  do |setting|
-  setting.site_title = 'Troop 1564 & 1804 Tree Recycle'
+  setting.site_title = 'Troop 100 Tree Recycle'
   setting.site_description = "This is the annual Tree Recycle fundraiser for Troop 100. Residents of Anytown, USA can have their Christmas trees recycle by making an online reservation and make an optional donation to support the Troop and it's Scouts."
-  setting.description = 'Bainbridge Island BSA Troops 1564 for boys and 1804 for girls holds an annual Christmas tree recycling fundraiser to support its annual programs, assisting Scouts in attending camps and other outdoor adventures. The Scouts from these Troops are directly involved in picking up the trees and arranging for them to be recycled by composting.'
+  setting.description = 'Anytown Troop 100 holds an annual Christmas tree recycling fundraiser to support its annual programs, assisting Scouts in attending camps and other outdoor adventures. '
   setting.contact_email = 'admin@example.com'
   setting.contact_name = 'John Doe'
   setting.contact_phone = '206-555-1212'
-  setting.pickup_date_and_time = Date.today + 1.month
-  setting.sign_up_deadline_at = Date.today + 1.month - 1.day
-  setting.organization_name = 'BSA Troop 1564 & 1804'
+  setting.pickup_date_and_time = Date.today + 2.month
+  setting.pickup_date_and_end_time = Date.today + 2.month + 6.hours
+  setting.sign_up_deadline_at = Date.today + 2.month - 1.day
+  setting.organization_name = 'BSA Troop 100'
 end
 
+zones = [
+  { name: 'Center', street: '7729 Finch Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+  { name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+  { name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+  { name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' }
+]
+zones.each {|z| Zone.create(name: z[:name], street: z[:street], city: z[:city], state: z[:state], country: z[:country] )}
 
-(1..16).each do
+
+(1..15).each do
   Driver.create(name: Faker::Name.name, zone_id: rand(5) +1, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone)
+end
+
+routes = [
+{ name: 'Battle Point', street: '9091 Olympus Beach Rd NE', zone: 'West' },
+{ name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', zone: 'West' },
+{ name: 'Eagledale', street: '10837 Bill Point Bluff NE', zone: 'South' },
+{ name: 'Ferncliff', street: '1017 Aaron Ave NE', zone: 'East' },
+{ name: 'Fort Ward', street: '1747 Parade Grounds Ave NE', zone: 'South' },
+{ name: 'High School', street: '9458 Capstan Dr NE', zone: 'Center' },
+{ name: 'Meadowmeer', street: '8458 NE Meadowmeer Dr', zone: 'West' },
+{ name: 'New Brooklyn', street: '8245 New Holland Ct', zone: 'West' },
+{ name: 'Point White', street: '3154 Point White Dr NE', zone: 'South' },
+{ name: 'Port Blakely', street: '4699 NE Mill Heights Cir', zone: 'South' },
+{ name: 'Rolling Bay', street: '10799 Manitou Beach Dr NE', zone: 'East' },
+{ name: 'Wing Point', street: '8477 Ferncliff Ave NE', zone: 'East' },
+{ name: 'Winslow North', street: '657 Annie Rose Ln NW', zone: 'Center' },
+{ name: 'Winslow South', street: '400 Harborview Dr SE', zone: 'Center' }
+]
+
+
+routes.each do |route|
+  zone = Zone.where(name: route[:zone]).first
+  Route.create(name: route[:name], street: route[:street], zone_id: zone.id)
 end
 
 
@@ -98,72 +130,7 @@ streets = [
 '6895 NE Hanks Ln'
 ]
 
-streets.each do |s|
+streets[0..25].each do |s|
   reservation = build(:reservation)
-  Reservation.create(name: reservation.name, street: s, email: reservation.email)
-end
-
-routes = [
-{ name: 'Battle Point', street: '9091 Olympus Beach Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'Eagledale', street: '10837 Bill Point Bluff NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-{ name: 'Ferncliff', street: '1017 Aaron Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
-{ name: 'Fletcher Bay', street: '9098 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'Fort Ward', street: '1747 Parade Grounds Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-{ name: 'High School', street: '9458 Capstan Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
-{ name: 'Island Center', street: '6820 Fletcher Bay Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'Lovgren', street: '9180 NE Lovgreen Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
-{ name: 'Lynwood Center', street: '5919 Blakely Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-{ name: 'Meadowmeer', street: '8458 NE Meadowmeer Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'New Brooklyn', street: '8245 New Holland Ct', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'Phelps', street: '15740 Euclid Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'Point White', street: '3154 Point White Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-{ name: 'Port Blakely', street: '4699 NE Mill Heights Cir', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-{ name: 'Rolling Bay', street: '10799 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
-{ name: 'Rotary', street: '348 Ashbury Ct NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
-{ name: 'Seabold', street: '13871 Manzanita Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-{ name: 'South Beach', street: '9309 NE South Beach Dr', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-{ name: 'Sunrise', street: '10250 NE Lafayette Ave', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
-{ name: 'Wing Point', street: '8477 Ferncliff Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'East' },
-{ name: 'Winslow North', street: '657 Annie Rose Ln NW', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
-{ name: 'Winslow South', street: '400 Harborview Dr SE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' }
-]
-
-
-routes_compact = [
-    { name: 'Battle Point', street: '9091 Olympus Beach Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-    { name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'West' },
-    { name: 'High School', street: '9458 Capstan Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'Center' },
-    { name: 'Lynwood Center', street: '5919 Blakely Ave NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States', zone: 'South' },
-]
-
-
-
-
-# Addresses to investigate
-# These addresses all come back with verified capitalized addresses that still don't geocode
-# 10027 NE Point View Dr
-# 6895 NE Hanks Lane
-# 10540 ARROW POINT DR NE / AV / Geocoded
-
-
-
-routes.each do |route|
-  zone = Zone.where(name: route[:zone]).first
-  Route.create(name: route[:name], street: route[:street], city: route[:city], state: route[:state], country: route[:country], zone_id: zone.id)
-end
-
-
-zones = [
-  { name: 'Center', street: '7729 Finch Rd NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
-  { name: 'West', street: '5685 NE Wild Cherry Ln', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
-  { name: 'South', street: '8792 NE Oddfellows Rd', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
-  { name: 'East', street: '10215 Manitou Beach Dr NE', city: 'Bainbridge Island', state: 'Washington', country: 'United States' }
-]
-
-zones.each {|z| Zone.create(name: z[:name], street: z[:street], city: z[:city], state: z[:state], country: z[:country] )}
-
-
-(1...20).each do
-  Driver.create(name: Faker::Name.name, phone: Faker::PhoneNumber.cell_phone, email: Faker::Internet.email, zone: Zone.find(rand(4) + 1))
+  Reservation.create(name: reservation.name, street: s, email: reservation.email, status: :pending_pickup)
 end
