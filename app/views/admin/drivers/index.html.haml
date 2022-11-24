@@ -1,14 +1,12 @@
-.container
+.container#drivers
   .row
-    .col-md-3
-    .col-md-6
+    .col-lg-12
       %h1
         %i.fa-solid.fa-car
         Drivers
 
   .row
-    .col-md-3
-    .col-md-6
+    .col-lg-12
       .admin-nav
         %nav
           %ul.nav.justify-content-end
@@ -17,11 +15,9 @@
                 %i.fa-solid.fa-plus
                 Driver
 
-
-
   .row
-    .col-md-3
-    .col-md-6
+    .col-md-2
+    .col-md-8
       .table-responsive
         %table.table#drivers-table
           - @drivers.each do |driver|

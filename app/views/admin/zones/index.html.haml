@@ -1,15 +1,13 @@
-.container
+.container#zones
   .row
-    .col-md-3
-    .col-md-6
+    .col-lg-12
       %h1
         %i.fa-solid.fa-road
         Routes
 
   - if admin_view?
     .row
-      .col-md-3
-      .col-md-6
+      .col-lg-12
         .admin-nav
           %nav
             %ul.nav.justify-content-end
@@ -22,8 +20,8 @@
                   %i.fa-solid.fa-plus
                   Zone
   .row
-    .col-md-3
-    .col-md-6
+    .col-md-2
+    .col-md-8
       .table-responsive
         %table.table#driver-zones-table
           %thead
@@ -134,5 +132,3 @@
                 %td.data#total-unrouted-pending-pickup-count.zone-pending-pickup-count= pending_pickup_count
                 %td.data.missing-count= missing_count
                 %td.data#total-picked-up-count= picked_up_count
-
-

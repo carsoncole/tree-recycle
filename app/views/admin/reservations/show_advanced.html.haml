@@ -1,9 +1,10 @@
-.container
+.container-fluid
   #admin-reservation
     .row
-      .col-md-12
+      .col-lg-3
+      .col-lg-6
         %header
-          %h1 Tree Pick-Up
+          %h1= @reservation.street
           %p.mb-1
             = link_to "Edit", edit_admin_reservation_path(@reservation), id: 'edit-link'
             \|
@@ -18,11 +19,12 @@
             .div
               = link_to "View Log", admin_reservation_logs_path(@reservation)
 
-    .row
-      .col-md-6
-        #reservation
+    %section#reservation
+      .row
+        .col-lg-3
+        .col-lg-6
           %h2 Reservation
-          %table.table.reservation
+          %table.table.table-borderless.reservation
             %tr
               %th Name
               %td= @reservation.name
@@ -51,9 +53,12 @@
               %th Country
               %td= @reservation.country
 
-        #contact-details
+    %section#contact-details
+      .row
+        .col-lg-3
+        .col-lg-6
           %h2 Contact details
-          %table.table.reservation
+          %table.table.table-borderless.reservation
             %tr
               %th Email
               %td= @reservation.email
@@ -68,10 +73,12 @@
               %th Phone
               %td= @reservation.phone
 
-      .col-md-6
-        #delivery
+    %section#delivery
+      .row
+        .col-lg-3
+        .col-lg-6          
           %h2 Delivery
-          %table.table.reservation
+          %table.table.table-borderless.reservation
             %tr
               %th Street
               %td= @reservation.street
@@ -111,32 +118,63 @@
                 - else
                   No
 
-        #status
+          #direction-links
+            .title Directions
+            = link_to "https://www.google.com/maps/place/#{ @reservation.latitude},#{ @reservation.longitude }", target: '_blank', class: 'map-link' do
+              %i.fa-solid.fa-map-location-dot
+              %i.fa-brands.fa-google
+
+            = link_to "https://maps.apple.com/?q=#{ @reservation.latitude},#{ @reservation.longitude}", target: '_blank', class: 'map-link' do
+              %i.fa-solid.fa-map-location-dot
+              %i.fa-brands.fa-apple
+
+            .title Google Mapped
+            = link_to driver_reservation_map_path(@reservation), class: 'map-link' do
+              %i.fa-solid.fa-map-location-dot
+
+
+
+    %section#status
+      .row
+        .col-lg-3
+        .col-lg-6
           %h2 Pick-up Status
           - if @reservation.archived?
             = reservation_status(@reservation)
           - else
-            = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
-              .form-group.mb-2
-                = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
-              = f.submit 'Update status', class: 'btn btn-primary'
+            .row
+              .col-lg-6
+              .col-lg-6
+                = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
+                  .form-group.mb-2
+                    = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+                  .text-end= f.submit 'Update status', class: 'btn btn-primary'
 
-        %h2.mt-4 Donations
-        %table.table.reservation
-          - @donations.each do |donation|
+    %section#donations
+      .row
+        .col-lg-3
+        .col-lg-6
+          %h2 Donations
+          %table.table.table-borderless.reservation
+            = "No donations" if @donations.empty?
+            - @donations.each do |donation|
+              %tr
+                %th= link_to 'Donation Receipt', admin_donations_path(donation)
+                %td= donation.payment_status.capitalize if donation.payment_status
+                %td= nice_short_date_time(donation.created_at)
+                %td= number_to_currency(donation.amount)
+
+    %section#misc
+      .row
+        .col-lg-3
+        .col-lg-6
+          %h2 Misc
+          %table.table.table-borderless.reservation
             %tr
-              %th= link_to 'Donation Receipt', admin_donations_path(donation)
-              %td= donation.payment_status.capitalize if donation.payment_status
-              %td= nice_short_date_time(donation.created_at)
-              %td= number_to_currency(donation.amount)
-
-        %h2.mt-4 Misc
-        %table.table.reservation
-          %tr
-            %th Stripe donated
-            %td= @reservation.stripe_charge_amount? ? 'Yes' : 'No'
-          %tr
-            %th Cash or check
-            %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
+              %th Stripe donated
+              %td= @reservation.stripe_charge_amount.present? ? 'Yes' : 'No'
+            %tr
+              %th Cash or check
+              %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
 
 

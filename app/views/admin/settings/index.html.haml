@@ -1,174 +1,183 @@
-#settings
-  .container
-    .row
-      .col-md-3
-        %h1 Settings
+
+.container#settings
+  .row
+    .col-lg-12
+      %h1 Settings
 
 
+  .row
+    .col-lg-12
+      .admin-nav
+        %nav
+          %ul.nav.justify-content-end
+            %li.nav-item
+              = link_to edit_admin_setting_path(setting) do
+                %i.fa-solid.fa-pen.icon
+                Edit
 
-    %p.text-end
-      = link_to edit_admin_setting_path(setting) do
-        %i.fa-solid.fa-pen.icon
-        Edit
-
-    .section
-      .row
-        .col-md-4
-          %h3
-            / %i.fa-solid.fa-tree
-            Reservations
-        .col-md-8
-          %table.table.settings#stats-table
-            %tr
-              %th
-                Reservations
-              %td
-                - if setting.is_reservations_open
-                  Open
-                  = button_to "Close", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm'
-                - else
-                  Closed
-                  = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm'
-            %tr
-              %td.text-end(colspan="32")
-                = link_to new_reservation_path do
-                  / %i.fa-solid.fa-plus.fa-lg
-                  Manual reservation entry
-
-
-    .section
-      .row
-        .col-md-4
-          %h3
-            / %i.fa-solid.fa-calendar-days
-            Event details
-        .col-md-8
-          %table.table.settings
-            %tbody
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-tree
+              Reservations
+          .col-md-8
+            %table.table.settings.table-borderless#stats-table
               %tr
                 %th
-                  Pick-up date start/end time
-
+                  Reservations
                 %td
-                  - if setting.pickup_date_and_time.present?
-                    = nice_date_time(setting.pickup_date_and_time)
+                  - if setting.is_reservations_open
+                    Open
+                    = button_to "Close", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm'
                   - else
-                    No start time set
-                  %br
-                  - if setting.pickup_date_and_end_time.present?
-                    = nice_date_time(setting.pickup_date_and_end_time)
+                    Closed
+                    = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm'
+
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-calendar-days
+              Event details
+          .col-md-8
+            %table.table.settings
+              %tbody
+                %tr
+                  %th
+                    Pick-up date start/end time
+
+                  %td
+                    - if setting.pickup_date_and_time.present?
+                      = nice_date_time(setting.pickup_date_and_time)
+                    - else
+                      No start time set
+                    %br
+                    - if setting.pickup_date_and_end_time.present?
+                      = nice_date_time(setting.pickup_date_and_end_time)
+                    - else
+                      No end time set
+                %tr
+                  %th Signup deadline
+                  %td= nice_date_time(setting.sign_up_deadline_at)
+
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-globe
+              Website configuration
+          .col-md-8
+            %table.table.settings
+
+              %tbody
+                %tr
+                  %th Site title
+                  %td= SITE_TITLE
+                %tr
+                  %th Site description
+                  %td= setting.site_description
+                %tr
+                  %th Organization name
+                  %td= ORGANIZATION_NAME
+                %tr
+                  %th Contact name
+                  %td= setting.contact_name
+                %tr
+                  %th Contact email
+                  %td= setting.contact_email
+                %tr
+                  %th Contact phone
+                  %td= setting.contact_phone
+                %tr
+                  %th Description
+                  %td= setting.description
+                %tr
+                  %th Day of pickup instructions
+                  %td= setting.on_day_of_pickup_instructions
+
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-map
+              Mapping
+          .col-md-8
+            %table.table.settings
+              %tbody
+
+                %tr
+                  %th Default city
+                  %td= DEFAULT_CITY
+                %tr
+                  %th Default state
+                  %td= DEFAULT_STATE
+                %tr
+                  %th Default country
+                  %td= DEFAULT_COUNTRY
+
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-at
+              Email notifications
+          .col-md-8
+            %table.table.table-borderless.settings
+
+              %tbody
+
+                %tr
+                  %th
+                    Email delivery
+
+                  %td
+                    - if setting.is_emailing_enabled
+                      Delivering
+                      = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
+                    - else
+                      Stopped
+                      = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
+
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-truck-pickup
+              Driver website
+          .col-md-8
+            %table.table.table-borderless.settings
+              %tr
+                %th Driver Secret Key
+                %td
+                  - if setting.driver_secret_key.present?
+                    = setting.driver_secret_key
                   - else
-                    No end time set
-              %tr
-                %th Signup deadline
-                %td= nice_date_time(setting.sign_up_deadline_at)
+                    No key
 
-    .section
-      .row
-        .col-md-4
-          %h3
-            / %i.fa-solid.fa-globe
-            Website configuration
-        .col-md-8
-          %table.table.settings
-
-            %tbody
-              %tr
-                %th Site title
-                %td= SITE_TITLE
-              %tr
-                %th Site description
-                %td= setting.site_description
-              %tr
-                %th Organization name
-                %td= ORGANIZATION_NAME
-              %tr
-                %th Contact name
-                %td= setting.contact_name
-              %tr
-                %th Contact email
-                %td= setting.contact_email
-              %tr
-                %th Contact phone
-                %td= setting.contact_phone
-              %tr
-                %th Description
-                %td= setting.description
-              %tr
-                %th Day of pickup instructions
-                %td= setting.on_day_of_pickup_instructions
-
-
-    .section
-      .row
-        .col-md-4
-          %h3
-            / %i.fa-solid.fa-map
-            Mapping
-        .col-md-8
-          %table.table.settings
-            %tbody
-
-              %tr
-                %th Default city
-                %td= DEFAULT_CITY
-              %tr
-                %th Default state
-                %td= DEFAULT_STATE
-              %tr
-                %th Default country
-                %td= DEFAULT_COUNTRY
-
-    .section
-      .row
-        .col-md-4
-          %h3
-            / %i.fa-solid.fa-at
-            Email notifications
-        .col-md-8
-          %table.table.settings
-
-            %tbody
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-box-archive
+              Archive
+          .col-md-8
+            %table.table.table-borderless.settings
 
               %tr
                 %th
-                  Email delivery
-
-                %td
-                  - if setting.is_emailing_enabled
-                    Delivering
-                    = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
-                  - else
-                    Stopped
-                    = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
-
-
-    .section
-      .row
-        .col-md-4
-          %h3
-            / %i.fa-solid.fa-truck-pickup
-            Driver website
-        .col-md-8
-          %table.table.settings
-            %tr
-              %th Driver Secret Key
-              %td
-                - if setting.driver_secret_key.present?
-                  = setting.driver_secret_key
-                - else
-                  No key
-
-
-    .section
-      .row
-        .col-md-4
-          %h3
-            / %i.fa-solid.fa-box-archive
-            Archive
-        .col-md-8
-          %table.table.settings
-
-            %tr
-              %th Reservations
-              %td= button_to "ARCHIVE ALL", admin_archive_all_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived reservations to be archived'}, class: 'btn btn-danger btn-sm'
+                %td= button_to "ARCHIVE ALL RESERVATIONS", admin_archive_all_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived reservations to be archived'}, class: 'btn btn-danger btn-sm'
