@@ -19,7 +19,6 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
     else
       @pagy, @reservations = pagy(Reservation.not_archived.pending_pickup.includes(:route).order(:street_name, :house_number))
-
     end
   end
 
@@ -28,30 +27,22 @@ class Admin::ReservationsController < Admin::AdminController
 
   def update
     if @reservation.update(reservation_params)
-      redirect_to admin_reservation_advanced_url(@reservation)
+      redirect_to admin_reservation_url(@reservation)
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def show
-  end
-
-  def show_advanced
     @logs = @reservation.logs
     @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
     @donations = @reservation.donations
   end
 
   def destroy
-    if Reservation.open?
-      @reservation.cancelled!
-      redirect_back(fallback_location: admin_root_path, notice: "Reservation was successfully cancelled.")
-    else
-      redirect_back(fallback_location: admin_root_path, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions.") unless Reservation.open?
-    end
+    @reservation.cancelled!
+    redirect_back(fallback_location: admin_root_path, notice: "Reservation was successfully cancelled.")
   end
-
 
   def map
     if params[:route_id]
@@ -63,8 +54,8 @@ class Admin::ReservationsController < Admin::AdminController
 
   def search
     @query = params[:search]
-    if @query.downcase.include?('in:archived')
-      query_without_param = @query.gsub('in:archived','').strip
+    if @query.downcase.include?('in:archive')
+      query_without_param = @query.gsub('in:archive','').strip
       @pagy, @reservations = pagy(Reservation.archived.where("name ILIKE ? OR street ILIKE ?", "%" + Reservation.sanitize_sql_like(query_without_param) + "%", "%" + Reservation.sanitize_sql_like(query_without_param) + "%"))
     else
       @pagy, @reservations = pagy(Reservation.not_archived.where("name ILIKE ? OR street ILIKE ?", "%" + Reservation.sanitize_sql_like(@query) + "%", "%" + Reservation.sanitize_sql_like(@query) + "%"))
@@ -75,7 +66,7 @@ class Admin::ReservationsController < Admin::AdminController
   def process_route
     @reservation.route!
     @reservation.save
-    redirect_back(fallback_location: admin_root_path)
+    redirect_back(fallback_location: admin_reservations_path)
   end
 
   def process_all_routes

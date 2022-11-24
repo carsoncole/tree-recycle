@@ -96,7 +96,7 @@ footer {
         padding: 0 0 0 0.7em;
         color: $scout-blue;
       }
-      .bainbridge {
+      .home-page-title {
         font-size: 1.1em;
         font-weight: 200;
         line-height: 0.9;
@@ -169,7 +169,8 @@ table.settings {
   }
 }
 
-table.reservations {
+#reservations-table {
+  margin-bottom: 2.666em;
   td.actions {
     text-align: right;
   }
@@ -245,6 +246,7 @@ table.reservation {
 #admin-reservation {
   table {
     margin-bottom: 2em;
+
   }
   header {
     text-align: center;
@@ -254,9 +256,35 @@ table.reservation {
     }
   }
 
+  #direction-links {
+    margin: 0 auto 1em auto;
+    display: inline-block;
+    border: 2px solid lighten(#000, 60%);
+    border-radius: 5px;
+    padding: 0.75em ;
+    text-align: center;
+    .title {
+      font-weight: 800;
+      color: lighten(#000, 60%);
+    }
+    .map-link {
+      font-size: 1.5em;
+      display: inline-block;
+      margin: 0 0.75em 0 0.75em;
+    }
+  }
+
+
+  section {
+    border-top: 1px solid #d2d2d7;
+    margin-bottom: 5em;
+  }
+
   h2 {
-    border-top: 2px solid #999;
-    padding-top: 0.5em;
+    margin-bottom: 2.666em;
+    line-height: 1.125;
+    font-weight: 600;
+    padding-top: 1em;
     font-size: 1.5em;
   }
   td {

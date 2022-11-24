@@ -8,7 +8,6 @@ This application was originally designed to assist in managing a BSA Scout tree 
 
 Ruby on Rails 7, Ruby ~> 3.0.0, and PostgreSQL.
 
-This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.
 
 ## Installation
 
@@ -19,6 +18,26 @@ This is a Ruby on Rails 7, Ruby 3.0+ application. You will need to have an serve
 Currently configured for PostgreSQL, but the `database.yml` can be configured for a different database.
 
 The database can be created with `rails db:setup`, which will do all of `db:create`, `db:schema:load`, `db:seed`. The seeds file contains sample data is is not need when you go into production. Or you can simply delete/create the data through the UI.
+
+
+### App Credentials
+
+Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to hold all necessary access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
+
+```
+EDITOR=vim rails credentials:edit
+```
+
+See the sample credentials file `config/credentials_sample.yml` for all of the necessary secrets.
+
+
+### App Constants
+
+Default application settings should be configured in `config/initializers/constants.rb`. 
+
+### USPS API Access
+
+This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.
 
 
 ### Settings
@@ -79,18 +98,7 @@ To sign-in, you will need to create an admin user through the console.
 > User.create(email: 'john.doe@example.com', password: [password])
 ```
 
-Default application settings should be configured in `config/initializers/constants.rb`.
 
-
-### Custom Credentials
-
-Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to hold all necessary access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
-
-```
-EDITOR=vim rails credentials:edit
-```
-
-See the sample credentials file `config/credentials_sample.yml` for all of the necessary secrets.
 
 
 ## Use

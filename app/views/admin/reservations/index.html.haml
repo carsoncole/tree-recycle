@@ -22,6 +22,11 @@
               = link_to new_reservation_path, class: 'nav-link' do
                 %i.fa-solid.fa-plus.fa-lg
                 Reservation
+            %li.nav-item
+              = button_to admin_process_all_routes_path, class: 'btn btn-warning btn-sm' do
+                %i.fa-solid.fa-bolt.fa-lg
+                Process routes
+
 
   .row
     .col-lg-12

@@ -2,7 +2,7 @@ class Admin::DriversController < Admin::AdminController
   before_action :set_driver, only: %i[ show edit update destroy ]
 
   def index
-    @drivers = Driver.all
+    @drivers = Driver.order(:name)
   end
 
   def show

@@ -1,2 +1,0 @@
-module Driver::ContactHelper
-end

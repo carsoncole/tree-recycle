@@ -25,7 +25,7 @@ class Admin::SearchTest < ApplicationSystemTestCase
     assert_selector "tr", count: 2 # includes header, no archived
     assert_selector "td", text: 'John Wilson Doe'
 
-    fill_in "search", with: 'Wil in:archived'
+    fill_in "search", with: 'Wil in:archive'
     click_on "Search"
     assert_selector "tr", count: 2 # includes header
     assert_selector "td", text: 'Wilbur Hester'

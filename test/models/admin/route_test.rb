@@ -22,7 +22,7 @@ class Admin::RouteTest < ActiveSupport::TestCase
 
     assert_difference 'Reservation.count', 0 do
       route.destroy
-      sleep 0.5
+      sleep 1
     end
 
     reservation.reload

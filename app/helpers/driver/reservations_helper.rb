@@ -1,2 +1,0 @@
-module Driver::ReservationsHelper
-end
