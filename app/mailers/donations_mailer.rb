@@ -1,3 +1,4 @@
+#FIXME Donation receipt image not working
 class DonationsMailer < ApplicationMailer
   include ApplicationHelper
   after_action :stop_delivery_if_disabled

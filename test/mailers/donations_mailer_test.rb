@@ -1,7 +1,7 @@
 require "test_helper"
 
 class DonationsMailerTest < ActionMailer::TestCase
-  test "confirmed donation email" do
+  test "confirmed donation receipt email" do
     donation = create(:donation)
     email = DonationsMailer.with(donation: donation).receipt_email
 
