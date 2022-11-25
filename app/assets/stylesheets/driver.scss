@@ -29,11 +29,13 @@ $scout-blue: #003F87;
       vertical-align: middle;
       height: 20px;
     }
+    td.notes {
+      font-size: 0.9em;
+    }
     th, td {
       &.notes {
         width: 30em;
         white-space: wrap;
-        font-size: 0.9em;
 
       }
       &.name {
@@ -42,7 +44,13 @@ $scout-blue: #003F87;
         overflow-x: scroll;
       }
       &.buttons {
-        width: 24em;
+        width: 27em;
+        .btn {
+          background-color: lighten($scout-blue, 30%);
+        }
+        .active {
+          background-color: $scout-blue;
+        }
       }
       &.phone {
         width: 9em;
@@ -55,20 +63,7 @@ $scout-blue: #003F87;
       }
     }
 
-    td.buttons .btn {
-      float: left !important;
-      margin-right: 7px;
-      font-size: 0.8em;
-      font-weight: 700;
-      padding-left: 0.4em;
-      padding-right: 0.4em;
-      &.pending-pickup {
-        margin-right: 0;
-      }
-    }
-    .btn-sm {
-      margin-top: 0.25em;
-    }
+
   }
 
 }

@@ -95,7 +95,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     assert_selector "#btn-picked-up-#{reservations[2].id}"
 
     accept_confirm do
-      click_button "btn-picked-up-#{reservations[0].id}"
+      click_on "btn-picked-up-#{reservations[0].id}"
     end
     assert_no_selector "#btn-picked-up-#{reservations[0].id}"
     assert_selector "#btn-not-picked-up-#{reservations[0].id}"
@@ -113,7 +113,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     visit driver_route_path(route)
 
     accept_confirm do
-      click_button "btn-missing-#{reservations[0].id}"
+      click_on "btn-missing-#{reservations[0].id}"
     end
     assert_no_selector "#btn-missing-#{reservations[0].id}"
 
@@ -131,10 +131,10 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     visit driver_route_path(route)
 
     accept_confirm do
-      click_button "btn-missing-#{reservations[0].id}"
+      click_on "btn-missing-#{reservations[0].id}"
     end
     accept_confirm do
-      click_button "btn-missing-#{reservations[1].id}"
+      click_on "btn-missing-#{reservations[1].id}"
     end
     sleep 0.25
     visit driver_routing_path
@@ -146,10 +146,10 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     assert_no_selector "#btn-not-pending-pickup-#{reservations[1].id}"
 
     accept_confirm do
-      click_button "btn-pending-pickup-#{reservations[0].id}"
+      click_on "btn-pending-pickup-#{reservations[0].id}"
     end
     accept_confirm do
-      click_button "btn-picked-up-#{reservations[1].id}"
+      click_on "btn-picked-up-#{reservations[1].id}"
     end
 
     visit driver_routing_path
