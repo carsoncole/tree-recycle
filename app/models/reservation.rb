@@ -28,6 +28,10 @@ class Reservation < ApplicationRecord
   after_save :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status? }
   after_update :send_cancelled_reservation_email!, if: -> (obj){ obj.cancelled? && obj.saved_change_to_status? }
 
+
+  # sms delivery
+  after_commit :send_missing_sms!, if: ->(obj){ obj.missing? && obj.phone.present? && obj.saved_change_to_status? && obj.persisted? }
+
   # logging
   after_commit :log_unconfirmed!, if: ->(obj){ obj.unconfirmed? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_pending_pickup!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? && obj.persisted? }
@@ -64,6 +68,12 @@ class Reservation < ApplicationRecord
 
   def send_cancelled_reservation_email!
     ReservationsMailer.with(reservation: self).cancelled_reservation_email.deliver_later
+  end
+
+  def send_missing_sms!
+    message = "Hello! We can't find your tree for pickup. "
+    message += "Please call #{ Setting&.first&.contact_phone } to reschedule." if Setting&.first&.contact_phone.present?
+    Sms.new.send(self.phone, message)
   end
 
   # method to import data from existing tree recycle system csv export
