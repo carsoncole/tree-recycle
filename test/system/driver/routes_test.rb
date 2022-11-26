@@ -51,7 +51,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     visit driver_routing_path
     assert_selector "h1", text: "Routes"
 
-    within "#driver-zones-table" do
+    within "#all-zones" do
       assert_selector "tbody tr", count: 1 # row 'ALL'
       assert_selector "th.zone", text: 'ALL'
       assert_selector "#all-map-link"
@@ -71,14 +71,11 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     reservations_without_routes = create_list(:reservation_with_coordinates, 2, is_routed: false)
 
     click_on 'Routes'
-    within "#driver-zones-table" do
-      assert_selector "tbody tr", count: 6
+    within "#zone-#{ route.zone.id }" do
+      assert_selector "tbody tr", count: 2
       assert_selector "th.zone", text: route.zone.name.upcase
       assert_selector "th.route", text: route.name
       assert_selector "#route-pending-pickup-count", text: '5'
-      assert_selector "th.zone", text: 'UNROUTED'
-      assert_selector "#total-unrouted-pending-pickup-count", text: '2'
-      assert_selector "#total-no-zone-pending-pickup-count", text: '3'
     end
   end
 

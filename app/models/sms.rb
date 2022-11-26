@@ -15,7 +15,6 @@ class Sms
         to: obj.phone,
         body: message
       )
-      debugger
       obj.logs.create(message: "SMS message sent: '#{ message }'") if obj.respond_to?(:logs)
 
       rescue => exception

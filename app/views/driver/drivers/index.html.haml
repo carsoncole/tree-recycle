@@ -6,12 +6,12 @@
         Drivers
 
   .row
-    .col-md-3
-    .col-md-6
+    .col-lg-6.offset-lg-3
       .table-responsive
         %table.table#drivers-table
           %tbody
             - @zones.each do |zone|
+              - next unless zone.drivers.any?
               %tr
                 %td.route-zone.zone
                   = zone.name

@@ -32,12 +32,12 @@
     .row
       .col-md-8.offset-2
         .table-responsive
-          %table.table.zones-table
+          %table.table.zones-table(id="zone-#{zone.id}")
             %thead
               %tr
                 %th
                   - if admin_view?
-                    = link_to admin_zones_path(all_zones: true) do
+                    = link_to (params[:all_zones] ? admin_zones_path : admin_zones_path(all_zones: true)) do
                       %i.fa-solid.fa-list
                       All Zones/Routes
                 %th.data Pending
@@ -120,7 +120,7 @@
   .row
     .col-md-6.offset-3
       .table-responsive
-        %table.table.zones-table
+        %table.table.zones-table#all-zones
           %thead
             %tr
               %th.zone
