@@ -128,6 +128,7 @@ $scout-blue: #003F87;
 
 
 table.zones-table {
+  margin-bottom: 2.66em;
   thead {
     font-size: 0.9em;
     .data {
@@ -146,6 +147,7 @@ table.zones-table {
       &.data {
         text-align: center;
         font-weight: 600;
+        min-width: 4em;
       }
       &.pending-pickup-count {
         background-color: lighten(#111111, 30%);
