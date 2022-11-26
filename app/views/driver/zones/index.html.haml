@@ -118,28 +118,6 @@
 
 
 
-  / Without Routes
-  - if Reservation.not_archived.unrouted.any?
-    - pending_pickup_count = Reservation.not_archived.unrouted.pending_pickup.count
-    - picked_up_count = Reservation.not_archived.unrouted.picked_up.count
-    - missing_count = Reservation.not_archived.unrouted.missing.count
-    - return if pending_pickup_count == 0 && picked_up_count == 0 && missing_count == 0 && !@all_zones
 
-    .row
-      .col-md-6.offset-3
-        .table-responsive
-          %table.table.zones-table
-            %thead
-              %tr
-                %th.zone
-                %th.data Pending
-                %th.data Missing
-                %th.data Picked
-            %tbody
-              %tr
-                %th.zone Unrouted
-                %td.data#total-unrouted-pending-pickup-count.zone-pending-pickup-count= pending_pickup_count
-                %td.data.missing-count= missing_count
-                %td.data#total-picked-up-count= picked_up_count
 
 
