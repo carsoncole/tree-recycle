@@ -15,7 +15,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     system_test_signin
     click_on 'Routes'
 
-    assert_equal 2, find('#driver-zones-table').all(:css, 'tr').count
+    assert_equal 2, find('#admin-zones.zones-table').all(:css, 'tr').count
 
     zone_1 = create(:zone)
 
@@ -36,10 +36,10 @@ class Admin::RoutesTest < ApplicationSystemTestCase
         assert_text z[:name], count: 0
       end
     end
-    assert_equal 2, find('#driver-zones-table').all(:css, 'tr').count # TH, Zone 'ALL'
+    assert_equal 2, find('#admin-zones.zones-table').all(:css, 'tr').count # TH, Zone 'ALL'
 
     reservation = create(:reservation_with_coordinates)
-    assert_equal 2, find('#driver-zones-table').all(:css, 'tr').count # TH, Zone 'ALL'
+    assert_equal 2, find('#admin-zones.zones-table').all(:css, 'tr').count # TH, Zone 'ALL'
 
     route = create(:route_with_zone)
     reservation = create(:reservation_with_coordinates, route_id: route.id)
@@ -50,7 +50,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
       assert_text route.zone.name.upcase
     end
 
-    assert_equal 5, find('#driver-zones-table tbody').all(:css, 'tr').count
+    assert_equal 5, find('#admin-zones.zones-table tbody').all(:css, 'tr').count
   end
 
   test "correct route assignments" do

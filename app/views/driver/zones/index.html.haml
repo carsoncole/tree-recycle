@@ -1,38 +1,18 @@
-.container
+#driver-zones.container
   .row
-    .col-md-3
-    .col-md-6
+    .col-lg-12
       %h1
         %i.fa-solid.fa-road
         Routes
 
-  - if admin_view?
-    .row
-      .col-md-3
-      .col-md-6
-        .admin-nav
-          %nav
-            %ul.nav.justify-content-end
-              %li.nav-item
-                = link_to new_admin_route_path, class: 'nav-link' do
-                  %i.fa-solid.fa-plus
-                  Route
-              %li.nav-item
-                = link_to new_admin_zone_path, class: 'nav-link' do
-                  %i.fa-solid.fa-plus
-                  Zone
   .row
     .col-md-3
     .col-md-6
       .table-responsive
-        %table.table#driver-zones-table.align-middle
+        %table.table.zones-table
           %thead
             %tr
               %th
-                - if admin_view?
-                  = link_to admin_zones_path(all_zones: true) do
-                    %i.fa-solid.fa-list
-                    All Zones/Routes
               %th.data Pending
               %th.data Missing
               %th.data Picked
