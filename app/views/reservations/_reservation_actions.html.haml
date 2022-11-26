@@ -1,8 +1,8 @@
-- if setting.is_reservations_open? && @reservation.persisted?
+- if setting.is_reservations_open? && @reservation && @reservation.persisted?
   #reservation-actions
     - if @reservation.cancelled?
-      =link_to "Make a new reservation", new_reservation_path
-    - elsif @reservation.pending_pickup? && @reservation.persisted?
+      =link_to "New reservation", new_reservation_path
+    - elsif (@reservation.pending_pickup? || @reservation.unconfirmed?) && @reservation.persisted?
       .actions
       = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
         %i.fa-solid.fa-pencil

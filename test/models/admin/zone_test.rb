@@ -24,7 +24,6 @@ class Admin::ZoneTest < ActiveSupport::TestCase
       zone.destroy
     end
 
-    assert_equal 5, Driver.count
     assert_not zone.persisted?
     assert_not drivers[0].reload.zone
   end

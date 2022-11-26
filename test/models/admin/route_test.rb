@@ -47,7 +47,6 @@ class Admin::RouteTest < ActiveSupport::TestCase
     assert_difference "Reservation.count", 0 do
       route.destroy
     end
-    assert_equal 10, Reservation.count
     assert_not route.persisted?
   end
 end

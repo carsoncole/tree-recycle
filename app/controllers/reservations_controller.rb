@@ -1,7 +1,7 @@
 require 'usps'
 
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_reservation update destroy ]
+  before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_confirmed_reservation update destroy ]
 
   def show
   end
@@ -33,12 +33,16 @@ class ReservationsController < ApplicationController
       #   render :form_2
       # end
       @verified_street = response.get(address).address1
+      render status: 200 # http :bad_request
     rescue USPS::MultipleAddressError
       @multiple_addresses_found = true
+      render status: 409 # http :conflict
     rescue USPS::AddressNotFoundError
       @address_not_found = true
+      render status: 422 # http :not_found
     rescue
       @address_not_found = true
+      render status: 400 # http :bad_request
     end
   end
 
@@ -46,14 +50,15 @@ class ReservationsController < ApplicationController
   def create
     @reservation = Reservation.new(reservation_params)
 
-    if @reservation.save
+    if !Reservation.open? && !signed_in?
+      redirect_to root_url, alert: "Reservations are CLOSED."
+    elsif @reservation.save
       if @reservation.geocoded?
         @reservation.pending_pickup!
         redirect_to new_reservation_donation_url(@reservation), notice: 'You are all set! Your pickup reservation is confirmed.'
       else
         redirect_to reservation_address_verification_url(@reservation)
       end
-
     else
       render :new, status: :unprocessable_entity
     end
@@ -74,11 +79,12 @@ class ReservationsController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
     else
-      redirect_to root_url, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions."
+      redirect_to reservation_url, alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions."
     end
   end
 
-  def submit_reservation
+  def submit_confirmed_reservation
+    @reservation.pending_pickup!
     redirect_to new_reservation_donation_url(@reservation)
   end
 
@@ -103,6 +109,7 @@ class ReservationsController < ApplicationController
           @reservation = Reservation.find(params[:id])
         rescue ActiveRecord::RecordNotFound
           @reservation_missing = true
+          flash[:alert] = "Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup."
         end
       elsif params[:reservation_id]
         @reservation = Reservation.find(params[:reservation_id])

@@ -11,8 +11,10 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(:street_name, :house_number))
     elsif params[:cancelled]
       @pagy, @reservations = pagy(Reservation.not_archived.cancelled.includes(:route).order(:street_name, :house_number))
-    elsif params[:missing]
+    elsif params[:missing]      
       @pagy, @reservations = pagy(Reservation.not_archived.missing.includes(:route).order(:street_name, :house_number))
+    elsif params[:unconfirmed]      
+      @pagy, @reservations = pagy(Reservation.not_archived.unconfirmed.includes(:route).order(:street_name, :house_number))
     elsif params[:all]
       @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
     elsif params[:archived]

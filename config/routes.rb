@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     get 'donations/cancel' => 'donations#cancel', as: 'cancel'
 
 
-    post 'submit-reservation' => 'reservations#submit_reservation', as: 'submit'
+    post 'submit-reservation' => 'reservations#submit_confirmed_reservation', as: 'submit'
 
 
   end

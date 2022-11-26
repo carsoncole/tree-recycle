@@ -20,6 +20,17 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should show reservation" do
+    get reservation_url(@reservation)
+    assert_response :success
+  end
+
+  test "should not show a missing reservation" do 
+    get reservation_url('bogus id')
+    assert_response :success
+    assert response.body.include? "Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup."
+  end
+
   test "should create reservation in step 1 with name, good address, and email and correct status" do
     new_reservation_attributes = build :reservation
     assert_difference("Reservation.count", 1) do
@@ -27,7 +38,21 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     end
     new_reservation = Reservation.order(updated_at: :asc).last
     assert_redirected_to new_reservation_donation_path(new_reservation)
+    assert_equal "You are all set! Your pickup reservation is confirmed.", flash[:notice]
     assert new_reservation.pending_pickup?
+  end
+
+  test "creating a reservation with incomplete info" do 
+    new_reservation_attributes = build :reservation
+    assert_difference("Reservation.count", 0) do
+      post reservations_url, params: { reservation: { name: new_reservation_attributes.name, street: new_reservation_attributes.street } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "updating a reservation with incomplete info" do 
+    patch reservation_url(@reservation), params: { reservation: { name: nil } }
+    assert_response :unprocessable_entity
   end
 
   test "should geocode and route new perfect address reservation" do
@@ -77,11 +102,6 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_not @reservation.routed?
   end
 
-  test "should show reservation" do
-    get reservation_url(@reservation)
-    assert_response :success
-  end
-
   test "should update reservation" do
     patch reservation_url(@reservation), params: { reservation: { city: @reservation.city, country: @reservation.country, email: @reservation.email, latitude: @reservation.latitude, longitude: @reservation.longitude, name: @reservation.name, phone: @reservation.phone, state: @reservation.state, street: @reservation.street, zip: @reservation.zip } }
     assert_redirected_to new_reservation_donation_path(@reservation)
@@ -95,8 +115,6 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to reservation_path(@reservation)
   end
 
-
-
   test "geocoding on updated reservations" do
     @reservation = create(:reservation_with_coordinates)
     lat,lon = @reservation.latitude, @reservation.longitude
@@ -109,6 +127,58 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
 
   test "routing on new reservation" do
 
+  end
+
+  test "new reservation when reservations closed" do 
+    Setting.first_or_create.update(is_reservations_open: false)
+    assert_not Reservation.open?
+
+    new_reservation_attributes = build :reservation
+    assert_difference("Reservation.count", 0) do
+      post reservations_url, params: { reservation: { name: new_reservation_attributes.name, street: '1760 Susan Place NW', email: new_reservation_attributes.email } }
+    end
+    assert_equal "Reservations are CLOSED.", flash[:alert]
+    assert_redirected_to root_url
+  end
+
+  test "updating reservation when reservations closed" do 
+    Setting.first_or_create.update(is_reservations_open: false)
+    patch reservation_path(@reservation), params: { reservation: { email: 'new@example.com' } }
+    assert flash[:alert].include? "Reservations are no longer changeable."
+    assert_redirected_to reservation_url(@reservation)
+  end
+
+  test "destroying reservation when reservations closed" do 
+    Setting.first_or_create.update(is_reservations_open: false)
+    delete reservation_path(@reservation)
+    assert flash[:alert].include? "Reservations are no longer changeable."
+    assert_redirected_to reservation_url(@reservation)
+  end
+
+  test "confirming and unconfirmed reservation" do 
+    @reservation.unconfirmed!
+    get reservation_url(@reservation)
+    assert response.body.include? "Unconfirmed. Not scheduled for pickup."
+    post reservation_submit_path(@reservation)
+    assert @reservation.reload.pending_pickup?
+    assert_redirected_to new_reservation_donation_url(@reservation)
+  end
+
+  test "reservation address successful verification" do 
+    get reservation_address_verification_url(@reservation)
+    assert_response :success
+  end
+
+  test "reservation address verification with multiple results" do
+    @reservation.update(street: '1761 Su San')
+    get reservation_address_verification_url(@reservation)
+    assert_response 200 # success, but there is likely a better street address
+  end
+
+  test "reservation address verification with no address found" do
+    @reservation.update(street: 'jackamo street')
+    get reservation_address_verification_url(@reservation)
+    assert_response 422
   end
 
 end

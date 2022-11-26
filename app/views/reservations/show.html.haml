@@ -9,9 +9,7 @@
         if you need to make a change.
 
     - if @reservation_missing
-      %p.mt-4.text-center Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup.
-
-      %p.text-center= link_to "Make a new reservation", new_reservation_path
+      %p.text-center= link_to "New reservation", new_reservation_path
 
     - else
       %h1 Tree Pickup
@@ -35,7 +33,7 @@
           - else
             = @reservation.notes
 
-      .row
+      .row.mb-3
         .col-md-6
           .item
             .field Email
@@ -55,10 +53,13 @@
 
 
       - unless @reservation.pending_pickup? || @reservation.cancelled? || !setting.is_reservations_open?
-        .row
-          .col-md-12.mt-4
+        .row.mb-3
+          .col-md-12
             .text-center= button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'
 
     = render 'reservation_actions'
 
-    %p.text-center= link_to "Make a donation?", new_reservation_donation_path(@reservation)
+    - if @reservation
+      %p.text-center= link_to "Donate", new_reservation_donation_path(@reservation)
+    - else 
+      %p.text-center= link_to "Donate", donation_without_reservation_path

@@ -4,15 +4,15 @@
       %i.fa-solid.fa-question.fa-lg.address-verification-map
       %i.fa-solid.fa-map-location.fa-lg.address-verification-map
       %i.fa-solid.fa-question.fa-lg.address-verification-map
-    .important-message
+    .important-message.danger
       Ouch! We are having issues and
       - if @address_not_found
-        can't seem to find your address.
+        can't seem to find your address. Can you make any possible adjustments below?
       - elsif @multiple_addresses_found
-        there seems to be multiple similar addresses.
+        there seems to be multiple similar addresses. Can you make any possible adjustments below?
       - else
         just need you to confirm it.
-      The best address is your official USPS address, but choose one of them below. Put any additional information in the notes.
+      The best address is your official USPS address. Put any additional information in the notes.
 
 %br
 

@@ -12,7 +12,7 @@ module ReservationsHelper
       elsif reservation.archived?
         ['Archived', 'info']
       elsif reservation.unconfirmed?
-        ['Unconfirmed', 'info']
+        ['Unconfirmed. Not scheduled for pickup.', 'warning']
       end
     if status
       out = ''
@@ -34,7 +34,7 @@ module ReservationsHelper
       elsif reservation.archived?
         ['Archived', 'info']
       elsif reservation.unconfirmed?
-        ['Unconfirmed', 'info']
+        ['Unconfirmed', 'warning']
       end
     if status
       out = ''

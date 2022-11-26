@@ -75,10 +75,11 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_root_url
+  end
 
-    Setting.first.update(is_reservations_open: false)
+  test "should destroy reservation as admin, with reservations closed" do 
+    Setting.first_or_create.update(is_reservations_open: false)
     new_reservation = create(:reservation_with_coordinates, is_routed: false, status: :pending_pickup)
-
 
     assert_difference("Reservation.pending_pickup.count", -1) do # reservations are still changeable for admin
       delete admin_reservation_url(new_reservation, as: @user)
