@@ -73,7 +73,7 @@ class Reservation < ApplicationRecord
   def send_missing_sms!
     message = "Hello! We can't find your tree for pickup. "
     message += "Please call #{ Setting&.first&.contact_phone } to reschedule." if Setting&.first&.contact_phone.present?
-    Sms.new.send(self.phone, message)
+    Sms.new.send(self, message)
   end
 
   # method to import data from existing tree recycle system csv export

@@ -6,14 +6,17 @@ class Sms
     @client = Twilio::REST::Client.new Rails.application.credentials.twilio.account_sid, Rails.application.credentials.twilio.auth_token
   end
 
-  def send(phone, message)
+  def send(obj, message)
     begin
+      return unless obj.phone.present?
 
       client.messages.create(
         from: Setting.first.sms_from_phone,
-        to: phone,
+        to: obj.phone,
         body: message
       )
+      debugger
+      obj.logs.create(message: "SMS message sent: '#{ message }'") if obj.respond_to?(:logs)
 
       rescue => exception
         if Rails.env.production?
