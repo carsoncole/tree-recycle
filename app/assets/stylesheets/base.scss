@@ -171,8 +171,20 @@ table.settings {
 
 #reservations-table {
   margin-bottom: 2.666em;
-  td.actions {
-    text-align: right;
+  th,td {
+    &.actions {
+      text-align: right;
+      min-width: 12em;
+    }
+    &.name {
+      min-width: 10em;
+    }
+    &.status {
+      min-width: 11em;
+    }
+    &.street {
+      min-width: 14em;
+    }
   }
 }
 

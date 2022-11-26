@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
+      post 'process-geocode' => 'reservations#process_geocode', as: 'process_geocode'
     end
     get '/routing' => 'zones#index', as: 'routing'
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'

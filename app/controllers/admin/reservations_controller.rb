@@ -71,6 +71,12 @@ class Admin::ReservationsController < Admin::AdminController
     redirect_back(fallback_location: admin_reservations_path)
   end
 
+  def process_geocode
+    @reservation.full_geocode!
+    @reservation.save
+    redirect_back(fallback_location: admin_reservations_path)
+  end
+
   def process_all_routes
     Reservation.process_all_routes!
     redirect_to admin_reservations_path
