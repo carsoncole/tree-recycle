@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     resources :routes, only: %i( show )
     resources :drivers, only: %i( index show )
     get '/routing' => 'zones#index', as: 'routing'
+    get '/zones' => 'zones#index', as: 'zones'
   end
 
   namespace :admin do
