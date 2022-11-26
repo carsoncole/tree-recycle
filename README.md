@@ -76,6 +76,9 @@ The default URL for mail is set in the environment configuration file:
 config.action_mailer.default_url_options = { host: 'site@example.com' }
 ```
 
+### SMS notifications
+
+SMS notifications are configured to send via Twilio, but this could be modified for any service in the Sms class `sms.rb`. Keys must be set in the Rails credentials file.
 
 ### Setup
 
