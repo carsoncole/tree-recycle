@@ -80,6 +80,8 @@
                     = link_to reservation.street, "https://maps.apple.com/?q=#{reservation.latitude},#{reservation.longitude}", target: '_blank'
                     = link_to "https://www.google.com/maps/place/#{reservation.latitude},#{reservation.longitude}", target: '_blank' do
                       %i.fa-brands.fa-google
+                  - else
+                    = reservation.street
 
 
                 %td.route
