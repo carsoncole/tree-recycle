@@ -1,32 +1,30 @@
-.container
-  #driver-search
+#driver-search.container
+  .row
+    .col-lg-12
+      %h1
+        %i.fa-solid.fa-magnifying-glass
+        Search
+
+  .row
+    .col-lg-2
+    .col-lg-8
+      = form_tag driver_search_path, id: 'search-form', local: true, method: :get do
+        .form-inline.mx-sm-3.mb-3
+          .row
+            .col-lg-12.mb-2
+              = text_field_tag 'search',"", placeholder: 'Search', class: 'form-control',  value: @query, id: 'search-field'
+              = submit_tag 'Search', class: 'btn btn-primary', id: 'search-button'
+
+
+  - if @reservations
     .row
       .col-lg-3
       .col-lg-6
-        %h1
-          %i.fa-solid.fa-magnifying-glass
-          Search
-
-    .row
-      .col-lg-2
-      .col-lg-8
-        = form_tag driver_search_path, id: 'search-form', local: true, method: :get do
-          .form-inline.mx-sm-3.mb-3
-            .row
-              .col-lg-12.mb-2
-                = text_field_tag 'search',"", placeholder: 'Search', class: 'form-control',  value: @query, id: 'search-field'
-                = submit_tag 'Search', class: 'btn btn-primary', id: 'search-button'
-
-
-    - if @reservations
-      .row
-        .col-lg-3
-        .col-lg-6
-          .table-responsive
-            %table.table#search-results
-              - @reservations.each do |reservation|
-                %tr
-                  %td.name= link_to reservation.name, driver_reservation_path(reservation)
-                  %td.street= reservation.street
-                  %td.status= reservation_status(reservation)
+        .table-responsive
+          %table.table#search-results
+            - @reservations.each do |reservation|
+              %tr
+                %td.name= link_to reservation.name, driver_reservation_path(reservation)
+                %td.street= reservation.street
+                %td.status= reservation_status(reservation)
 
