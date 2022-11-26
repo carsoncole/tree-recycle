@@ -3,26 +3,35 @@ class Sms
   attr_accessor :client
 
   def client
-    @client = Twilio::REST::Client.new Rails.application.credentials.twilio.account_sid, Rails.application.credentials.twilio.auth_token
+    if Rails.env.test? 
+      sid, auth_token = Rails.application.credentials.twilio.test.account_sid, Rails.application.credentials.twilio.test.auth_token
+    else
+      sid, auth_token = Rails.application.credentials.twilio.production.account_sid, Rails.application.credentials.twilio.production.auth_token
+    end
+
+    @client = Twilio::REST::Client.new sid, auth_token
   end
 
-  def send(obj, message)
+  def send(obj, message, from_number=nil)
     begin
       return unless obj.phone.present?
 
-      client.messages.create(
-        from: Setting.first.sms_from_phone,
+      from_number = '+15005550006' if Rails.env.test?
+
+      message = client.messages.create(
+        from: from_number || Setting.first.sms_from_phone,
         to: obj.phone,
         body: message
       )
       obj.logs.create(message: "SMS message sent: '#{ message }'") if obj.respond_to?(:logs)
 
+      return message
+
       rescue => exception
         if Rails.env.production?
           Bugsnag.notify(exception)
         else 
-          puts "*" * 40
-          puts exception 
+          exception
         end
       end
 
