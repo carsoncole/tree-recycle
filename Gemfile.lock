@@ -71,6 +71,18 @@ GEM
     argon2 (2.1.2)
       ffi (~> 1.14)
       ffi-compiler (~> 1.0)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.665.0)
+    aws-sdk-core (3.168.1)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.5)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-locationservice (1.25.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.5.2)
+      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.15.0)
@@ -145,6 +157,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jmespath (1.6.2)
     jwt (2.5.0)
     loofah (2.19.0)
       crass (~> 1.0.2)
@@ -283,6 +296,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-locationservice
   bootsnap
   bugsnag (~> 6.24)
   capybara
