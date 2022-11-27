@@ -83,7 +83,7 @@ class Reservation < ApplicationRecord
     CSV.foreach(file.path, headers: true) do |row|
       street = row['pickup_address'] == 'Pick-up Canceled' ? row['house'] + ' ' + row['street'] : row['pickup_address']
       name = row['full_name'].present? ? row['full_name'] : 'No name provided'
-      reservation = Reservation.new(name: name, email: row['email'], street: street, phone: row['phone'], notes: row['comment'], latitude: row['lat'], longitude: row['lng'], house_number: row['house'], street_name: row['street'], route_name: row['route'], unit: row['unit'], status: 'archived', is_routed: false )
+      reservation = Reservation.new(name: name, email: row['email'], street: street, phone: row['phone'], notes: row['comment'], latitude: row['lat'], longitude: row['lng'], house_number: row['house'], street_name: row['street'], route_name: row['route'], unit: row['unit'], status: 'archived', is_routed: false, no_emails: true, no_sms: true )
       unless reservation.save
         puts "*"*40
         puts row['email']
