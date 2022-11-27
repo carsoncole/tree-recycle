@@ -28,19 +28,31 @@ module Geocodable
     end
 
     def full_geocode!
-      begin
-        self.latitude = nil
-        self.longitude = nil
-        self.house_number = nil
-        self.street_name = nil
-        self.route_id = nil if self.class == Reservation && self.is_routed
-        results = Geocoder.search(self.address)
-        self.latitude = results.as_json[0]["data"]["lat"]
-        self.longitude = results.as_json[0]["data"]["lon"]
-        self.house_number = results.as_json[0]["data"]["address"]["house_number"]
-        self.street_name = results.as_json[0]["data"]["address"]["road"]
-      rescue
-        geocode
+      self.latitude = nil
+      self.longitude = nil
+      self.house_number = nil
+      self.street_name = nil
+      self.route_id = nil if self.class == Reservation && self.is_routed
+      if Geocoder.config.lookup == :nominatum
+        begin
+          results = Geocoder.search(self.address)
+          self.latitude = results.as_json[0]["data"]["lat"]
+          self.longitude = results.as_json[0]["data"]["lon"]
+          self.house_number = results.as_json[0]["data"]["address"]["house_number"]
+          self.street_name = results.as_json[0]["data"]["address"]["road"]
+        rescue
+          geocode
+        end
+      elsif Geocoder.config.lookup == :amazon_location_service
+        # a bad address "bad address" returns more than one address (10 in this case)
+        begin
+          results = Geocoder.search(self.address)
+          if results.count == 1
+            geocode
+          end
+        rescue
+          # geocode
+        end        
       end
     end
 
