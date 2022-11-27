@@ -1,5 +1,5 @@
 class Admin::ReservationsController < Admin::AdminController
-  before_action :set_reservation, except: %i[ new index search process_all_routes map archive_all]
+  before_action :set_reservation, except: %i[ new index search process_all_routes map archive_all upload]
 
 
   def index
@@ -87,12 +87,17 @@ class Admin::ReservationsController < Admin::AdminController
     redirect_to admin_root_path, notice: 'All Reservations archived'
   end
 
+  def upload
+    Reservation.import(params[:file])
+    redirect_to reservations_path #=> or where you want
+  end
+
   private
     def set_reservation
       @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :is_routed)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :is_routed, :unit)
     end
 end

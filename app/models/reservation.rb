@@ -80,7 +80,8 @@ class Reservation < ApplicationRecord
   def self.import(file)
     Setting.first.update(is_emailing_enabled: false)
     CSV.foreach(file.path, headers: true) do |row|
-      Reservation.create(name: row['full_name'], email: row['email'], street: row['pickup_address'], phone: row['phone'], notes: row['comment'], latitude: row['lat'], longitude: row['lng'], house_number: row['house'], street_name: row['street'], route_name: row['route'], status: 'archived' )
+      street = row['pickup_address'] == 'Pick-up Canceled' ? row['house'] + ' ' + row['street'] : row['pickup_address']
+      Reservation.create(name: row['full_name'], email: row['email'], street: street, phone: row['phone'], notes: row['comment'], latitude: row['lat'], longitude: row['lng'], house_number: row['house'], street_name: row['street'], route_name: row['route'], unit: row['unit'], status: 'archived', is_routed: false )
     end
   end
 

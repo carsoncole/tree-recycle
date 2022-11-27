@@ -69,3 +69,14 @@
     .form-text.text-muted If there is a secret key, access to the Driver application requires a key as a param '.../?key=[secret key]'. A change in the key hear will invalidate any prior key usage.
   .actions
     = f.submit 'Save', class: 'btn btn-primary'
+
+
+%hr.mb-4.mt-5
+
+%h2 Data Upload
+
+= form_tag admin_upload_path, multipart: true do
+  = label_tag  "Upload CSV File"
+  = file_field_tag :file, class: 'form-control-file', required: true
+  = submit_tag 'Submit', class: 'btn btn-primary'
+

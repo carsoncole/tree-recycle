@@ -21,8 +21,6 @@ Rails.application.routes.draw do
   get '/donation' => 'donations#donation_without_reservation', as: 'donation_without_reservation'
   get '/thank-you-for-your-donation' => 'donations#success', as: 'success'
 
-  post 'res-upload' => 'reservations#upload', as: 'upload'
-
   resources :reservations, except: [:index] do
 
     get 'address-verification', as: 'address_verification'
@@ -73,6 +71,7 @@ Rails.application.routes.draw do
       get 'map' => 'routes#map', as: 'map'
     end
     get 'search' => 'reservations#search', as: 'search'
+    post 'res-upload' => 'reservations#upload', as: 'upload'
   end
 
 end
