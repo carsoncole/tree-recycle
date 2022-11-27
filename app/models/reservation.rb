@@ -38,6 +38,7 @@ class Reservation < ApplicationRecord
   after_commit :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_cancelled!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :log_archived!, if: ->(obj){ obj.archived? && obj.saved_change_to_status? && obj.persisted? }
 
   def self.open?
     Setting.first_or_create.is_reservations_open?
@@ -129,6 +130,10 @@ class Reservation < ApplicationRecord
 
   def log_cancelled!
     logs.create(message: 'Reservation cancelled')
+  end
+
+  def log_archived!
+    logs.create(message: 'Reservation archived')
   end
 
 end
