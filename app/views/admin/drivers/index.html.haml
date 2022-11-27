@@ -5,15 +5,17 @@
         %i.fa-solid.fa-car
         Drivers
 
-  .row
-    .col-lg-12
-      .admin-nav
-        %nav
-          %ul.nav.justify-content-end
-            %li.nav-item
-              = link_to new_admin_driver_path, class: 'nav-link' do
-                %i.fa-solid.fa-plus
-                Driver
+
+  - if current_user.editor? || current_user.administrator?
+    .row
+      .col-lg-12
+        .admin-nav
+          %nav
+            %ul.nav.justify-content-end
+              %li.nav-item
+                = link_to new_admin_driver_path, class: 'nav-link' do
+                  %i.fa-solid.fa-plus
+                  Driver
 
   .row
     .col-md-2
@@ -31,8 +33,9 @@
                   = driver.phone
               %td.email= mail_to driver.email
               %td.actions-1
-                = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }  do
-                  %i.fa-solid.fa-trash
-                = link_to edit_admin_driver_path(driver) do
-                  %i.fa-solid.fa-pen
+                - if current_user.editor? || current_user.administrator?
+                  = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }  do
+                    %i.fa-solid.fa-trash
+                  = link_to edit_admin_driver_path(driver) do
+                    %i.fa-solid.fa-pen
 

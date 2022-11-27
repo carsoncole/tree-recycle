@@ -5,7 +5,7 @@
         %i.fa-solid.fa-road
         Routes
 
-  - if admin_view?
+  - if admin_view? && current_user.editor? || current_user.administrator?
     .row
       .col-lg-12
         .admin-nav

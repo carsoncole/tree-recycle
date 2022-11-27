@@ -5,15 +5,16 @@
       %h1 Settings
 
 
-  .row
-    .col-lg-12
-      .admin-nav
-        %nav
-          %ul.nav.justify-content-end
-            %li.nav-item
-              = link_to edit_admin_setting_path(setting) do
-                %i.fa-solid.fa-pen.icon
-                Edit
+  - if current_user.administrator?
+    .row
+      .col-lg-12
+        .admin-nav
+          %nav
+            %ul.nav.justify-content-end
+              %li.nav-item
+                = link_to edit_admin_setting_path(setting) do
+                  %i.fa-solid.fa-pen.icon
+                  Edit
 
   .row
     .col-lg-10.offset-1
@@ -31,10 +32,11 @@
                 %td
                   - if setting.is_reservations_open
                     Open
-                    = button_to "Close", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm'
+
+                    = button_to "Close", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
                   - else
                     Closed
-                    = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm'
+                    = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
 
   .row
     .col-lg-10.offset-1
@@ -144,10 +146,12 @@
                   %td
                     - if setting.is_emailing_enabled
                       Delivering
-                      = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
+                      - if current_user.administrator?
+                        = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
                     - else
                       Stopped
-                      = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
+                      - if current_user.administrator?
+                        = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
 
   .row
     .col-lg-10.offset-1
@@ -199,4 +203,5 @@
 
               %tr
                 %th
-                %td= button_to "ARCHIVE ALL RESERVATIONS", admin_archive_all_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived reservations to be archived'}, class: 'btn btn-danger btn-sm'
+                %td
+                  = button_to "ARCHIVE ALL RESERVATIONS", admin_archive_all_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived reservations to be archived'}, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true

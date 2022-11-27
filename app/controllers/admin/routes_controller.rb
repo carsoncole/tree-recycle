@@ -1,8 +1,8 @@
+#OPTIMIZE admin driver route show should be added. currently using driver show
 class Admin::RoutesController < Admin::AdminController
   before_action :set_route, only: %i[ show edit update destroy map ]
 
   def show
-    @route = Route.find(params[:id])
     @reservations = @route.reservations.not_archived
   end
 
@@ -14,27 +14,42 @@ class Admin::RoutesController < Admin::AdminController
   end
 
   def create
-    @route = Route.new(route_params)
+    if current_user.editor? || current_user.administrator?
+      @route = Route.new(route_params)
 
-    if @route.save
-      redirect_to admin_routing_url, notice: "Route was successfully created."
+      if @route.save
+        redirect_to admin_routing_url, notice: "Route was successfully created."
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      @route = Route.new
+      render :edit, status: :unauthorized
     end
   end
 
   def update
-    if @route.update(route_params)
-      redirect_to admin_routing_url, notice: "Route was successfully updated."
+    if current_user.editor? || current_user.administrator?
+      if @route.update(route_params)
+        redirect_to admin_routing_url, notice: "Route was successfully updated."
+      else
+        render :edit, status: :unprocessable_entity
+      end
     else
-      render :edit, status: :unprocessable_entity
+      @reservations = @route.reservations.not_archived
+      render :show, status: :unauthorized
     end
   end
 
   def destroy
-    @route.destroy
+    if current_user.editor? || current_user.administrator?
+      @route.destroy
 
-    redirect_to admin_routing_url, notice: "Route was successfully destroyed."
+      redirect_to admin_routing_url, notice: "Route was successfully destroyed."
+    else
+      @reservations = @route.reservations.not_archived
+      render :show, status: :unauthorized
+    end
   end
 
 # https://maps.google.com/maps?ll=-25.344016,131.035417&z=16&t=h&hl=en-US&gl=US&mapclient=apiv3&cid=4469685432667933103

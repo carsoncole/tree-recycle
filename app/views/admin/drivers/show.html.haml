@@ -21,10 +21,11 @@
       = mail_to @driver.email
 
 
-  .row
-    .col-md-3
-    .col-md-6
-      %p= link_to "Edit", edit_admin_driver_path(@driver)
-      = button_to "Destroy Driver", admin_driver_path(@driver), data: { "turbo-method": :delete, turbo_confirm: 'Are you sure?'}, class: 'btn btn-danger'
+  - if current_user.editor? || current_user.administrator?
+    .row
+      .col-md-3
+      .col-md-6
+        %p= link_to "Edit", edit_admin_driver_path(@driver)
+        = button_to "Destroy Driver", admin_driver_path(@driver), data: { "turbo-method": :delete, turbo_confirm: 'Are you sure?'}, class: 'btn btn-danger'
 
 

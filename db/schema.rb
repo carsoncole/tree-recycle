@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_052112) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_27_230455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "role", ["viewer", "editor", "administrator"]
 
   create_table "donations", force: :cascade do |t|
     t.uuid "reservation_id"
@@ -74,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_052112) do
     t.boolean "is_routed", default: true
     t.integer "heard_about_source"
     t.string "unit"
+    t.boolean "no_sms"
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["route_id"], name: "index_reservations_on_route_id"
     t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"
@@ -133,6 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_052112) do
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
     t.string "phone"
+    t.integer "role", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true

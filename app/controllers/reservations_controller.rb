@@ -66,7 +66,6 @@ class ReservationsController < ApplicationController
 
   def update
     if Reservation.open?
-
       if @reservation.update(reservation_params)
         @reservation.pending_pickup! if @reservation.unconfirmed?
         message = if @reservation.pending_pickup?

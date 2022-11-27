@@ -13,19 +13,20 @@
       = render 'search'
 
 
-  .row
-    .col-lg-12
-      .admin-nav
-        %nav
-          %ul.nav.justify-content-end
-            %li.nav-item
-              = link_to new_reservation_path, class: 'nav-link' do
-                %i.fa-solid.fa-plus.fa-lg
-                Reservation
-            %li.nav-item
-              = button_to admin_process_all_routes_path, class: 'btn btn-warning btn-sm' do
-                %i.fa-solid.fa-bolt.fa-lg
-                Process routes
+  - if current_user.editor? || current_user.administrator?
+    .row
+      .col-lg-12
+        .admin-nav
+          %nav
+            %ul.nav.justify-content-end
+              %li.nav-item
+                = link_to new_reservation_path, class: 'nav-link' do
+                  %i.fa-solid.fa-plus.fa-lg
+                  Reservation
+              %li.nav-item
+                = button_to admin_process_all_routes_path, class: 'btn btn-warning btn-sm' do
+                  %i.fa-solid.fa-bolt.fa-lg
+                  Process routes
 
 
   .row
@@ -95,15 +96,17 @@
                 %td.actions
                   = link_to admin_reservation_path(reservation), class: 'view-reservation-button' do
                     %i.fa-solid.fa-eye.icon
-                  = link_to edit_admin_reservation_path(reservation) do
-                    %i.fa-solid.fa-pen.icon
-                  - unless reservation.cancelled?
-                    = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
-                      %i.fa-solid.fa-trash.icon
-                  = link_to admin_reservation_process_geocode_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
-                    %i.fa-solid.fa-location-dot.icon
-                  = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
-                    %i.fa-solid.fa-bolt.icon
+                  - if current_user.editor? || current_user.administrator?
+                    = link_to edit_admin_reservation_path(reservation) do
+                      %i.fa-solid.fa-pen.icon
+        
+                    - unless reservation.cancelled?
+                      = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
+                        %i.fa-solid.fa-trash.icon
+                    = link_to admin_reservation_process_geocode_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
+                      %i.fa-solid.fa-location-dot.icon
+                    = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
+                      %i.fa-solid.fa-bolt.icon
   .row
     .col-lg-12
       .pagination= pagy_bootstrap_nav(@pagy).html_safe

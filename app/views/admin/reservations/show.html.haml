@@ -5,8 +5,9 @@
       .col-lg-6
         %header
           %h1= @reservation.street
-          %p.mb-1
-            = link_to "Edit", edit_admin_reservation_path(@reservation), id: 'edit-link'
+          - if current_user.editor? || current_user.administrator?
+            %p.mb-1
+              = link_to "Edit", edit_admin_reservation_path(@reservation), id: 'edit-link'
 
 
           .text-center.mb-2#reservation-status
@@ -35,12 +36,14 @@
             %tr
               %th Street
               %td= @reservation.street
-            %tr
-              %th House number
-              %td= @reservation.house_number
-            %tr
-              %th Road
-              %td= @reservation.street_name
+            - if @reservation.house_number.present?
+              %tr
+                %th House number
+                %td= @reservation.house_number
+            - if @reservation.street_name.present?
+              %tr
+                %th Road
+                %td= @reservation.street_name
             %tr
               %th City
               %td= @reservation.city
@@ -70,6 +73,13 @@
             %tr
               %th Phone
               %td= @reservation.phone
+            %tr
+              %th No SMS?
+              %td
+                - if @reservation.no_sms
+                  SMS disabled
+                - else
+                  False
 
     %section#delivery
       .row
@@ -99,7 +109,8 @@
                 = form_for [:admin, @reservation] do |f|
                   .mb-2
                     = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
-                  = f.submit 'Update Route', class: 'btn btn-primary'
+                  - if current_user.editor? || current_user.administrator?
+                    = f.submit 'Update Route', class: 'btn btn-primary'
 
             %tr
               %th Latitude
@@ -115,6 +126,19 @@
                   Yes
                 - else
                   No
+            %tr 
+              %th Geocode 
+              %td
+                - if current_user.editor? || current_user.administrator?
+                  = link_to admin_reservation_process_geocode_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
+                    %i.fa-solid.fa-location-dot.icon
+
+            %tr 
+              %th Route
+              %td
+                - if current_user.editor? || current_user.administrator?
+                  = link_to admin_reservation_process_route_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
+                    %i.fa-solid.fa-bolt.icon
 
           .text-center
             #direction-links
@@ -147,7 +171,8 @@
                 = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
                   .form-group.mb-2
                     = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
-                  .text-end= f.submit 'Update status', class: 'btn btn-primary'
+                  - if current_user.editor? || current_user.administrator?
+                    .text-end= f.submit 'Update status', class: 'btn btn-primary'
 
     %section#donations
       .row

@@ -8,14 +8,18 @@ class Admin::SettingsController < Admin::AdminController
   end
 
   def update
-    if helpers.setting.update(setting_params)
-      if setting_params[ :is_emailing_enabled ] || setting_params[ :is_reservations_open ]
-        redirect_to admin_settings_path
+    if current_user.editor? || current_user.administrator?
+      if helpers.setting.update(setting_params)
+        if setting_params[ :is_emailing_enabled ] || setting_params[ :is_reservations_open ]
+          redirect_to admin_settings_path
+        else
+          redirect_to admin_settings_url
+        end
       else
-        redirect_to admin_settings_url
+        render :edit, status: :unprocessable_entity
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unauthorized
     end
   end
 

@@ -28,10 +28,17 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def update
-    if @reservation.update(reservation_params)
-      redirect_to admin_reservation_url(@reservation)
+    if current_user.editor? || current_user.administrator?
+      if @reservation.update(reservation_params)
+        redirect_to admin_reservation_url(@reservation)
+      else
+        render :edit, status: :unprocessable_entity
+      end
     else
-      render :edit, status: :unprocessable_entity
+      @logs = @reservation.logs
+      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
+      @donations = @reservation.donations
+      render :show, status: :unauthorized
     end
   end
 
@@ -42,8 +49,15 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def destroy
-    @reservation.cancelled!
-    redirect_back(fallback_location: admin_root_path, notice: "Reservation was successfully cancelled.")
+    if current_user.editor? || current_user.administrator?
+      @reservation.cancelled!
+      redirect_back(fallback_location: admin_root_path, notice: "Reservation was successfully cancelled.")
+    else
+      @logs = @reservation.logs
+      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
+      @donations = @reservation.donations
+      render :show, status: :unauthorized
+    end
   end
 
   def map
@@ -66,25 +80,47 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def process_route
-    @reservation.route!
-    @reservation.save
-    redirect_back(fallback_location: admin_reservations_path)
+    if current_user.editor? || current_user.administrator?
+      @reservation.route!
+      @reservation.save
+      redirect_back(fallback_location: admin_reservations_path)
+    else
+      @logs = @reservation.logs
+      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
+      @donations = @reservation.donations
+      render :show, status: :unauthorized
+    end
   end
 
   def process_geocode
-    @reservation.full_geocode!
-    @reservation.save
-    redirect_back(fallback_location: admin_reservations_path)
+    if current_user.editor? || current_user.administrator?
+      @reservation.full_geocode!
+      @reservation.save
+      redirect_back(fallback_location: admin_reservations_path)
+    else
+      @logs = @reservation.logs
+      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
+      @donations = @reservation.donations
+      render :show, status: :unauthorized
+    end
   end
 
   def process_all_routes
-    Reservation.process_all_routes!
-    redirect_to admin_reservations_path
+    if current_user.editor? || current_user.administrator?
+      Reservation.process_all_routes!
+      redirect_to admin_reservations_path
+    else
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized'
+    end
   end
 
   def archive_all
-    Reservation.archive_all!
-    redirect_to admin_root_path, notice: 'All Reservations archived'
+    if current_user.administrator?
+      Reservation.archive_all!
+      redirect_to admin_root_path, notice: 'All Reservations archived'
+    else
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized'
+    end
   end
 
   def upload
@@ -98,6 +134,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :is_routed, :unit)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :no_sms, :is_routed, :unit)
     end
 end
