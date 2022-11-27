@@ -84,8 +84,8 @@ class Reservation < ApplicationRecord
       reservation = Reservation.new(name: row['full_name'], email: row['email'], street: street, phone: row['phone'], notes: row['comment'], latitude: row['lat'], longitude: row['lng'], house_number: row['house'], street_name: row['street'], route_name: row['route'], unit: row['unit'], status: 'archived', is_routed: false )
       unless reservation.save
         puts "*"*40
-        puts row
-        puts reservation.errors
+        puts row['email']
+        puts reservation.errors.full_messages
       end
     end
   end
