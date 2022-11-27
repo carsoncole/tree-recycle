@@ -18,14 +18,14 @@ class Sms
 
       from_number = '+15005550006' if Rails.env.test?
 
-      message = client.messages.create(
+      response = client.messages.create(
         from: from_number || Setting.first.sms_from_phone,
         to: obj.phone,
         body: message
       )
       obj.logs.create(message: "SMS message sent: '#{ message }'") if obj.respond_to?(:logs)
 
-      return message
+      return response
 
       rescue => exception
         if Rails.env.production?
