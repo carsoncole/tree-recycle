@@ -1,31 +1,38 @@
-- unless Setting.first_or_create.is_reservations_open?
-  .important-message.warning
-    Reservations will open on December 1.
+#home.container
+  .row
+    .col-md-12
+      %h1
+        .top-line
+          .year= HOME_PAGE_YEAR
+          .home-page-title= HOME_PAGE_TITLE
+        .bottom-line
+          .tree Tree
+          .recycle Recycle
+      .sub-line
+        = HOME_PAGE_LEAD
+
+  .row
+    .col-md-12
+
+      .text-center.pickup_date
+        = nice_date(setting&.pickup_date_and_time)
 
 
-#home.mt-5
-  %h1
-    .top-line
-      .year= HOME_PAGE_YEAR
-      .home-page-title= HOME_PAGE_TITLE
-    .bottom-line
-      .tree Tree
-      .recycle Recycle
-  .sub-line
-    = HOME_PAGE_LEAD
-
-
-
-  .text-center.pickup_date
-    = nice_date(setting&.pickup_date_and_time)
-
-
-  .text-center.d-grid.gap-2= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg', id: 'reservation-button'
+      .text-center.d-grid.gap-2= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg', id: 'reservation-button'
 
 
   .row
-    .col-md-2
-    .col-md-8.important-date
+    .col-md-10.offset-lg-1.description
+      %p= setting.description.html_safe
+
+
+  .row
+    .col-md-10.offset-lg-1
+      .get-started Register now for a tree pickup. Donations accepted and can be made online or left with the tree.
+
+
+  .row
+    .col-md-8.offset-lg-2.important-date
       - if setting&.sign_up_deadline_at
         Reservations close
         = nice_date_time_no_year(setting&.sign_up_deadline_at)
