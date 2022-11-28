@@ -48,7 +48,7 @@
       .mb-3
         = f.label :notes, "Where did you hear about us?", class: 'form-label inline'
         %span.form-text.text-muted Optional
-        = f.select :heard_about_source, options_for_select(Reservation.heard_about_sources.map {|key,value| [key.humanize, Reservation.heard_about_sources.key(value)] },selected: @reservation.heard_about_source), {include_blank: true }, class: 'form-control'
+        = f.select :heard_about_source, options_for_select(Reservation.heard_about_sources.map {|key,value| [key.humanize, Reservation.heard_about_sources.key(value)] },selected: @reservation.heard_about_source), {include_blank: 'Select one' }, class: 'form-control'
 
 
 
