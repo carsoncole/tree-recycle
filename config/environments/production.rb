@@ -31,7 +31,7 @@ Rails.application.configure do
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.asset_host = "https://tree-recycle.herokuapp.com"
+  config.asset_host = "https://www.treerecycle.com"
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
@@ -91,7 +91,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'tree-recycle.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'www.treerecycle.com' }
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.delivery_method = :smtp
