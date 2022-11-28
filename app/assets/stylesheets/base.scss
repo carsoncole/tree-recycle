@@ -191,6 +191,20 @@ table.settings {
     font-weight: 500;
     margin-bottom: 1.666em;
   }
+
+  .software {
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 7em;
+    margin-bottom: 1em;
+    color: #999;
+    a {
+      color: #666;
+      &:hover {
+        color: blue;
+      }
+    }
+  }
 }
 
 

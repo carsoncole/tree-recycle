@@ -1,27 +1,33 @@
 # Tree Recycle
 
-The Tree Recycle application provides customizable public website that does the multiple jobs of taking tree recycle pick-up reservations and donations, sending out confirmations and a reminder on the pick-up date. On the administrative side, the application organizes reservations into pickup routes, and integrating with Google and Apple Maps to show pickup locations.
-
-This application was originally designed to assist in managing a BSA Scout tree recycling fundraiser, however it could be used by any organization.
+Host and manage a tree recycling fundraiser website with Tree Recycle. It provides a customizable public website, and handles the multiple jobs of 1) taking tree recycle pick-up reservations, 2) taking donations, and 3) route management, organizing reservations into zones and routes for an organized pickup process.
 
 ## Requirements
 
-Ruby on Rails 7, Ruby ~> 3.0.0, and PostgreSQL.
-
+This is a Ruby on Rails 7 application, dependent on Ruby ~> 3.0.0, and PostgreSQL as the database.
 
 ## Installation
 
-This is a Ruby on Rails 7, Ruby 3.0+ application. You will need to have an server instance that has both Rails and Ruby installed.
+This installed has been configured to run on [Heroku](https://heroku.com/), but is easily modified to work on any cloud provider. Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to install the necessary gems.
 
-### Database - PostgreSQL
+### Database
 
-Currently configured for PostgreSQL, but the `database.yml` can be configured for a different database.
+To setup the database, which gets its configuration from `db/database.yml`:
 
-The database can be created with `rails db:setup`, which will do all of `db:create`, `db:schema:load`, `db:seed`. The seeds file contains sample data is is not need when you go into production. Or you can simply delete/create the data through the UI.
+```
+rails db:create
+```
+
+For development use, there is seed data that can be loaded if you want to see the site configured with zones, routes, and reservations and other data by
+
+```
+rails db:seed
+```
+
 
 ### App Credentials
 
-Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to hold all necessary access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
+Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to securely hold all environment variables, including access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
 
 ```
 EDITOR=vim rails credentials:edit
@@ -29,23 +35,29 @@ EDITOR=vim rails credentials:edit
 
 See the sample credentials file `config/credentials_sample.yml` for all of the necessary secrets.
 
+On Heroku, you need to provide the master key so the file can be decrypted. You can do this through the Heroku UI, or in the Heroku console:
+
+```
+heroku config:set RAILS_MASTER_KEY=<your-master-key>
+```
+
 
 ### App Constants
 
-Default application settings should be configured in `config/initializers/constants.rb`. 
+Set the default application settings in `config/initializers/constants.rb`. 
 
 ### USPS API Access
 
 This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.
 
-### Settings
-
-The application derives Reservation, and fundraiser defaults, all of can be configured through the UI in `Admin > Settings`.
-
 
 ### Email notifications
 
 Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file.
+
+
+
+production.rb
 
 ```
   config.action_mailer.smtp_settings = {
@@ -80,7 +92,12 @@ SMS notifications are configured to send via Twilio, but this could be modified 
 
 ### Setup
 
-To start up the application locally, do `bundle install` and 'rails s'.
+To start up the application:
+
+```
+bundle install
+rails s
+```
 
 
 ### Heroku
@@ -100,29 +117,30 @@ To sign-in, you will need to create an admin user through the console.
 ```
 
 
-
-
 ## Use
 
-Create users in the console who will have administrator access.
+Users in the application are only necessary for management of the event. The initial adminstrator/owner user should be created directly in the console.
 
 ```
-User.create(email: 'admin email', password: 'admin password')
+User.create(email: 'admin email', password: 'admin password', role: 'administrator')
 ```
 
-Reservations is the resource for holding tree pickup reservations and they are created by customers without any necessary login, [TODO] but are retrievable and changeable using a custom link sent to customers upon initial creation and any updates.
+Once the initial user is setup, you can manage the user roles (`viewer`, `editor`, `administrator`) through the UI, after any user signs up at `/sign_up`. The ability to sign up is configured in `initializers/clearance.rb`
 
-Registered users are administrators that can access all of the resources. Administrators (users) need to be manually created in the database as there is no access to signups through the UI.
+```
+config.allow_sign_up = true
+```
 
-Routes are used to create areas of reservations, for convenient pick ups. Routes are set with a center point and a radius distance in miles. Reservations can also be manually assigned to a Route.
-
-There is an admin setting `Emailing enabled?` that controls whether emails are sent out.
 
 ### Driver
 
 The driver component of the app is at `/driver`. By default, resources under this namespace are open publicly by default, with the risks being that reservation personal information as well as the ability to toggle the status of the pickup. It is suggested that once your app is live, that you enable authenticated accessed by configuring a `Driver secret key` in admin `Settings`. Then access to these resources require the initial request to have the key, but subsequent requests do not, unless the key is reset in the settings.
 
-With a driver secret key of `happy`: `/driver/key=happy`.
+With a driver secret key of `happy`: `/driver/key=happy`. So the URL for accessing the driver part of the app:
+
+```
+https://example.com/driver?key=happy
+```
 
 ## Mapping
 
@@ -161,4 +179,4 @@ You can replace the favicons and Apple touch icons, which are reference in `shar
 
 ## Copyright
 
-Copyright (c) 2022 Carson Cole. See MIT-LICENSE for details.
+Copyright (c) 2022 [Carson Cole](https://carsonrcole.com). See MIT-LICENSE for details.
