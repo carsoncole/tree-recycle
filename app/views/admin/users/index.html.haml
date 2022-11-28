@@ -11,4 +11,11 @@
         - @users.each do |user|
           %tr 
             %td.email= user.email 
-            %td.role= user.role
+            %td.role
+              = form_for [:admin, user], data: { turbo_method: "patch" } do |f|
+                .row
+                  .col-lg-7          
+                    .form-group.mb-2
+                      = f.select :role, options_for_select(@roles, user.role), {},class: 'form-control', id: 'user-role-dropdown'
+                  .col-lg-5
+                    .text-end= f.submit 'Update', class: 'btn btn-primary'
