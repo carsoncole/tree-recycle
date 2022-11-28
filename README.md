@@ -19,7 +19,6 @@ Currently configured for PostgreSQL, but the `database.yml` can be configured fo
 
 The database can be created with `rails db:setup`, which will do all of `db:create`, `db:schema:load`, `db:seed`. The seeds file contains sample data is is not need when you go into production. Or you can simply delete/create the data through the UI.
 
-
 ### App Credentials
 
 Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to hold all necessary access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
@@ -38,7 +37,6 @@ Default application settings should be configured in `config/initializers/consta
 ### USPS API Access
 
 This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.
-
 
 ### Settings
 
