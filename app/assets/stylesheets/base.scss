@@ -165,6 +165,22 @@ table.settings {
   }
 }
 
+#reservations {
+  section.menu {
+    margin-bottom: 2em;
+  }
+  h3 {
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1em;
+  }
+  .link {
+    line-height: 2;
+  }
+}
+
+
 #reservations-table {
   margin-bottom: 2.666em;
   th,td {

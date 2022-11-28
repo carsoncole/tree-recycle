@@ -9,13 +9,38 @@
           = Route.find(params[:route_id]).name
 
   .row
-    .col-lg-12
+    .col-lg-2 
+      %section.menu
+        %h3 Status
+        = link_to "Pending pickup", admin_reservations_path, class: 'link'
+        %br
+        = link_to "Un-Routed", admin_reservations_path(unrouted: true), class: 'link'
+        %br
+        = link_to "Picked up", admin_reservations_path(picked_up: true), class: 'link'
+        %br
+        = link_to "Missing", admin_reservations_path(missing: true), class: 'link'
+        %br
+        = link_to "Cancelled", admin_reservations_path(cancelled: true), class: 'link'
+        %br
+        = link_to "Archived", admin_reservations_path(archived: true), class: 'link'
+        %br
+        = link_to "Unconfirmed", admin_reservations_path(unconfirmed: true), class: 'link'
+        %br
+        = link_to "All", admin_reservations_path(all: true), class: 'link'
+
+      %section.menu
+        %h3 Routes
+        - Route.all.each do |route|
+          = link_to route.name, admin_reservations_path(route_id: route.id), class: 'link'
+          %br
+
+
+
+    .col-lg-10
       = render 'search'
 
 
-  - if current_user.editor? || current_user.administrator?
-    .row
-      .col-lg-12
+      - if current_user.editor? || current_user.administrator?
         .admin-nav
           %nav
             %ul.nav.justify-content-end
@@ -28,40 +53,6 @@
                   %i.fa-solid.fa-bolt.fa-lg
                   Process routes
 
-
-  .row
-    .col-lg-12
-      %hr
-
-  .row
-    .col-lg-6
-      %h5 Status
-      %p.mb-4
-        = link_to "Pending pickup", admin_reservations_path
-        = '|'
-        = link_to "Un-Routed", admin_reservations_path(unrouted: true)
-        = '|'
-        = link_to "Picked up", admin_reservations_path(picked_up: true)
-        = '|'
-        = link_to "Missing", admin_reservations_path(missing: true)
-        = '|'
-        = link_to "Cancelled", admin_reservations_path(cancelled: true)
-        = '|'
-        = link_to "Archived", admin_reservations_path(archived: true)
-        = '|'
-        = link_to "Unconfirmed", admin_reservations_path(unconfirmed: true)
-        = '|'
-        = link_to "All", admin_reservations_path(all: true)
-    .col-lg-6
-      %h5 Routes
-      %p.mb-4
-        - Route.all.each do |route|
-          = '|'
-          = link_to route.name, admin_reservations_path(route_id: route.id)
-
-
-  .row
-    .col-lg-10.offset-lg-1
       .table-responsive
         %table.table#reservations-table
           %thead
@@ -107,6 +98,5 @@
                       %i.fa-solid.fa-location-dot.icon
                     = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
                       %i.fa-solid.fa-bolt.icon
-  .row
-    .col-lg-12
+
       .pagination= pagy_bootstrap_nav(@pagy).html_safe
