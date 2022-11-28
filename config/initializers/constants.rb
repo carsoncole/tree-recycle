@@ -1,6 +1,4 @@
 SITE_TITLE = 'Tree Recycle'
-SITE_PRODUCTION_URL = 'https://www.treerecycle.net'
-MAILER_PRODUCTION_DEFAULT_URL_HOST = 'www.treerecycle.net'
 DRIVER_SITE_TITLE = 'Driver'
 ADMIN_SITE_TITLE = 'Admin'
 ORGANIZATION_NAME = 'Troops 1564 & 1804'
