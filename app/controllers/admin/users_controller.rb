@@ -1,6 +1,7 @@
 class Admin::UsersController < Clearance::UsersController
   before_action :require_login
   before_action :require_administrator
+  layout 'admin/admin'
 
   def index
     @users = User.all
