@@ -1,11 +1,9 @@
 %header.mb-lg-5
   %nav.navbar.navbar-expand-lg.navbar-dark#main-navbar
     .container
-      - site_title = SITE_TITLE
-
       = link_to root_path, class: 'navbar-brand' do
         %i.fa-solid.fa-tree.fa-lg
-        = site_title
+        = setting.site_title
 
 
       %button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")

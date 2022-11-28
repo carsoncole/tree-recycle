@@ -12,7 +12,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     end
     within "#new-reservation" do
-      assert_selector "h1", text: "New Reservation"
+      assert_selector "h1", text: "Register for a tree pickup"
     end
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: reservation.street

@@ -9,7 +9,7 @@
     - elsif admin_view?
       = ADMIN_SITE_TITLE
       \-
-    = SITE_TITLE
+    = setting.site_title
   %meta(name="viewport" content="width=device-width,initial-scale=1")
   - if setting.meta_description
     %meta{ description: setting.meta_description }

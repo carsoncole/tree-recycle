@@ -6,7 +6,7 @@ class HomeTest < ApplicationSystemTestCase
     visit root_url
 
     click_on "About"
-    assert_selector "h1", text: "About"
+    assert_selector "h1", text: "Tree Pickup"
 
     click_on "question_header_link"
     assert_selector "h1", text: "Have a question?"
