@@ -17,6 +17,7 @@
                   .row
                     .col-lg-7          
                       .form-group.mb-2
-                        = f.select :role, options_for_select(@roles, user.role), {},class: 'form-control', id: 'user-role-dropdown'
+                        = f.select :role, options_for_select(@roles, user.role), {  },disabled: (current_user.administrator? ? false : true), class: 'form-control', id: 'user-role-dropdown'
                     .col-lg-5
-                      .text-end= f.submit 'Update', class: 'btn btn-primary'
+                      - if current_user.administrator?
+                        .text-end= f.submit 'Update', class: 'btn btn-primary'
