@@ -8,4 +8,6 @@ HOME_PAGE_LEAD = 'Scout Troops 1564 & 1804. Recycling Bainbridge Christmas trees
 DEFAULT_CITY = 'Bainbridge Island'
 DEFAULT_STATE = 'Washington'
 DEFAULT_COUNTRY = 'United States'
+STRIPE_DEVELOPMENT_PRICE_ITEM = 'price_1Lxwp5AY1LGWbDshKyepVUDL'
+STRIPE_PRODUCTION_PRICE_ITEM = 'price_1M8vYzAY1LGWbDshqoJcAiV9'
 
