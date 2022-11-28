@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get '/donation' => 'donations#donation_without_reservation', as: 'donation_without_reservation'
   get '/thank-you-for-your-donation' => 'donations#success', as: 'success'
 
+  get '/software' => 'home#software', as: 'software'
+
   resources :reservations, except: [:index] do
 
     get 'address-verification', as: 'address_verification'
