@@ -12,12 +12,14 @@
     = setting.site_title
   %meta(name="viewport" content="width=device-width,initial-scale=1")
   - if setting.meta_description
-    %meta{ description: setting.meta_description }
+    %meta{ name: "description", content: setting.meta_description }
   = csrf_meta_tags
   = csp_meta_tag
 
   - if driver_view? || admin_view?
     %meta(name="robots" content="noindex")
+
+  %link{ rel:"canonical", href: "https://www.treerecycle.net" + request.path }
 
   <!-- Facebook meta -->
   - if setting.facebook_page_id.present?
