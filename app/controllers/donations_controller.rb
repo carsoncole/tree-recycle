@@ -9,7 +9,7 @@ class DonationsController < ApplicationController
   def create
     @session = Stripe::Checkout::Session.create({
       line_items: [{
-          price: Rails.env.production? ? STRIPE_PRODUCTION_PRICE_ITEM : TRIPE_DEVELOPMENT_PRICE_ITEM,
+          price: Rails.env.production? ? STRIPE_PRODUCTION_PRICE_ITEM : STRIPE_DEVELOPMENT_PRICE_ITEM,
           quantity: 1
       }],
       mode: 'payment',
@@ -25,7 +25,7 @@ class DonationsController < ApplicationController
   def donation_without_reservation
     @session = Stripe::Checkout::Session.create({
       line_items: [{
-          price: Rails.env.production? ? STRIPE_PRODUCTION_PRICE_ITEM : TRIPE_DEVELOPMENT_PRICE_ITEM,
+          price: Rails.env.production? ? STRIPE_PRODUCTION_PRICE_ITEM : STRIPE_DEVELOPMENT_PRICE_ITEM,
           quantity: 1
       }],
       mode: 'payment',

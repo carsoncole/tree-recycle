@@ -67,6 +67,26 @@
     = f.label :driver_secret_key, class: 'form-label'
     = f.text_field :driver_secret_key, class: 'form-control'
     .form-text.text-muted If there is a secret key, access to the Driver application requires a key as a param '.../?key=[secret key]'. A change in the key hear will invalidate any prior key usage.
+
+  .mb-3
+    = f.label :meta_site_name, class: 'form-label'
+    = f.text_field :meta_site_name, class: 'form-control'
+  .mb-3
+    = f.label :meta_title, class: 'form-label'
+    = f.text_field :meta_title, class: 'form-control'
+  .mb-3
+    = f.label :meta_description, class: 'form-label'
+    = f.text_field :meta_description, class: 'form-control'
+  .mb-3
+    = f.label :meta_image_filename, class: 'form-label'
+    = f.text_field :meta_image_filename, class: 'form-control'
+    .form-text.text-muted File name of file in 'assets/images/'
+  .mb-3
+    = f.label 'Facebook Page ID', class: 'form-label'
+    = f.text_field :facebook_page_id, class: 'form-control'
+
+
+
   .actions
     = f.submit 'Save', class: 'btn btn-primary'
 

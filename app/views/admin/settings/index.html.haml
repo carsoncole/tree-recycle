@@ -74,7 +74,7 @@
           .col-md-4
             %h3
               / %i.fa-solid.fa-globe
-              Website configuration
+              Site content
           .col-md-8
             %table.table.settings
 
@@ -204,6 +204,39 @@
                 %th
                 %td.text-end
                   = link_to "Users", admin_users_path
+
+  .row
+    .col-lg-10.offset-1
+      .section
+        .row
+          .col-md-4
+            %h3
+              / %i.fa-solid.fa-truck-pickup
+              SEO META
+          .col-md-8
+            %table.table.settings
+              %tr
+                %th Meta Title
+                %td.text-end
+                  = setting.meta_title
+              %tr
+                %th Meta Site Name
+                %td.text-end
+                  = setting.meta_site_name
+              %tr
+                %th Meta Description
+                %td.text-end
+                  = setting.meta_description
+              %tr
+                %th Meta Image filename
+                %td.text-end
+                  = setting.meta_image_filename
+              %tr
+                %th Facebook Page ID
+                %td.text-end
+                  = setting.facebook_page_id
+
+
   .row
     .col-lg-10.offset-1
       .section

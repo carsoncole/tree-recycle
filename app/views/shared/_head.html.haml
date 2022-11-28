@@ -1,16 +1,34 @@
 %head
   %title
+    - if @site_title
+      = @site_title
+      \-
     - if driver_view?
       = DRIVER_SITE_TITLE
+      \-
     - elsif admin_view?
       = ADMIN_SITE_TITLE
-    - else
-      = SITE_TITLE
+      \-
+    = SITE_TITLE
   %meta(name="viewport" content="width=device-width,initial-scale=1")
-  - if setting.site_description
-    %meta{description: setting.site_description}
+  - if setting.meta_description
+    %meta{ description: setting.meta_description }
   = csrf_meta_tags
   = csp_meta_tag
+
+  - if driver_view? || admin_view?
+    %meta(name="robots" content="noindex")
+
+  <!-- Facebook meta -->
+  - if setting.facebook_page_id.present?
+    %meta{ property: 'fb:admins', content: setting.facebook_page_id } 
+  - if setting.meta_site_name.present?
+    %meta{ property: 'og:site_name', content: setting.meta_site_name }
+  - if setting.meta_description.present?
+    %meta{ property: 'og:description', content: setting.meta_description }
+  - if setting.meta_image_filename.present?
+    %meta{ property: 'og:image', content: "#{ image_url(setting.meta_image_filename) }" }
+
 
   <!-- CSS only -->
   - if driver_view?

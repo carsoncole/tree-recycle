@@ -2,11 +2,6 @@
 class ApplicationController < ActionController::Base
   include Clearance::Controller
   include Pagy::Backend
-  before_action :set_title
-
-  def set_title
-    @site_title = SITE_TITLE
-  end
 
   def driver_signed_in?
     cookies.permanent[:driver_key] = params[:key] if params[:key]
