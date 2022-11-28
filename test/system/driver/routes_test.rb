@@ -129,11 +129,13 @@ class Driver::RoutesTest < ApplicationSystemTestCase
 
     accept_confirm do
       click_on "btn-missing-#{reservations[0].id}"
+      sleep 0.25
     end
     accept_confirm do
       click_on "btn-missing-#{reservations[1].id}"
+      sleep 0.25
     end
-    sleep 0.25
+
     visit driver_routing_path
     assert_selector "#all-missing-count", text: '2'
 

@@ -96,8 +96,8 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
   test "should remove geocoding and routing on edit with bad-address" do
     patch reservation_url(@reservation), params: { reservation: { street: 'bad address' } }
     assert_redirected_to new_reservation_donation_path(@reservation)
-
     @reservation.reload
+
     assert_not @reservation.geocoded?
     assert_not @reservation.routed?
   end

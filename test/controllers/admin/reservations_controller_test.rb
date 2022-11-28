@@ -3,11 +3,13 @@ require "test_helper"
 class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @reservation = create(:reservation_with_coordinates, status: :pending_pickup, is_routed: false)
-    @user = create :user
+    @viewer = create :viewer
+    @editor = create :editor
+    @administrator = create :administrator
   end
 
   test "should get index" do
-    get admin_reservations_url(as: @user)
+    get admin_reservations_url(as: @viewer)
     assert_response :success
   end
 
@@ -24,30 +26,30 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     reservation_missing = create(:reservation_with_coordinates, status: :missing, is_routed: false)
     reservation_archived = create(:reservation_with_coordinates, status: :archived, is_routed: false)
 
-    get admin_reservations_url(route_id: reservation_routed.route_id, as: @user)
+    get admin_reservations_url(route_id: reservation_routed.route_id, as: @viewer)
     assert @response.body.include? reservation_routed.name
 
-    get admin_reservations_url(picked_up: true, as: @user)
+    get admin_reservations_url(picked_up: true, as: @viewer)
     assert @response.body.include? reservation_picked_up.name 
 
-    get admin_reservations_url(cancelled: true, as: @user)
+    get admin_reservations_url(cancelled: true, as: @viewer)
     assert @response.body.include? reservation_cancelled.name
 
-    get admin_reservations_url(missing: true, as: @user)
+    get admin_reservations_url(missing: true, as: @viewer)
     assert @response.body.include? reservation_missing.name
 
-    get admin_reservations_url(archived: true, as: @user)
+    get admin_reservations_url(archived: true, as: @viewer)
     assert @response.body.include? reservation_archived.name
 
-    get admin_reservations_url(all: true, as: @user)
+    get admin_reservations_url(all: true, as: @viewer)
     assert @response.body.include? reservation_missing.name
 
-    get admin_reservations_url(unrouted: true, as: @user)
+    get admin_reservations_url(unrouted: true, as: @viewer)
     assert @response.body.include? @reservation.name
   end
 
   test "should get show with auth" do
-    get admin_reservation_url(@reservation, as: @user)
+    get admin_reservation_url(@reservation, as: @viewer)
     assert_response :success
   end
 
@@ -60,21 +62,33 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     get admin_reservation_url(@reservation)
     assert_redirected_to  sign_in_path
 
-    get admin_reservation_url(@reservation, as: @user)
+    get admin_reservation_url(@reservation, as: @viewer)
     assert_response :success
   end
 
   test "should update reservation" do
-    patch admin_reservation_url(@reservation, as: @user), params: { reservation: { name: 'Name updated' } }
+    patch admin_reservation_url(@reservation, as: @editor), params: { reservation: { name: 'Name updated' } }
     assert_redirected_to admin_reservation_url(@reservation)
+  end
+
+  test "should not update reservation as viewer" do
+    patch admin_reservation_url(@reservation, as: @viewer), params: { reservation: { name: 'Name updated' } }
+    assert_response :unauthorized
   end
 
   test "should destroy reservation" do
     assert_difference("Reservation.pending_pickup.count", -1) do
-      delete admin_reservation_url(@reservation, as: @user)
+      delete admin_reservation_url(@reservation, as: @editor)
     end
 
     assert_redirected_to admin_root_url
+  end
+
+  test "should not destroy reservation as viewer" do
+    assert_difference("Reservation.pending_pickup.count", 0) do
+      delete admin_reservation_url(@reservation, as: @viewer)
+    end
+    assert_response :unauthorized
   end
 
   test "should destroy reservation as admin, with reservations closed" do 
@@ -82,7 +96,7 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     new_reservation = create(:reservation_with_coordinates, is_routed: false, status: :pending_pickup)
 
     assert_difference("Reservation.pending_pickup.count", -1) do # reservations are still changeable for admin
-      delete admin_reservation_url(new_reservation, as: @user)
+      delete admin_reservation_url(new_reservation, as: @editor)
     end
 
     assert_redirected_to admin_root_url
@@ -91,23 +105,23 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
   test "mapping of a route and all" do 
     route = create(:route, is_zoned: false)
 
-    get admin_map_path(route_id: route.id, as: @user)
+    get admin_map_path(route_id: route.id, as: @viewer)
     assert_response :success
 
-    get admin_map_path(as: @user)
+    get admin_map_path(as: @viewer)
     assert_response :success
   end
 
   #OPTIMIZE this test only verifies a successful response, not successful answers
   test "reservations search" do 
-    get admin_search_url(search: @reservation.name, as: @user)
+    get admin_search_url(search: @reservation.name, as: @viewer)
     assert_response :success
     assert @response.body.include? @reservation.name
   end
 
   #OPTIMIZE does not assert actual search results
   test "reservations search in the archive" do 
-    get admin_search_url(search: @reservation.name + ' in:archive', as: @user)
+    get admin_search_url(search: @reservation.name + ' in:archive', as: @viewer)
     assert_response :success
   end
 
@@ -116,10 +130,19 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     @reservation.update(is_routed: true) 
     assert_not @reservation.route
 
-    post admin_reservation_process_route_path(@reservation, as: @user)
+    post admin_reservation_process_route_path(@reservation, as: @editor)
     assert_redirected_to admin_reservations_path
     @reservation.reload
     assert @reservation.route
+  end
+
+  test "not routing a reservation as viewer" do 
+    route = create(:route_with_coordinates, is_zoned: false)
+    @reservation.update(is_routed: true) 
+    assert_not @reservation.route
+
+    post admin_reservation_process_route_path(@reservation, as: @viewer)
+    assert_response :unauthorized
   end
 
   test "routing all reservations" do
@@ -127,17 +150,44 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     @reservation.update(is_routed: true) 
     assert_not @reservation.route
 
-    post admin_process_all_routes_path(as: @user)
+    post admin_process_all_routes_path(as: @editor)
     assert_redirected_to admin_reservations_path
     @reservation.reload
     assert @reservation.route
   end
 
-  test "archiving all reservations" do
+  test "not routing all reservations as viewer" do
+    create(:route_with_coordinates, is_zoned: false)
+
+    post admin_process_all_routes_path(as: @viewer)
+    assert_redirected_to admin_reservations_path(pending_pickup: true)
+  end
+
+  test "archiving all reservations as administrator" do
     create_list(:reservation_with_coordinates, 10, is_routed: false)
     assert_equal 0, Reservation.archived.count
-    delete admin_archive_all_path(as: @user)
+    delete admin_archive_all_path(as: @administrator)
     assert_equal 11, Reservation.archived.count
+  end
+
+  test "not archiving all reservations as viewer" do
+    create_list(:reservation_with_coordinates, 10, is_routed: false)
+    delete admin_archive_all_path(as: @viewer)
+    assert_redirected_to admin_reservations_path(pending_pickup: true)
+    assert_equal 0, Reservation.archived.count
+  end
+
+
+  test "not archiving all reservations as editor" do
+    create_list(:reservation_with_coordinates, 10, is_routed: false)
+    delete admin_archive_all_path(as: @editor)
+    assert_redirected_to admin_reservations_path(pending_pickup: true)
+    assert_equal 0, Reservation.archived.count
+  end
+
+  #OPTIMIZE add processing all routes test
+  test "processing all routes" do 
+    # nothing yet
   end
 
 end

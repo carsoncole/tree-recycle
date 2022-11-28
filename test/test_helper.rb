@@ -19,7 +19,7 @@ class ActiveSupport::TestCase
   # fixtures :all
 
   def system_test_signin
-    @user = create(:user)
+    @user = create(:editor)
     visit '/admin'
     click_on 'Sign in'
     fill_in "Email", with: @user.email

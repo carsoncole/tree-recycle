@@ -103,7 +103,7 @@
                     - unless reservation.cancelled?
                       = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, confirm: 'Are you sure?' } do
                         %i.fa-solid.fa-trash.icon
-                    = link_to admin_reservation_process_geocode_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
+                    = link_to admin_reservation_process_geocode_path(reservation), method: :post, id: "process-geocode-button-#{reservation.id}", data: { "turbo-method": :post } do
                       %i.fa-solid.fa-location-dot.icon
                     = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
                       %i.fa-solid.fa-bolt.icon

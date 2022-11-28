@@ -7,7 +7,8 @@ class ReservationTest < ActiveSupport::TestCase
     { name: 'Bloedel Reserve', street:'16253 Agate Point Rd NE', zone: 'West', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
     { name: 'High School', street: '9458 Capstan Dr NE', zone: 'Center', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
     { name: 'Lynwood Center', street: '5919 Blakely Ave NE', zone: 'South', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
-    { name: 'Winslow South', street: '400 Harborview Dr SE', zone: 'Center', city: 'Bainbridge Island', state: 'Washington', country: 'United States' }
+    { name: 'Winslow South', street: '400 Harborview Dr SE', zone: 'Center', city: 'Bainbridge Island', state: 'Washington', country: 'United States' },
+    { name: 'Point White', street: '3154 Point White Dr NE', zone: 'South', city: 'Bainbridge Island', state: 'Washington', country: 'United States'}
     ]
 
     @zones = [
@@ -56,7 +57,7 @@ class ReservationTest < ActiveSupport::TestCase
     assert_not_equal reservation.latitude, lat
     assert reservation.geocoded?
     assert_not_equal lat, reservation.latitude
-    assert_equal reservation.latitude, 47.64001144897959
+    assert_equal 0.476401120180451e2, reservation.latitude
   end
 
   test "no geocoding of new reservation with coordinates provided" do
@@ -65,20 +66,19 @@ class ReservationTest < ActiveSupport::TestCase
     reservation.street = 'pluto' # lat, long as been provided stopping geocoding
     reservation.save
     assert reservation.geocoded? # still geocoded
-    assert_equal reservation.latitude, 47.6259654 # this would be reset to nil if geocoded again
+    assert_equal 47.6259654, reservation.latitude # this would be reset to nil if geocoded again
   end
 
   test "re-routing and zone on updated reservations" do
     @zones.each {|z| Zone.create(name: z[:name], street: z[:street]) }
-    @routes.each { |r| Route.create(name: r[:name], street: r[:street], zone_id: Zone.find_by_name(r[:zone]).id) }
+    @routes.each { |r| Route.create(name: r[:name], street: r[:street], zone_id: Zone.find_by_name(r[:zone]).id, is_zoned: false ) }
 
     reservation = create(:reservation_with_coordinates)
-    route = reservation.route
     assert_equal "Winslow South", reservation.route.name
     reservation.update(street: '9509 NE South Beach Dr')
     assert reservation.geocoded?
     assert reservation.routed?
-    assert_equal 'Lynwood Center', reservation.route.name, 'wrong route'
+    assert_equal 'Point White', reservation.route.name, 'wrong route'
     assert_equal "South", reservation.route.zone.name, 'wrong zone'
   end
 end

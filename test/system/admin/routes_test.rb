@@ -30,12 +30,12 @@ class Admin::RoutesTest < ApplicationSystemTestCase
       within "#flash" do
         assert_text "Route was successfully created."
       end
-      assert Route.where(name: z[:name]).first.geocoded?
 
       within "#admin-zones .zones-table" do
         assert_text z[:name], count: 0
       end
     end
+    assert_equal 3, Route.count
     assert_equal 2, find('#admin-zones .zones-table').all(:css, 'tr').count # TH, Zone 'ALL'
 
     reservation = create(:reservation_with_coordinates)
