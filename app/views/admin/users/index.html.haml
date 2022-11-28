@@ -1,0 +1,12 @@
+#users.container
+  .row
+    .col-md-12
+      %h1 Users
+
+  .row
+    .col-lg-8.offset-2 
+      %table.table.table-users
+        - @users.each do |user|
+          %tr 
+            %td.email= user.email 
+            %td.role= user.role

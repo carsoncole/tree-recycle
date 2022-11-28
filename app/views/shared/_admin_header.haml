@@ -27,6 +27,9 @@
             /   = link_to "Routes", admin_routes_path, class: 'nav-link'
             %li.nav-item
               = link_to "Drivers", admin_drivers_path, class: 'nav-link'
+            - if current_user.administrator?
+              %li.nav-item
+                = link_to "Users", admin_users_path, class: 'nav-link'
             %li.nav-item
               = link_to "Map", admin_map_path, class: 'nav-link'
             %li.nav-item

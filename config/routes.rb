@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :drivers
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
+    resources :users, only: [ :index ]
     delete 'reservations/archive-all' => 'reservations#archive_all', as: 'archive_all'
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
       get 'logs' => 'logs#index', as: 'logs'
