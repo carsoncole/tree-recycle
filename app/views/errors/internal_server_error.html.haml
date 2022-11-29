@@ -1,0 +1,11 @@
+.container#errors 
+  .row
+    .col-lg-12
+      %i.fa-solid.fa-triangle-exclamation
+
+      %h1 Ouch! Server error (500)
+
+      %p
+        We're sorry, but something went wrong. We've been notified!
+        = link_to "Contact us", questions_url
+        or try again in a little while.

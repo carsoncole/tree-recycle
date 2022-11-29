@@ -1,4 +1,3 @@
-require 'usps'
 
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_confirmed_reservation update destroy ]
@@ -100,12 +99,7 @@ class ReservationsController < ApplicationController
   private
     def set_reservation
       if params[:id]
-        begin
-          @reservation = Reservation.find(params[:id])
-        rescue ActiveRecord::RecordNotFound
-          @reservation_missing = true
-          flash[:alert] = "Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup."
-        end
+        @reservation = Reservation.find(params[:id])
       elsif params[:reservation_id]
         @reservation = Reservation.find(params[:reservation_id])
       end

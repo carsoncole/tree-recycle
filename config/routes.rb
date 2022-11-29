@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'errors/not_found'
+  get 'errors/internal_server_error'
   root 'home#index'
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -33,7 +35,6 @@ Rails.application.routes.draw do
 
 
     post 'submit-reservation' => 'reservations#submit_confirmed_reservation', as: 'submit'
-
 
   end
 
@@ -76,4 +77,8 @@ Rails.application.routes.draw do
     post 'res-upload' => 'reservations#upload', as: 'upload'
   end
 
+
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+  match "/422", to: "errors#unprocessable_entity", via: :all
 end

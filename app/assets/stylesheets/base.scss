@@ -572,6 +572,24 @@ nav.navbar {
   }
 }
 
+#errors {
+  line-height: 1.666;
+  text-align: center;
+  i.fa-solid {
+    font-size: 5em;
+    margin-top: 1em;
+    line-height: 1.666;
+    color: $scout-red;
+  }
+  h1 {
+    margin-bottom: 1.2em;
+  }
+  p {
+    text-align: center;
+    font-size: 1.2em;
+  }
+}
+
 #reservation {
   h1 {
     text-align: center;

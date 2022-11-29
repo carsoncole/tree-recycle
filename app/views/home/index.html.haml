@@ -23,7 +23,7 @@
 
   .row
     .col-md-10.offset-lg-1.description
-      %p= setting.description.html_safe
+      %p= setting.description.html_safe if setting.description.present?
 
 
   .row

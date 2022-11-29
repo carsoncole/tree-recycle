@@ -26,9 +26,9 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not show a missing reservation" do 
-    get reservation_url('bogus id')
-    assert_response :success
-    assert response.body.include? "Ooops! That reservation does not seem to exist. Please contact us if you think this is an error, or re-register your tree pickup."
+    assert_raise ActiveRecord::RecordNotFound do
+      get reservation_url('bogus id')
+    end
   end
 
   test "should create reservation in step 1 with name, good address, and email and correct status" do
