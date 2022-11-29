@@ -70,7 +70,7 @@ Rails.application.routes.draw do
     get '/routing' => 'zones#index', as: 'routing'
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
-    resources :routes, except: [ :index ] do
+    resources :routes, except: [ :index, :show ] do
       get 'map' => 'routes#map', as: 'map'
     end
     get 'search' => 'reservations#search', as: 'search'

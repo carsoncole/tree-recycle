@@ -1,10 +1,6 @@
 #OPTIMIZE admin driver route show should be added. currently using driver show
 class Admin::RoutesController < Admin::AdminController
-  before_action :set_route, only: %i[ show edit update destroy map ]
-
-  def show
-    @reservations = @route.reservations.not_archived
-  end
+  before_action :set_route, only: %i[ edit update destroy map ]
 
   def new
     @route = Route.new
