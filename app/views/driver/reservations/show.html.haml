@@ -1,4 +1,4 @@
-#reservation
+#reservation.container
   .row
     .col-lg-3
     .col-lg-6
@@ -7,8 +7,13 @@
       #status= reservation_status(@reservation)
 
   .row
-    .colmd-12.text-center
+    .col-md-12.text-center
       %p= link_to "< Back", :back
+
+  - if signed_in?
+    .row
+      .col-lg-12.text-center
+        %p= link_to "Admin View", admin_reservation_path(@reservation)
 
 
   .row
@@ -68,4 +73,5 @@
         - if admin_view?
           %tr
             %th.text-center(colspan="2")= link_to "Admin View", admin_reservation_path(@reservation)
+
 
