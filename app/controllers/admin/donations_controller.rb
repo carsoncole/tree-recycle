@@ -1,6 +1,6 @@
 class Admin::DonationsController < Admin::AdminController
   def index
-    @donations = Donation.all
+    @donations = Donation.order(id: :desc)
   end
 
   def show
