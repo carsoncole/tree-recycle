@@ -65,6 +65,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     assert_selector "h1", text: "Please consider a donation"
     click_on "Donate at pick-up"
+    sleep 0.5
     assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
 
