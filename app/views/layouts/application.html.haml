@@ -4,6 +4,7 @@
   = render 'shared/stripe' if controller_name == 'donations'
 
   %body
+    = render 'shared/google_tag_manager_body' if Rails.env.production? && !admin_view? && !driver_view?
     = render 'shared/header'
 
     .container.main

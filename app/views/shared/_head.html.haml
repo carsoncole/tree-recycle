@@ -1,4 +1,5 @@
 %head
+  = render 'shared/google_tag_manager_head' if Rails.env.production? && !admin_view? && !driver_view?
   %title
     - if @site_title
       = @site_title
