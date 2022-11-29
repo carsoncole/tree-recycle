@@ -55,7 +55,7 @@
               %td= @reservation.country
             %tr 
               %th How did you hear about us?
-              %td= @reservation.heard_about_source
+              %td= @reservation&.heard_about_source&.humanize
 
     %section#contact-details
       .row
