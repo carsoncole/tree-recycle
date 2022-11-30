@@ -7,7 +7,7 @@
         = image_tag "credit_card.png", class: 'img-fluid', width: '250px'
       = form_tag [:reservation, :donations], local: true, data: { turbo:false } do
         .action.online
-          = submit_tag 'Donate online', class: 'btn btn-primary btn-lg'
+          = submit_tag 'Donate online', class: 'btn btn-primary btn-lg', id: 'button-donate-online'
 
 
   .col-lg-6
@@ -16,7 +16,7 @@
       %p Place your donation in an envelope and attach it to your tree before 8am on Jan 2023. Make checks payable to BSA Troop 1564 & 1804.
       = form_tag reservation_cash_or_check_path(reservation_id: @reservation.id), local: true, data: { turbo:false } do
         .action.pickup
-          = submit_tag "Donate at pick-up", class: 'btn btn-primary btn-lg'
+          = submit_tag "Donate at pick-up", class: 'btn btn-primary btn-lg', id: 'button-donate-at-pickup'
 
 
 %section
@@ -25,4 +25,4 @@
 
       = form_tag reservation_no_donation_path(reservation_id: @reservation.id), local: true, data: { turbo:false } do
         .action.no-donation
-          = submit_tag "No donation", class: 'btn btn-primary btn'
+          = submit_tag "No donation", class: 'btn btn-primary btn', id: 'button-donate-thinking'

@@ -46,6 +46,15 @@ heroku config:set RAILS_MASTER_KEY=<your-master-key>
 
 Set the default application settings in `config/initializers/constants.rb`. 
 
+#### Reservation sources
+
+When taking reservations, users select from a drop down where they heard about the event. The choices are hard-coded as an Enum in `reservation.rb` and should be configured.
+
+reservation.rb
+```
+enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
+```
+
 ### USPS API Access
 
 This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.

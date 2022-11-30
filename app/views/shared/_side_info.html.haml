@@ -24,19 +24,20 @@
     .section.pickup-details
       %h2 Pickup details
       %h3 Date
-      = nice_date(setting.pickup_date_and_time)
+      #pickup-date= nice_date(setting.pickup_date_and_time)
 
       %h3 Pickup-time
-      = nice_time(setting.pickup_date_and_time)
-      \-
-      = nice_time(setting.pickup_date_and_end_time)
+      #pickup-time
+        = nice_time(setting.pickup_date_and_time)
+        \-
+        = nice_time(setting.pickup_date_and_end_time)
 
     - if @reservation.email
       .section.contact-info
         %h2 Contact
-        = @reservation.email
+        .email= @reservation.email
         - if @reservation.phone.present?
           %br
-          = @reservation.phone
+          .phone= @reservation.phone
 
     = render 'reservations/reservation_actions'
