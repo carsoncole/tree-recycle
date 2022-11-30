@@ -15,7 +15,7 @@ class Sms
   def send(obj, message, from_number=nil)
     begin
       return unless obj.phone.present?
-      return if obj.respond_to(:no_sms).no_sms?
+      return if obj.respond_to?(:no_sms) && obj.no_sms?
 
       from_number = '+15005550006' if Rails.env.test?
 
