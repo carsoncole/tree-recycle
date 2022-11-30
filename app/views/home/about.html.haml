@@ -1,5 +1,9 @@
 #about
-  %h1 Tree Pickup
+  %h1 Tree pickup details
+
+
+
+  = image_tag "tree_recycle_2023.jpeg", width: '600px', class: 'img-fluid mb-4'
 
   #organization
     = image_tag "bsa.png", width: '60', id: 'bsa-logo'
@@ -7,7 +11,7 @@
 
   - if setting
     %p.mb-4
-      = setting.description
+      = setting.description.html_safe
 
 
     %H5 On the day of pickup

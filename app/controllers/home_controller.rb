@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   end
 
   def about
-    @site_title = 'Tree Pickup'
+    @site_title = 'Tree pickup details'
   end
 
   def questions
