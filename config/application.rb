@@ -16,6 +16,8 @@ module TreeRecycle
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
+    config.active_job.queue_name_prefix = Rails.env
+    
     config.time_zone = "Pacific Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
   end

@@ -58,6 +58,7 @@ gem "factory_bot_rails"
 gem "bugsnag", "~> 6.24"
 gem 'twilio-ruby', '~> 5.73.3'
 gem 'aws-sdk-locationservice'
+gem 'delayed_job_active_record'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
