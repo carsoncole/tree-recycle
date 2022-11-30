@@ -33,7 +33,7 @@ class Admin::RoutesController < Admin::AdminController
       end
     else
       @reservations = @route.reservations.not_archived
-      render :show, status: :unauthorized
+      render :edit, status: :unauthorized
     end
   end
 
@@ -43,8 +43,7 @@ class Admin::RoutesController < Admin::AdminController
 
       redirect_to admin_routing_url, notice: "Route was successfully destroyed."
     else
-      @reservations = @route.reservations.not_archived
-      render :show, status: :unauthorized
+      render :edit, status: :unauthorized
     end
   end
 

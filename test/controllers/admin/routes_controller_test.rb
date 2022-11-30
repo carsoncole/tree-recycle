@@ -38,16 +38,6 @@ class Admin::RoutesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
-  test "should show route" do
-    get admin_route_url(@route, as: @viewer)
-    assert_response :success
-  end
-
-  test "should not show route without auth" do
-    get admin_route_url(@route)
-    assert_redirected_to sign_in_path
-  end
-
   test "should get edit" do
     get edit_admin_route_url(@route, as: @viewer)
     assert_response :success

@@ -24,6 +24,7 @@ class ReservationsController < ApplicationController
 
   #FIXME review purpose of !address.valid?
   def address_verification
+    @site_title = 'Address verification'
     USPS.config.username = Rails.application.credentials.usps.username
     address = USPS::Address.new(address1: @reservation.street, city: @reservation.city, state: @reservation.state)
     req = USPS::Request::AddressStandardization.new(address)
