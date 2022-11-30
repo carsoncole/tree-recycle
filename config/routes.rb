@@ -30,8 +30,10 @@ Rails.application.routes.draw do
 
     resources :donations, only: %i[ new create ]
     post 'cash-or-check' => 'donations#cash_or_check', as: 'cash_or_check'
+    post 'no-donation' => 'donations#no_donation', as: 'no_donation'
     get 'donations/success' => 'donations#success', as: 'success'
     get 'donations/cancel' => 'donations#cancel', as: 'cancel'
+    get 'confirmed' => 'reservations#confirmed', as: 'confirmed'
 
 
     post 'submit-reservation' => 'reservations#submit_confirmed_reservation', as: 'submit'
@@ -55,7 +57,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root 'zones#index'
+    root 'reservations#index'
     resources :zones, except: [ :show ]
     resources :drivers
     resources :donations, only: [ :index, :show ]

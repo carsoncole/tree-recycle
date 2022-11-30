@@ -46,9 +46,9 @@ module ReservationsHelper
 
   def donation_status(reservation)
     return unless reservation.persisted?
-    status = if reservation.stripe_charge_amount.present?
+    status = if reservation.online_donation?
         ['Stripe Donated', 'info']
-      elsif reservation.is_cash_or_check?
+      elsif reservation.cash_or_check_donation?
         ['Cash or Check', 'danger']
       end
     if status

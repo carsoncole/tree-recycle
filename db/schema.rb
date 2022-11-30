@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_29_221454) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_30_072904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -80,7 +80,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_221454) do
     t.string "country", default: "United States"
     t.string "notes"
     t.decimal "stripe_charge_amount"
-    t.boolean "is_cash_or_check"
     t.decimal "latitude"
     t.decimal "longitude"
     t.bigint "route_id"
@@ -94,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_221454) do
     t.integer "heard_about_source"
     t.string "unit"
     t.boolean "no_sms"
+    t.integer "donation"
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["route_id"], name: "index_reservations_on_route_id"
     t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"

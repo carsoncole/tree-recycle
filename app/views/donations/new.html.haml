@@ -1,11 +1,29 @@
-%h1.donation.text-center Please consider a donation
-
-#view-reservation= link_to "View reservation", reservation_path(@reservation)
-
-%ul.mb-5
-  %li Our service is free, but your donation provides opportunities for Scouts from boys Troop 1564 and girls Troop 1804 to go to camp and to get training in valuable lifelong skills
-  %li We accept online donations (credit, debit, Apple and Google Pay) or donations at pick-up (cash or check)
-  %li Clicking a donation option will complete the registration process
+#donation.container
+  .row
+    .col-lg-12
+      %h1.donation.text-center.mb-3 Please consider a donation
 
 
-= render 'form'
+  .row
+    .col-lg-10.offset-lg-1
+      %p
+        Our service is free, but your donation provides opportunities for Scouts in Troop 1564 for boys, and Troop 1804 for girls, to go to camp and other outdoor adventures, with training in valuable lifelong skills.
+        / %li We accept online donations (credit, debit, Apple and Google Pay) or donations at pick-up (cash or check)
+
+  .row
+    .col-lg-12.text-center.mb-2
+      = image_tag "bsa-logo.png", width: '100px'
+
+  .row
+    .col-lg-12
+
+      .positive-push Clicking a donation option will complete the registration process
+
+
+  = render 'form'
+
+
+  .row
+    .col-lg-12
+      %section
+        #view-reservation= link_to "View reservation", reservation_path(@reservation)

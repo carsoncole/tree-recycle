@@ -184,11 +184,8 @@
           %h2 Donations
           %table.table.table-borderless.reservation
             %tr
-              %th Online donated
-              %td= @reservation.online_donated? ? 'Yes' : 'No'
-            %tr
-              %th Cash or check
-              %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
+              %th Donation type
+              %td= @reservation&.donation&.humanize
 
 
           - if @reservation.online_donated?

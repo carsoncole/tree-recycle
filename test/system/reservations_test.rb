@@ -19,11 +19,9 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "reservation_email", with: reservation.email
     click_on "Register your address"
 
-    assert_selector "#flash", text: "You are all set! Your pickup reservation is confirmed."
-
     assert_selector "h1", text: "Please consider a donation"
-    assert_selector "h5", text: "Donate online"
-    assert_selector "h5", text: "Donate at pick-up"
+    assert_selector "h3", text: "Donate online"
+    assert_selector "h3", text: "Donate at pick-up"
     click_on "Donate at pick-up"
     assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
@@ -108,9 +106,9 @@ class ReservationsTest < ApplicationSystemTestCase
     assert_text "Reservation was successfully updated and is confirmed for pick up."
     assert_selector "h1", text: "Please consider a donation"
 
-    click_on "Donate at pick-up"
-    assert_text "Your tree pick-up is confirmed. You can leave your donation with your tree."
-    assert_text "1760 SUSAN PL NW, Bainbridge Island, Washington"
+    click_on "No donation"
+
+    assert_selector "h1", text: "Tree Pickup"
   end
 
   test "reservations are closed" do

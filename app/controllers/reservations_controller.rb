@@ -1,6 +1,6 @@
 
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_confirmed_reservation update destroy ]
+  before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_confirmed_reservation update destroy confirmed ]
 
   def show
   end
@@ -56,7 +56,7 @@ class ReservationsController < ApplicationController
     elsif @reservation.save
       if @reservation.geocoded?
         @reservation.pending_pickup!
-        redirect_to new_reservation_donation_url(@reservation), notice: 'You are all set! Your pickup reservation is confirmed.'
+        redirect_to new_reservation_donation_url(@reservation)
       else
         redirect_to reservation_address_verification_url(@reservation)
       end
@@ -86,6 +86,11 @@ class ReservationsController < ApplicationController
   def submit_confirmed_reservation
     @reservation.pending_pickup!
     redirect_to new_reservation_donation_url(@reservation)
+  end
+
+  def confirmed
+    @site_title = 'Tree pickup confirmed'
+    render :show
   end
 
   def destroy

@@ -1,12 +1,13 @@
 class DonationsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :set_reservation, only: %i[ create new cash_or_check]
+  before_action :set_reservation, only: %i[ create new cash_or_check no_donation ]
 
   def new
   end
 
   def create
+    @reservation.online_donation!
     @session = Stripe::Checkout::Session.create({
       line_items: [{
           price: Rails.env.production? ? STRIPE_PRODUCTION_PRICE_ITEM : STRIPE_DEVELOPMENT_PRICE_ITEM,
@@ -36,8 +37,13 @@ class DonationsController < ApplicationController
   end
 
   def cash_or_check
-    @reservation.update(is_cash_or_check: true)
-    redirect_to reservation_url(@reservation), notice: "Your tree pick-up is confirmed. You can leave your donation with your tree."
+    @reservation.cash_or_check_donation!
+    redirect_to reservation_confirmed_url(@reservation), notice: "Your tree pick-up is confirmed. You can leave your donation with your tree."
+  end
+
+  def no_donation
+    @reservation.no_donation!
+    redirect_to reservation_confirmed_url(@reservation)
   end
 
   def stripe_webhook

@@ -2,7 +2,7 @@ $scout-red: #CE1126;
 $scout-blue: #003F87;
 
 @mixin font-important {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -265,16 +265,9 @@ table.reservation {
   }
 }
 .navbar-brand {
-  font-size: 1.6em;
+  font-size: 1.2em;
   font-weight: 800;
   text-transform: camelcase
-}
-
-
-#view-reservation {
-  text-align: center;
-  margin-bottom: 2em;
-  font-weight: 700;
 }
 
 
@@ -501,6 +494,35 @@ nav.navbar {
   }
 }
 
+#donation {
+  .h3 {
+    font-size: 1.6em;
+    margin-bottom: 1em;
+    line-height: 1.5;
+  }
+  .positive-push {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 1.4em;
+    color: $scout-red;
+  }
+  .thinking-about-it {
+  }
+  .action {
+     text-align: center;
+  }
+  section {
+    border-top: 1px solid lighten(#000, 70%);
+    padding-top: 1.2em;
+    margin-bottom: 1.5em;
+  }
+  #view-reservation {
+    text-align: center;
+    margin-bottom: 1.66em;
+    font-weight: 700;
+  }
+}
 
 .important-message {
   padding: 0.75em 1.5em;
@@ -673,6 +695,14 @@ nav.navbar {
   }
   #home h1 {
     margin-top: 1em;
+  }
+  .navbar-brand {
+    font-size: 1.6em;
+  }
+  #donation {
+    .thinking-about-it {
+      text-align: center;
+    }
   }
 }
 

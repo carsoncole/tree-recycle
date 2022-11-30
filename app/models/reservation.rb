@@ -10,9 +10,10 @@ class Reservation < ApplicationRecord
   has_many :donations, dependent: :nullify
   has_many :logs, dependent: :destroy
 
+  enum :donation, { online_donation: 1, cash_or_check_donation: 2, no_donation: 3 }
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
 
-  enum :heard_about_source, { facebook: 1, nextdoor: 2, roadside_sign: 3, troop_1565_flyer_at_time_of_tree_purchase: 3, word_of_mouth: 4, email_reminder_from_last_year: 5, other: 99 }
+  enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
 
   scope :pending, -> { where.not(status: ['archived', 'cancelled', 'unconfirmed'])}
   scope :unrouted, -> { where(route_id: nil) }
@@ -52,7 +53,7 @@ class Reservation < ApplicationRecord
   end
 
   def donated?
-    stripe_charge_amount.present? || is_cash_or_check?
+    stripe_charge_amount.present?
   end
 
   def online_donated?
