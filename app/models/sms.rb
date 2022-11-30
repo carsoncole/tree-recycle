@@ -38,4 +38,13 @@ class Sms
 
   end
 
+  def send_without_log(phone, message)
+    from_number = '+15005550006' if Rails.env.test?
+    response = client.messages.create(
+      from: Setting.first.sms_from_phone,
+      to: phone,
+      body: message
+    )
+  end
+
 end
