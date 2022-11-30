@@ -55,6 +55,10 @@ class Reservation < ApplicationRecord
     stripe_charge_amount.present? || is_cash_or_check?
   end
 
+  def online_donated?
+    donations.any?
+  end
+
   def routed?
     route.present?
   end

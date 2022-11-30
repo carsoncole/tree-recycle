@@ -183,25 +183,26 @@
         .col-lg-6
           %h2 Donations
           %table.table.table-borderless.reservation
-            = "No donations" if @donations.empty?
-            - @donations.each do |donation|
-              %tr
-                %th= link_to 'Donation Receipt', admin_donations_path(donation)
-                %td= donation.payment_status.capitalize if donation.payment_status
-                %td= nice_short_date_time(donation.created_at)
-                %td= number_to_currency(donation.amount)
-
-    %section#misc
-      .row
-        .col-lg-3
-        .col-lg-6
-          %h2 Misc
-          %table.table.table-borderless.reservation
             %tr
-              %th Stripe donated
-              %td= @reservation.stripe_charge_amount.present? ? 'Yes' : 'No'
+              %th Online donated
+              %td= @reservation.online_donated? ? 'Yes' : 'No'
             %tr
               %th Cash or check
               %td= @reservation.is_cash_or_check? ? 'Yes' : 'No'
+
+
+          - if @reservation.online_donated?
+            %table.mt-4.table.table-borderless.reservation
+              - @donations.each do |donation|
+                %tr
+                  %th= link_to 'Donation Receipt', admin_donations_path(donation)
+                  %td= donation.payment_status.capitalize if donation.payment_status
+                  %td= nice_short_date_time(donation.created_at)
+                  %td= number_to_currency(donation.amount)
+
+    %section#misc
+
+
+
 
 

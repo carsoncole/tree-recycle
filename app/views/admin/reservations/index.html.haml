@@ -65,7 +65,12 @@
           %tbody
             - @reservations.each do |reservation|
               %tr
-                %td.name= link_to reservation.name, admin_reservation_path(reservation)
+                %td.name
+                  = link_to reservation.name, admin_reservation_path(reservation)
+                  - if reservation.online_donated?
+                    %i.fa-solid.fa-dollar-sign.fa-lg
+                  - elsif reservation.is_cash_or_check?
+                    %i.fa-solid.fa-money-check-dollar.fa-lg
                 %td.status= reservation_status(reservation)
                 %td.map-links
                   - if reservation.coordinates.present?
