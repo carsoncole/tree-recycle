@@ -9,7 +9,7 @@
 
     .container.main
       .row
-        - if [ 'reservations' , 'donations' ].include?(controller_name) && ['new'].include?(action_name)
+        - if [ 'reservations' , 'donations' ].include?(controller_name) && ['new', 'success'].include?(action_name)
           .col-xl-3
             = render 'shared/side_info'
           .col-xl-9
