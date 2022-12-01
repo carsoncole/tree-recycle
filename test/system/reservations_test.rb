@@ -9,6 +9,7 @@ class ReservationsTest < ApplicationSystemTestCase
     visit '/'
     click_on "Reserve a tree pickup"
 
+    # check side info
     within "#side-info" do
       assert_selector "h1", text: "Summary"
       assert_no_selector "h2", text: "Address"
@@ -18,6 +19,7 @@ class ReservationsTest < ApplicationSystemTestCase
       assert_selector "#pickup-time", text: "8:00 AM - 2:00 PM"
     end
 
+    # fill out reservation form
     within "#new-reservation" do 
       fill_in "reservation_name", with: reservation.name
       fill_in "reservation_street", with: reservation.street
@@ -25,10 +27,15 @@ class ReservationsTest < ApplicationSystemTestCase
       fill_in "reservation_phone", with: '206-555-1212'
       fill_in "reservation_notes", with: Faker::Lorem.sentences(number: 3).join(" ")
       fill_in "Where will your tree be?", with: 'end of driveway'
+
       find('#heard-about-sources option', :text => 'Facebook').click
-      click_on "Register your address"    
+      select 'Word Of Mouth', from: 'heard-about-sources'
+
+      # register
+      click_on "Register your address"
     end
 
+    # review summery of reservation
     within "#side-info" do
       assert_selector "h1", text: "Summary"
       assert_selector "h2", text: "Address"
@@ -39,33 +46,40 @@ class ReservationsTest < ApplicationSystemTestCase
       assert_selector ".email", text: reservation.email
     end
 
+    # view the donation option buttons
     within '#donation' do 
       assert_button "Donate online"
       assert_button "Donate at pick-up"
       assert_button "No donation"
     end
 
+    # Choose 'No donation'
     click_on 'No donation'
     assert_selector 'h1', text: 'Tree Pickup'
     assert_selector '.important-message', text: 'This reservation is scheduled for pickup.'
 
+    # go back to the donate page
     within '#reservation' do 
       click_on 'Donate'
     end
-
     assert_selector 'h1', text: 'Please consider a donation'
+
+    # choose 'Donate at pickup'
     click_on 'Donate at pick-up'
     assert_selector 'h1', text: 'Tree Pickup'
     assert_selector '#flash', text: 'Your tree pick-up is confirmed. You can leave your donation with your tree.'
 
-    within '#reservation' do 
-      click_on 'Donate'
-    end
-    click_on 'Donate online'
+    # check underlying data
+    assert submitted_reservation = Reservation.find_by_email(reservation.email)
+    assert submitted_reservation.pending_pickup?
+    assert_equal reservation.street, submitted_reservation.street
+    assert 'end of driveway', submitted_reservation.notes
+    assert submitted_reservation.word_of_mouth?
+    assert submitted_reservation.cash_or_check_donation?
+
 
     #OPTIMIZE add stripe tests
   end
-
 
   test "creating a valid minimal reservation with good address and online donation" do
     reservation = build_stubbed(:reservation)
@@ -76,6 +90,8 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: reservation.street
     fill_in "reservation_email", with: reservation.email
+    select 'Roadside Sign', from: 'heard-about-sources'
+
     click_on "Register your address"
 
     click_on "Donate at pick-up"
@@ -90,6 +106,7 @@ class ReservationsTest < ApplicationSystemTestCase
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: 'gobbly gook'
     fill_in "reservation_email", with: reservation.email
+    select 'Christmas Tree Lot Flyer', from: 'heard-about-sources'
     click_on "Register your address"
     sleep 1
 
@@ -126,12 +143,9 @@ class ReservationsTest < ApplicationSystemTestCase
   end
 
   test "reservations are closed" do
-    visit root_url
-    click_on "New reservation"
-    assert_text "Provide the address where the tree will be located and any helpful notes"
-
     Setting.first_or_create.update(is_reservations_open: false)
 
+    visit '/'
     click_on "New reservation"
     within("#flash") do
       assert_text "Reservations are CLOSED."
