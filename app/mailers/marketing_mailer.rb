@@ -1,9 +1,17 @@
 class MarketingMailer < ApplicationMailer
+  include ApplicationHelper
   before_action :set_reservation
   after_action :stop_delivery_if_disabled
 
   def set_reservation
     @reservation = params[:reservation]
+  end
+
+  # redundant, but is a safety check
+  def stop_delivery_if_disabled
+    if !setting.is_emailing_enabled? || @reservation&.no_emails?
+      mail.perform_deliveries = false
+    end
   end
 
   # Email #1 to prior year reservations
@@ -21,5 +29,4 @@ class MarketingMailer < ApplicationMailer
     mail(to: @reservation.email, subject: "Tree recycling last reminder for #{nice_long_date(setting.pickup_date_and_time)}")
     @reservation.logs.create(message: 'Marketing email 2 sent to archived')
   end
-
 end

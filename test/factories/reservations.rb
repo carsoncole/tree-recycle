@@ -23,8 +23,10 @@ FactoryBot.define do
       route
     end
 
-    factory :archived_reservation do
+    factory :archived_with_coordinates_reservation do
       status { :archived }
+      latitude { 47.6259654 }
+      longitude { -122.517533 }
     end
   end
 end

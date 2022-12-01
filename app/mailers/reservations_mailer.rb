@@ -28,8 +28,6 @@ class ReservationsMailer < ApplicationMailer
     @reservation.logs.create(message: 'Pick up reminder email sent.')
   end
 
-
-
   def cancelled_reservation_email
     return if @reservation.no_emails? || !setting.is_emailing_enabled
     mail(to: @reservation.email, subject: "Your tree pickup reservation has been cancelled")
