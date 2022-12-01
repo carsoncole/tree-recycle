@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  get 'errors/not_found'
-  get 'errors/internal_server_error'
+  match "(*any)",
+    to: redirect(subdomain: ""),
+    via: :all,
+    constraints: { subdomain: "www" }
+
   root 'home#index'
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
