@@ -53,7 +53,7 @@
                   %i.fa-solid.fa-bolt.fa-lg
                   Process routes
 
-      .table-responsive
+      .table-responsive-xxl
         %table.table#reservations-table
           %thead
             %tr
@@ -73,8 +73,6 @@
                     %i.fa-solid.fa-money-check-dollar.fa-lg
                   - elsif reservation.no_donation?
                     %i.fa-solid.fa-sack-xmark
-                  - if reservation.newspaper?
-                    %i.fa-solid.fa-newspaper
                 %td.status= reservation_status(reservation)
                 %td.map-links
                   - if reservation.coordinates.present?

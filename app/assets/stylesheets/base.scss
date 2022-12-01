@@ -208,8 +208,11 @@ table.settings {
     &.status {
       min-width: 11em;
     }
-    &.street {
-      min-width: 14em;
+    &.map-links {
+      min-width: 17em;
+    }
+    &.route {
+      min-width: 13em;
     }
   }
 }
@@ -241,7 +244,7 @@ table.settings {
 i {
   &.icon {
   margin-right: 0em;
-  margin-left: 1em;
+  margin-left: 0.25em;
   }
   &.lg {
     font-size: 1.5em;
