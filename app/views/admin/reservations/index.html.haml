@@ -9,7 +9,7 @@
           = Route.find(params[:route_id]).name
 
   .row
-    .col-lg-2 
+    .col-md-2 
       %section.menu
         %h3 Status
         = link_to "Pending pickup", admin_reservations_path, class: 'link'
@@ -36,7 +36,7 @@
 
 
 
-    .col-lg-10
+    .col-md-10
       = render 'search'
 
 
@@ -73,6 +73,8 @@
                     %i.fa-solid.fa-money-check-dollar.fa-lg
                   - elsif reservation.no_donation?
                     %i.fa-solid.fa-sack-xmark
+                  - if reservation.newspaper?
+                    %i.fa-solid.fa-newspaper
                 %td.status= reservation_status(reservation)
                 %td.map-links
                   - if reservation.coordinates.present?
