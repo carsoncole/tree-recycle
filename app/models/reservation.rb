@@ -52,8 +52,8 @@ class Reservation < ApplicationRecord
     end
   end
 
-  def donated?
-    stripe_charge_amount.present?
+  def total_donations_amount
+    donations.sum(:amount)
   end
 
   def online_donated?

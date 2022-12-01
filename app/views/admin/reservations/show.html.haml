@@ -183,6 +183,9 @@
         .col-lg-6
           %h2 Donations
           %table.table.table-borderless.reservation
+            %tr 
+              %th Total donations
+              %td= number_to_currency(@reservation.total_donations_amount)
             %tr
               %th Donation type
               %td= @reservation&.donation&.humanize
@@ -192,7 +195,7 @@
             %table.mt-4.table.table-borderless.reservation
               - @donations.each do |donation|
                 %tr
-                  %th= link_to 'Donation Receipt', admin_donations_path(donation)
+                  %th= link_to 'Donation', admin_donation_path(donation)
                   %td= donation.payment_status.capitalize if donation.payment_status
                   %td= nice_short_date_time(donation.created_at)
                   %td= number_to_currency(donation.amount)

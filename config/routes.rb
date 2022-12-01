@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   match "(*any)",
     to: redirect(subdomain: ""),
     via: :all,
-    constraints: { subdomain: "www" }
+    constraints: { subdomain: "www" } unless Rails.env.test?
 
   root 'home#index'
 

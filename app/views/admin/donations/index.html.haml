@@ -5,6 +5,10 @@
         %i.fa-solid.fa-credit-card
         Donations
 
+      %p.text-end
+        %span.fw-bold Total donated:
+        = number_to_currency(Donation.sum(:amount))
+
 
   .row
     .col-lg-8.offset-2
@@ -13,17 +17,17 @@
           %thead
             %tr
               %th
-              %th Reservation
+              %th.name Name
               %th Amount
               %th Status
-              %th Payment status
               %th
           %tbody
             - @donations.each do |donation|
               %tr
                 %td= link_to donation.id, [:admin, donation]
-                %td= link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
+                %td.name= link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
                 %td= number_to_currency donation.amount
                 %td= donation&.status&.capitalize
-                %td= donation&.payment_status&.capitalize
                 %td= nice_short_date_time(donation.created_at)
+
+      .pagination= pagy_bootstrap_nav(@pagy).html_safe

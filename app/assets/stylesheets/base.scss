@@ -217,6 +217,19 @@ table.settings {
   }
 }
 
+#donation-table {
+  th {
+    min-width: 10em;
+  }
+}
+#donations-table {
+  th, td {
+    &.name {
+      min-width: 11em;
+    }
+  }
+}
+
 #about {
   #organization {
     text-align: center;
