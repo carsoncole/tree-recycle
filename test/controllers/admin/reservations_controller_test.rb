@@ -78,10 +78,18 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy reservation" do
     assert_difference("Reservation.pending_pickup.count", -1) do
+      delete admin_reservation_url(@reservation, as: @administrator)
+    end
+
+    assert_redirected_to admin_reservations_url
+  end
+
+  test "should not destroy reservation as editor" do
+    assert_difference("Reservation.pending_pickup.count", 0) do
       delete admin_reservation_url(@reservation, as: @editor)
     end
 
-    assert_redirected_to admin_root_url
+    assert_response :unauthorized
   end
 
   test "should not destroy reservation as viewer" do
@@ -91,15 +99,36 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
+  test "archiving as editor or administrator" do 
+    post admin_reservation_archive_path(@reservation, as: @editor)
+    assert @reservation.reload.archived?
+
+    @reservation.unconfirmed!
+
+    post admin_reservation_archive_path(@reservation, as: @editor)
+    assert @reservation.reload.archived?
+  end
+
+  test "archiving as editor" do 
+    post admin_reservation_archive_path(@reservation, as: @editor)
+    assert @reservation.reload.archived?
+  end
+
+  test "not archiving as viewer" do 
+    post admin_reservation_archive_path(@reservation, as: @viewer)
+    assert_not @reservation.reload.archived?
+  end
+
+
   test "should destroy reservation as admin, with reservations closed" do 
     Setting.first_or_create.update(is_reservations_open: false)
     new_reservation = create(:reservation_with_coordinates, is_routed: false, status: :pending_pickup)
 
-    assert_difference("Reservation.pending_pickup.count", -1) do # reservations are still changeable for admin
-      delete admin_reservation_url(new_reservation, as: @editor)
+    assert_difference("Reservation.count", -1) do # reservations are still changeable for admin
+      delete admin_reservation_url(new_reservation, as: @administrator)
     end
 
-    assert_redirected_to admin_root_url
+    assert_redirected_to admin_reservations_url
   end
 
   test "mapping of a route and all" do 

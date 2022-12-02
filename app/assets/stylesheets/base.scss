@@ -387,6 +387,17 @@ nav.navbar {
   }
 }
 
+.bi {
+  font-size: 1rem;
+  vertical-align: top;
+  &.success {
+    color: rgb(63, 164, 13);
+  }
+  &.danger {
+    color: $scout-red;
+  }
+}
+
 #side-info {
   display: none;
   .section {

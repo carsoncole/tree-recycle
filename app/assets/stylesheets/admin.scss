@@ -11,7 +11,7 @@ body#admin {
 
 #admin-reservation {
   header {
-    margin-bottom: 1em;
+    margin-bottom: 3em;
     h1 {
       margin-bottom: 0;
       font-size: 2.7em;
@@ -53,13 +53,13 @@ body#admin {
   }
 
   .status {
-    float: right;
     display: block;
-    padding: 0.3em 2em 0.3em 0em !important;
-    width: 15em;
-    text-align: right;
-    font-size: 2em;
-    font-weight: 700;
+    padding-top: 0.7em;
+    padding-left: 1em;
+    padding-bottom: 2.7em;
+    margin-bottom: 1em;
+    font-size: 3em;
+    font-weight: 800;
     text-transform: uppercase;
     vertical-align: middle;
 
@@ -69,13 +69,25 @@ body#admin {
     margin-bottom: 1em;
   }
 
+  .main {
+    border-left: 1px solid #d2d2d7;
+    padding-left: 2em; 
+  }
+
   h2 {
+    font-size: 2em;
+ 
+    margin-bottom: 0.5em;
+    font-weight: 800;
+  }
+
+  h3 {
     border-bottom: 1px solid #d2d2d7;
-    padding-bottom: 0.75em;
-    margin-bottom: 1em;
+    padding-bottom: 0.6em;
+    margin-bottom: .8em;
     line-height: 1.125;
     font-weight: 600;
-    font-size: 1.8em;
+    font-size: 1.5em;
   }
   td {
     text-align: right;

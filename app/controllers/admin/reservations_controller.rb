@@ -55,10 +55,22 @@ class Admin::ReservationsController < Admin::AdminController
     @donations = @reservation.donations
   end
 
-  def destroy
+  def archive
     if current_user.editor? || current_user.administrator?
-      @reservation.cancelled!
+      @reservation.archived!
       redirect_back(fallback_location: admin_root_path, notice: "Reservation was successfully cancelled.")
+    else
+      @logs = @reservation.logs
+      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
+      @donations = @reservation.donations
+      render :show, status: :unauthorized
+    end 
+  end
+
+  def destroy
+    if current_user.administrator?
+      @reservation.destroy
+      redirect_to admin_reservations_path, notice: "Reservation was successfully destroyed."
     else
       @logs = @reservation.logs
       @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact

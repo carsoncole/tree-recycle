@@ -90,6 +90,7 @@
               %tr
                 %td.name
                   %i.fa-solid.fa-tree
+                  &nbsp;
                   = link_to reservation.name, admin_reservation_path(reservation)
                   - if reservation.online_donation?
                     %i.fa-brands.fa-cc-stripe.fa-lg

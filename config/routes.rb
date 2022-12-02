@@ -67,10 +67,11 @@ Rails.application.routes.draw do
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update ]
     delete 'reservations/archive-all' => 'reservations#archive_all', as: 'archive_all'
-    resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
+    resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
       post 'process-geocode' => 'reservations#process_geocode', as: 'process_geocode'
+      post 'archive' => 'reservations#archive', as: 'archive'
     end
     get '/routing' => 'zones#index', as: 'routing'
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'

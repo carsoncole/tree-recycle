@@ -10,9 +10,9 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
 
     visit admin_reservation_path(@reservation)
     assert_selector "h1", text: @reservation.street
-    assert_selector "h2", text: "Address"
-    assert_selector "h2", text: "Contact"
-    assert_selector "h2", text: "Routing"
+    assert_selector "h3", text: "Address"
+    assert_selector "h3", text: "Contact"
+    assert_selector "h3", text: "Routing"
   end
 
   test "editing a reservation" do
