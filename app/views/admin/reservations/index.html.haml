@@ -14,31 +14,31 @@
         %h3 Status
         = link_to "Pending pickup", admin_reservations_path, class: 'link'
         = surround("(",")") do 
-          = Reservation.pending_pickup.count
+          = @count_pending_pickups
         %br
         = link_to "Un-Routed", admin_reservations_path(unrouted: true), class: 'link'
         = surround("(",")") do 
-          = Reservation.not_archived.unrouted.count
+          = @count_not_routed
         %br
         = link_to "Picked up", admin_reservations_path(picked_up: true), class: 'link'
         = surround("(",")") do 
-          = Reservation.picked_up.count
+          = @count_picked_up
         %br
         = link_to "Missing", admin_reservations_path(missing: true), class: 'link'
         = surround("(",")") do 
-          = Reservation.missing.count
+          = @count_missing
         %br
         = link_to "Cancelled", admin_reservations_path(cancelled: true), class: 'link'
         = surround("(",")") do 
-          = Reservation.cancelled.count
+          = @count_cancelled
         %br
         = link_to "Archived", admin_reservations_path(archived: true), class: 'link'
         = surround("(",")") do 
-          = Reservation.archived.count
+          = @count_archived
         %br
         = link_to "Unconfirmed", admin_reservations_path(unconfirmed: true), class: 'link'
         = surround("(",")") do 
-          = Reservation.unconfirmed.count
+          = @count_unconfirmed
         %br
         = link_to "All", admin_reservations_path(all: true), class: 'link'
 

@@ -22,6 +22,13 @@ class Admin::ReservationsController < Admin::AdminController
     else
       @pagy, @reservations = pagy(Reservation.not_archived.pending_pickup.includes(:route).order(:street_name, :house_number))
     end
+    @count_pending_pickups = Reservation.pending_pickup.count
+    @count_not_routed = Reservation.not_archived.unrouted.count
+    @count_picked_up = Reservation.picked_up.count
+    @count_missing = Reservation.missing.count
+    @count_cancelled = Reservation.cancelled.count
+    @count_archived = Reservation.archived.count
+    @count_unconfirmed = Reservation.unconfirmed.count
   end
 
   def edit
