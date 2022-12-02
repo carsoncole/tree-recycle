@@ -4,23 +4,23 @@ class Admin::ReservationsController < Admin::AdminController
 
   def index
     if params[:route_id]
-      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(:street_name, :house_number).where(route_id: params[:route_id]))
+      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(created_at: :desc).where(route_id: params[:route_id]))
     elsif params[:picked_up]
-      @pagy, @reservations = pagy(Reservation.not_archived.picked_up.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.picked_up.includes(:route).order(created_at: :desc))
     elsif params[:unrouted]
-      @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(created_at: :desc))
     elsif params[:cancelled]
-      @pagy, @reservations = pagy(Reservation.not_archived.cancelled.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.cancelled.includes(:route).order(created_at: :desc))
     elsif params[:missing]      
-      @pagy, @reservations = pagy(Reservation.not_archived.missing.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.missing.includes(:route).order(created_at: :desc))
     elsif params[:unconfirmed]      
-      @pagy, @reservations = pagy(Reservation.not_archived.unconfirmed.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.unconfirmed.includes(:route).order(created_at: :desc))
     elsif params[:all]
-      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(created_at: :desc).order(created_at: :asc))
     elsif params[:archived]
-      @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(:street_name, :house_number).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(created_at: :desc).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.not_archived.pending_pickup.includes(:route).order(:street_name, :house_number))
+      @pagy, @reservations = pagy(Reservation.not_archived.pending_pickup.includes(:route).order(created_at: :desc))
     end
     @count_pending_pickups = Reservation.pending_pickup.count
     @count_not_routed = Reservation.not_archived.unrouted.count
