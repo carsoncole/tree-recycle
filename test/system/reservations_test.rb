@@ -93,6 +93,7 @@ class ReservationsTest < ApplicationSystemTestCase
     select 'Roadside Sign', from: 'heard-about-sources'
 
     click_on "Register your address"
+    sleep 1
 
     click_on "Donate at pick-up"
   end
@@ -133,6 +134,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     assert_text "Ouch! We are having issues and"
     click_on "Use this corrected address"
+    sleep 1
 
     assert_text "Reservation was successfully updated and is confirmed for pick up."
     assert_selector "h1", text: "Please consider a donation"

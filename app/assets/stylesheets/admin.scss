@@ -1,0 +1,119 @@
+body#admin {
+  font-size: 14px;
+}
+
+#admin-reservation {
+  header {
+    margin-bottom: 1em;
+    h1 {
+      margin-bottom: 0;
+      font-size: 2.7em;
+    }
+    padding-bottom: 1em;
+    border-bottom: 1px solid #d2d2d7;
+  }
+  .top {
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  #direction-links {
+    margin: 0 auto 1em auto;
+    display: inline-block;
+    border: 2px solid lighten(#000, 60%);
+    border-radius: 5px;
+    padding: 0.75em ;
+    text-align: center;
+    .title {
+      font-weight: 800;
+      color: lighten(#000, 60%);
+    }
+    .map-link {
+      font-size: 1.5em;
+      display: inline-block;
+      margin: 0 0.75em 0 0.75em;
+    }
+
+  }
+
+  table.reservation {
+    margin-bottom: 2em;
+    th {
+      font-weight: 400;
+    }
+    td {
+      font-weight: 700;
+    }
+  }
+
+  .status {
+    float: right;
+    display: block;
+    padding: 0.3em 2em 0.3em 0em !important;
+    width: 15em;
+    text-align: right;
+    font-size: 2em;
+    font-weight: 700;
+    text-transform: uppercase;
+    vertical-align: middle;
+
+  }
+
+  section {
+    margin-bottom: 1em;
+  }
+
+  h2 {
+    border-bottom: 1px solid #d2d2d7;
+    padding-bottom: 0.75em;
+    margin-bottom: 1em;
+    line-height: 1.125;
+    font-weight: 600;
+    font-size: 1.8em;
+  }
+  td {
+    text-align: right;
+  }
+}
+
+
+#reservations {
+  section.menu {
+    margin-bottom: 2em;
+  }
+  h3 {
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1em;
+  }
+  .link {
+    line-height: 2;
+  }
+  .status {
+    padding: 0.2em 1em;
+    font-weight: 700;
+  }
+}
+
+
+#reservations-table {
+  margin-bottom: 2.666em;
+  th,td {
+    &.actions {
+      text-align: right;
+      min-width: 12em;
+    }
+    &.name {
+      min-width: 12em;
+    }
+    &.status {
+      min-width: 11em;
+    }
+    &.map-links {
+      min-width: 17em;
+    }
+    &.route {
+      min-width: 13em;
+    }
+  }
+}

@@ -179,43 +179,6 @@ table.settings {
   }
 }
 
-#reservations {
-  section.menu {
-    margin-bottom: 2em;
-  }
-  h3 {
-    font-size: 1em;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 1em;
-  }
-  .link {
-    line-height: 2;
-  }
-}
-
-
-#reservations-table {
-  margin-bottom: 2.666em;
-  th,td {
-    &.actions {
-      text-align: right;
-      min-width: 12em;
-    }
-    &.name {
-      min-width: 12em;
-    }
-    &.status {
-      min-width: 11em;
-    }
-    &.map-links {
-      min-width: 17em;
-    }
-    &.route {
-      min-width: 13em;
-    }
-  }
-}
 
 #donation-table {
   th {
@@ -304,54 +267,7 @@ table.reservation {
   }
 }
 
-#admin-reservation {
-  table {
-    margin-bottom: 2em;
 
-  }
-  header {
-    text-align: center;
-    margin-bottom: 3em;
-    h1 {
-      margin-bottom: 0;
-    }
-  }
-
-  #direction-links {
-    margin: 0 auto 1em auto;
-    display: inline-block;
-    border: 2px solid lighten(#000, 60%);
-    border-radius: 5px;
-    padding: 0.75em ;
-    text-align: center;
-    .title {
-      font-weight: 800;
-      color: lighten(#000, 60%);
-    }
-    .map-link {
-      font-size: 1.5em;
-      display: inline-block;
-      margin: 0 0.75em 0 0.75em;
-    }
-  }
-
-
-  section {
-    border-top: 1px solid #d2d2d7;
-    margin-bottom: 5em;
-  }
-
-  h2 {
-    margin-bottom: 2.666em;
-    line-height: 1.125;
-    font-weight: 600;
-    padding-top: 1em;
-    font-size: 2em;
-  }
-  td {
-    text-align: right;
-  }
-}
 .additional_info {
   display: inline;
   color: #aaa;
@@ -495,7 +411,6 @@ nav.navbar {
 }
 
 .status {
-  padding: 0.2em 0.5em;
   &.primary {
     background-color: #cfe2ff;
     color: #084298;

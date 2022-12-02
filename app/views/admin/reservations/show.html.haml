@@ -1,28 +1,31 @@
-.container-fluid
-  #admin-reservation
+#admin-reservation
+  .container-fluid
+
     .row
-      .col-lg-3
-      .col-lg-6
+      .col-lg-12
         %header
+          = reservation_status(@reservation)
+          .top
+            %i.fa-solid.fa-tree
+            Reservation
+
           %h1= @reservation.street
-          - if current_user.editor? || current_user.administrator?
-            %p.mb-1
-              = link_to "Edit", edit_admin_reservation_path(@reservation), id: 'edit-link'
+
+    .row
+      .col-lg-12
+        - if current_user.editor? || current_user.administrator?
+          %p.mb-1
+            = link_to edit_admin_reservation_path(@reservation), id: 'edit-link' do
+              %i.fa-solid.fa-pencil
+              Edit
 
 
-          .text-center.mb-2#reservation-status
-            = reservation_status(@reservation)
-
-
-          = turbo_frame_tag @reservation do
-            .div
-              = link_to "View Log", admin_reservation_logs_path(@reservation)
 
     %section#reservation
       .row
         .col-lg-3
         .col-lg-6
-          %h2 Reservation
+          %h2 Address
           %table.table.table-borderless.reservation
             %tr
               %th Name
@@ -61,7 +64,7 @@
       .row
         .col-lg-3
         .col-lg-6
-          %h2 Contact details
+          %h2 Contact
           %table.table.table-borderless.reservation
             %tr
               %th Email
@@ -88,7 +91,7 @@
       .row
         .col-lg-3
         .col-lg-6          
-          %h2 Delivery
+          %h2 Routing
           %table.table.table-borderless.reservation
             %tr
               %th Street
@@ -106,14 +109,17 @@
                     = link_to @reservation&.route&.name, admin_route_map_path(@reservation.route)
                   - else
                     No Route set
+                  - if !@reservation.is_routed
+                    .badge.bg-warning Manual Routing
 
 
-
-                = form_for [:admin, @reservation] do |f|
-                  .mb-2
-                    = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
-                  - if current_user.editor? || current_user.administrator?
-                    = f.submit 'Update Route', class: 'btn btn-primary'
+                .row
+                  .col-lg-8.offset-lg-4
+                    = form_for [:admin, @reservation] do |f|
+                      .mb-2
+                        = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
+                      - if current_user.editor? || current_user.administrator?
+                        = f.submit 'Update Route', class: 'btn btn-primary'
 
             %tr
               %th Latitude
@@ -121,14 +127,6 @@
             %tr
               %th Longitude
               %td= @reservation.longitude
-
-            %tr
-              %th Auto routed?
-              %td
-                - if @reservation.is_routed?
-                  Yes
-                - else
-                  No
             %tr 
               %th Geocode 
               %td
@@ -204,5 +202,7 @@
 
 
 
-
+  = turbo_frame_tag @reservation do
+    .div
+      = link_to "View Log", admin_reservation_logs_path(@reservation)
 

@@ -9,7 +9,7 @@
           = Route.find(params[:route_id]).name
 
   .row
-    .col-md-2 
+    .col-lg-2
       %section.menu
         %h3 Status
         = link_to "Pending pickup", admin_reservations_path, class: 'link'
@@ -36,22 +36,23 @@
 
 
 
-    .col-md-10
-      = render 'search'
-
-
-      - if current_user.editor? || current_user.administrator?
-        .admin-nav
-          %nav
-            %ul.nav.justify-content-end
-              %li.nav-item
-                = link_to new_reservation_path, class: 'nav-link' do
-                  %i.fa-solid.fa-plus.fa-lg
-                  Reservation
-              %li.nav-item
-                = button_to admin_process_all_routes_path, class: 'btn btn-warning btn-sm' do
-                  %i.fa-solid.fa-bolt.fa-lg
-                  Process routes
+    .col-lg-10
+      .row
+        .col-lg-8
+          = render 'search'
+        .col-lg-4
+          - if current_user.editor? || current_user.administrator?
+            .admin-nav
+              %nav
+                %ul.nav.justify-content-end
+                  %li.nav-item
+                    = link_to new_reservation_path, class: 'nav-link' do
+                      %i.fa-solid.fa-plus.fa-lg
+                      Reservation
+                  %li.nav-item
+                    = button_to admin_process_all_routes_path, class: 'btn btn-warning btn-sm' do
+                      %i.fa-solid.fa-bolt.fa-lg
+                      Process routes
 
       .table-responsive-xxl
         %table.table#reservations-table
