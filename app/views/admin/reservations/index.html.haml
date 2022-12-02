@@ -55,7 +55,7 @@
         - Zone.all.each do |zone|
           = link_to zone.name, admin_zone_path(zone)
           = surround("(", ")") do 
-            = Reservation.joins(:route).where("routes.zone_id = ?",zone.id).count
+            = Reservation.not_archived.joins(:route).where("routes.zone_id = ?",zone.id).count
           %br
 
     .col-lg-10
