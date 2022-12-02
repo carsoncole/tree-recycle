@@ -13,18 +13,32 @@
       %section.menu
         %h3 Status
         = link_to "Pending pickup", admin_reservations_path, class: 'link'
+        = surround("(",")") do 
+          = Reservation.pending_pickup.count
         %br
         = link_to "Un-Routed", admin_reservations_path(unrouted: true), class: 'link'
+        = surround("(",")") do 
+          = Reservation.not_archived.unrouted.count
         %br
         = link_to "Picked up", admin_reservations_path(picked_up: true), class: 'link'
+        = surround("(",")") do 
+          = Reservation.picked_up.count
         %br
         = link_to "Missing", admin_reservations_path(missing: true), class: 'link'
+        = surround("(",")") do 
+          = Reservation.missing.count
         %br
         = link_to "Cancelled", admin_reservations_path(cancelled: true), class: 'link'
+        = surround("(",")") do 
+          = Reservation.cancelled.count
         %br
         = link_to "Archived", admin_reservations_path(archived: true), class: 'link'
+        = surround("(",")") do 
+          = Reservation.archived.count
         %br
         = link_to "Unconfirmed", admin_reservations_path(unconfirmed: true), class: 'link'
+        = surround("(",")") do 
+          = Reservation.unconfirmed.count
         %br
         = link_to "All", admin_reservations_path(all: true), class: 'link'
 
@@ -32,6 +46,8 @@
         %h3 Routes
         - Route.all.each do |route|
           = link_to route.name, admin_reservations_path(route_id: route.id), class: 'link'
+          = surround("(",")") do 
+            = Reservation.where.not(status: 'archived').where(route: route).count
           %br
 
 
