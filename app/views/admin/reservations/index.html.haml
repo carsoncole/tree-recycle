@@ -72,7 +72,7 @@
                       %i.fa-solid.fa-plus.fa-lg
                       Reservation
                   %li.nav-item
-                    = button_to admin_process_all_routes_path, class: 'btn btn-warning btn-sm' do
+                    = button_to admin_process_all_routes_path, class: 'btn btn-warning btn-sm', data: {  turbo_confirm: 'Are you sure? This will re-route ALL reservations that have auto-routing enabled.'} do
                       %i.fa-solid.fa-bolt.fa-lg
                       Process routes
 
