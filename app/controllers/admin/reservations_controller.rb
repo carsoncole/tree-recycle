@@ -20,7 +20,7 @@ class Admin::ReservationsController < Admin::AdminController
     elsif params[:archived]
       @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(created_at: :desc).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.not_archived.pending_pickup.includes(:route).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(created_at: :desc))
     end
     @count_pending_pickups = Reservation.pending_pickup.count
     @count_not_routed = Reservation.not_archived.unrouted.count
