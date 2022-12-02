@@ -20,6 +20,12 @@ class Admin::ZonesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get show" do
+    create_list(:route_with_coordinates, 3, is_zoned: false, zone_id: @zone.id)
+    get admin_zone_url(@zone, as: @viewer)
+    assert_response :success
+  end
+
   test "should create zone" do
     assert_difference("Zone.count") do
       post admin_zones_url(as: @editor), params: { zone:  attributes_for(:zone)  }

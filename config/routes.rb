@@ -61,7 +61,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'reservations#index'
-    resources :zones, except: [ :show ]
+    resources :zones
     resources :drivers
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]

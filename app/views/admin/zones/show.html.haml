@@ -1,0 +1,16 @@
+#admin-zone.container
+  .row
+    .col-lg-12
+      %h1
+        %i.fa-solid.fa-road 
+        = @zone.name
+        = '- Zone'
+
+
+  .row
+    .col-lg-12
+      - @zone.routes.each do |route|
+        = link_to route.name, admin_reservations_path(route_id: route.id)
+        = surround("(",")") do 
+          = route.reservations.count
+        %br
