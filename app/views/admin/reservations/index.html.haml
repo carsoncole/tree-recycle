@@ -47,7 +47,7 @@
         - Route.all.each do |route|
           = link_to route.name, admin_reservations_path(route_id: route.id), class: 'link'
           = surround("(",")") do 
-            = Reservation.where.not(status: 'archived').where(route: route).count
+            = Reservation.where.not(status: ['archived', 'cancelled']).where(route: route).count
           %br
 
 
@@ -123,4 +123,4 @@
                     = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
                       %i.fa-solid.fa-bolt.icon
 
-      .pagination= pagy_bootstrap_nav(@pagy).html_safe
+      .pagination= pagy_bootstrap_nav(@pagy, pagy_id: 'pagination').html_safe
