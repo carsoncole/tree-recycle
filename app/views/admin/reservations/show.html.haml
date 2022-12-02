@@ -54,6 +54,9 @@
                     - if @reservation.geocoded?
                       &nbsp;
                       %i.bi.bi-check-circle-fill.success
+                    - else
+                      &nbsp;
+                      %i.bi.bi-exclamation-circle-fill.danger
                 %tr
                   %th Notes
                   %td
