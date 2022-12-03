@@ -38,6 +38,10 @@
                     Closed
                     = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
 
+              %tr
+                %th Reservations closed message
+                %td= setting.reservations_closed_message
+
   .row
     .col-lg-10.offset-1
       .section

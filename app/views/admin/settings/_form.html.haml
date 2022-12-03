@@ -28,6 +28,10 @@
   /   = f.label :is_emailing_enabled, class: 'form-check-label'
   /   = f.check_box :is_emailing_enabled, class: 'form-check-input'
   .mb-3
+    = f.label :reservations_closed_message, class: 'form-label'
+    = f.text_field :reservations_closed_message, placeholder: 'Message to show if reservations are closed...', class: 'form-control'
+
+  .mb-3
     = f.label :organization_name, class: 'form-label'
     = f.text_field :organization_name, class: 'form-control'
   .mb-3
