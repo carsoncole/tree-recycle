@@ -13,8 +13,8 @@
             %ul.nav.justify-content-end
               %li.nav-item
                 = link_to edit_admin_setting_path(setting) do
-                  %i.fa-solid.fa-pen.icon
-                  Edit
+                  %i.bi.bi-pencil-fill.icon
+                  EDIT
 
   .row
     .col-lg-10.offset-1
@@ -260,11 +260,32 @@
           .col-md-4
             %h3
               / %i.fa-solid.fa-box-archive
-              Archive
+              Operations
           .col-md-8
             %table.table.table-borderless.settings
 
               %tr
-                %th
+                %th Archive all Unarchived reservations
                 %td
-                  = button_to "ARCHIVE ALL RESERVATIONS", admin_archive_all_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived reservations to be archived'}, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+                  = button_to "ARCHIVE ALL", admin_archive_all_unarchived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived Reservations to be archived' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
+
+              %tr
+                %th Merge unarchived reservations with archived (removing older duplicates), then archive all
+                %td
+                  = button_to "MERGE UNARCHIVED", admin_merge_unarchived_reservations_path, method: :post, data: { "turbo-method": :post, turbo_confirm: 'Are you sure? This will merge all unarchived (not unconfirmed) reservations with the existing archived reservations, removing the older duplicates.' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
+
+              %tr
+                %th Destroy all Unconfirmed reservations
+                %td
+                  = button_to "DESTROY UNCONFIRMED", admin_destroy_unconfirmed_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all UNCONFIRMED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+
+              %tr
+                %th Destroy all Archived reservations
+                %td
+                  = button_to "DESTROY ARCHIVED", admin_destroy_all_archived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all ARCHIVED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+
+              %tr
+                %th Destroy ALL reservations
+                %td
+                  = button_to "DESTROY ALL", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+

@@ -1,5 +1,5 @@
 class Admin::ReservationsController < Admin::AdminController
-  before_action :set_reservation, except: %i[ new index search process_all_routes map archive_all upload]
+  before_action :set_reservation, except: %i[ new index search process_all_routes map archive_all_unarchived merge_unarchived destroy_all_archived destroy_unconfirmed destroy_all upload]
 
 
   def index
@@ -16,14 +16,14 @@ class Admin::ReservationsController < Admin::AdminController
     elsif params[:unconfirmed]      
       @pagy, @reservations = pagy(Reservation.not_archived.unconfirmed.includes(:route).order(created_at: :desc))
     elsif params[:all]
-      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(created_at: :desc).order(created_at: :asc))
+      @pagy, @reservations = pagy(Reservation.not_archived.not_unconfirmed.includes(:route).order(created_at: :desc).order(created_at: :asc))
     elsif params[:archived]
       @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(created_at: :desc).order(created_at: :asc))
     else
-      @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.not_archived.not_unconfirmed.includes(:route).order(created_at: :desc))
     end
     @count_pending_pickups = Reservation.pending_pickup.count
-    @count_not_routed = Reservation.not_archived.unrouted.count
+    @count_not_routed = Reservation.not_archived.not_unconfirmed.unrouted.count
     @count_picked_up = Reservation.picked_up.count
     @count_missing = Reservation.missing.count
     @count_cancelled = Reservation.cancelled.count
@@ -133,12 +133,48 @@ class Admin::ReservationsController < Admin::AdminController
     end
   end
 
-  def archive_all
+  def archive_all_unarchived
     if current_user.administrator?
-      Reservation.archive_all!
-      redirect_to admin_root_path, notice: 'All Reservations archived'
+      Reservation.archive_all_unarchived!
+      redirect_to admin_settings_path, notice: 'All Reservations archived'
     else
-      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized'
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized', status: :unauthorized
+    end
+  end
+
+  def merge_unarchived
+    if current_user.administrator?
+      Reservation.merge_unarchived_with_archived!
+      redirect_to admin_settings_path, notice: 'Merging unarchived with archived was successful.'
+    else
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized', status: :unauthorized
+    end
+  end
+
+  def destroy_unconfirmed
+    if current_user.administrator?
+      Reservation.unconfirmed.destroy_all
+      redirect_to admin_settings_path, notice: 'Destroying unconfirmed was successful.'
+    else
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized', status: :unauthorized
+    end
+  end
+
+  def destroy_all
+    if current_user.administrator?
+      Reservation.destroy_all
+      redirect_to admin_settings_path, notice: 'All Reservations destroyed'
+    else
+      redirect_to admin_reservations_path, alert: 'Not authorized', status: :unauthorized
+    end
+  end
+
+  def destroy_all_archived
+    if current_user.administrator?
+      Reservation.destroy_all_archived!
+      redirect_to admin_root_path, notice: 'All archived Reservations destroyed'
+    else
+      redirect_to admin_reservations_path, alert: 'Not authorized', status: :unauthorized
     end
   end
 

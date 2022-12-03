@@ -169,15 +169,7 @@ footer {
   padding-bottom: 3em;
 }
 
-table.settings {
-  margin-bottom: 3em;
-  th {
-    width: 20em;
-  }
-  td {
-    text-align: right;
-  }
-}
+
 
 
 #donation-table {
@@ -342,6 +334,21 @@ table#admin-drivers {
     display: inline-block;
     font-size: 1.1em;
     font-weight: 600;
+  }
+}
+
+table.settings {
+  margin-bottom: 3em;
+  h3 {
+    font-size: 1.5em;
+  }
+  th {
+    min-width: 12em;
+
+  }
+  td {
+    text-align: right;
+    min-width: 15em;
   }
 }
 
