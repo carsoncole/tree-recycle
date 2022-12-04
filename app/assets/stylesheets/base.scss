@@ -169,15 +169,7 @@ footer {
   padding-bottom: 3em;
 }
 
-table.settings {
-  margin-bottom: 3em;
-  th {
-    width: 20em;
-  }
-  td {
-    text-align: right;
-  }
-}
+
 
 
 #donation-table {
@@ -345,6 +337,21 @@ table#admin-drivers {
   }
 }
 
+table.settings {
+  margin-bottom: 3em;
+  h3 {
+    font-size: 1.5em;
+  }
+  th {
+    min-width: 12em;
+
+  }
+  td {
+    text-align: right;
+    min-width: 15em;
+  }
+}
+
 #settings {
   form {
     display: inline-block;
@@ -384,6 +391,17 @@ nav.navbar {
 
       }
     }
+  }
+}
+
+.bi {
+  font-size: 1rem;
+  vertical-align: top;
+  &.success {
+    color: rgb(63, 164, 13);
+  }
+  &.danger {
+    color: $scout-red;
   }
 }
 

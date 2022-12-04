@@ -4,7 +4,6 @@
     .row
       .col-lg-12
         %header
-          #reservation-status= reservation_status(@reservation)
           .top
             %i.fa-solid.fa-tree
             Reservation
@@ -12,197 +11,224 @@
           %h1= @reservation.street
 
     .row
-      .col-lg-12
-        - if current_user.editor? || current_user.administrator?
+      .col-lg-2.mb-4
+        #reservation-status= reservation_status(@reservation)
+        - if current_user.viewer?
+          .text-muted
+            %i.bi.bi-pencil-fill
+            Edit
+        - else
           %p.mb-1
             = link_to edit_admin_reservation_path(@reservation), id: 'edit-link' do
-              %i.fa-solid.fa-pencil
+              %i.bi.bi-pencil-fill
               Edit
-
-
-
-    %section#reservation
-      .row
-        .col-lg-3
-        .col-lg-6
-          %h2 Address
-          %table.table.table-borderless.reservation
-            %tr
-              %th Name
-              %td= @reservation.name
-            %tr
-              %th Address
-              %td= @reservation.address
-            %tr
-              %th Delivery notes
-              %td= @reservation.notes
-            %tr
-              %th Street
-              %td= @reservation.street
-            - if @reservation.house_number.present?
-              %tr
-                %th House number
-                %td= @reservation.house_number
-            - if @reservation.street_name.present?
-              %tr
-                %th Road
-                %td= @reservation.street_name
-            %tr
-              %th City
-              %td= @reservation.city
-            %tr
-              %th State
-              %td= @reservation.state
-            %tr
-              %th Country
-              %td= @reservation.country
-            %tr 
-              %th How did you hear about us?
-              %td= @reservation&.heard_about_source&.humanize
-
-    %section#contact-details
-      .row
-        .col-lg-3
-        .col-lg-6
-          %h2 Contact
-          %table.table.table-borderless.reservation
-            %tr
-              %th Email
-              %td= @reservation.email
-            %tr
-              %th No Emails?
-              %td
-                - if @reservation.no_emails
-                  Emailing disabled
-                - else
-                  False
-            %tr
-              %th Phone
-              %td= @reservation.phone
-            %tr
-              %th No SMS?
-              %td
-                - if @reservation.no_sms
-                  SMS disabled
-                - else
-                  False
-
-    %section#delivery
-      .row
-        .col-lg-3
-        .col-lg-6          
-          %h2 Routing
-          %table.table.table-borderless.reservation
-            %tr
-              %th Street
-              %td= @reservation.street
-            %tr
-              %th Route
-              %td#route-name
-                .mb-2
-                  - if @reservation&.route&.zone
-                    = link_to @reservation.route.zone.name, admin_zone_path(@reservation.route.zone)
-                  - else
-                    No Zone selected
-                  \|
-                  - if @reservation.route
-                    = link_to @reservation&.route&.name, admin_route_map_path(@reservation.route)
-                  - else
-                    No Route set
-                  - if !@reservation.is_routed
-                    .badge.bg-warning Manual Routing
-
-
-                .row
-                  .col-lg-8.offset-lg-4
-                    = form_for [:admin, @reservation] do |f|
-                      .mb-2
-                        = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
-                      - if current_user.editor? || current_user.administrator?
-                        = f.submit 'Update Route', class: 'btn btn-primary'
-
-            %tr
-              %th Latitude
-              %td= @reservation.latitude
-            %tr
-              %th Longitude
-              %td= @reservation.longitude
-            %tr 
-              %th Geocode 
-              %td
-                - if current_user.editor? || current_user.administrator?
-                  = link_to admin_reservation_process_geocode_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
-                    %i.fa-solid.fa-location-dot.icon
-
-            %tr 
-              %th Route
-              %td
-                - if current_user.editor? || current_user.administrator?
-                  = link_to admin_reservation_process_route_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
-                    %i.fa-solid.fa-bolt.icon
-
-          .text-center
-            #direction-links
-              .title Directions
-              = link_to "https://www.google.com/maps/place/#{ @reservation.latitude},#{ @reservation.longitude }", target: '_blank', class: 'map-link' do
-                %i.fa-solid.fa-map-location-dot
-                %i.fa-brands.fa-google
-
-              = link_to "https://maps.apple.com/?q=#{ @reservation.latitude},#{ @reservation.longitude}", target: '_blank', class: 'map-link' do
-                %i.fa-solid.fa-map-location-dot
-                %i.fa-brands.fa-apple
-
-              .title Google Mapped
-              = link_to driver_reservation_map_path(@reservation), class: 'map-link' do
-                %i.fa-solid.fa-map-location-dot
-
-
-
-    %section#status
-      .row
-        .col-lg-3
-        .col-lg-6
-          %h2 Pick-up Status
-          - if @reservation.archived?
-            = reservation_status(@reservation)
+        %p.mb-1
+          - if current_user.viewer?
+            .text-muted
+              %i.bi.bi-archive-fill
+              Archive
           - else
-            .row
-              .col-lg-6
-              .col-lg-6
-                = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
-                  .form-group.mb-2
-                    = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
-                  - if current_user.editor? || current_user.administrator?
-                    .text-end= f.submit 'Update status', class: 'btn btn-primary'
-
-    %section#donations
-      .row
-        .col-lg-3
-        .col-lg-6
-          %h2 Donations
-          %table.table.table-borderless.reservation
-            %tr 
-              %th Total donations
-              %td= number_to_currency(@reservation.total_donations_amount)
-            %tr
-              %th Donation type
-              %td= @reservation&.donation&.humanize
+            = link_to  edit_admin_reservation_path(@reservation) do
+              %i.bi.bi-archive-fill
+              Archive
 
 
-          - if @reservation.online_donated?
-            %table.mt-4.table.table-borderless.reservation
-              - @donations.each do |donation|
+      .col-lg-2.main
+        %h2= @reservation.name
+        .mb-5= @reservation.street
+        
+
+      .col-lg-5
+        %section#reservation
+          .row
+            .col-lg-12
+              %h3 Address
+              %table.table.table-borderless.reservation
                 %tr
-                  %th= link_to 'Donation', admin_donation_path(donation)
-                  %td= donation.payment_status.capitalize if donation.payment_status
-                  %td= nice_short_date_time(donation.created_at)
-                  %td= number_to_currency(donation.amount)
+                  %th Name
+                  %td= @reservation.name
+                %tr
+                  %th Address
+                  %td
+                    = @reservation.short_address
+                    - if @reservation.geocoded?
+                      &nbsp;
+                      %i.bi.bi-check-circle-fill.success
+                    - else
+                      &nbsp;
+                      %i.bi.bi-exclamation-circle-fill.danger
+                %tr
+                  %th Notes
+                  %td
+                    - if @reservation.notes.present?
+                      = @reservation.notes
+                    - else
+                      No special instructions
 
-    %section#misc
+
+        %section#contact-details
+          .row
+            .col-lg-12
+              %h3 Contact
+              %table.table.table-borderless.reservation
+                %tr
+                  %th Email
+                  %td
+                    = @reservation.email
+                    - if @reservation.no_emails?
+                      &nbsp;
+                      %i.bi.bi-envelope-x-fill.danger
+                    - elsif !@reservation.no_emails?
+                      &nbsp;
+                      %i.bi.bi-envelope-fill.success
+                %tr
+                  %th Phone
+                  %td
+                    = @reservation.phone
+                    - if @reservation.phone.present? && @reservation.no_sms?
+                      &nbsp;
+                      %i.bi.bi-telephone-x-fill.danger
+                    - elsif @reservation.phone.present? && !@reservation.no_sms?
+                      &nbsp;
+                      %i.bi.bi-telephone-fill.success
+
+        %section#delivery
+          .row
+            .col-lg-12
+              %h3 Routing
+              %table.table.table-borderless.reservation
+                %tr
+                  %th Street
+                  %td= @reservation.street
+                %tr
+                  %th Route
+                  %td#route-name
+                    .mb-2
+                      - if @reservation&.route&.zone
+                        = link_to @reservation.route.zone.name, admin_zone_path(@reservation.route.zone)
+                      - else
+                        No Zone selected
+                      \|
+                      - if @reservation.route
+                        = link_to @reservation&.route&.name, admin_route_map_path(@reservation.route)
+                      - else
+                        No Route set
+                      - if !@reservation.is_routed
+                        .badge.bg-warning Manual Routing
+
+
+                    .row
+                      .col-lg-8.offset-lg-4
+                        = form_for [:admin, @reservation] do |f|
+                          .mb-2
+                            = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
+                          - if current_user.editor? || current_user.administrator?
+                            = f.submit 'Update Route', class: 'btn btn-primary'
+
+                %tr
+                  %th Latitude
+                  %td= @reservation.latitude
+                %tr
+                  %th Longitude
+                  %td= @reservation.longitude
+                %tr 
+                  %th Geocode 
+                  %td
+                    - if current_user.editor? || current_user.administrator?
+                      = link_to admin_reservation_process_geocode_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
+                        %i.fa-solid.fa-location-dot.icon
+
+                %tr 
+                  %th Route
+                  %td
+                    - if current_user.editor? || current_user.administrator?
+                      = link_to admin_reservation_process_route_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
+                        %i.fa-solid.fa-bolt.icon
+
+              .text-center
+                #direction-links
+                  .title Directions
+                  = link_to "https://www.google.com/maps/place/#{ @reservation.latitude},#{ @reservation.longitude }", target: '_blank', class: 'map-link' do
+                    %i.fa-solid.fa-map-location-dot
+                    %i.fa-brands.fa-google
+
+                  = link_to "https://maps.apple.com/?q=#{ @reservation.latitude},#{ @reservation.longitude}", target: '_blank', class: 'map-link' do
+                    %i.fa-solid.fa-map-location-dot
+                    %i.fa-brands.fa-apple
+
+                  .title Google Mapped
+                  = link_to driver_reservation_map_path(@reservation), class: 'map-link' do
+                    %i.fa-solid.fa-map-location-dot
 
 
 
-  = turbo_frame_tag @reservation do
-    .div
-      = link_to "View Log", admin_reservation_logs_path(@reservation)
+        %section#status
+          .row
+            .col-lg-12
+              %h3 Pick-up Status
+              - if @reservation.archived?
+                = reservation_status(@reservation)
+              - else
+                .row
+                  .col-lg-6
+                  .col-lg-6
+                    = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
+                      .form-group.mb-2
+                        = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+                      - if current_user.editor? || current_user.administrator?
+                        .text-end= f.submit 'Update status', class: 'btn btn-primary'
+
+        %section#donations
+          .row
+            .col-lg-12
+              %h3 Donations
+              %table.table.table-borderless.reservation
+                %tr 
+                  %th Total donations
+                  %td= number_to_currency(@reservation.total_donations_amount)
+                %tr
+                  %th Donation type
+                  %td
+                    - if @reservation&.donation
+                      = @reservation&.donation&.humanize
+                    - else
+                      Not selected
+
+
+              - if @reservation.online_donated?
+                %table.mt-4.table.table-borderless.reservation
+                  - @donations.each do |donation|
+                    %tr
+                      %th= link_to 'Donation', admin_donation_path(donation)
+                      %td= donation.payment_status.capitalize if donation.payment_status
+                      %td= nice_short_date_time(donation.created_at)
+                      %td= number_to_currency(donation.amount)
+
+        %section#donations
+          .row
+            .col-lg-12
+              %h3 Misc
+              %table.table.table-borderless.reservation
+                %tr 
+                  %th How did you hear about us?
+                  %td
+                    - if @reservation&.heard_about_source?
+                      = @reservation&.heard_about_source&.humanize
+                    - else
+                      Not selected
+                %tr 
+                  %th Log
+                  %td
+                    = turbo_frame_tag @reservation do
+                      .div
+                        = link_to "View Log", admin_reservation_logs_path(@reservation)
+
+        %section#actions
+          .row
+            .col-lg-12
+              %div.d-grid
+                = button_to 'Destroy', admin_reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, 'turbo-confirm': 'Are you sure? This is irreversible and will remove all related data except donations.' },id: 'edit-link', class: 'btn btn-danger col-6 offset-3', disabled: (current_user.administrator? ? false : true)
+
+
+
 
