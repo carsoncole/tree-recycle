@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_04_020244) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_03_181059) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -65,17 +65,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_020244) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reservation_id"], name: "index_logs_on_reservation_id"
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.string "number"
-    t.string "body"
-    t.uuid "reservation_id"
-    t.string "service_status"
-    t.integer "direction"
-    t.boolean "viewed", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "reservations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -159,6 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_020244) do
     t.string "meta_description"
     t.string "meta_image_filename"
     t.string "reservations_closed_message"
+    t.string "sms_from_phone"
   end
 
   create_table "users", force: :cascade do |t|
