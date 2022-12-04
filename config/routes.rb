@@ -71,13 +71,19 @@ Rails.application.routes.draw do
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update ]
-    delete 'reservations/archive-all' => 'reservations#archive_all', as: 'archive_all'
-    resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
+    delete 'reservations/archive-all' => 'reservations#archive_all_unarchived', as: 'archive_all_unarchived_reservations'
+    delete 'reservations/destroy-all' => 'reservations#destroy_all', as: 'destroy_all_reservations'
+    delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'
+    delete 'reservations/destroy-unconfirmed' => 'reservations#destroy_unconfirmed', as: 'destroy_unconfirmed_reservations'
+    post 'reservations/merge-unarchived' => 'reservations#merge_unarchived', as: 'merge_unarchived_reservations'
+    resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
       post 'process-geocode' => 'reservations#process_geocode', as: 'process_geocode'
+      post 'archive' => 'reservations#archive', as: 'archive'
     end
     get '/routing' => 'zones#index', as: 'routing'
+    get '/marketing' => 'marketing#index', as: 'marketing'
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
     resources :routes, except: [ :index, :show ] do

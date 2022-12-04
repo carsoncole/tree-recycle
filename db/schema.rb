@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_181059) do
     t.string "unit"
     t.boolean "no_sms"
     t.integer "donation"
+    t.index ["email"], name: "index_reservations_on_email"
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["route_id"], name: "index_reservations_on_route_id"
     t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"
