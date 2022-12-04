@@ -140,6 +140,16 @@ Once the initial user is setup, you can manage the user roles (`viewer`, `editor
 config.allow_sign_up = true
 ```
 
+### Marketing Sources
+
+Update the Reservation class with the sources enum for where a reservation heard about the event.
+
+reservation.rb
+
+```
+enum :heard_about_source, { newspaper: 8, facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2,  roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
+```
+
 
 ### Driver
 
