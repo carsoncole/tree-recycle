@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       post 'archive' => 'reservations#archive', as: 'archive'
     end
     get '/routing' => 'zones#index', as: 'routing'
+    get '/marketing' => 'marketing#index', as: 'marketing'
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
     resources :routes, except: [ :index, :show ] do

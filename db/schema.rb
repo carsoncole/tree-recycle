@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_181059) do
     t.string "unit"
     t.boolean "no_sms"
     t.integer "donation"
+    t.index ["email"], name: "index_reservations_on_email"
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["route_id"], name: "index_reservations_on_route_id"
     t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"
@@ -142,13 +143,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_181059) do
     t.datetime "sign_up_deadline_at"
     t.datetime "pickup_date_and_end_time"
     t.string "driver_secret_key"
-    t.string "sms_from_phone"
     t.string "facebook_page_id"
     t.string "meta_site_name"
     t.string "meta_title"
     t.string "meta_description"
     t.string "meta_image_filename"
     t.string "reservations_closed_message"
+    t.string "sms_from_phone"
   end
 
   create_table "users", force: :cascade do |t|
