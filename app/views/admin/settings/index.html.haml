@@ -190,7 +190,7 @@
                   %th
                     SMS from phone
                   %td 
-                    = setting.sms_from_phone
+                    = Rails.application.credentials.twilio.production.number
 
   .row
     .col-lg-10.offset-1

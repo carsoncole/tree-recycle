@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   match "(*any)",
     to: redirect(subdomain: ""),
     via: :all,
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
 
   get '/software' => 'home#software', as: 'software'
 
+  post 'messages/reply' => 'messages#reply'
   resources :reservations, except: [:index] do
 
     get 'address-verification', as: 'address_verification'
@@ -60,9 +62,12 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get 'messages/index'
+    get 'messages/create'
     root 'reservations#index'
     resources :zones
     resources :drivers
+    resources :messages, only: [:index, :create]
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update ]

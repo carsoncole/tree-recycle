@@ -9,8 +9,11 @@ class Donation < ApplicationRecord
     DonationsMailer.with(donation: self).receipt_email.deliver_later
   end
 
+  #OPTIMIZE moved admin_mobile_phone to settings and allow for multiple numbers
   def send_donation_sms!
-    SendSmsJob.perform_later(Rails.application.credentials.admin_mobile_phone, "Tree Recycle donation: $#{ self.amount.to_s } by #{ self.email }")
+    Message.create(
+      body: "Tree Recycle donation: $#{ self.amount.to_s } by #{ self.email }",
+      to: Rails.application.credentials.admin_mobile_phone
+      )
   end
-
 end

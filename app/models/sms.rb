@@ -12,18 +12,17 @@ class Sms
     @client = Twilio::REST::Client.new sid, auth_token
   end
 
-  def send(obj, message, from_number=nil)
+  def send_with_object(obj, message)
     begin
       return unless obj.phone.present?
       return if obj.respond_to?(:no_sms) && obj.no_sms?
 
-      from_number = '+15005550006' if Rails.env.test?
-
       response = client.messages.create(
-        from: from_number || Setting.first.sms_from_phone,
+        from: @from_number,
         to: obj.phone,
         body: message
       )
+
       obj.logs.create(message: "SMS message sent: '#{ message }'") if obj.respond_to?(:logs)
 
       return response
@@ -34,14 +33,22 @@ class Sms
         else 
           exception
         end
-      end
-
+    end
   end
 
-  def send_without_log(phone, message)
-    from_number = '+15005550006' if Rails.env.test?
+
+  def from_number
+    @from_number = if Rails.env.test?
+      Rails.application.credentials.twilio.test.number
+    else
+      Rails.application.credentials.twilio.production.number
+    end
+  end
+
+
+  def send(phone, message)
     response = client.messages.create(
-      from: Setting.first.sms_from_phone,
+      from: from_number,
       to: phone,
       body: message
     )

@@ -1,0 +1,13 @@
+#new-message
+  = form_for [:admin, @new_message] do |f|
+    .row.g-3.align-items-center
+      .col-auto
+        .form-group
+          = f.label :number, class: 'form-label'
+          = f.text_field :number, class: 'form-control'
+      .col-lg-5
+        .form-group
+          = f.label :message, class: 'form-label'
+          = f.text_field :body, class: 'form-control'
+      .col-auto
+        = f.submit "Send", class: 'btn btn-primary'
