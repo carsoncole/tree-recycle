@@ -8,16 +8,26 @@ class Admin::MessagesController < Admin::AdminController
     @new_message = Message.new
   end
 
-  def show
-
+  def create
+    if current_user.administrator? || current_user.editor?
+      @message = Message.new(message_params)
+      if @message.save
+        redirect_to admin_messages_path(number: @message.number)
+      else
+        redirect_to admin_messages_path(number: @message.number)
+      end
+    else
+      redirect_to admin_messages_path, status: :unauthorized
+    end
   end
 
-  def create
-    @message = Message.new(message_params)
-    if @message.save
-      redirect_to admin_messages_path(number: @message.number)
+  def destroy
+    if current_user.administrator? || current_user.editor?
+      message = Message.find(params[:id])
+      Message.where(number: message.number).destroy_all
+      redirect_to admin_messages_path
     else
-      redirect_to admin_messages_path(number: @message.number)
+      redirect_to admin_messages_path, status: :unauthorized
     end
   end
 

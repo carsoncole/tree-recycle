@@ -13,7 +13,7 @@ class Donation < ApplicationRecord
   def send_donation_sms!
     Message.create(
       body: "Tree Recycle donation: $#{ self.amount.to_s } by #{ self.email }",
-      to: Rails.application.credentials.admin_mobile_phone
+      number: Rails.application.credentials.admin_mobile_phone
       )
   end
 end

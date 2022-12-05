@@ -18,7 +18,7 @@ class Sms
       return if obj.respond_to?(:no_sms) && obj.no_sms?
 
       response = client.messages.create(
-        from: @from_number,
+        from: from_number,
         to: obj.phone,
         body: message
       )
@@ -45,13 +45,16 @@ class Sms
     end
   end
 
-
+  #OPTIMIZE rescue Twilio errors
+  # Twilio::REST::RestError: [HTTP 400] 21211 : Unable to create record
   def send(phone, message)
+
     response = client.messages.create(
       from: from_number,
       to: phone,
       body: message
     )
+
   end
 
 end

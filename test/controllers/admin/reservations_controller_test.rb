@@ -194,24 +194,26 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
 
   test "archiving all reservations as administrator" do
     create_list(:reservation_with_coordinates, 10, is_routed: false)
-    assert_equal 0, Reservation.archived.count
-    delete admin_archive_all_unarchived_reservations_path(as: @administrator)
-    assert_equal 11, Reservation.archived.count
+    assert_difference('Reservation.archived.count', 11) do
+      delete admin_archive_all_unarchived_reservations_path(as: @administrator)
+    end
   end
 
   test "not archiving all reservations as viewer" do
     create_list(:reservation_with_coordinates, 10, is_routed: false)
-    delete admin_archive_all_unarchived_reservations_path(as: @viewer)
+    assert_difference('Reservation.archived.count', 0) do
+      delete admin_archive_all_unarchived_reservations_path(as: @viewer)
+    end
     assert_response :unauthorized
-    assert_equal 0, Reservation.archived.count
   end
 
 
   test "not archiving all reservations as editor" do
     create_list(:reservation_with_coordinates, 10, is_routed: false)
-    delete admin_archive_all_unarchived_reservations_path(as: @editor)
+    assert_difference('Reservation.archived.count', 0) do
+      delete admin_archive_all_unarchived_reservations_path(as: @editor)
+    end
     assert_response :unauthorized
-    assert_equal 0, Reservation.archived.count
   end
 
   #OPTIMIZE add processing all routes test

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :message do
-    number { "2065551212" }
+    number { "+12064517216" }
     body { "MyString" }
   end
 end

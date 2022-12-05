@@ -7,6 +7,7 @@ class CreateMessages < ActiveRecord::Migration[7.0]
       t.string :service_status
       t.integer :direction
       t.boolean :viewed, default: false
+      t.string :status
 
       t.timestamps
     end

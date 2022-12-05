@@ -67,7 +67,7 @@ Rails.application.routes.draw do
     root 'reservations#index'
     resources :zones
     resources :drivers
-    resources :messages, only: [:index, :create]
+    resources :messages, only: [:index, :create, :destroy ]
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update ]

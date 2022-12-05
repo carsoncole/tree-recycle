@@ -6,16 +6,22 @@
 
 
   .row
-    .col-lg-2
-      - @numbers.each do |number|
-        = link_to number, admin_messages_path(number: number), class: Message.unviewed?(number) ? 'unviewed' : nil
-        %br
+    .col-lg-2#messages-by-number
+      .row
+        - @numbers.each do |number|
+          = link_to number, admin_messages_path(number: number), class: Message.unviewed?(number) ? 'unviewed' : 'viewed'
+          %br
 
-    .col-lg-8
+    .col-lg-8.offset-lg-1
       = render 'new_message'
 
 
-      %h2= @number
+      .number-header
+        %h2= @number
+        - if @messages.any?
+          = link_to admin_message_path(@messages.first.id), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure? This will delete the entire thread of messages to this number.' } do
+            %i.bi.bi-trash-fill
+            Delete
       .table-responsive
         %table.table.table-borderless#messages-table
           %tbody

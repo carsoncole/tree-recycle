@@ -120,6 +120,7 @@ GEM
       activerecord (>= 3.0, < 8.0)
       delayed_job (>= 3.0, < 5)
     docile (1.4.0)
+    e164 (0.3.2)
     email_validator (2.2.4)
       activemodel
     erubi (1.11.0)
@@ -314,6 +315,7 @@ DEPENDENCIES
   clearance
   debug
   delayed_job_active_record
+  e164
   factory_bot_rails
   faker
   geocoder
