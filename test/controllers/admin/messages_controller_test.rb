@@ -31,7 +31,7 @@ class Admin::MessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should NOT get create" do
-    get admin_messages_create_url(message: { number: '2065551212', body: 'how are you?' },as: @viewer)
+    post admin_messages_url(message: { number: '2065551212', body: 'how are you?' },as: @viewer)
     assert_response :unauthorized
   end
 
