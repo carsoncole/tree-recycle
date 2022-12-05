@@ -23,14 +23,21 @@ class Admin::MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to :sign_in
   end
 
-  test "should get create" do
+  test "creating a message as administrator" do
+    assert_difference('Message.count') do
+      post admin_messages_url(message: { number: '+12065551212', body: 'how are you?' }, as: @administrator)
+    end
+    assert_redirected_to admin_messages_path(number: '+12065551212')
+  end
+
+  test "creating a message as editor" do
     assert_difference('Message.count') do
       post admin_messages_url(message: { number: '+12065551212', body: 'how are you?' }, as: @editor)
     end
     assert_redirected_to admin_messages_path(number: '+12065551212')
   end
 
-  test "should NOT get create" do
+  test "should NOT create as viewer" do
     post admin_messages_url(message: { number: '2065551212', body: 'how are you?' },as: @viewer)
     assert_response :unauthorized
   end
