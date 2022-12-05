@@ -9,6 +9,21 @@ body#admin {
 
 }
 
+#users {
+  table.table.table-users {
+    td.new-user {
+      font-size: 1.2em;
+      font-weight: 700;
+      text-align: right;
+      vertical-align: middle;
+    }
+    .user-delete-icon {
+      veritical-align: middle;
+      margin-left: 1em;
+    }
+  }
+}
+
 #admin-reservation {
   header {
     margin-bottom: 3em;

@@ -17,7 +17,7 @@
                   EDIT
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -43,7 +43,7 @@
                 %td= setting.reservations_closed_message
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -72,7 +72,7 @@
                   %td= nice_date_time(setting.sign_up_deadline_at)
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -109,7 +109,7 @@
                   %td= setting.on_day_of_pickup_instructions
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -131,7 +131,7 @@
                   %td= DEFAULT_COUNTRY
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -147,7 +147,7 @@
 
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -174,7 +174,7 @@
                         = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -193,7 +193,7 @@
                     = Rails.application.credentials.twilio.production.number
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -211,7 +211,7 @@
                     No key
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -226,7 +226,7 @@
                   = link_to "Users", admin_users_path
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4
@@ -258,7 +258,7 @@
 
 
   .row
-    .col-lg-10.offset-1
+    .col-lg-10.offset-lg-1
       .section
         .row
           .col-md-4

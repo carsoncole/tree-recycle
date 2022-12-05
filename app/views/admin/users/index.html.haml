@@ -5,19 +5,42 @@
         %i.fa-solid.fa-user 
         Users
 
+
   .row
-    .col-lg-6.offset-3
+    .col-lg-6.offset-lg-3
       .table-responsive
         %table.table.table-borderless.table-users
           - @users.each do |user|
             %tr 
-              %td.email= user.email 
-              %td.role
-                = form_for [:admin, user], data: { turbo_method: "patch" } do |f|
+              = form_for [:admin, user], data: { turbo_method: "patch" } do |f|
+                %td.email
+                  = f.text_field :email, class: 'form-control' 
+                %td.role
                   .row
                     .col-lg-7          
-                      .form-group.mb-2
-                        = f.select :role, options_for_select(@roles, user.role), {  },disabled: (current_user.administrator? ? false : true), class: 'form-control', id: 'user-role-dropdown'
+                      = f.select :role, options_for_select(@roles, user.role), {  },disabled: (current_user.administrator? ? false : true), class: 'form-control', id: 'user-role-dropdown'
                     .col-lg-5
                       - if current_user.administrator?
-                        .text-end= f.submit 'Update', class: 'btn btn-primary'
+                        .text-end
+                          = f.submit 'Update', class: 'btn btn-primary'
+                          - if current_user.administrator?
+                            = link_to admin_user_path(user), method: :delete, data: { "turbo-method": :delete }, class: 'user-delete-icon' do 
+                              %i.bi.bi-trash-fill
+    - if current_user.administrator?
+      %hr
+      .row
+        .col-lg-8.offset-lg-2
+          .table-responsive
+            %table.table.table-borderless.table-users
+              %tr 
+                %td.new-user
+                  New user
+                = form_for [:admin, @user] do |f|
+                  %td.email= f.email_field :email, class: 'form-control', placeholder: 'email'
+                  %td.password= f.password_field :password, class: 'form-control', placeholder: 'password'
+                  %td.role 
+                    .row
+                      .col-lg-7
+                        = f.select :role, options_for_select(@roles, @user.role), {  }, class: 'form-control', id: 'user-role-dropdown'
+                      .col-lg-5
+                        .text-end= f.submit 'Create', class: 'btn btn-primary'

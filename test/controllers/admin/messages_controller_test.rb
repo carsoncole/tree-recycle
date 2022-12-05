@@ -4,11 +4,23 @@ class Admin::MessagesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @viewer = create :viewer
     @editor = create :editor
+    @administrator = create :administrator
   end
 
   test "should get index" do
     get admin_messages_url(as: @viewer)
     assert_response :success
+
+    get admin_messages_url(as: @editor)
+    assert_response :success
+
+    get admin_messages_url(as: @administrator)
+    assert_response :success
+  end
+
+  test "not getting index" do 
+    get admin_messages_url
+    assert_redirected_to :sign_in
   end
 
   test "should get create" do

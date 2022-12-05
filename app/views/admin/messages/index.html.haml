@@ -18,7 +18,7 @@
 
       .number-header
         %h2= @number
-        - if @messages.any?
+        - if @messages.any? && (current_user.administrator? || current_user.editor?)
           = link_to admin_message_path(@messages.first.id), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure? This will delete the entire thread of messages to this number.' } do
             %i.bi.bi-trash-fill
             Delete
@@ -40,4 +40,4 @@
               .form-group
                 = f.text_field :body, class: 'form-control'
             .col-lg-2.text-left
-              = f.submit "Send", class: 'btn btn-primary'
+              = f.submit "Send",disabled: (current_user.administrator? || current_user.editor?) ? false : true, class: "btn btn-primary"
