@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_04_020244) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_06_061211) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -165,6 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_020244) do
     t.string "meta_description"
     t.string "meta_image_filename"
     t.string "reservations_closed_message"
+    t.boolean "is_driver_site_enabled", default: true
   end
 
   create_table "users", force: :cascade do |t|

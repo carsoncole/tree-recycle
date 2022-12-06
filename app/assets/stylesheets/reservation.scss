@@ -39,30 +39,6 @@ $scout-blue: #003F87;
 #reservation-status {
   margin-bottom: 1em;
   @include font-important;
-
-  .reservation-status-badge {
-    &.primary {
-      background-color: #cfe2ff;
-      color: #084298;
-      border-color: #b6d4fe;
-    }
-    &.info {
-      background-color: #cff4fc;
-      border-color: #cff4fc;
-      color: #055160;
-    }
-    &.danger {
-      background-color: #f8d7da;
-      color: #842029;
-      border-color: #f5c2c7;
-    }
-    &.warning {
-      background-color: #fff3cd;
-      color: #664d03;
-      border-color: #ffecb5;
-    }
-
-  }
 }
 
 #reservation-actions {

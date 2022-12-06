@@ -110,6 +110,7 @@
                   %th Day of pickup instructions
                   %td= setting.on_day_of_pickup_instructions
 
+
   .row
     .col-lg-10.offset-lg-1
       .section
@@ -139,13 +140,30 @@
           .col-md-4
             %h3
               / %i.fa-solid.fa-map
-              Drivers
+              Driver website
           .col-md-8
             %table.table.table-borderless.settings
               %tbody
                 %tr
                   %th
                   %td= link_to "Drivers", admin_drivers_path
+                %tr 
+                  %th Is Driver Site enabled?
+                  %td
+                    - if setting.is_driver_site_enabled?
+                      = link_to admin_setting_path(setting, setting: { is_driver_site_enabled: false } ), method: :patch, data: { 'turbo-method': 'patch' } do 
+                        %i.bi.bi-check2-square
+                    - else
+                      = link_to admin_setting_path(setting, setting: { is_driver_site_enabled: true } ), method: :patch, data: { 'turbo-method': 'patch' } do 
+                        %i.bi.bi-square
+
+                %tr
+                  %th Driver Secret Key
+                  %td
+                    - if setting.driver_secret_key.present?
+                      = setting.driver_secret_key
+                    - else
+                      No key
 
 
   .row
@@ -194,23 +212,6 @@
                   %td 
                     = Rails.application.credentials.twilio.production.number
 
-  .row
-    .col-lg-10.offset-lg-1
-      .section
-        .row
-          .col-md-4
-            %h3
-              / %i.fa-solid.fa-truck-pickup
-              Driver website
-          .col-md-8
-            %table.table.table-borderless.settings
-              %tr
-                %th Driver Secret Key
-                %td
-                  - if setting.driver_secret_key.present?
-                    = setting.driver_secret_key
-                  - else
-                    No key
 
   .row
     .col-lg-10.offset-lg-1
