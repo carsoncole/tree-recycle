@@ -7,7 +7,7 @@ class ReservationsTest < ApplicationSystemTestCase
     reservation = build_stubbed(:reservation)
 
     visit '/'
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     # check side info
     within "#side-info" do
@@ -85,7 +85,7 @@ class ReservationsTest < ApplicationSystemTestCase
     reservation = build_stubbed(:reservation)
 
     visit root_url
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: reservation.street
@@ -102,7 +102,7 @@ class ReservationsTest < ApplicationSystemTestCase
     reservation = build(:reservation)
 
     visit root_url
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: 'gobbly gook'
@@ -123,7 +123,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
   test "creating a reservation that has a better address" do
     visit root_url
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     fill_in "reservation_name", with: 'John Doe'
     fill_in "reservation_street", with: '1760 su san pl'
