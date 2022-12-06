@@ -95,15 +95,6 @@
                   %th Organization name
                   %td= ORGANIZATION_NAME
                 %tr
-                  %th Contact name
-                  %td= setting.contact_name
-                %tr
-                  %th Contact email
-                  %td= setting.contact_email
-                %tr
-                  %th Contact phone
-                  %td= setting.contact_phone
-                %tr
                   %th Description
                   %td= setting.description
                 %tr
@@ -173,12 +164,21 @@
           .col-md-4
             %h3
               / %i.fa-solid.fa-at
-              Email notifications
+              Contact
           .col-md-8
             %table.table.table-borderless.settings
 
               %tbody
 
+                %tr
+                  %th Contact name
+                  %td= setting.contact_name
+                %tr
+                  %th Contact email
+                  %td= setting.contact_email
+                %tr
+                  %th Contact phone
+                  %td= setting.contact_phone
                 %tr
                   %th
                     Email delivery
@@ -192,19 +192,6 @@
                       Stopped
                       - if current_user.administrator?
                         = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
-
-  .row
-    .col-lg-10.offset-lg-1
-      .section
-        .row
-          .col-md-4
-            %h3
-              / %i.fa-solid.fa-at
-              SMS notifications
-          .col-md-8
-            %table.table.table-borderless.settings
-
-              %tbody
 
                 %tr
                   %th
