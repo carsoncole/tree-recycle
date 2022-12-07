@@ -62,11 +62,15 @@ h1 {
         width: 9em;
       }
       &.donation {
-        background-color: #111;
-        font-weight: 900;
-        text-align: center;
-        color: #fff;
-        width: 14em;
+        .type {
+          display: inline-block;
+          background-color: #111;
+          font-weight: 900;
+          text-align: center;
+          color: #fff;
+          padding: 0.5em;
+          width: 13em;
+          }
       }
       &.street {
         min-width: 19em;
@@ -325,9 +329,9 @@ table.zones-table {
 
         th, td {
           &.donation {
-            background-color: #333 !important;
-            color: #fff !important;
-            print-color-adjust: exact; 
+            .type {
+              print-color-adjust: exact; 
+            }
           }
           &.buttons {
             width: 18em;

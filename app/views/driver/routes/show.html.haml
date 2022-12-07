@@ -5,6 +5,14 @@
       .map-icon
         = link_to driver_reservations_map_path(route_id: @route.id) do
           %i.fa-solid.fa-map.d-print-none
+    %p 
+      %span.fw-bold Zone Leaders:
+      - if @route.zone
+        - @route.zone.drivers.leader.each do |l|
+          = l.name
+          - if l.phone.present?
+            = surround("(",")") do
+              = l.phone
     .table-responsive
       %table.table.driver-routes
         %thead
@@ -32,6 +40,7 @@
               %td.street= link_to reservation.street, driver_reservation_path(reservation)
 
               %td.notes= reservation.notes
-              %td.donation= reservation.donation.humanize.capitalize if reservation.donation
+              %td.donation
+                .type= reservation.donation.humanize.capitalize if reservation.donation
               %td.name= reservation.name
               %td.phone= reservation.phone
