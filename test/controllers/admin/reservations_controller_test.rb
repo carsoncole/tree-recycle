@@ -142,6 +142,7 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   #OPTIMIZE this test only verifies a successful response, not successful answers
+  #OPTIMIZE needs reworking. original tests did not discover errors in archve
   test "reservations search" do 
     get admin_search_url(search: @reservation.name, as: @viewer)
     assert_response :success

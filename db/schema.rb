@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_07_031113) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_070931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "role", ["viewer", "editor", "administrator"]
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
@@ -99,12 +103,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_031113) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status"
-    t.boolean "no_emails"
+    t.boolean "no_emails", default: false
     t.string "route_name"
     t.boolean "is_routed", default: true
     t.integer "heard_about_source"
     t.string "unit"
-    t.boolean "no_sms"
+    t.boolean "no_sms", default: false
     t.integer "donation"
     t.boolean "is_confirmed_reservation_email_sent", default: false
     t.boolean "is_marketing_email_1_sent", default: false

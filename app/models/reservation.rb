@@ -128,7 +128,7 @@ class Reservation < ApplicationRecord
 
   def self.reservations_to_send_marketing
     # collect Archived,
-    #    not in not_archived
+    #    not also in not_archived
     #    not sent marketing email 1
     #    not no_emails
     #    max count of email_batch_quantity
@@ -136,12 +136,8 @@ class Reservation < ApplicationRecord
       Reservation.archived.
       where.not(email:  Reservation.not_archived.map{ |r| r.email } ).
       where(is_marketing_email_1_sent: false).
-      where.not(no_emails: true).
-      order(:email).
-      limit(Setting.first.email_batch_quantity)
-
-    # removes dupes
-    reservations_to_send.uniq { |r| r.email }
+      where(no_emails: false).
+      order(:email)
   end
 
 

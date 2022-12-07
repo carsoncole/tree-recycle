@@ -16,7 +16,7 @@ class Admin::SearchTest < ApplicationSystemTestCase
 
   test "searching archive for a reservation" do
     reservation = create(:reservation, name: 'John Wilson Doe', is_routed: false)
-    archived_reservation = create(:archived_reservation, is_routed: false, name: 'Wilbur Hester' )
+    archived_reservation = create(:archived_with_coordinates_reservation, is_routed: false, name: 'Wilbur Hester' )
 
     system_test_signin
     visit admin_reservations_path

@@ -28,7 +28,7 @@
               %i.bi.bi-archive-fill
               Archive
           - else
-            = link_to  edit_admin_reservation_path(@reservation) do
+            = link_to admin_reservation_path(@reservation, reservation: { status: 'archived'} ), method: :patch, data: { 'turbo-method': :patch } do
               %i.bi.bi-archive-fill
               Archive
 
@@ -168,7 +168,7 @@
               %h3 Pick-up Status
               - if @reservation.archived?
                 = reservation_status(@reservation)
-              - else
+              - if current_user.administrator? || !@reservation.archived?
                 .row
                   .col-lg-6
                   .col-lg-6

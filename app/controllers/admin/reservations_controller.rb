@@ -91,9 +91,9 @@ class Admin::ReservationsController < Admin::AdminController
     @query = params[:search] || ""
     if @query.downcase.include?('in:archive')
       query_without_param = @query.gsub('in:archive','').strip
-      @pagy, @reservations = pagy(Reservation.archived.where("name ILIKE ? OR street ILIKE ?", "%" + Reservation.sanitize_sql_like(query_without_param) + "%", "%" + Reservation.sanitize_sql_like(query_without_param) + "%"))
+      @pagy, @reservations = pagy(Reservation.archived.where("name ILIKE ? OR street ILIKE ? OR email ILIKE ?", "%" + query_without_param + "%", "%" + query_without_param + "%", "%" + query_without_param + "%"))
     else
-      @pagy, @reservations = pagy(Reservation.not_archived.where("name ILIKE ? OR street ILIKE ?", "%" + Reservation.sanitize_sql_like(@query) + "%", "%" + Reservation.sanitize_sql_like(@query) + "%"))
+      @pagy, @reservations = pagy(Reservation.not_archived.where("name ILIKE ? OR street ILIKE ? OR email ILIKE ?", "%" + Reservation.sanitize_sql_like(params[:search]) + "%", "%" + Reservation.sanitize_sql_like(params[:search]) + "%", "%" + Reservation.sanitize_sql_like(params[:search]) + "%"))
     end
     render :index
   end

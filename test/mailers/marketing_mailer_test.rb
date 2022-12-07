@@ -1,7 +1,7 @@
 require "test_helper"
 
 class MarketingMailerTest < ActionMailer::TestCase
-  test "hello email to archived" do
+  test "marketing email 1" do
     reservation = create(:reservation_with_coordinates, status: 'archived')
     email = MarketingMailer.with(reservation: reservation).marketing_email_1
 
@@ -15,7 +15,7 @@ class MarketingMailerTest < ActionMailer::TestCase
     assert email.html_part.body.to_s.include? "It's our 26th year of recycling Christmas trees on Bainbridge"
   end
 
-  test "last call email to archived" do
+  test "marketing email 2" do
     reservation = create(:reservation_with_coordinates, status: 'archived')
     email = MarketingMailer.with(reservation: reservation).marketing_email_2
 
