@@ -7,6 +7,11 @@
             %h1(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; font-weight: 300; font-size: 40px; margin: 20px auto 50px auto;text-align: center;padding: 0;line-height: 1.5;")
               Last call for a tree pickup
 
+            - if @reservation.name.present?
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+                = 'Hello ' + @reservation.name + ','
+
+
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
               We noticed that you haven't signed up yet, so we are sending a friendly reminder that the Scouts of Bainbridge Island Troop 1564 and Troop 1804 are picking up trees on Bainbridge Island on
               = succeed(".") do
@@ -38,3 +43,6 @@
               Thank You,
               %br
               Bainbridge Island Troop 1564 and Troop 1804
+
+
+            = render 'unsubscribe'

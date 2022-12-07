@@ -10,9 +10,9 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
 
     visit admin_reservation_path(@reservation)
     assert_selector "h1", text: @reservation.street
-    assert_selector "h2", text: "Reservation"
-    assert_selector "h2", text: "Contact details"
-    assert_selector "h2", text: "Delivery"
+    assert_selector "h3", text: "Address"
+    assert_selector "h3", text: "Contact"
+    assert_selector "h3", text: "Routing"
   end
 
   test "editing a reservation" do
@@ -37,7 +37,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     visit admin_reservation_path(@reservation)
 
     within '#reservation-status' do
-      assert_text 'Pending Pickup'
+      assert_text 'PENDING PICKUP'
     end
 
     within '#status' do
@@ -46,7 +46,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     end
 
     within '#reservation-status' do
-      assert_text 'Missing'
+      assert_text 'MISSING'
     end
 
     click_on 'View Log'
@@ -65,7 +65,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     end
 
     within '#reservation-status' do
-      assert_text 'Picked Up'
+      assert_text 'PICKED UP'
     end
 
     click_on 'View Log'
@@ -84,7 +84,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     end
 
     within '#reservation-status' do
-      assert_text 'Cancelled'
+      assert_text 'CANCELLED'
     end
 
     click_on 'View Log'
@@ -110,7 +110,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   test "reservations not being open yet" do
     Setting.first_or_create.update(is_reservations_open: false)
     visit '/'
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
     assert_text "Reservations are CLOSED."
   end
 end

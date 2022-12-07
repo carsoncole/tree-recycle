@@ -205,6 +205,9 @@ table.zones-table {
         &.status {
           text-align: right;
           width: 3em;
+          .status {
+            padding-right: 1em;
+          }
         }
         &.street {
           width: 7em;

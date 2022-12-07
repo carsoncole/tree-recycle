@@ -18,8 +18,10 @@ class ReservationsMailer < ApplicationMailer
 
   def confirmed_reservation_email
     return if @reservation.no_emails? || !setting.is_emailing_enabled
+    return if @reservation.is_confirmed_reservation_email_sent?
     mail(to: @reservation.email, subject: 'Your tree pickup is confirmed')
     @reservation.logs.create(message: 'Confirmed reservation email sent.')
+    @reservation.update(is_confirmed_reservation_email_sent: true)
   end
 
   def pick_up_reminder_email

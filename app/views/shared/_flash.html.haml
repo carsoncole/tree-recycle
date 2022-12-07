@@ -1,5 +1,5 @@
 - if flash.present?
-  .container
+  .container.d-print-none
     #flash
       - flash.each do |key, value|
         .alert{class: key == 'notice' ? 'alert-primary' : 'alert-warning'}

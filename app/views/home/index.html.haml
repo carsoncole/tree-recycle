@@ -19,7 +19,11 @@
         = nice_date(setting&.pickup_date_and_time)
 
 
-      .text-center.d-grid.gap-2= link_to "Reserve a tree pickup", new_reservation_path, class: 'btn btn-primary btn-lg', id: 'reservation-button'
+      .text-center.d-grid.gap-2
+        = link_to new_reservation_path, class: 'btn btn-primary btn-lg', id: 'reservation-button' do 
+          Reserve now
+          %i.bi.bi-arrow-right-circle
+
 
 
   / .row
@@ -29,7 +33,7 @@
 
   / .row
   /   .col-md-10.offset-lg-1
-  /     .get-started Register now for a tree pickup. Donations accepted and can be made online or left with the tree.
+  /     .get-started Reserve now for a tree pickup. Donations accepted and can be made online or left with the tree.
 
 
   .row

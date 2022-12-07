@@ -147,6 +147,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     accept_confirm do
       click_on "btn-pending-pickup-#{reservations[0].id}"
     end
+    sleep 1
     accept_confirm do
       click_on "btn-picked-up-#{reservations[1].id}"
     end

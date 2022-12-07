@@ -3,7 +3,7 @@ require 'csv'
 class Reservation < ApplicationRecord
   include Geocodable
 
-  default_scope { order(:street_name, :house_number) }
+  # default_scope { order(:street_name, :house_number) }
 
   belongs_to :route, optional: true
   has_one :zone, through: :route
@@ -13,7 +13,7 @@ class Reservation < ApplicationRecord
   enum :donation, { online_donation: 1, cash_or_check_donation: 2, no_donation: 3 }
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
 
-  enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
+  enum :heard_about_source, { newspaper: 8, facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2,  roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
 
   scope :pending, -> { where.not(status: ['archived', 'cancelled', 'unconfirmed'])}
   scope :unrouted, -> { where(route_id: nil) }
@@ -52,8 +52,8 @@ class Reservation < ApplicationRecord
     end
   end
 
-  def donated?
-    stripe_charge_amount.present?
+  def total_donations_amount
+    donations.sum(:amount)
   end
 
   def online_donated?
@@ -79,7 +79,7 @@ class Reservation < ApplicationRecord
   def send_missing_sms!
     message = "Hello! We can't find your tree for pickup. "
     message += "Please call #{ Setting&.first&.contact_phone } to reschedule." if Setting&.first&.contact_phone.present?
-    Sms.new.send(self, message)
+    Sms.new.send_with_object(self, message)
   end
 
   # method to import data from existing tree recycle system csv export
@@ -111,9 +111,39 @@ class Reservation < ApplicationRecord
     end
   end
 
-  def self.archive_all!
+  def self.archive_all_unarchived!
     Reservation.not_archived.update_all(status: :archived)
   end
+
+  def self.destroy_all_archived!
+    Reservation.archived.destroy_all
+  end
+
+  def self.merge_unarchived_with_archived!
+    Reservation.not_archived.not_unconfirmed.each do |r|
+      Reservation.archived.where(email: r.email).destroy_all
+      r.archived!
+    end
+  end
+
+  def self.reservations_to_send_marketing
+    # collect Archived,
+    #    not in not_archived
+    #    not sent marketing email 1
+    #    not no_emails
+    #    max count of email_batch_quantity
+    reservations_to_send =
+      Reservation.archived.
+      where.not(email:  Reservation.not_archived.map{ |r| r.email } ).
+      where(is_marketing_email_1_sent: false).
+      where.not(no_emails: true).
+      order(:email).
+      limit(Setting.first.email_batch_quantity)
+
+    # removes dupes
+    reservations_to_send.uniq { |r| r.email }
+  end
+
 
   private
 

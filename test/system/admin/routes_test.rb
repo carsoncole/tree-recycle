@@ -59,7 +59,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
 
     # create a reservation
     visit root_url
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
     fill_in "reservation[name]", with: 'Carson'
     fill_in "reservation[street]", with: '1760 Susan Place NW'
     fill_in "Email", with: 'admin@example.com'

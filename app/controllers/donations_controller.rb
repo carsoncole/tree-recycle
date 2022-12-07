@@ -1,3 +1,4 @@
+#OPTIMIZE fix donation_without_reservation to connect with existing res
 class DonationsController < ApplicationController
   skip_before_action :verify_authenticity_token
 

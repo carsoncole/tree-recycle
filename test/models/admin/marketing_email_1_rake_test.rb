@@ -3,41 +3,27 @@ require "test_helper"
 class MarketingEmail1RakeTest < ActiveSupport::TestCase
 
   setup do
-    # regular reservations that should NOT get the email
-    create(:reservation_with_coordinates, status: 'picked_up', is_routed: false, email: 'bill@example.com')
-    create(:reservation_with_coordinates, status: 'picked_up', is_routed: false, email: 'john@example.com')
-    create(:reservation_with_coordinates, status: 'picked_up', is_routed: false, email: 'adam@example.com')
-
-    # archived (2) reservations that should NOT get the email since they have regular reservations
-    create(:archived_with_coordinates_reservation, is_routed: false, email: 'bill@example.com')
-    create(:archived_with_coordinates_reservation, is_routed: false, email: 'adam@example.com')
-
-    # archived (3) reservations that should get the email
-    create(:archived_with_coordinates_reservation, is_routed: false, email: 'joe@example.com')
-    create(:archived_with_coordinates_reservation, is_routed: false, email: 'sam@example.com')
-    create(:archived_with_coordinates_reservation, is_routed: false, email: 'louie@example.com')
-    
-    # archived (5) that have logs indicating they have already been sent the email
-    archived_with_logs = create_list(:archived_with_coordinates_reservation, 5, is_routed: false)
-    archived_with_logs.each {|r| r.logs.create(message: 'Marketing email 1 sent to archived') }
+    setting.update(is_emailing_enabled: false)
+    # 20 pending_pickup reservations
+    pending = create_list(:reservation_with_coordinates, 20, status: 'pending_pickup', is_routed: false)
+    # 5 archived, no_emails reservations
+    create_list(:reservation_with_coordinates, 5, status: 'archived', is_routed: false, no_emails: true)
+    # 5 archived, is_sent_marketing_email_1 = true  reservations
+    create_list(:reservation_with_coordinates, 5, status: 'archived', is_routed: false, is_marketing_email_1_sent: true)
+    # 10 archived reservations
+    create_list(:reservation_with_coordinates, 10, status: 'archived', is_routed: false)
+    # 5 archived, but with existing reservations
+    pending[0..4].each { |r| create(:reservation_with_coordinates, email: r.email, status: 'archived', is_routed: false)}
+    setting.update(is_emailing_enabled: true)
 
     TreeRecycle::Application.load_tasks
+    ActionMailer::Base.deliveries = []
     Rake::Task['marketing:send_email_1_to_archived_customers'].invoke
   end
 
   test "marketing email 1 is sent to archived" do
-    sleep 2
-    assert_equal 10, Reservation.archived.count
-    assert_equal 3, ActionMailer::Base.deliveries.count # count of emails to be sent
-
-    # should get emails
-    assert_includes Reservation.all.filter_map { |r| r.email if r.logs.where(message: 'Marketing email 1 sent to archived').any? }, 'joe@example.com'
-    assert_includes Reservation.all.filter_map { |r| r.email if r.logs.where(message: 'Marketing email 1 sent to archived').any? }, 'louie@example.com'
-    assert_includes Reservation.all.filter_map { |r| r.email if r.logs.where(message: 'Marketing email 1 sent to archived').any? }, 'sam@example.com'
-
-    # should not get emails
-    assert_not Reservation.all.filter_map { |r| r.email if r.logs.where(message: 'Marketing email 1 sent to archived').any? }.include? 'bill@example.com'
-    assert_not Reservation.all.filter_map { |r| r.email if r.logs.where(message: 'Marketing email 1 sent to archived').any? }.include? 'adam@example.com'
+    assert_equal 25, Reservation.archived.count
+    assert_equal 10, ActionMailer::Base.deliveries.count # count of emails to be sent
 
     # no reservation should have logs indicating two email 1's went out
     assert_empty Reservation.all.filter_map { |r| r if r.logs.where(message: 'Marketing email 1 sent to archived').count > 1 }

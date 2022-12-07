@@ -23,38 +23,10 @@ class ReservationsMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
 
-    assert_equal ["troop_1564@treerecycle.net"], email.from
+    assert_equal ["scouttroop1564@gmail.com"], email.from
     assert_equal [reservation.email], email.to
     assert_equal "Your tree pickup reservation has been cancelled", email.subject
     assert email.html_part.body.to_s.include? 'If this cancellation is in error, please create a new reservation.'
-  end
-
-  test "hello email to archived" do
-    reservation = create(:reservation_with_coordinates, status: 'archived')
-    email = ReservationsMailer.with(reservation: reservation).hello_email
-
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    # assert_equal ["me@example.com"], email.from
-    assert_equal [reservation.email], email.to
-    assert_equal "Tree recycling on #{nice_long_date(Setting.first.pickup_date_and_time)}", email.subject
-    assert email.html_part.body.to_s.include? 'We are sending a friendly reminder that the Scouts of Bainbridge Island Troop 1564'
-  end
-
-  test "last call email to archived" do
-    reservation = create(:reservation_with_coordinates, status: 'archived')
-    email = ReservationsMailer.with(reservation: reservation).last_call_email
-
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    # assert_equal ["me@example.com"], email.from
-    assert_equal [reservation.email], email.to
-    assert_equal "Tree recycling last reminder for #{nice_long_date(Setting.first.pickup_date_and_time)}", email.subject
-    assert email.html_part.body.to_s.include? "We noticed that you haven't signed up yet"
   end
 
   test "pick up reminder email" do
@@ -72,15 +44,17 @@ class ReservationsMailerTest < ActionMailer::TestCase
   end
 
   test "delivery of emails on status changes" do
-    assert_emails 1 do
+    assert_emails 1 do # confirmed
       @reservation = create(:reservation_with_coordinates)
     end
+
+    assert_equal ActionMailer::Base.deliveries.last.subject, "Your tree pickup is confirmed"
 
     assert_emails 0 do
       @reservation.unconfirmed!
     end
 
-    assert_emails 1 do
+    assert_emails 0 do # only 1 confirmed will be sent
       @reservation.pending_pickup!
     end
     assert_equal ActionMailer::Base.deliveries.last.subject, "Your tree pickup is confirmed"
@@ -90,10 +64,9 @@ class ReservationsMailerTest < ActionMailer::TestCase
     end
     assert_equal "Your tree pickup reservation has been cancelled", ActionMailer::Base.deliveries.last.subject
 
-    assert_emails 1 do
+    assert_emails 0 do # confirmed emails only sent once
       @reservation.pending_pickup!
     end
-    assert_equal ActionMailer::Base.deliveries.last.subject, "Your tree pickup is confirmed"
   end
 
   test "delivery of email on cancelled reservation" do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_30_072904) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_031113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,6 +41,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_072904) do
     t.boolean "is_receipt_email_sent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_payment_intent_id"
+    t.string "customer_name"
+    t.string "checkout_session_status"
+    t.string "checkout_session_customer_email"
     t.index ["reservation_id"], name: "index_donations_on_reservation_id"
   end
 
@@ -61,6 +65,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_072904) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reservation_id"], name: "index_logs_on_reservation_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "number"
+    t.string "body"
+    t.uuid "reservation_id"
+    t.string "service_status"
+    t.integer "direction"
+    t.boolean "viewed", default: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reservations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -90,6 +106,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_072904) do
     t.string "unit"
     t.boolean "no_sms"
     t.integer "donation"
+    t.boolean "is_confirmed_reservation_email_sent", default: false
+    t.boolean "is_marketing_email_1_sent", default: false
+    t.boolean "is_marketing_email_2_sent", default: false
+    t.index ["email"], name: "index_reservations_on_email"
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["route_id"], name: "index_reservations_on_route_id"
     t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"
@@ -138,12 +158,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_30_072904) do
     t.datetime "sign_up_deadline_at"
     t.datetime "pickup_date_and_end_time"
     t.string "driver_secret_key"
-    t.string "sms_from_phone"
     t.string "facebook_page_id"
     t.string "meta_site_name"
     t.string "meta_title"
     t.string "meta_description"
     t.string "meta_image_filename"
+    t.string "reservations_closed_message"
+    t.boolean "is_driver_site_enabled", default: true
+    t.integer "email_batch_quantity", default: 300
   end
 
   create_table "users", force: :cascade do |t|

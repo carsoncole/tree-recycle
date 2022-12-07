@@ -1,4 +1,4 @@
-- if setting.is_reservations_open? && @reservation && @reservation.persisted?
+- if setting.is_reservations_open? && @reservation && @reservation.persisted? && !@reservation.archived?
   #reservation-actions
     - if @reservation.cancelled?
       =link_to "New reservation", new_reservation_path

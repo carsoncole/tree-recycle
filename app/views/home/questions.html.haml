@@ -5,10 +5,19 @@
     %p Contact us if your questions are not answered below:
 
   %ul.mb-5
+    - if Rails.application.credentials.twilio.production.number
+      %li
+        .fw-bold Send an SMS to:
+        = Rails.application.credentials.twilio.production.number.to_s
     - if setting&.contact_email.present?
-      %li= setting&.contact_email
+      %li
+        .fw-bold Send us an email:
+        = setting&.contact_email
     - if setting&.contact_phone.present?
-      %li= setting&.contact_phone
+      %li
+        .fw-bold Call us at:
+        = setting&.contact_phone
+
 
 
   .row

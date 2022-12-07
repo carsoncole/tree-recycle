@@ -181,4 +181,16 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response 422
   end
 
+  test "unsubscribing and resubscribing" do 
+    assert_changes('@reservation.no_emails?') do 
+      get reservation_unsubscribe_url(@reservation)
+      @reservation.reload
+    end
+
+    assert_changes('@reservation.no_emails?') do 
+      get reservation_resubscribe_url(@reservation)
+      @reservation.reload
+    end    
+
+  end
 end

@@ -17,11 +17,11 @@ class MarketingEmail2RakeTest < ActiveSupport::TestCase
     create(:archived_with_coordinates_reservation, is_routed: false, email: 'sam@example.com')
     create(:archived_with_coordinates_reservation, is_routed: false, email: 'louie@example.com')
     
-    # archived (5) that have logs indicating they have already been sent the email
-    archived_with_logs = create_list(:archived_with_coordinates_reservation, 5, is_routed: false)
-    archived_with_logs.each {|r| r.logs.create(message: 'Marketing email 2 sent to archived') }
+    # archived (5) and flagged as having already been sent the email
+    create_list(:archived_with_coordinates_reservation, 5, is_routed: false, is_marketing_email_2_sent: true)
 
     TreeRecycle::Application.load_tasks
+    ActionMailer::Base.deliveries = []
     Rake::Task['marketing:send_email_2_to_archived_customers'].invoke
   end
 

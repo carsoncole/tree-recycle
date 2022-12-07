@@ -1,0 +1,38 @@
+#marketing.container
+  .row
+    .col-lg-12
+      %h1
+        %i.bi.bi-megaphone-fill
+        Marketing
+
+  .row
+    .col-lg-4
+      %h2 Where did you hear about Tree Recycle?
+      %table.table#heard-from-source-table
+
+        - @sources.each do |source|
+          %tr
+            %th= source[0].humanize.capitalize
+            %td= Reservation.where(heard_about_source: source[0]).count
+
+    .col-lg-4.offset-lg-1
+      %h2 Email campaigns
+      %p.text-muted Emails will only be sent once in a campaign. Each year, archived reservations will need to be reset to enable resending.
+      .mb-4
+        .mb-2= button_to "Send Marketing Email #1", '', disabled: true, class: 'btn btn-primary'
+        %p Email reminder to all Archived reservations, that have not signed up with a 'Pending Pickup'
+      .mb-2= button_to "Send Marketing Email #2", '', disabled: true, class: 'btn btn-primary'
+      %p Email last call to all Archived reservations, that have not signed up with a 'Pending Pickup'
+
+
+
+      .mb-4
+
+        .mb-2= button_to "Reset Archived reservation for campaigns", '', disabled: true, class: 'btn btn-info'
+        %p Reset reservations to allow for new campaign emails. This should be done once prior to every recycling event.
+
+      %p
+        Quantity of emails to send in a marketing blast:
+        %span.fw-bold= setting.email_batch_quantity
+
+

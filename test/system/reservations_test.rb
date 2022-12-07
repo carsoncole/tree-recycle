@@ -7,7 +7,7 @@ class ReservationsTest < ApplicationSystemTestCase
     reservation = build_stubbed(:reservation)
 
     visit '/'
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     # check side info
     within "#side-info" do
@@ -85,7 +85,7 @@ class ReservationsTest < ApplicationSystemTestCase
     reservation = build_stubbed(:reservation)
 
     visit root_url
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: reservation.street
@@ -93,6 +93,7 @@ class ReservationsTest < ApplicationSystemTestCase
     select 'Roadside Sign', from: 'heard-about-sources'
 
     click_on "Register your address"
+    sleep 1
 
     click_on "Donate at pick-up"
   end
@@ -101,7 +102,7 @@ class ReservationsTest < ApplicationSystemTestCase
     reservation = build(:reservation)
 
     visit root_url
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     fill_in "reservation_name", with: reservation.name
     fill_in "reservation_street", with: 'gobbly gook'
@@ -122,7 +123,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
   test "creating a reservation that has a better address" do
     visit root_url
-    click_on "Reserve a tree pickup"
+    click_on "Reserve now"
 
     fill_in "reservation_name", with: 'John Doe'
     fill_in "reservation_street", with: '1760 su san pl'
@@ -133,6 +134,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     assert_text "Ouch! We are having issues and"
     click_on "Use this corrected address"
+    sleep 1
 
     assert_text "Reservation was successfully updated and is confirmed for pick up."
     assert_selector "h1", text: "Please consider a donation"

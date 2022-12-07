@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  get 'errors/not_found'
-  get 'errors/internal_server_error'
+
+  match "(*any)",
+    to: redirect(subdomain: ""),
+    via: :all,
+    constraints: { subdomain: "www" } unless Rails.env.test?
+
   root 'home#index'
 
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
@@ -24,6 +28,7 @@ Rails.application.routes.draw do
 
   get '/software' => 'home#software', as: 'software'
 
+  post 'messages/reply' => 'messages#reply'
   resources :reservations, except: [:index] do
 
     get 'address-verification', as: 'address_verification'
@@ -37,7 +42,8 @@ Rails.application.routes.draw do
 
 
     post 'submit-reservation' => 'reservations#submit_confirmed_reservation', as: 'submit'
-
+    get 'unsubscribe' => 'reservations#unsubscribe', as: 'unsubscribe'
+    get 'resubscribe' => 'reservations#resubscribe', as: 'resubscribe'
   end
 
   post 'stripe-webhook' => "donations#stripe_webhook"
@@ -58,18 +64,25 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'reservations#index'
-    resources :zones, except: [ :show ]
+    resources :zones
     resources :drivers
+    resources :messages, only: [:index, :create, :destroy ]
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
-    resources :users, only: [ :index, :update ]
-    delete 'reservations/archive-all' => 'reservations#archive_all', as: 'archive_all'
-    resources :reservations, only: [ :index, :show, :edit, :update, :destroy ] do
+    resources :users, only: [ :index, :update, :create, :destroy, :new ]
+    delete 'reservations/archive-all' => 'reservations#archive_all_unarchived', as: 'archive_all_unarchived_reservations'
+    delete 'reservations/destroy-all' => 'reservations#destroy_all', as: 'destroy_all_reservations'
+    delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'
+    delete 'reservations/destroy-unconfirmed' => 'reservations#destroy_unconfirmed', as: 'destroy_unconfirmed_reservations'
+    post 'reservations/merge-unarchived' => 'reservations#merge_unarchived', as: 'merge_unarchived_reservations'
+    resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
       post 'process-geocode' => 'reservations#process_geocode', as: 'process_geocode'
+      post 'archive' => 'reservations#archive', as: 'archive'
     end
     get '/routing' => 'zones#index', as: 'routing'
+    get '/marketing' => 'marketing#index', as: 'marketing'
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
     resources :routes, except: [ :index, :show ] do

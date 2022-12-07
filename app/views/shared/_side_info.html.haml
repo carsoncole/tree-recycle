@@ -41,3 +41,6 @@
           .phone= @reservation.phone
 
     = render 'reservations/reservation_actions'
+
+    - if @reservation.persisted?
+      %p= link_to 'Donate', new_reservation_donation_path(@reservation)

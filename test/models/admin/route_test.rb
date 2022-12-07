@@ -18,12 +18,8 @@ class Admin::RouteTest < ActiveSupport::TestCase
   test "destroying route should orphan associated reservations" do
     route = create(:route_with_coordinates, is_zoned: false)
     reservation = create(:reservation_with_coordinates, route: route, is_routed: false)
-    assert_equal reservation.route, route
 
-    assert_difference 'Reservation.count', 0 do
-      route.destroy
-      sleep 1
-    end
+    route.destroy
 
     reservation.reload
     assert_not reservation.route

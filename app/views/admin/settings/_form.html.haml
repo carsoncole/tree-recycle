@@ -28,6 +28,12 @@
   /   = f.label :is_emailing_enabled, class: 'form-check-label'
   /   = f.check_box :is_emailing_enabled, class: 'form-check-input'
   .mb-3
+    = f.label :reservations_closed_message, class: 'form-label'
+    = f.text_field :reservations_closed_message, placeholder: 'Message to show if reservations are closed...', class: 'form-control'
+  .mb-3
+    = f.label :is_driver_site_enabled, class: 'form-label'
+    = f.check_box :is_driver_site_enabled, class: 'form-check-input'
+  .mb-3
     = f.label :organization_name, class: 'form-label'
     = f.text_field :organization_name, class: 'form-control'
   .mb-3
@@ -51,9 +57,7 @@
   .mb-3
     = f.label :sign_up_deadline_at, class: 'form-label'
     = f.datetime_select :sign_up_deadline_at, class: 'form-control'
-  .mb-3
-    = f.label :sms_from_phone, class: 'form-label'
-    = f.text_field :sms_from_phone, class: 'form-control'
+
   .mb-3
     = f.label :default_city, class: 'form-label'
     = f.text_field :default_city, class: 'form-control'
@@ -67,7 +71,10 @@
     = f.label :driver_secret_key, class: 'form-label'
     = f.text_field :driver_secret_key, class: 'form-control'
     .form-text.text-muted If there is a secret key, access to the Driver application requires a key as a param '.../?key=[secret key]'. A change in the key hear will invalidate any prior key usage.
-
+  .mb-3
+    = f.label :email_batch_quantity, class: 'form-label'
+    = f.text_field :email_batch_quantity, class: 'form-control'
+    .form-text.text-muted Quantity of emails to send at a time
   .mb-3
     = f.label :meta_site_name, class: 'form-label'
     = f.text_field :meta_site_name, class: 'form-control'

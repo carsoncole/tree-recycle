@@ -4,7 +4,7 @@ class Admin::LogTest < ActiveSupport::TestCase
   def setup
     @reservation = create(:reservation_with_coordinates)
     setting.update(is_emailing_enabled: true)
-    sleep 0.5
+    sleep 1
   end
 
   test "log on unconfirmed" do
