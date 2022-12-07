@@ -4,31 +4,34 @@
       = @route.name_with_zone
       .map-icon
         = link_to driver_reservations_map_path(route_id: @route.id) do
-          %i.fa-solid.fa-map
+          %i.fa-solid.fa-map.d-print-none
     .table-responsive
-      %table.table.table-striped.driver-routes
+      %table.table.driver-routes
         %thead
           %tr
-            %th.buttons  Status
+            %th.buttons
+              .d-print-none  Status
+              .print-driver-actions
             %th.street Address
 
             %th.notes Notes
+            %th.donation Donation
             %th.name Name
             %th.phone Phone
         %tbody
           - @reservations.each do |reservation|
             %tr{class: reservation.picked_up? ? 'table-primary' : reservation.missing? ? 'table-danger' : nil}
-              / %td.buttons-orig
-              /   = button_to "Picked Up", [:driver, reservation], id: reservation.picked_up? ? "btn-not-picked-up-#{reservation.id}" : "btn-picked-up-#{reservation.id}", class: "btn picked-up btn-outline-primary #{ reservation.picked_up? ? 'active' : nil}",  params: { status: 'picked_up' }, data: { turbo_confirm: 'Picked up? Are you sure?' }
-              /   = button_to "Missing", [:driver, reservation], id: reservation.missing? ? "btn-not-missing-#{reservation.id}" : "btn-missing-#{reservation.id}", class: "btn missing btn-outline-danger #{ reservation.missing? ? 'active' : nil }",  params: { status: 'missing' }, data: { turbo_confirm: 'Missing? Are you sure?' }
-              /   = button_to "Pending Pickup", [:driver, reservation], id: reservation.pending_pickup? ? "btn-not-pending-pickup-#{reservation.id}" : "btn-pending-pickup-#{reservation.id}", class: "btn pending-pickup btn-outline-success #{ reservation.pending_pickup? ? 'active' : nil }",  params: { status: 'pending_pickup' }, data: { turbo_confirm: 'Reseting to PENDING PICKUP. This will send a notification. Are you sure?' }
               %td.buttons
-                .btn-group(role="group")
+                .btn-group.d-print-none(role="group")
                   = link_to "Pending pickup", [:driver, reservation, status: 'pending_pickup'], type: 'button', id: reservation.pending_pickup? ? "btn-not-pending-pickup-#{reservation.id}" : "btn-pending-pickup-#{reservation.id}", class: "btn pending-pickup btn-primary #{ reservation.pending_pickup? ? 'active' : nil }",  data: { turbo_method: :patch, turbo_confirm: setting.is_driver_site_enabled? ? "Are you sure? Setting to Pending and will send a notification to the resident." : "Cannot be updated at this time. Please contact the site administrator." }
                   = link_to "Picked up", [:driver, reservation, status: 'picked_up'], type: 'button', id: reservation.picked_up? ? "btn-not-picked-up-#{reservation.id}" : "btn-picked-up-#{reservation.id}",  class: "btn picked-up btn-primary #{ reservation.picked_up? ? 'active' : nil}",  data: { turbo_method: :patch, turbo_confirm: setting.is_driver_site_enabled? ? "Picked up? Are you sure?" : "Cannot be updated at this time. Please contact the site administrator." }
                   = link_to "Missing", [:driver, reservation, status: 'missing'], type: 'button', id: reservation.missing? ? "btn-not-missing-#{reservation.id}" : "btn-missing-#{reservation.id}", class: "btn missing btn-primary #{ reservation.missing? ? 'active' : nil }",  data: { turbo_method: :patch, turbo_confirm: setting.is_driver_site_enabled? ? "Missing? Are you sure? This will send a SMS to the resident notifying them and telling them to call us to reschedule." : "Cannot be updated at this time. Please contact the site administrator." }
+                .print-driver-actions
+                  %i.bi.bi-square &nbsp; Picked Up
+                  %i.bi.bi-square &nbsp; Missing
               %td.street= link_to reservation.street, driver_reservation_path(reservation)
 
               %td.notes= reservation.notes
+              %td.donation= reservation.donation.humanize.capitalize if reservation.donation
               %td.name= reservation.name
               %td.phone= reservation.phone

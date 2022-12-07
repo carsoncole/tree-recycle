@@ -7,6 +7,10 @@ $scout-blue: #003F87;
   }
 }
 
+h1 {
+  margin-bottom: 1.5em;
+}
+
 #driver-route {
   h1 {
     display: inline-block;
@@ -27,21 +31,20 @@ $scout-blue: #003F87;
     }
     tr {
       vertical-align: middle;
-      height: 20px;
+      line-height: 1.4;
     }
-    td.notes {
-      font-size: 0.9em;
+    td {
+      font-size: 0.9em !important;
     }
     th, td {
+      padding: 0.9em 0.6em;
       &.notes {
-        width: 30em;
+        min-width: 29em;
         white-space: wrap;
 
       }
       &.name {
-        width: 14em;
-        white-space: nowrap;
-        overflow-x: scroll;
+        min-width: 13em;
       }
       &.buttons {
         width: 27em;
@@ -52,14 +55,23 @@ $scout-blue: #003F87;
           background-color: $scout-blue;
         }
       }
+      .print-driver-actions {
+        display: none;
+      }
       &.phone {
         width: 9em;
       }
+      &.donation {
+        background-color: #111;
+        font-weight: 900;
+        text-align: center;
+        color: #fff;
+        width: 14em;
+      }
       &.street {
-        width: 17em;
-        white-space: nowrap;
+        min-width: 19em;
         font-weight: 700;
-        overflow-x: scroll;
+        font-size: 1em;
       }
     }
 
@@ -221,6 +233,8 @@ table.zones-table {
 }
 
 
+
+
 @media print {
   *,
   *::before,
@@ -295,11 +309,42 @@ table.zones-table {
       background-color: #000 !important;
       color: #fff !important;
     }
+    a {
+      color: #000;
+      text-decoration: none;
+    }
     .btn {
       display: none;
     }
     th, td {
       padding: 0;
+    }
+    table.table.driver-routes {
+      tr {
+        background-color: #000 !important;
+
+        th, td {
+          &.donation {
+            background-color: #333 !important;
+            color: #fff !important;
+            print-color-adjust: exact; 
+          }
+          &.buttons {
+            width: 18em;
+          }
+          .print-driver-actions {
+            vertical-align: middle;
+            display: inline-block !important;
+            min-width: 16em;
+            i.bi { 
+            font-style: normal;
+            padding-right: 0.4em;
+            font-weight: 700;
+            text-transform: uppercase;
+            }
+          }
+        }
+      }
     }
   }
 }
