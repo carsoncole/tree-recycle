@@ -28,22 +28,6 @@ class ReservationsMailer < ApplicationMailer
     @reservation.logs.create(message: 'Pick up reminder email sent.')
   end
 
-  # email to prior year reservations
-  def hello_email
-    return if @reservation.no_emails? || !setting.is_emailing_enabled
-    return unless @reservation.archived? # don't send to current reservations
-    mail(to: @reservation.email, subject: "Tree recycling on #{nice_long_date(setting.pickup_date_and_time)}")
-    @reservation.logs.create(message: 'Hello email sent.')
-  end
-
-  # email last reminder to prior year reservations
-  def last_call_email
-    return if @reservation.no_emails? || !setting.is_emailing_enabled
-    return unless @reservation.archived? # don't send to current reservations
-    mail(to: @reservation.email, subject: "Tree recycling last reminder for #{nice_long_date(setting.pickup_date_and_time)}")
-    @reservation.logs.create(message: 'Last call email sent.')
-  end
-
   def cancelled_reservation_email
     return if @reservation.no_emails? || !setting.is_emailing_enabled
     mail(to: @reservation.email, subject: "Your tree pickup reservation has been cancelled")

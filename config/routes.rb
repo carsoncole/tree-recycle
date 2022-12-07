@@ -42,7 +42,8 @@ Rails.application.routes.draw do
 
 
     post 'submit-reservation' => 'reservations#submit_confirmed_reservation', as: 'submit'
-
+    get 'unsubscribe' => 'reservations#unsubscribe', as: 'unsubscribe'
+    get 'resubscribe' => 'reservations#resubscribe', as: 'resubscribe'
   end
 
   post 'stripe-webhook' => "donations#stripe_webhook"

@@ -49,7 +49,7 @@
                 = @reservation.phone
 
 
-      - unless @reservation.pending_pickup? || @reservation.cancelled? || !setting.is_reservations_open?
+      - unless @reservation.pending_pickup? || @reservation.cancelled? || !setting.is_reservations_open? || @reservation.archived?
         .row.mb-3
           .col-md-12
             .text-center= button_to 'Submit Reservation', reservation_submit_path(@reservation), class: 'btn btn-primary btn-lg'

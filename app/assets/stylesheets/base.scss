@@ -199,7 +199,12 @@ table.reservation {
   }
 }
 
-
+#unsubscribe, #resubscribe {
+  margin-top: 5em;
+  h1 {
+    font-size: 1.7em;
+  }
+}
 
 .additional_info {
   display: inline;

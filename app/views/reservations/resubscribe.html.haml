@@ -1,0 +1,12 @@
+#resubscribe.container
+  %h1
+    %i.bi.bi-envelope-fill &nbsp;
+    You are resubscribed!
+  %p
+    The email
+    %span.fw-bold= @reservation.email
+    has been resubscribed and we will let you know about upcoming Tree Recycle events. Thank you!
+
+  %p
+    If you want to unsubscribe,
+    = link_to "click here.", reservation_unsubscribe_url(@reservation)

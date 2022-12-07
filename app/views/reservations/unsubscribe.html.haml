@@ -1,0 +1,12 @@
+#unsubscribe.container
+  %h1
+    %i.bi.bi-envelope-slash-fill &nbsp;
+    You are unsubscribed!
+  %p
+    The email
+    %span.fw-bold= @reservation.email
+    has been unsubscribed and will no longer receive any messages about upcoming Tree Recycle events. If you make a new reservation with this email address, you will be resubscribed. Thank you!
+
+  %p
+    If you want to resubscribe,
+    = link_to "click here.", reservation_resubscribe_url(@reservation)

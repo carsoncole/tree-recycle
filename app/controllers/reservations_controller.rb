@@ -1,6 +1,6 @@
 
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_confirmed_reservation update destroy confirmed ]
+  before_action :set_reservation, only: %i[ show edit form_1 address_verification submit_confirmed_reservation update destroy confirmed unsubscribe resubscribe]
 
   def show
   end
@@ -100,6 +100,16 @@ class ReservationsController < ApplicationController
     else
       redirect_to reservation_url(@reservation), alert: "Reservations are no longer changeable. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
     end
+  end
+
+  def unsubscribe
+    @reservation.update(no_emails: true)
+    @reservation.logs.create(message: 'Unsubscribed from emails.')
+  end
+
+  def resubscribe
+    @reservation.update(no_emails: false)
+    @reservation.logs.create(message: 'Resubscribed to emails.')
   end
 
   private
