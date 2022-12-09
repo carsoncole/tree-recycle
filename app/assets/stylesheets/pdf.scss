@@ -4,6 +4,7 @@
 
 
   .header {
+    vertical-align: middle;
     page-break-before: always;
     margin-bottom: 1.5em;
     background-color: #cfcfcf;
@@ -55,14 +56,14 @@
         width: 250px;
       }
       &.donation {
-        width: 265px;
+        width: 270px;
       }
       &.notes {
         width: 240px;
       }
       &.name {
         text-align: right;
-        width: 180px;
+        width: 172px;
       }
     }
   }
