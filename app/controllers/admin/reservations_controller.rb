@@ -42,10 +42,7 @@ class Admin::ReservationsController < Admin::AdminController
         render :edit, status: :unprocessable_entity
       end
     else
-      @logs = @reservation.logs
-      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
-      @donations = @reservation.donations
-      render :show, status: :unauthorized
+      redirect_to admin_reservation_url(@reservation), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -60,10 +57,7 @@ class Admin::ReservationsController < Admin::AdminController
       @reservation.archived!
       redirect_back(fallback_location: admin_root_path, notice: "Reservation was successfully cancelled.")
     else
-      @logs = @reservation.logs
-      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
-      @donations = @reservation.donations
-      render :show, status: :unauthorized
+      redirect_to admin_reservation_url(@reservation), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end 
   end
 
@@ -72,10 +66,7 @@ class Admin::ReservationsController < Admin::AdminController
       @reservation.destroy
       redirect_to admin_reservations_path, notice: "Reservation was successfully destroyed."
     else
-      @logs = @reservation.logs
-      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
-      @donations = @reservation.donations
-      render :show, status: :unauthorized
+      redirect_to admin_reservation_url(@reservation), alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -104,10 +95,7 @@ class Admin::ReservationsController < Admin::AdminController
       @reservation.save
       redirect_back(fallback_location: admin_reservations_path)
     else
-      @logs = @reservation.logs
-      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
-      @donations = @reservation.donations
-      render :show, status: :unauthorized
+      redirect_to admin_reservation_url(@reservation), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -117,10 +105,7 @@ class Admin::ReservationsController < Admin::AdminController
       @reservation.save
       redirect_back(fallback_location: admin_reservations_path)
     else
-      @logs = @reservation.logs
-      @statuses = Reservation.statuses.map {|key, value| key == "archived" ? nil : [key.titleize, key] }.compact
-      @donations = @reservation.donations
-      render :show, status: :unauthorized
+      redirect_to admin_reservation_url(@reservation), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -129,7 +114,7 @@ class Admin::ReservationsController < Admin::AdminController
       Reservation.process_all_routes!
       redirect_to admin_reservations_path
     else
-      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized'
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -138,7 +123,7 @@ class Admin::ReservationsController < Admin::AdminController
       Reservation.archive_all_unarchived!
       redirect_to admin_settings_path, notice: 'All Reservations archived'
     else
-      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized', status: :unauthorized
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -147,7 +132,7 @@ class Admin::ReservationsController < Admin::AdminController
       Reservation.merge_unarchived_with_archived!
       redirect_to admin_settings_path, notice: 'Merging unarchived with archived was successful.'
     else
-      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized', status: :unauthorized
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -156,7 +141,7 @@ class Admin::ReservationsController < Admin::AdminController
       Reservation.unconfirmed.destroy_all
       redirect_to admin_settings_path, notice: 'Destroying unconfirmed was successful.'
     else
-      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Not authorized', status: :unauthorized
+      redirect_to admin_reservations_path(pending_pickup: true), alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -165,7 +150,7 @@ class Admin::ReservationsController < Admin::AdminController
       Reservation.destroy_all
       redirect_to admin_settings_path, notice: 'All Reservations destroyed'
     else
-      redirect_to admin_reservations_path, alert: 'Not authorized', status: :unauthorized
+      redirect_to admin_reservations_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end
   end
 
@@ -174,7 +159,7 @@ class Admin::ReservationsController < Admin::AdminController
       Reservation.destroy_all_archived!
       redirect_to admin_root_path, notice: 'All archived Reservations destroyed'
     else
-      redirect_to admin_reservations_path, alert: 'Not authorized', status: :unauthorized
+      redirect_to admin_reservations_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end
   end
 

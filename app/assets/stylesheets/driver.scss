@@ -46,7 +46,8 @@ h1 {
 
       }
       &.name {
-        min-width: 12em;
+        min-width: 11em;
+        text-align: right;
       }
       &.buttons {
         width: 27em;
@@ -343,7 +344,7 @@ table.zones-table {
           .print-driver-actions {
             vertical-align: middle;
             display: inline-block !important;
-            min-width: 23em;
+            min-width: 27em;
             i.bi { 
             font-style: normal;
             font-size: 1.2em;

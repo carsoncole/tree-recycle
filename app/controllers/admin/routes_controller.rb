@@ -19,8 +19,7 @@ class Admin::RoutesController < Admin::AdminController
         render :new, status: :unprocessable_entity
       end
     else
-      @route = Route.new
-      render :edit, status: :unauthorized
+      redirect_to admin_routing_url, alert: 'Unauthorized. Editor or Administrator access is required', status: :unauthorized
     end
   end
 
@@ -32,8 +31,7 @@ class Admin::RoutesController < Admin::AdminController
         render :edit, status: :unprocessable_entity
       end
     else
-      @reservations = @route.reservations.not_archived
-      render :edit, status: :unauthorized
+      redirect_to admin_routing_url, alert: 'Unauthorized. Editor or Administrator access is required', status: :unauthorized
     end
   end
 
@@ -43,7 +41,7 @@ class Admin::RoutesController < Admin::AdminController
 
       redirect_to admin_routing_url, notice: "Route was successfully destroyed."
     else
-      render :edit, status: :unauthorized
+      redirect_to admin_routing_url, alert: 'Unauthorized. Editor or Administrator access is required', status: :unauthorized
     end
   end
 

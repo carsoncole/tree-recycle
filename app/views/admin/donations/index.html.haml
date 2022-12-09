@@ -28,6 +28,6 @@
                 %td.name= link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
                 %td= number_to_currency donation.amount
                 %td= donation&.status&.capitalize
-                %td= nice_short_date_time(donation.created_at)
+                %td.text-end= nice_short_date_time(donation.created_at)
 
       .pagination= pagy_bootstrap_nav(@pagy).html_safe

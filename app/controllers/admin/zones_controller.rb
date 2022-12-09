@@ -37,22 +37,13 @@ class Admin::ZonesController < Admin::AdminController
 
   def update
     if current_user.editor? || current_user.administrator?
-      respond_to do |format|
-        if @zone.update(zone_params)
-          format.html { redirect_to admin_zones_url, notice: "Zone was successfully updated." }
-          format.json { render :show, status: :ok, location: @zone }
-        else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @zone.errors, status: :unprocessable_entity }
-        end
+      if @zone.update(zone_params)
+        redirect_to admin_zones_url, notice: "Zone was successfully updated."
+      else
+        redirect_to admin_routing_url, alert: 'Unauthorized. Editor or Administrator access is required', status: :unauthorized
       end
     else
-      @zones = Zone.includes(:routes).all.order(:name)
-      @pending_pickups_count = Reservation.pending_pickup.routed.count
-      @missing_count = Reservation.missing.count
-      @picked_up_count = Reservation.picked_up.count
-      @all_zones = true if params[:all_zones]
-      render :index, status: :unauthorized
+      redirect_to admin_routing_url, alert: 'Unauthorized. Editor or Administrator access is required', status: :unauthorized
     end    
   end
 
@@ -66,12 +57,7 @@ class Admin::ZonesController < Admin::AdminController
         format.json { head :no_content }
       end
     else
-      @zones = Zone.includes(:routes).all.order(:name)
-      @pending_pickups_count = Reservation.pending_pickup.routed.count
-      @missing_count = Reservation.missing.count
-      @picked_up_count = Reservation.picked_up.count
-      @all_zones = true if params[:all_zones]
-      render :index, status: :unauthorized
+      redirect_to admin_routing_url, alert: 'Unauthorized. Editor or Administrator access is required', status: :unauthorized
     end
   end
 

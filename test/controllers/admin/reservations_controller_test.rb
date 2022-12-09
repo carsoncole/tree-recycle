@@ -190,7 +190,7 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     create(:route_with_coordinates, is_zoned: false)
 
     post admin_process_all_routes_path(as: @viewer)
-    assert_redirected_to admin_reservations_path(pending_pickup: true)
+    assert_response :unauthorized
   end
 
   test "archiving all reservations as administrator" do

@@ -24,7 +24,7 @@ class MarketingEmail2RakeTest < ActiveSupport::TestCase
   end
 
   test "marketing email 2 is sent to archived" do
-    sleep 5
+    sleep 6
     assert_equal 25, Reservation.archived.count
     assert_equal 10, ActionMailer::Base.deliveries.count # count of emails to be sent
 

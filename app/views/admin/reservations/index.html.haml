@@ -118,19 +118,18 @@
                           = pluralize(reservation.distance_to_route.round(2), "mile")
 
                 %td.actions
-                  - if current_user.editor? || current_user.administrator?
-                    = link_to edit_admin_reservation_path(reservation) do
-                      %i.fa-solid.fa-pen.icon
-        
-                    - unless reservation.cancelled?
-                      = link_to admin_reservation_archive_path(reservation), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will archive the reservation.' } do
-                        %i.bi.bi-archive-fill.icon
-                    - if current_user.administrator?
-                      = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, 'turbo-confirm': 'Are you sure? This will permanently, and irreversibly destroy this reservation.' } do
-                        %i.bi.bi-trash-fill.icon
-                    = link_to admin_reservation_process_geocode_path(reservation), method: :post, id: "process-geocode-button-#{reservation.id}", data: { "turbo-method": :post } do
-                      %i.fa-solid.fa-location-dot.icon
-                    = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
-                      %i.fa-solid.fa-bolt.icon
+                  = link_to edit_admin_reservation_path(reservation) do
+                    %i.fa-solid.fa-pen.icon
+      
+                  - unless reservation.cancelled?
+                    = link_to admin_reservation_archive_path(reservation), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will archive the reservation.' } do
+                      %i.bi.bi-archive-fill.icon
+
+                  = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, 'turbo-confirm': 'Are you sure? This will permanently, and irreversibly destroy this reservation.' } do
+                    %i.bi.bi-trash-fill.icon
+                  = link_to admin_reservation_process_geocode_path(reservation), method: :post, id: "process-geocode-button-#{reservation.id}", data: { "turbo-method": :post } do
+                    %i.fa-solid.fa-location-dot.icon
+                  = link_to admin_reservation_process_route_path(reservation), method: :post, id: "process-route-button-#{reservation.id}", data: { "turbo-method": :post } do
+                    %i.fa-solid.fa-bolt.icon
 
       .pagination= pagy_bootstrap_nav(@pagy, pagy_id: 'pagination').html_safe
