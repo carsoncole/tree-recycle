@@ -105,3 +105,8 @@
               %td.data.zone-pending-pickup-count#all-pending-count= @pending_pickups_count
               %td.data.missing-count#all-missing-count= @missing_count
               %td.data#all-picked-count= @picked_up_count
+
+  %p.text-end
+    = link_to '/driver/zones.pdf', target: '_blank' do 
+      %i.bi.bi-box-arrow-down
+      Full report
