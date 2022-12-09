@@ -9,7 +9,7 @@ class Admin::SearchTest < ApplicationSystemTestCase
     system_test_signin
 
     visit admin_reservations_path
-    fill_in "search", with: @reservation.name[0..3]
+    fill_in "Search", with: @reservation.name[0..3]
     click_on "Search"
     assert_text @reservation.name
   end

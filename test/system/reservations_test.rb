@@ -55,6 +55,7 @@ class ReservationsTest < ApplicationSystemTestCase
 
     # Choose 'No donation'
     click_on 'No donation'
+    sleep 0.25
     assert_selector 'h1', text: 'Tree Pickup'
     assert_selector '.important-message', text: 'This reservation is scheduled for pickup.'
 

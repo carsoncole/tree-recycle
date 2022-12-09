@@ -1,0 +1,52 @@
+!!!
+
+%html
+  %head
+    %meta(charset='utf-8')
+    = wicked_pdf_stylesheet_link_tag "pdf"
+    %link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css")
+
+  %body
+    .driver-route.pdf
+      .table-responsive
+        %table.table.driver-routes
+          %thead
+
+            .header
+              .zone= @route.zone.name
+              .route= @route.name
+            %tr
+              %th.buttons
+              %th Address
+
+              %th.notes Notes
+              %th Donation
+              %th.name Name/Phone
+          %tbody
+            - @route.reservations.each do |reservation|
+              %tr
+                %td.buttons
+                  %i.bi.bi-square
+                  %span Picked Up
+                  %i.bi.bi-square
+                  %span Missing
+                %td.street= reservation.street
+
+                %td.notes.smaller= reservation.notes
+                %td.donation
+                  - if reservation.donation
+                    - if reservation.online_donation?
+                      %i.bi.bi-check-square
+                      %span Online
+                    - elsif reservation.cash_or_check_donation?
+                      %i.bi.bi-square
+                      %span Cash/Check
+                    %i.bi.bi-square
+                    %span Door hanger
+                    %br
+                    %i.bi.bi-square
+                    %span Cash/Check $______
+                %td.name.smaller
+                  = reservation.name
+                  %br
+                  = reservation.phone
