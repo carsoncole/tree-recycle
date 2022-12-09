@@ -1,4 +1,4 @@
-require 'faker'
+drequire 'faker'
 include FactoryBot::Syntax::Methods
 
 User.create(email: 'admin@example.com', password: 'password')

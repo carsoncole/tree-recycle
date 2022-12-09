@@ -1,6 +1,8 @@
 $scout-red: #CE1126;
 $scout-blue: #003F87;
 
+
+
 #driver-search {
   h1 {
     margin-bottom: 3em;
@@ -8,7 +10,7 @@ $scout-blue: #003F87;
 }
 
 h1 {
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 
 #driver-route {
@@ -27,14 +29,14 @@ h1 {
       font-size: 0.8em;
     }
     tbody {
-      font-size: 0.75em;
+      font-size: 1em;
     }
     tr {
       vertical-align: middle;
       line-height: 1.4;
     }
     td {
-      font-size: 0.9em !important;
+
     }
     th, td {
       padding: 0.9em 0.6em;
@@ -44,7 +46,7 @@ h1 {
 
       }
       &.name {
-        min-width: 13em;
+        min-width: 12em;
       }
       &.buttons {
         width: 27em;
@@ -62,20 +64,22 @@ h1 {
         width: 9em;
       }
       &.donation {
+        min-width: 23em;
         .type {
           display: inline-block;
           background-color: #111;
-          font-weight: 900;
+          font-weight: 800;
+          font-size: 0.9em;
           text-align: center;
           color: #fff;
-          padding: 0.5em;
-          width: 13em;
+          padding: 0.2em 3em 0.2em 1em;
+
           }
       }
       &.street {
         min-width: 19em;
         font-weight: 700;
-        font-size: 1em;
+        font-size: 1.2em !important;
       }
     }
 
@@ -334,16 +338,19 @@ table.zones-table {
             }
           }
           &.buttons {
-            width: 18em;
+            width: 20em;
           }
           .print-driver-actions {
             vertical-align: middle;
             display: inline-block !important;
-            min-width: 16em;
+            min-width: 23em;
             i.bi { 
             font-style: normal;
-            padding-right: 0.4em;
+            font-size: 1.2em;
+            padding-right: 0.2em;
             font-weight: 700;
+            .text { font-size: 0.9em;
+              display: inline-block; }
             text-transform: uppercase;
             }
           }
