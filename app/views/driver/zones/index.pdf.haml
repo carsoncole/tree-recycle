@@ -10,7 +10,7 @@
     - @zones.each do |zone|
       .driver-route.pdf
         - zone.routes.each do |route|
-          - next if route.reservations.empty?
+          - next if route.reservations.pending.empty?
 
           / .zone-leaders
           /   %span.Zone Leaders:
@@ -36,7 +36,7 @@
                   %th Donation
                   %th.name Name/Phone
               %tbody
-                - route.reservations.each do |reservation|
+                - route.reservations.pending.each do |reservation|
                   %tr
                     %td.buttons
                       %i.bi.bi-square
@@ -52,13 +52,13 @@
                           %i.bi.bi-check-square
                           %span Online
                         - elsif reservation.cash_or_check_donation?
-                          %i.bi.bi-square
+                          %i.bi.bi-square-square
                           %span Cash/Check
-                        %i.bi.bi-square
-                        %span Door hanger
-                        %br
-                        %i.bi.bi-square
-                        %span Cash/Check $______
+                      %i.bi.bi-square
+                      %span Door hanger
+                      %br
+                      %i.bi.bi-square
+                      %span Cash/Check $______
                     %td.name.smaller
                       = reservation.name
                       %br
