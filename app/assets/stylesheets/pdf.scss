@@ -43,7 +43,7 @@
 
     th, td {
       text-align: left;
-      padding: 0.6em 1em 0.3em 0em;
+      padding: 0.3em 0.8em 0.3em 0em;
       border-top: 1px solid #999;
       &.buttons, &.donation {
         font-weight: 800;
@@ -56,14 +56,14 @@
         width: 250px;
       }
       &.donation {
-        width: 270px;
+        width: 290px;
       }
       &.notes {
         width: 240px;
       }
       &.name {
         text-align: right;
-        width: 172px;
+        width: 165px;
       }
     }
   }

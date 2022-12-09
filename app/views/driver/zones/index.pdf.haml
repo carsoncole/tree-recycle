@@ -48,17 +48,18 @@
                     %td.notes.smaller= reservation.notes
                     %td.donation
                       - if reservation.donation
-                        - if reservation.online_donation?
+                        - if !reservation.online_donation?
                           %i.bi.bi-check-square
                           %span Online
-                        - elsif reservation.cash_or_check_donation?
-                          %i.bi.bi-square-square
-                          %span Cash/Check
+                        - elsif !reservation.cash_or_check_donation?
+                          %i.bi.bi-check-square
+                          %span Order: Cash/Check
+                          %br
                       %i.bi.bi-square
                       %span Door hanger
                       %br
                       %i.bi.bi-square
-                      %span Cash/Check $______
+                      %span Rec'd: Cash/Check $____
                     %td.name.smaller
                       = reservation.name
                       %br
