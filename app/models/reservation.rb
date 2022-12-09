@@ -1,6 +1,5 @@
 require 'csv'
 #OPTIMIZE improve route assignments
-#FIXME Manually routed reservations don't show on route map
 class Reservation < ApplicationRecord
   include Geocodable
 
