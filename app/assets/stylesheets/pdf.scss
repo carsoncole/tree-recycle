@@ -5,10 +5,11 @@
 
   .header {
     vertical-align: middle;
+    line-height: 1.7;
     page-break-before: always;
     margin-bottom: 1.5em;
     background-color: #cfcfcf;
-    padding: 0.5em 1em;
+    padding: 0.5em 1.5em;
     .zone, .route {
       font-size: 2em;
       font-weight: 800;
@@ -30,6 +31,9 @@
     i.bi {
       display: inline;
       font-style: normal;
+      font-size: 1.8em;
+      float: left;
+      margin-right: 0.15em;
     }
     thead {
       color: #aaa;
@@ -41,22 +45,38 @@
       font-size: 0.85em;
     }
 
+    tbody {
+      tr {
+      }
+      th, td {
+        border-top: 1px solid #999; 
+        height:  2.8em;       
+      }
+    }
+
+
     th, td {
       text-align: left;
-      padding: 0.3em 0.8em 0.3em 0em;
-      border-top: 1px solid #999;
+      vertical-align: middle;
+      padding: 0.5em 0.8em 0.5em 0em;
+      .status {
+        float: left;
+        margin-top: 0.3em;
+        margin-right: 0.3em;
+      }
       &.buttons, &.donation {
         font-weight: 800;
         text-transform: uppercase;
       }
       &.buttons {
-        width: 240px;
+        width: 285px;
       }
       &.street {
         width: 250px;
+        font-weight: 800;
       }
       &.donation {
-        width: 290px;
+        width: 270px;
       }
       &.notes {
         width: 240px;
