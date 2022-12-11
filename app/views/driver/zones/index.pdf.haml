@@ -50,16 +50,16 @@
                       - if reservation.donation
                         - if reservation.online_donation?
                           %i.bi.bi-check-square
-                          %span Online
-                        - elsif reservation.cash_or_check_donation?
-                          %i.bi.bi-check-square
-                          %span Order: Cash/Check
+                          .status Online
+                        - else 
+                          - if reservation.cash_or_check_donation?
+                            %i.bi.bi-check-square
+                            .status Order: Cash/Check
+                          %i.bi.bi-square
+                          .status Door hanger
                           %br
                           %i.bi.bi-square
-                          %span Door hanger
-                          %br
-                          %i.bi.bi-square
-                          %span Rec'd: Cash/Check $____
+                          .status Rec'd: Cash/Check $____
                     %td.name.smaller
                       = reservation.name
                       %br

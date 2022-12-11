@@ -38,9 +38,10 @@
                     - if reservation.online_donation?
                       %i.bi.bi-check-square
                       .status Online
-                    - elsif reservation.cash_or_check_donation?
-                      %i.bi.bi-square
-                      .status Order: Cash/Check
+                    - else 
+                      - if reservation.cash_or_check_donation?
+                        %i.bi.bi-square
+                        .status Order: Cash/Check
                       %i.bi.bi-square
                       .status Door hanger
                       %br
