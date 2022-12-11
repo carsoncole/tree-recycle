@@ -28,13 +28,6 @@
   }
 
   table.table.driver-routes {
-    i.bi {
-      display: inline;
-      font-style: normal;
-      font-size: 1.8em;
-      float: left;
-      margin-right: 0.15em;
-    }
     thead {
       color: #aaa;
       font-size: 0.7em;
@@ -50,20 +43,30 @@
       }
       th, td {
         border-top: 1px solid #999; 
-        height:  2.8em;       
+        height:  3em; 
       }
     }
-
 
     th, td {
       text-align: left;
       vertical-align: middle;
       padding: 0.5em 0.8em 0.5em 0em;
-      .status {
-        float: left;
-        margin-top: 0.3em;
-        margin-right: 0.3em;
+
+      .selection {
+        vertical-align: middle;
+        display: inline-block;
+        margin-right: 0.25em;
+        line-height: 1.8em;
+        .status {
+          vertical-align: top;
+          display: inline-block;
+        }
+        i.bi {
+          display: inline-block;
+          font-size: 1.8em;
+        }
       }
+
       &.buttons, &.donation {
         font-weight: 800;
         text-transform: uppercase;
@@ -74,6 +77,7 @@
       &.street {
         width: 250px;
         font-weight: 800;
+        vertical-align: middle;
       }
       &.donation {
         width: 270px;
