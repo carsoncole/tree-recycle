@@ -18,19 +18,26 @@ h1 {
     line-height: 2;
     font-size: 1.3em;
     font-weight: 600;
-    margin-bottom: 0.4em;
+
   }
   .btn-sm {
     margin-left: 0.2em;
     margin-right: 0.2em;
   }
   .notes {
-    line-height: 2.5;
+    line-height: 1.5;
+    margin-bottom: 1em;
   }
   .map-link {
     text-align: center;
     font-size: 1.7em;
     padding: 0 0.2em;
+  }
+  .status-info {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 0.4em;
+    text-transform: uppercase;
   }
 }
 

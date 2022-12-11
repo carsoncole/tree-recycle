@@ -28,7 +28,7 @@
 
 <div id="map"></div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_maps.api_key %>&callback=initMap&libraries=&v=weekly" async></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_maps.api_key %>&callback=initMap&libraries=marker&v=beta"></script>
 <script>
 
   // Initialize and add the map
@@ -55,21 +55,42 @@
           zoom: 12,
           center: new google.maps.LatLng(47.64483,-122.54827),
         <%- end %>
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapId: "4504f8b37365c3d0"
     });
 
     var infowindow = new google.maps.InfoWindow();
 
     for (i = 0; i < locations.length; i++) {
 
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][2], locations[i][3]),
-        map: map,
-        title: locations[i][1]
+      const pinViewBackgroundPickedUp = new google.maps.marker.PinView({
+        background: "#efefef",
+        scale: 0.7,
       });
 
+      const pinViewBackgroundPending = new google.maps.marker.PinView({
+        background: "#1ABC9C",
+      });
+
+      const pinViewBackgroundMissing = new google.maps.marker.PinView({
+        background: "#C70039",
+        glyphColor: "white"
+      });
+
+      const marker = new google.maps.marker.AdvancedMarkerView({
+        map,
+        position: { lat: locations[i][2], lng: locations[i][3] },
+        title: locations[i][1],
+        map: map,
+        content: locations[i][5]=='Pending pickup' ? pinViewBackgroundPending.element : locations[i][5]=='Missing' ? pinViewBackgroundMissing.element : pinViewBackgroundPickedUp.element,
+      });
+
+
+
       let html_content = `<div class='map-info-window'><a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a><br>` +
+            `<div class='status-info'>${locations[i][5]}</div>` +
             `<div class='notes'>${locations[i][4]}</div>` +
+
             `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-success btn-sm' href='/driver/reservations/${locations[i][0]}?status=picked_up'>Picked Up</a> ` +
             `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm' href='/driver/reservations/${locations[i][0]}?status=missing'>Missing</a>` +
             `<a href="https://maps.apple.com/?q=${locations[i][2]},${ locations[i][3]}" target='_blank' class= 'map-link'><i class='bi bi-apple'></i></a>` +

@@ -13,15 +13,15 @@ class Driver::ReservationsController < Driver::DriverController
   def map
     if params[:route_id]
       @route = Route.find(params[:route_id])
-      @reservations = Reservation.pending_pickup.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || ""] }
+      @reservations = Reservation.pending.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || ""] }
     elsif params[:zone_id]
       @zone = Zone.find(params[:zone_id])
-      @reservations = @zone.reservations.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || ""] }
+      @reservations = @zone.reservations.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || ""] }
     elsif params[:reservation_id]
       @reservation = Reservation.find(params[:reservation_id])
-      @reservations = [ @reservation.id.to_s, @reservation.street.to_s, @reservation.latitude.to_s.to_f, @reservation.longitude.to_s.to_f, @reservation.notes || ""]
+      @reservations = [ @reservation.id.to_s, @reservation.street.to_s, @reservation.latitude.to_s.to_f, @reservation.longitude.to_s.to_f, @reservation.notes || "", @reservation.status.humanize.capitalize, @reservation.phone || ""]
     else
-      @reservations = Reservation.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || ""] }
+      @reservations = Reservation.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || ""] }
     end
   end
 
