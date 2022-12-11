@@ -39,14 +39,14 @@
                     .status Online
                   - else 
                     - if reservation.cash_or_check_donation?
-                      %i.bi.bi-square
+                      %i.bi.bi-check-square
                       .status Order: Cash/Check
                     .clear
-                    %i.bi.bi-square
-                    .status Door hanger
+                      %i.bi.bi-square
+                      .status Door hanger
                     .clear
-                    %i.bi.bi-square
-                    .status Cash/Check $______
+                      %i.bi.bi-square
+                      .status Cash/Check $______
                 %td.name.smaller
                   = reservation.name
                   %br

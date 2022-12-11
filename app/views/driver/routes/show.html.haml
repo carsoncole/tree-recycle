@@ -43,18 +43,18 @@
               %td.notes= reservation.notes
               %td.donation
                 .print-driver-actions
-                  - if reservation.donation
-                    - if reservation.online_donation?
-                      %i.bi.bi-check-square
-                        .text Online
-                    - elsif reservation.cash_or_check_donation?
+                  - if reservation.online_donation?
+                    %i.bi.bi-check-square
+                      .text Online
+                  - else
+                    - if reservation.cash_or_check_donation?
                       %i.bi.bi-check-square
                         .text Cash/Check
-                  %i.bi.bi-square
-                    .text Door hanger
-                  %br
-                  %i.bi.bi-square
-                    .text Cash/Check $______
+                    %i.bi.bi-square
+                      .text Door hanger
+                    %br
+                    %i.bi.bi-square
+                      .text Cash/Check $______
               %td.name
                 = reservation.name
                 %br
