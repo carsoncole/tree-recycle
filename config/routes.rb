@@ -74,6 +74,7 @@ Rails.application.routes.draw do
     delete 'reservations/destroy-all' => 'reservations#destroy_all', as: 'destroy_all_reservations'
     delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'
     delete 'reservations/destroy-unconfirmed' => 'reservations#destroy_unconfirmed', as: 'destroy_unconfirmed_reservations'
+    post 'reservations/destroy-reservations' => 'reservations#destroy_reservations', as: 'destroy_reservations'
     post 'reservations/merge-unarchived' => 'reservations#merge_unarchived', as: 'merge_unarchived_reservations'
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
       get 'logs' => 'logs#index', as: 'logs'

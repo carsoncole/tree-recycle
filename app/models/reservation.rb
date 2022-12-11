@@ -128,6 +128,10 @@ class Reservation < ApplicationRecord
     end
   end
 
+  def self.destroy_reservations_older_than_months(months)
+    Reservation.where("created_at > ?", Time.now + months.to_i.months).destroy_all
+  end
+
   def self.reservations_to_send_marketing
     # collect Archived,
     #    not also in not_archived

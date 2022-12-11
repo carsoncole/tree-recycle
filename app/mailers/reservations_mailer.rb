@@ -1,5 +1,3 @@
-#OPTIMIZE create mailer for unconfirmed reservations
-#OPTIMIZE is there a way to eliminate duplicate emails in archive?
 class ReservationsMailer < ApplicationMailer
   include ApplicationHelper
   before_action :set_reservation

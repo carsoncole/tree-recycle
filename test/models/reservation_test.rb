@@ -81,4 +81,13 @@ class ReservationTest < ActiveSupport::TestCase
     assert_equal 'Point White', reservation.route.name, 'wrong route'
     assert_equal "South", reservation.route.zone.name, 'wrong zone'
   end
+
+  test "destroying reservations older than N months" do 
+    reservations = create_list(:reservation_with_coordinates, 5, is_routed: false)
+    reservations[0].update(created_at: Time.now + 24.months)
+    
+    assert_equal 5, Reservation.count 
+    Reservation.destroy_reservations_older_than_months(12)
+    assert_equal 4, Reservation.count 
+  end
 end
