@@ -1,39 +1,52 @@
 require "application_system_test_case"
-#OPTIMIZE add admin/driver tests
+
 class Admin::DriversTest < ApplicationSystemTestCase
-  # setup do
-  #   @admin_driver = admin_drivers(:one)
-  # end
+  setup do
+    @driver = create(:driver)
+  end
 
-  # test "visiting the index" do
-  #   visit admin_drivers_url
-  #   assert_selector "h1", text: "Drivers"
-  # end
+  test "visiting the index" do
+    system_test_signin
+    visit admin_drivers_url
+    assert_selector "h1", text: "Drivers"
+  end
 
-  # test "should create driver" do
-  #   visit admin_drivers_url
-  #   click_on "New driver"
+  test "should create driver" do
+    system_test_signin
+    visit admin_drivers_url
+    within "#drivers" do 
+      click_on "Driver", match: :first
+    end
 
-  #   click_on "Create Driver"
+    fill_in "Name", with: "Joe Blow"
+    fill_in "Email", with: "joe@example.com"
+    fill_in "Phone", with: '206-555-1212'
+    click_on "Save"
 
-  #   assert_text "Driver was successfully created"
-  #   click_on "Back"
-  # end
+    within "#flash" do 
+      assert_text "Driver was successfully created."
+    end
+  end
 
-  # test "should update Driver" do
-  #   visit admin_driver_url(@admin_driver)
-  #   click_on "Edit this driver", match: :first
+  test "should update Driver" do
+    system_test_signin
+    visit admin_driver_url(@driver)
+    click_on "Edit", match: :first
+    fill_in "Phone", with: '800-555-1212'
 
-  #   click_on "Update Driver"
+    click_on "Save"
 
-  #   assert_text "Driver was successfully updated"
-  #   click_on "Back"
-  # end
+    assert_text "Driver was successfully updated"
+    assert_text "800-555-1212"
+  end
 
-  # test "should destroy Driver" do
-  #   visit admin_driver_url(@admin_driver)
-  #   click_on "Destroy this driver", match: :first
+  test "should destroy Driver" do
+    system_test_signin
+    visit admin_driver_url(@driver)
+    accept_confirm do 
+      click_on "Destroy Driver"
+    end
 
-  #   assert_text "Driver was successfully destroyed"
-  # end
+    assert_text "Driver was successfully destroyed"
+  end
 end

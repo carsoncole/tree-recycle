@@ -15,7 +15,7 @@ class Admin::SettingsController < Admin::AdminController
         render :edit, status: :unprocessable_entity
       end
     else
-      render :edit, status: :unauthorized
+      redirect_to admin_settings_path, notice: 'Unauthorized. Editor or Administrator access is required. ', status: :unauthorized
     end
   end
 

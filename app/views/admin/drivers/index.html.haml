@@ -29,13 +29,13 @@
                 = 'Leader' if driver.is_leader?
               %td.zone= link_to driver.zone.name, admin_zone_path(driver.zone) if driver.zone
               %td.phone
-                = link_to "tel:#{driver.phone}" do
+                = link_to "tel:#{driver.phone}", id: "driver-#{driver.id}-phone-link" do
                   = driver.phone
               %td.email= mail_to driver.email
               %td.actions-1
                 - if current_user.editor? || current_user.administrator?
-                  = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }  do
+                  = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }, id: "driver-#{driver.id}-destroy-link"  do
                     %i.fa-solid.fa-trash
-                  = link_to edit_admin_driver_path(driver) do
+                  = link_to edit_admin_driver_path(driver), id: "driver-#{driver.id}-edit-link" do
                     %i.fa-solid.fa-pen
 
