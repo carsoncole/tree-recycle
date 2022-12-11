@@ -39,25 +39,39 @@
                 - route.reservations.pending.each do |reservation|
                   %tr
                     %td.buttons
-                      %i.bi.bi-square
-                      %span Picked Up
-                      %i.bi.bi-square
-                      %span Missing
+                      - if reservation.picked_up?
+                        .selection
+                          %i.bi.bi-check-square
+                          .status Picked Up
+                      - else
+                        .selection
+                          %i.bi.bi-square
+                          .status Picked Up
+                      .selection
+                        %i.bi.bi-square
+                        .status Missing
                     %td.street= reservation.street
 
                     %td.notes.smaller= reservation.notes
                     %td.donation
                       - if reservation.online_donation?
-                        %i.bi.bi-check-square
-                        .status Online
+                        .selection
+                          %i.bi.bi-check-square
+                          .status Online
                       - else 
                         - if reservation.cash_or_check_donation?
-                          %i.bi.bi-check-square
-                          .status Order: Cash/Check
-                        %i.bi.bi-square.clear
-                        .status Door hanger
-                        %i.bi.bi-square.clear
-                        .status Rec'd: Cash/Check $____
+                          .selection
+                            %i.bi.bi-check-square
+                            .status Cash/Check $______
+                        - else
+                          .selection
+                            %i.bi.bi-square
+                            .status Cash/Check $______
+                        .selection
+                          %i.bi.bi-square.clear
+                          .status Door hanger
+
+
                     %td.name.smaller
                       = reservation.name
                       %br
