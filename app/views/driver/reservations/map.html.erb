@@ -71,7 +71,10 @@
       let html_content = `<div class='map-info-window'><a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a><br>` +
             `<div class='notes'>${locations[i][4]}</div>` +
             `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-success btn-sm' href='/driver/reservations/${locations[i][0]}?status=picked_up'>Picked Up</a> ` +
-            `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm' href='/driver/reservations/${locations[i][0]}?status=missing'>Missing</a></div>`
+            `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm' href='/driver/reservations/${locations[i][0]}?status=missing'>Missing</a>` +
+            `<a href="https://maps.apple.com/?q=${locations[i][2]},${ locations[i][3]}" target='_blank' class= 'map-link'><i class='bi bi-apple'></i></a>` +
+            `<a href="https://www.google.com/maps/place/${locations[i][2]},${ locations[i][3]}", target='_blank' class='map-link'><i class='bi bi-google'></i></a>` +
+            `</div>`
 
       google.maps.event.addListener(marker, 'click', (function (marker, i) {
         return function () {
