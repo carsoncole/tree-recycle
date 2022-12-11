@@ -15,7 +15,7 @@ class MarketingEmail2RakeTest < ActiveSupport::TestCase
     # 5 archived, but with existing reservations
     pending[0..4].each { |r| create(:reservation_with_coordinates, email: r.email, status: 'archived', is_routed: false)}
 
-    sleep 2
+    sleep 4
     setting.update(is_emailing_enabled: true)
 
     TreeRecycle::Application.load_tasks
@@ -24,7 +24,7 @@ class MarketingEmail2RakeTest < ActiveSupport::TestCase
   end
 
   test "marketing email 2 is sent to archived" do
-    sleep 6
+    sleep 5
     assert_equal 25, Reservation.archived.count
     assert_equal 10, ActionMailer::Base.deliveries.count # count of emails to be sent
 
