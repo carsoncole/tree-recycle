@@ -25,6 +25,10 @@ body {
   width: 100%;
 }
 
+.clear {
+  clear: both;
+}
+
 a, #driver-nav a {
   color: lighten($scout-blue,25%);
 }

@@ -47,19 +47,19 @@
 
                     %td.notes.smaller= reservation.notes
                     %td.donation
-                      - if reservation.donation
-                        - if reservation.online_donation?
+                      - if reservation.online_donation?
+                        %i.bi.bi-check-square
+                        .status Online
+                      - else 
+                        - if reservation.cash_or_check_donation?
                           %i.bi.bi-check-square
-                          .status Online
-                        - else 
-                          - if reservation.cash_or_check_donation?
-                            %i.bi.bi-check-square
-                            .status Order: Cash/Check
-                          %i.bi.bi-square
-                          .status Door hanger
-                          %br
-                          %i.bi.bi-square
-                          .status Rec'd: Cash/Check $____
+                          .status Order: Cash/Check
+                        .clear
+                        %i.bi.bi-square
+                        .status Door hanger
+                        .clear
+                        %i.bi.bi-square
+                        .status Rec'd: Cash/Check $____
                     %td.name.smaller
                       = reservation.name
                       %br

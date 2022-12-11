@@ -23,7 +23,7 @@
               %th Donation
               %th.name Name/Phone
           %tbody
-            - @route.reservations.each do |reservation|
+            - @reservations.each do |reservation|
               %tr
                 %td.buttons
                   %i.bi.bi-square
@@ -34,19 +34,19 @@
 
                 %td.notes.smaller= reservation.notes
                 %td.donation
-                  - if reservation.donation
-                    - if reservation.online_donation?
-                      %i.bi.bi-check-square
-                      .status Online
-                    - else 
-                      - if reservation.cash_or_check_donation?
-                        %i.bi.bi-square
-                        .status Order: Cash/Check
+                  - if reservation.online_donation?
+                    %i.bi.bi-check-square
+                    .status Online
+                  - else 
+                    - if reservation.cash_or_check_donation?
                       %i.bi.bi-square
-                      .status Door hanger
-                      %br
-                      %i.bi.bi-square
-                      .status Cash/Check $______
+                      .status Order: Cash/Check
+                    .clear
+                    %i.bi.bi-square
+                    .status Door hanger
+                    .clear
+                    %i.bi.bi-square
+                    .status Cash/Check $______
                 %td.name.smaller
                   = reservation.name
                   %br
