@@ -54,6 +54,8 @@
                       %i.fa-solid.fa-wrench
                     = link_to admin_zone_path(zone.id), method: :delete, data: { "turbo-method": :delete } do
                       %i.fa-solid.fa-trash
+                  - if zone.geocoded?
+                    %i.bi.bi-geo-fill
                 %td.data.zone-pending-pickup-count= pending_pickup_count
                 %td.data.missing-count= missing_count
                 %td.data.picked-up-count= picked_up_count
@@ -74,6 +76,8 @@
                         %i.fa-solid.fa-wrench
                       = link_to admin_route_path(route.id), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure?' } do
                         %i.fa-solid.fa-trash
+                    - if route.geocoded?
+                      %i.bi.bi-geo-fill
                   %td.data.pending_pickup.pending-pickup-count#route-pending-pickup-count
                     = pending_pickup_count
                   %td.data.missing.missing-count= missing_count
