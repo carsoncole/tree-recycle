@@ -23,7 +23,7 @@ class ReservationsMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
 
-    assert_equal ["scouttroop1564@gmail.com"], email.from
+    assert_equal ["bainbridgeislandscouts@gmail.com"], email.from
     assert_equal [reservation.email], email.to
     assert_equal "Your tree pickup reservation has been cancelled", email.subject
     assert email.html_part.body.to_s.include? 'If this cancellation is in error, please create a new reservation.'

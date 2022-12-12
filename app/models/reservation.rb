@@ -132,16 +132,16 @@ class Reservation < ApplicationRecord
     Reservation.where("created_at > ?", Time.now + months.to_i.months).destroy_all
   end
 
-  def self.reservations_to_send_marketing
+  def self.reservations_to_send_marketing_emails(attribute)
     # collect Archived,
-    #    not also in not_archived
-    #    not sent marketing email 1
+    #    not also in [:archived, :unconfirmed]
+    #    not sent to attribute
     #    not no_emails
     #    max count of email_batch_quantity
     reservations_to_send =
       Reservation.archived.
-      where.not(email:  Reservation.not_archived.map{ |r| r.email } ).
-      where(is_marketing_email_1_sent: false).
+      where.not(email:  Reservation.where(status: :pending_pickup).map{ |r| r.email } ).
+      where(attribute.to_sym => false).
       where(no_emails: false).
       order(:email)
   end

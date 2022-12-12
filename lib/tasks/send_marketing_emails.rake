@@ -6,10 +6,7 @@ namespace :marketing do
 
   # send emails to archived reservations that don't have new reservations with same email or log indicating already sent
   task :send_email_1_to_archived_customers => :environment do
-    puts "\n== Preparing Email 1 for delivery =="
-    puts "\n Batch size: #{ Setting.first.email_batch_quantity }"
-
-    reservations_to_send = Reservation.reservations_to_send_marketing
+    reservations_to_send = Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent')
     puts "Total available size: #{ reservations_to_send.count }"
 
     reservations_to_send = reservations_to_send.limit(Setting.first.email_batch_quantity)
@@ -27,7 +24,7 @@ namespace :marketing do
     puts "\n== Preparing Email 2 for delivery =="
     puts "\n Batch size: #{ Setting.first.email_batch_quantity }"
 
-    reservations_to_send = Reservation.reservations_to_send_marketing
+    reservations_to_send = Reservation.reservations_to_send_marketing_emails('is_marketing_email_2_sent')
     puts "Total available size: #{ reservations_to_send.count }"
 
     reservations_to_send = reservations_to_send.limit(Setting.first.email_batch_quantity)

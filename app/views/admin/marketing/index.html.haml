@@ -19,20 +19,37 @@
       %h2 Email campaigns
       %p.text-muted Emails will only be sent once in a campaign. Each year, archived reservations will need to be reset to enable resending.
       .mb-4
-        .mb-2= button_to "Send Marketing Email #1", '', disabled: true, class: 'btn btn-primary'
+        .mb-2= button_to "Send Marketing Email #1", admin_marketing_send_email_1_path, class: 'btn btn-primary'
         %p Email reminder to all Archived reservations, that have not signed up with a 'Pending Pickup'
-      .mb-2= button_to "Send Marketing Email #2", '', disabled: true, class: 'btn btn-primary'
+      .mb-2= button_to "Send Marketing Email #2", admin_marketing_send_email_2_path, class: 'btn btn-primary'
       %p Email last call to all Archived reservations, that have not signed up with a 'Pending Pickup'
-
-
-
       .mb-4
-
-        .mb-2= button_to "Reset Archived reservation for campaigns", '', disabled: true, class: 'btn btn-info'
-        %p Reset reservations to allow for new campaign emails. This should be done once prior to every recycling event.
-
-      %p
-        Quantity of emails to send in a marketing blast:
-        %span.fw-bold= setting.email_batch_quantity
+        .mb-2= button_to "Reset Archived reservations for campaigns", admin_marketing_reset_sent_campaigns_path, class: 'btn btn-info'
+        %p Campaign emails will only be sent to Archived reservations and only once. Reseting here will allow for new sends.
 
 
+      = form_for [:admin, setting] do |f|
+        = hidden_field_tag :source, "marketing"
+        .row.g-3.align-items-center.mb-4
+          .col-lg-5.fw-bold
+            = f.label :email_batch_quantity
+          .col-lg-3  
+            = f.text_field :email_batch_quantity, class: 'form-control'
+          .col-lg-4
+            = f.submit 'Update', class: 'btn btn-primary'
+
+
+      - if setting.is_emailing_enabled
+        .row
+          .col-lg-5
+            .fw-bold Email is delivering
+          .col-lg-4
+            - if current_user.administrator?
+              = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}, source: 'marketing'), method: :patch, class: 'btn btn-danger'
+      - else
+        .row
+          .col-lg-5
+            .fw-bold Email is stopped
+          .col-lg-4
+            - if current_user.administrator?
+              = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}, source: 'marketing'), method: :patch, class: 'btn btn-danger'

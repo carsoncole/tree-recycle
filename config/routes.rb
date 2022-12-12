@@ -83,7 +83,13 @@ Rails.application.routes.draw do
       post 'archive' => 'reservations#archive', as: 'archive'
     end
     get '/routing' => 'zones#index', as: 'routing'
+
+
+    post '/marketing/send-email-1' => 'marketing#send_marketing_email_1', as: 'marketing_send_email_1'
+    post '/marketing/send-email-2' => 'marketing#send_marketing_email_2', as: 'marketing_send_email_2'
+    post '/marketing/reset-sent-campaigns' => 'marketing#reset_sent_campaigns', as: 'marketing_reset_sent_campaigns'
     get '/marketing' => 'marketing#index', as: 'marketing'
+
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'
     resources :routes, except: [ :index, :show ] do
