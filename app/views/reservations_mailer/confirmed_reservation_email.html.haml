@@ -4,11 +4,13 @@
       %table(style="max-width:800px;margin-left: auto;margin-right: auto;")
         %tr
           %td(style="text-align:left;padding: 0;border:0")
-            %h1(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; font-weight: 300; font-size: 40px; margin: 20px auto 50px auto;text-align: center;padding: 0;line-height: 1.5;")
+            %h1(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; font-weight: 300; font-size: 40px; margin: 20px auto 70px auto;text-align: center;padding: 0;line-height: 1.5;")
               Tree pick-up scheduled
 
-            %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5;box-sizing: border-box; font-size: 16px; margin: 0; padding: 0;")
-              Confirmation
+            %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5;box-sizing: border-box; font-size: 16px; margin: 0 0 20px; padding: 0;")
+              Dear
+              = succeed(",") do
+                = @reservation.name
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
               This email is to confirm that we will be picking up your tree on
@@ -68,7 +70,8 @@
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
               You may
               = link_to "make a change", reservation_url(@reservation)
-              or cancel your reservation at any time.
+              or cancel your reservation at any time. If you have any questions, please
+              = link_to "contact us.", questions_url
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
               Thank You,
