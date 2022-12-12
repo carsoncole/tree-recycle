@@ -47,11 +47,20 @@ module Geocodable
           geocode
         end
       elsif Geocoder.config.lookup == :amazon_location_service
-        # a bad address "bad address" returns more than one address (10 in this case)
+
+        # multiple results (seems like 2) can be return, the second being a coordinate of just the street, not number
         begin
           results = Geocoder.search(self.address)
+
           if results.count == 1
             geocode
+          elsif results.count == 2 && results.as_json[0]["place"]["address_number"].present?
+            result = results.as_json[0]["place"]
+
+            self.latitude = result["geometry"]["point"][1]
+            self.longitude = result["geometry"]["point"][0]
+            self.house_number = result["geometry"]["address_number"]
+            self.street_name = result["street"]            
           end
         rescue
           # geocode
