@@ -2,7 +2,7 @@
   %h1 Have a question?
 
   - if setting&.contact_email.present? || setting&.contact_phone.present?
-    %p Contact us if your questions are not answered below:
+    %p Contact us if your questions are not answered below. If you'd rather make your reservations through the contact details below, please include 1) your name, 2) street address, 3) email, and 4) phone. We'll enter your reservation and you will get a confirmation via email.
 
   %ul.mb-5
     - if Rails.application.credentials.twilio.production.number
