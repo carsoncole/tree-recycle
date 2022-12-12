@@ -15,7 +15,7 @@ h1 {
 
 .map-info-window {
   .street {
-    line-height: 2;
+    line-height: 1.5;
     font-size: 1.3em;
     font-weight: 600;
 
@@ -28,16 +28,28 @@ h1 {
     line-height: 1.5;
     margin-bottom: 1em;
   }
-  .map-link {
-    text-align: center;
-    font-size: 1.7em;
-    padding: 0 0.2em;
-  }
   .status-info {
-    font-size: 1.2em;
+    font-size: 1.7em;
     font-weight: 700;
-    margin-bottom: 0.4em;
+
     text-transform: uppercase;
+    margin-left: 2em;
+  }
+  .phone {
+    display: inline-block;
+  }
+  .map-links {
+    float: right;
+    .map-link {
+      display: inline-block;
+      font-size: 1.7em;
+      padding: 0 0.2em;
+    }
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4em;
   }
 }
 
