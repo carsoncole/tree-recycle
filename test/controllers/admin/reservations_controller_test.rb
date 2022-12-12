@@ -27,25 +27,25 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     reservation_archived = create(:reservation_with_coordinates, status: :archived, is_routed: false)
 
     get admin_reservations_url(route_id: reservation_routed.route_id, as: @viewer)
-    assert @response.body.include? reservation_routed.name
+    assert_match reservation_routed.name, @response.body
 
     get admin_reservations_url(picked_up: true, as: @viewer)
-    assert @response.body.include? reservation_picked_up.name 
+    assert_match reservation_picked_up.name, @response.body 
 
     get admin_reservations_url(cancelled: true, as: @viewer)
-    assert @response.body.include? reservation_cancelled.name
+    assert_match reservation_cancelled.name, @response.body
 
     get admin_reservations_url(missing: true, as: @viewer)
-    assert @response.body.include? reservation_missing.name
+    assert_match reservation_missing.name, @response.body
 
     get admin_reservations_url(archived: true, as: @viewer)
-    assert @response.body.include? reservation_archived.name
+    assert_match reservation_archived.name, @response.body
 
     get admin_reservations_url(all: true, as: @viewer)
-    assert @response.body.include? reservation_missing.name
+    assert_match reservation_missing.name, @response.body
 
     get admin_reservations_url(unrouted: true, as: @viewer)
-    assert @response.body.include? @reservation.name
+    assert_match @reservation.name, @response.body
   end
 
   test "should get show with auth" do

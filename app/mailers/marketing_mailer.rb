@@ -1,4 +1,3 @@
-#TODO enable buttons for email campaigns
 class MarketingMailer < ApplicationMailer
   include ApplicationHelper
   before_action :set_reservation

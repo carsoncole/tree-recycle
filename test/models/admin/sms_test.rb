@@ -12,12 +12,6 @@ class Admin::SmsTest < ActiveSupport::TestCase
     end
   end
 
-  #FIXME Tests overwrite numbers so this needs fixing
-  # test "sending a sms to a reservation without a number" do
-  #   reservation = create(:reservation_with_coordinates, is_routed: false)
-  #   assert_not Sms.new.send(reservation, "This is a test message")
-  # end
-
   test "sending a sms to a reservation with an invalid number" do 
     reservation = create(:reservation_with_coordinates, is_routed: false, no_emails: true, phone: '+12054517216')
     sleep 0.5
@@ -27,7 +21,7 @@ class Admin::SmsTest < ActiveSupport::TestCase
     end
   end
 
-  #FIXME not complete--need to figure out how to add twilio responses
+  #OPTIMIZE not complete--need to figure out how to add twilio responses
   test "sending an sms" do
     assert create(:message)
   end

@@ -1,6 +1,5 @@
 require "application_system_test_case"
 
-#TODO add more tests on routing page on calcs and 'No Zone'
 class Driver::RoutesTest < ApplicationSystemTestCase
 
   test "visiting the driver root path and nav links" do
