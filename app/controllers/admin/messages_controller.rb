@@ -3,7 +3,7 @@ class Admin::MessagesController < Admin::AdminController
     @numbers = Message.distinct.pluck(:number).uniq
     @number = params[:number]
     @message = Message.new(number: @number)
-    @messages = Message.where(number: @number)
+    @messages = Message.where(number: @number).order(:created_at)
     @messages.update_all(viewed: true) if @messages.any?
     @new_message = Message.new
   end
