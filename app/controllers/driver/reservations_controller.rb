@@ -11,6 +11,7 @@ class Driver::ReservationsController < Driver::DriverController
   end
 
   def map
+    flash[:notice] = "Reservation status changes are NOT enabled." unless helpers.setting.is_driver_site_enabled?
     if params[:route_id]
       @route = Route.find(params[:route_id])
       @reservations = Reservation.pending.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || ""] }
