@@ -13,7 +13,17 @@ h1 {
   margin-bottom: 1em;
 }
 
+#reservation {
+  table#detail {
+    th {
+      width: 13em;
+    }
+  }
+}
+
+
 .map-info-window {
+  box-sizing:border-box;
   .street {
     line-height: 1.5;
     font-size: 1.3em;
@@ -39,7 +49,8 @@ h1 {
     display: inline-block;
   }
   .map-links {
-    float: right;
+    clear: both;
+    text-align: right;
     .map-link {
       display: inline-block;
       font-size: 1.7em;
@@ -53,14 +64,58 @@ h1 {
   }
   .buttons {
     float: right;
+    margin-bottom: 0.8em;
+    a {
+      font-size: 1.4em;
+    }
+  }
+  .donation-status {
+    font-size: 1.4em;
+    margin: 0.2em 0;
+  }
+
+  .donation-info {
+    clear: both;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 0.5em 0.9em;
+    margin-bottom: 0.5em;
   }
   .actions {
     line-height: 1.5;
+    .choose {
+      font-weight: 800;
+    }
+    .btn-sm {
+      font-size: 0.8em;
+    }
+
+    form {
+      box-sizing:border-box;
+    }
     label, input {
       display: inline-block;
     }
     input[type=checkbox] {
-      margin: 0 0.3em;
+      margin: 0 1em 0.5em 0.3em;
+    }
+    input[type=button], input[type=submit] {
+      background-color: #62529c;
+      border: none;
+      color: #fff;
+      padding: 3px 10px;
+      text-decoration: none;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    input[type=number] {
+      border: 0;
+      padding: 0.3em 1em;
+      background-color: #efefef;
+    }
+    .checkboxes {
+      margin-bottom: 0.25em;
     }
   }
 }

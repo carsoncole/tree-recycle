@@ -7,7 +7,7 @@
       #status= reservation_status(@reservation)
 
   .row
-    .col-md-12.text-center
+    .col-lg-12.text-center
       %p= link_to "< Back", :back
 
   - if signed_in?
@@ -17,8 +17,8 @@
 
 
   .row
-    .col-md-3
-    .col-md-6.text-center
+    .col-lg-3
+    .col-lg-6.text-center
       #direction-links
         .title Directions
         = link_to "https://www.google.com/maps/place/#{ @reservation.latitude},#{ @reservation.longitude }", target: '_blank', class: 'map-link' do
@@ -43,8 +43,8 @@
 
 
   .row
-    .col-md-3
-    .col-md-6
+    .col-lg-3
+    .col-lg-6
       %table.table#detail
         %tr
           %th Name
@@ -54,7 +54,8 @@
           %td= @reservation.short_address
         - if @reservation.notes.present?
           %tr
-            %td(colspan="2")= @reservation.notes
+            %th Pickup notes
+            %td= @reservation.notes
         %tr
           %th Email
           %td= mail_to @reservation.email
@@ -65,10 +66,16 @@
         %tr
           %th Route
           %td= reservation_zone_route(@reservation)
-        - if donation_status(@reservation)
-          %tr
-            %th Donation
-            %td= donation_status(@reservation)
+
+        %tr
+          %th Donation selection
+          %td= donation_status(@reservation)
+        %tr 
+          %th Donation at Pickup
+          %td 
+            = @reservation&.collected&.humanize&.capitalize
+            - if @reservation.collected_amount
+              = number_to_currency(@reservation.collected_amount)
 
         - if admin_view?
           %tr

@@ -29,15 +29,26 @@ class Driver::ReservationsController < Driver::DriverController
   def update
     @reservation = Reservation.find(params[:id])
     if helpers.setting.is_driver_site_enabled?
-      case params[:status]
-      when  'picked_up'
-        @reservation.picked_up!
-      when 'missing'
-        @reservation.missing!
-      when 'pending_pickup'
-        @reservation.pending_pickup!
+      if params[:status]
+        case params[:status]
+        when  'picked_up'
+          @reservation.picked_up!
+        when 'missing'
+          @reservation.missing!
+        when 'pending_pickup'
+          @reservation.pending_pickup!
+        end
+      else
+        @reservation.cash! if params[:cash_collected] == 'on'
+        @reservation.check! if params[:check_collected] == 'on'
+        @reservation.door_hanger! if params[:doorhanger_checkbox] == 'on'
+        @reservation.update(collected_amount: params[:collected_amount]) if params[:collected_amount].present?
       end
-      redirect_to driver_route_path(@reservation.route)
+      if params[:view]=='map'
+        redirect_to driver_reservations_map_path(route_id: @reservation.route_id)
+      else 
+        redirect_to driver_route_path(@reservation.route)
+      end
     else
       redirect_to driver_route_path(@reservation.route), status: 405
     end

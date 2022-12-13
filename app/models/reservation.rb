@@ -12,6 +12,7 @@ class Reservation < ApplicationRecord
 
   enum :donation, { online_donation: 1, cash_or_check_donation: 2, no_donation: 3 }
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
+  enum :collected, { door_hanger: 1, cash: 2, check: 3 }
 
   enum :heard_about_source, { newspaper: 8, facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2,  roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
 

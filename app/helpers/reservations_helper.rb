@@ -50,6 +50,10 @@ module ReservationsHelper
         ['Stripe Donated', 'info']
       elsif reservation.cash_or_check_donation?
         ['Cash or Check', 'danger']
+      elseif reservation.no_donation?
+        ['No Donation', 'info']
+      else
+        ['Nothing selected', 'info']
       end
     if status
       out = ''

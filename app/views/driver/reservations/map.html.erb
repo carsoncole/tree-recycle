@@ -97,29 +97,36 @@
               `</div>` +
 
             `<div class='buttons'>` +
-              `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-success btn-sm' href='/driver/reservations/${locations[i][0]}?status=picked_up'>Picked Up</a> ` +
-              `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm' href='/driver/reservations/${locations[i][0]}?status=missing'>Missing</a>` +
-            `</div>` +
+              `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-success btn-sm' href='/driver/reservations/${locations[i][0]}?status=picked_up&view=map'>Picked Up</a> ` +
+              `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm' href='/driver/reservations/${locations[i][0]}?status=missing&view=map'>Missing</a>` +
+            `</div>`
 
-
-
+      html_content +=
             `<div class='phone'>${locations[i][6] ? locations[i][6] : ""}</div>` +
-            `<div class='notes'>${locations[i][4]}</div>` +
-
-            `<div class='actions'>` +
-              `<div class='badge bg-primary'>${locations[i][7]=='online_donation' ? "Online Donation" : 
-                locations[i][7]=='cash_or_check_donation' ? "Cash/Check donation" : locations[i][7]=='no_donation' ? "No Donation" : "No Selection" } </div> &nbsp;` +
-              `<form action='/driver/reservation/${locations[i][0]}'>` +
-              `${locations[i][7] != 'online_donation' ? '<label>Doorhanger<input type="checkbox" name="doorhanger_checkbox"></label><label>Cash collected<input type="checkbox" name="cash_collected"></label><label>Check collected<input type="checkbox" name="check_collected"></label></br><label>Amount</label><input type="number" name="number">' : "" }`+
-              `<input type="submit" value="Submit" class='btn btn-primary btn-sm'>` +
-            `</form></div>` +
-
+            `<div class='notes'>${locations[i][4]}</div>`
+      html_content +=
+            `<div class='donation-info'>`+
+            `<div class='donation-status'>` +
+              `<div class='badge bg-primary'>Donation: ${locations[i][7]=='online_donation' ? "Online Donation" : 
+                locations[i][7]=='cash_or_check_donation' ? "Cash/Check donation" : locations[i][7]=='no_donation' ? "No Donation" : "No Selection" } </div>` +
+            `</div>`
+      if (locations[i][7] != 'online_donation'){
+        html_content +=
+              `<div class='actions'>` +
+              `<form action='/driver/reservations/${locations[i][0]}' method="patch" data-turbo-method="patch" data-method='patch'>` +
+              `<div class='checkboxes'><div class='choose'>Choose one:</div>` +
+              `<label>Doorhanger<input type="checkbox" name="doorhanger_checkbox"></label><label>Cash collected<input type="checkbox" name="cash_collected"></label><label>Check collected<input type="checkbox" name="check_collected"></label></div><input type="number" name="collected_amount" placeholder="Cash or check amount" step="0.01">`+
+              `<input type="hidden" name="view" value="map" />` +
+              `<input type="submit" value="Submit">` +
+            `</form></div>`
+        }
+      html_content +=  
+            `</div>` +
             `<div class='map-links'>`+
               `<a href="https://maps.apple.com/?q=${locations[i][2]},${ locations[i][3]}" target='_blank' class= 'map-link'><i class='bi bi-apple'></i></a>` +
               `<a href="https://www.google.com/maps/place/${locations[i][2]},${ locations[i][3]}", target='_blank' class='map-link'><i class='bi bi-google'></i></a>` +
             `</div>` +
-
-            `</div>`
+            `</div>` 
 
       google.maps.event.addListener(marker, 'click', (function (marker, i) {
         return function () {
