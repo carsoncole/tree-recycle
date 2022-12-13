@@ -110,7 +110,7 @@
               `<div class='badge bg-primary'>${locations[i][7]=='online_donation' ? "Online Donation" : 
                 locations[i][7]=='cash_or_check_donation' ? "Cash/Check donation" : locations[i][7]=='no_donation' ? "No Donation" : "No Selection" } </div> &nbsp;` +
               `<form action='/driver/reservation/${locations[i][0]}'>` +
-              `${locations[i][7] != 'online_donation' ? '<label>Doorhanger<input type="checkbox" ></label><label>Cash collected<input type="checkbox" ></label><label>Check collected<input type="checkbox" ></label></br><label>Amount</label><input type="number" name="number">' : "" }`+
+              `${locations[i][7] != 'online_donation' ? '<label>Doorhanger<input type="checkbox" name="doorhanger_checkbox"></label><label>Cash collected<input type="checkbox" name="cash_collected"></label><label>Check collected<input type="checkbox" name="check_collected"></label></br><label>Amount</label><input type="number" name="number">' : "" }`+
               `<input type="submit" value="Submit" class='btn btn-primary btn-sm'>` +
             `</form></div>` +
 
