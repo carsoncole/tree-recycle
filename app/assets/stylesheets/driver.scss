@@ -51,6 +51,18 @@ h1 {
     justify-content: space-between;
     margin-bottom: 0.4em;
   }
+  .buttons {
+    float: right;
+  }
+  .actions {
+    line-height: 1.5;
+    label, input {
+      display: inline-block;
+    }
+    input[type=checkbox] {
+      margin: 0 0.3em;
+    }
+  }
 }
 
 
