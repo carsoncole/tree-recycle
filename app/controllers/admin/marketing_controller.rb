@@ -1,6 +1,8 @@
 class Admin::MarketingController < Admin::AdminController
   def index
     @sources = Reservation.heard_about_sources
+    @donation_counts = Reservation.not_archived.group(:donation).count
+    @reservations_count = Reservation.not_archived.count
   end
 
   def send_marketing_email_1

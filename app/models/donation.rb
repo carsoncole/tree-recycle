@@ -15,6 +15,6 @@ class Donation < ApplicationRecord
     Message.create(
       body: "Tree Recycle donation: $#{ self.amount.to_s } by #{ self.email }",
       number: notification_number
-      ) if notification_number
+      ) if notification_number.present?
   end
 end

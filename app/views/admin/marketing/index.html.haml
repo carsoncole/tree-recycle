@@ -7,24 +7,49 @@
 
   .row
     .col-lg-4
-      %h2 Where did you hear about Tree Recycle?
-      %table.table#heard-from-source-table
+      .row.mb-3
+        .col-lg-12
+          %h2 Where did you hear about Tree Recycle?
+          %table.table#heard-from-source-table
 
-        - @sources.each do |source|
-          %tr
-            %th= source[0].humanize.capitalize
-            %td= Reservation.where(heard_about_source: source[0]).count
+            - @sources.each do |source|
+              %tr
+                %th= source[0].humanize.capitalize
+                %td= Reservation.where(heard_about_source: source[0]).count
+
+      .row.mb-3
+        .col-lg-12
+          %h2 Donations
+          %table.table#donations-analysis
+            %thead 
+            %tbody 
+              - @donation_counts.each do |type, count|
+                %tr
+                  %th
+                    - if type.nil?
+                      No selection
+                    - else
+                      = type.humanize.capitalize
+                  %td.count
+                    = count
+                    = surround("(", ")") do 
+                      = number_to_percentage(count.to_f / @reservations_count * 100, precision: 1)
+
+
+
+
+
 
     .col-lg-4.offset-lg-1
       %h2 Email campaigns
       %p.text-muted Emails will only be sent once in a campaign. Each year, archived reservations will need to be reset to enable resending.
       .mb-4
-        .mb-2= button_to "Send Marketing Email #1", admin_marketing_send_email_1_path, class: 'btn btn-primary'
+        .mb-2= button_to "Send Marketing Email #1", admin_marketing_send_email_1_path, class: 'btn btn-primary', data: { 'turbo-confirm': 'Are you sure? This will send out emails, limited in quantity by the batch size setting, to archived reservations that do not have current pending reservations with the same email address. Reservations sent this mailing will be flagged to avoid sending the same email twice. '}
         %p Email reminder to all Archived reservations, that have not signed up with a 'Pending Pickup'
-      .mb-2= button_to "Send Marketing Email #2", admin_marketing_send_email_2_path, class: 'btn btn-primary'
+      .mb-2= button_to "Send Marketing Email #2", admin_marketing_send_email_2_path, class: 'btn btn-primary', data: { 'turbo-confirm': 'Are you sure? This will send out emails, limited in quantity by the batch size setting, to archived reservations that do not have current pending reservations with the same email address. Reservations sent this mailing will be flagged to avoid sending the same email twice. '}
       %p Email last call to all Archived reservations, that have not signed up with a 'Pending Pickup'
       .mb-4
-        .mb-2= button_to "Reset Archived reservations for campaigns", admin_marketing_reset_sent_campaigns_path, class: 'btn btn-info'
+        .mb-2= button_to "Reset Archived reservations for campaigns", admin_marketing_reset_sent_campaigns_path, class: 'btn btn-info', data: { 'turbo-confirm': 'Are you sure? This will reset the flags on reservations that have been sent marketing emails, to enable the sending of these same marketing emails anew. '}
         %p Campaign emails will only be sent to Archived reservations and only once. Reseting here will allow for new sends.
 
 

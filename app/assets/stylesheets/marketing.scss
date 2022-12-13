@@ -13,4 +13,21 @@
       font-weight: 900;
     }
   }
+
+  table.table#donations-analysis {
+    th, td {
+      &.count {
+        text-align: right;
+      }
+    }
+    td {
+      font-weight: 900;
+    }
+    th {
+      font-weight: 400;
+    }
+  }
+
+
+
 }
