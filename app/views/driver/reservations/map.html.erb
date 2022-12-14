@@ -24,10 +24,7 @@
 <%- end %>
 </div>
 
-
-
 <div id="map"></div>
-
 <script async src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_maps.api_key %>&callback=initMap&libraries=marker&v=beta"></script>
 <script>
 
@@ -35,7 +32,7 @@
   var map;
   function initMap() {
 
-    // reservations = [[id, street, lat, lon, notes, status, phone, donation]]
+    // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected]]
     let locations =  <%= raw @reservations %>;
 
     // Create the map, centered at gfg_office
@@ -115,7 +112,15 @@
               `<div class='actions'>` +
               `<form action='/driver/reservations/${locations[i][0]}' method="patch" data-turbo-method="patch" data-method='patch'>` +
               `<div class='checkboxes'><div class='choose'>Choose one:</div>` +
-              `<label>Doorhanger<input type="checkbox" name="doorhanger_checkbox"></label><label>Cash collected<input type="checkbox" name="cash_collected"></label><label>Check collected<input type="checkbox" name="check_collected"></label></div><input type="number" name="collected_amount" placeholder="Cash or check amount" step="0.01">`+
+
+              `<label>Doorhanger</label>` +
+              `<input type="radio" name="collected" id="collected_door_hanger" value="door_hanger" ${locations[i][8]=="door_hanger" ? "checked" : "" }>` +
+              `<label>Cash collected</label>` +
+              `<input type="radio" name="collected" id="collected_cash" value="cash" ${locations[i][8]=="cash" ? "checked" : "" }>` +
+              `<label>Check collected</label>` +
+              `<input type="radio" name="collected" id="collected_check" value="check" ${locations[i][8]=="check" ? "checked" : "" }>` +
+
+              `</div><input type="number" name="collected_amount" placeholder="Cash or check amount" step="0.01" value=${locations[i][9]}>`+
               `<input type="hidden" name="view" value="map" />` +
               `<input type="submit" value="Submit">` +
             `</form></div>`

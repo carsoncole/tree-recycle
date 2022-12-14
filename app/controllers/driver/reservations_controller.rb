@@ -14,15 +14,15 @@ class Driver::ReservationsController < Driver::DriverController
     flash[:notice] = "Reservation status changes are NOT enabled." unless helpers.setting.is_driver_site_enabled?
     if params[:route_id]
       @route = Route.find(params[:route_id])
-      @reservations = Reservation.pending.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || ""] }
+      @reservations = Reservation.pending.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount] }
     elsif params[:zone_id]
       @zone = Zone.find(params[:zone_id])
-      @reservations = @zone.reservations.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || ""] }
+      @reservations = @zone.reservations.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount] }
     elsif params[:reservation_id]
       @reservation = Reservation.find(params[:reservation_id])
-      @reservations = [ @reservation.id.to_s, @reservation.street.to_s, @reservation.latitude.to_s.to_f, @reservation.longitude.to_s.to_f, @reservation.notes || "", @reservation.status.humanize.capitalize, @reservation.phone || "", @reservation.donation || ""]
+      @reservations = [ @reservation.id.to_s, @reservation.street.to_s, @reservation.latitude.to_s.to_f, @reservation.longitude.to_s.to_f, @reservation.notes || "", @reservation.status.humanize.capitalize, @reservation.phone || "", @reservation.donation || "", @reservation.collected || "", @reservation.collected_amount]
     else
-      @reservations = Reservation.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || ""] }
+      @reservations = Reservation.pending_pickup.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount] }
     end
   end
 
@@ -39,10 +39,11 @@ class Driver::ReservationsController < Driver::DriverController
           @reservation.pending_pickup!
         end
       else
-        @reservation.cash! if params[:cash_collected] == 'on'
-        @reservation.check! if params[:check_collected] == 'on'
-        @reservation.door_hanger! if params[:doorhanger_checkbox] == 'on'
-        @reservation.update(collected_amount: params[:collected_amount]) if params[:collected_amount].present?
+        @reservation.collected = 'cash' if params[:collected] == 'cash'
+        @reservation.collected = 'check' if params[:collected] == 'check'
+        @reservation.collected = 'door_hanger' if params[:collected] == 'door_hanger'
+        @reservation.collected_amount = params[:collected_amount] if params[:collected_amount].present?
+        @reservation.save
       end
       if params[:view]=='map'
         redirect_to driver_reservations_map_path(route_id: @reservation.route_id)
