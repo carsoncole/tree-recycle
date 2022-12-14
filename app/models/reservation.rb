@@ -1,5 +1,5 @@
 require 'csv'
-#OPTIMIZE improve route assignments
+
 class Reservation < ApplicationRecord
   include Geocodable
 

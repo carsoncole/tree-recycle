@@ -22,7 +22,6 @@ class ReservationsController < ApplicationController
   def edit
   end
 
-  #FIXME review purpose of !address.valid?
   def address_verification
     @site_title = 'Address verification'
     USPS.config.username = Rails.application.credentials.usps.username
@@ -30,9 +29,6 @@ class ReservationsController < ApplicationController
     req = USPS::Request::AddressStandardization.new(address)
     begin
       response = req.send!
-      # if !address.valid?
-      #   render :form_2
-      # end
       @verified_street = response.get(address).address1
       render status: 200 # http :bad_request
     rescue USPS::MultipleAddressError
@@ -47,7 +43,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  #OPTIMIZE Add check for reservations.open? unless signed_in
   def create
     @reservation = Reservation.new(reservation_params)
 

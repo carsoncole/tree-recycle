@@ -8,7 +8,7 @@ This is a Ruby on Rails 7 application, dependent on Ruby ~> 3.0.0, and PostgreSQ
 
 ## Installation
 
-This installed has been configured to run on [Heroku](https://heroku.com/), but is easily modified to work on any cloud provider. Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to install the necessary gems.
+This application has been configured to run on [Heroku](https://heroku.com/), but is easily modified to work on any cloud provider. Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to install the necessary gems.
 
 ### Database
 
@@ -24,6 +24,7 @@ For development use, there is seed data that can be loaded if you want to see th
 rails db:seed
 ```
 
+In production, Heroku will configure settings when you initially deploy.
 
 ### App Credentials
 
@@ -41,10 +42,9 @@ On Heroku, you need to provide the master key so the file can be decrypted. You 
 heroku config:set RAILS_MASTER_KEY=<your-master-key>
 ```
 
-
 ### App Constants
 
-Set the default application settings in `config/initializers/constants.rb`. 
+Basic settings and information for the site is stored in a constants file, `config/initializers/constants.rb`. Edit these accordingly.
 
 #### Reservation sources
 
@@ -62,8 +62,7 @@ This app requires USPS API access for address verification (https://www.usps.com
 
 ### Email notifications
 
-Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file.
-
+Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file. The sample settings have the correct values if you use Gmail for sending emails. If you use a differnt service, you may need to modify or add to the settings in the individual environment files.
 
 
 production.rb
