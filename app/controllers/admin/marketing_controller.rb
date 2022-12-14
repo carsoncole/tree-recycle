@@ -1,6 +1,6 @@
 class Admin::MarketingController < Admin::AdminController
   def index
-    @sources = Reservation.heard_about_sources
+    @sources = Reservation.not_archived.heard_about_sources
     @donation_counts = Reservation.not_archived.group(:donation).count
     @reservations_count = Reservation.not_archived.count
   end

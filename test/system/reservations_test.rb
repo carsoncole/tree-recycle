@@ -78,8 +78,6 @@ class ReservationsTest < ApplicationSystemTestCase
     assert submitted_reservation.word_of_mouth?
     assert submitted_reservation.cash_or_check_donation?
 
-
-    #OPTIMIZE add stripe tests
   end
 
   test "creating a valid minimal reservation with good address and online donation" do

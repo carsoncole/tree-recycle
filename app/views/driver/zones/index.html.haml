@@ -27,7 +27,7 @@
                 %th.route-zone.zone
                   = zone.name
                   = link_to driver_reservations_map_path(zone_id: zone.id) do
-                    %i.fa-solid.fa-map
+                    %i.bi.bi-map-fill
                 %td.data.zone-pending-pickup-count= pending_pickup_count
                 %td.data.missing-count= missing_count
                 %td.data.picked-up-count= picked_up_count
@@ -42,7 +42,7 @@
                   %th.route
                     %span.div{id: "route-name-" + route.id.to_s }= link_to route.name, driver_route_path(route)
                     = link_to driver_reservations_map_path(route_id: route.id) do
-                      %i.fa-solid.fa-map
+                      %i.bi.bi-map-fill
                   %td.data.pending_pickup.pending-pickup-count#route-pending-pickup-count
                     = pending_pickup_count
                   %td.data.missing.missing-count= missing_count
@@ -101,12 +101,12 @@
               %th.route-zone.zone
                 All
                 = link_to driver_reservations_map_path, id: 'all-map-link' do
-                  %i.fa-solid.fa-map
+                  %i.bi.bi-map-fill
               %td.data.zone-pending-pickup-count#all-pending-count= @pending_pickups_count
               %td.data.missing-count#all-missing-count= @missing_count
               %td.data#all-picked-count= @picked_up_count
 
   %p.text-end
     = link_to '/driver/zones.pdf', target: '_blank' do 
-      %i.bi.bi-box-arrow-down
-      Full report
+      %i.bi.bi-file-pdf
+      All routes
