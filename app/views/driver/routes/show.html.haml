@@ -42,6 +42,11 @@
 
               %td.notes= reservation.notes
               %td.donation
+                .d-print-none
+                  - if reservation.donation
+                    = reservation.donation.humanize.capitalize
+                  - else
+                    Not selected
                 .print-driver-actions
                   - if reservation.online_donation?
                     %i.bi.bi-check-square
