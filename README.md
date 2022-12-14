@@ -98,6 +98,11 @@ config.action_mailer.default_url_options = { host: 'site@example.com' }
 
 SMS notifications are configured to send via Twilio, but this could be modified for any service in the Sms class `sms.rb`. Keys must be set in the Rails credentials file.
 
+
+### Error monitoring
+
+Rollbar.io is integrating for error monitoring. This can be easily replaced with other services. The configuration file is `config/initializers/rollbar.rb` and the access token is stored in the Rails credentials file, which is the only thing that needs to be updated for it to work within your own Rollbar account. Rollbar is free for 5,000 errors a month, which should easily cover it.
+
 ### Setup
 
 To start up the application:
