@@ -32,7 +32,7 @@
   var map;
   function initMap() {
 
-    // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected]]
+    // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected, collected_amount, name]]
     let locations =  <%= raw @reservations %>;
 
     // Create the map, centered at gfg_office
@@ -92,6 +92,8 @@
               `<a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a><br>` +
               `<div class='status-info'>${locations[i][5]}</div>` +
               `</div>` +
+
+              `<div class='name'>${locations[i][10]}</div>` +
 
             `<div class='buttons'>` +
               `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-success btn-sm' href='/driver/reservations/${locations[i][0]}?status=picked_up&view=map'>Picked Up</a> ` +
