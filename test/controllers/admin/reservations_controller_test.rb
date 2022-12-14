@@ -3,6 +3,7 @@ require "test_helper"
 class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @reservation = create(:reservation_with_coordinates, status: :pending_pickup, is_routed: false)
+    @archived_reservation = create(:reservation_with_coordinates, status: 'archived', is_routed: false)
     @viewer = create :viewer
     @editor = create :editor
     @administrator = create :administrator
@@ -141,18 +142,16 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  #OPTIMIZE this test only verifies a successful response, not successful answers
-  #OPTIMIZE needs reworking. original tests did not discover errors in archve
   test "reservations search" do 
     get admin_search_url(search: @reservation.name, as: @viewer)
     assert_response :success
     assert @response.body.include? @reservation.name
   end
 
-  #OPTIMIZE does not assert actual search results
-  test "reservations search in the archive" do 
-    get admin_search_url(search: @reservation.name + ' in:archive', as: @viewer)
+  test "reservations search in the archive" do
+    get admin_search_url(search: @archived_reservation.name + ' in:archive', as: @viewer)
     assert_response :success
+    assert @response.body.include? @archived_reservation.name
   end
 
   test "routing a reservation" do 
@@ -217,21 +216,25 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
-  #OPTIMIZE add processing all routes test
-  test "processing all routes" do 
-    # nothing yet
+  test "processing all routes" do
+    post admin_process_all_routes_path(as: @administrator)
+    assert_redirected_to admin_reservations_url
+
+    post admin_process_all_routes_path(as: @editor)
+    assert_redirected_to admin_reservations_url
+
+    post admin_process_all_routes_path(as: @viewer)
+    assert_response :unauthorized
   end
 
   test "destroying all reservations" do 
-    create_list(:reservation_with_coordinates, 5, is_routed: false)
-    assert_difference('Reservation.count', -6) do 
+    assert_difference('Reservation.count', -2) do
       delete admin_destroy_all_reservations_path(as: @administrator)
     end
   end
 
   test "destroying all archived reservations" do 
-    create_list(:reservation_with_coordinates, 3, status: :archived, is_routed: false)
-    assert_difference('Reservation.count', -3) do 
+    assert_difference('Reservation.count', -1) do
       delete admin_destroy_all_archived_reservations_path(as: @administrator)
     end
   end
@@ -261,7 +264,7 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     create_list(:reservation_with_coordinates, 3, status: 'unconfirmed', is_routed: false, no_emails: true)
-    assert_equal 5, Reservation.archived.count
+    assert_equal 6, Reservation.archived.count
     
     assert_difference('Reservation.archived.count', 11) do 
       post admin_merge_unarchived_reservations_path(as: @administrator)
@@ -269,7 +272,7 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     
     assert_equal 3, Reservation.unconfirmed.count
     assert_equal 0, Reservation.not_archived.not_unconfirmed.count 
-    assert_equal 16, Reservation.archived.count
+    assert_equal 17, Reservation.archived.count
   end
 
   test "destroying unconfirmed" do 

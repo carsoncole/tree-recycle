@@ -1,6 +1,5 @@
 require "application_system_test_case"
 
-#OPTIMIZE add more route assignment tests. Not enough
 class Admin::RoutesTest < ApplicationSystemTestCase
 
   def setup
