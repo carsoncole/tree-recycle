@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   match "(*any)",
     to: redirect(subdomain: ""),
     via: :all,
-    constraints: { subdomain: "www" } unless Rails.env.test?
+    constraints: { subdomain: "www" } unless Rails.env.test?\
 
   root 'home#index'
 
@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   get '/software' => 'home#software', as: 'software'
 
   post 'messages/reply' => 'messages#reply'
+
+  get '/tree-program', to: redirect('/about') # this redirect old web links to this site
+
   resources :reservations, except: [:index] do
 
     get 'address-verification', as: 'address_verification'

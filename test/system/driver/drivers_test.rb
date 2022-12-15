@@ -24,7 +24,7 @@ class Driver::DriversTest < ApplicationSystemTestCase
   end
 
   test "driver show with all info" do
-    driver = create( :driver, email: Faker::Internet.email)
+    driver = create( :driver, email: random_email)
     visit driver_driver_path(driver)
     assert_text "Zone: #{ driver.zone.name }"
     assert_text driver.email

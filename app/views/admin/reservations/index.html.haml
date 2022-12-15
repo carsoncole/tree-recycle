@@ -2,7 +2,7 @@
   .row
     .col-lg-12
       %h1
-        %i.bi.bi-tree-fill
+        %i.bi.bi-house-fill
         Reservations
         - if params[:route_id]
           \-
@@ -90,7 +90,7 @@
             - @reservations.each do |reservation|
               %tr
                 %td.name
-                  %i.fa-solid.fa-tree
+                  %i.bi.bi-house-fill
                   &nbsp;
                   = link_to reservation.name, admin_reservation_path(reservation)
                   - if reservation.online_donation?
@@ -124,7 +124,7 @@
       
                   - unless reservation.cancelled?
                     = link_to admin_reservation_archive_path(reservation), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will archive the reservation.' } do
-                      %i.bi.bi-archive-fill.icon
+                      %i.bi.bi-archive-fill.icon(data-bs-toggle="tooltip" data-bs-placement="top" title="Archive this reservation.")
 
                   = link_to [:admin, reservation], method: :delete, class: 'delete-reservation-button', data: { "turbo-method": :delete, 'turbo-confirm': 'Are you sure? This will permanently, and irreversibly destroy this reservation.' } do
                     %i.bi.bi-trash-fill.icon

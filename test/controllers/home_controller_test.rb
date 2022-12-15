@@ -15,4 +15,9 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get questions_url
     assert_response :success
   end
+
+  test "should get software" do
+    get software_url
+    assert_response :success
+  end
 end

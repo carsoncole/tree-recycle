@@ -34,4 +34,8 @@ class ActiveSupport::TestCase
     setting.update(driver_secret_key: Faker::Internet.password)
   end
 
+  def random_email
+    Faker::Name.first_name.underscore + '@example.com'
+  end
+
 end

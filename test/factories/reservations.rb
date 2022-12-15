@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :reservation do
     name { Faker::Name.name }
     street { '215 Ericksen Ave NE' }
-    email { Faker::Internet.email }
+    email { Faker::Name.first_name.underscore + '@example.com' }
 
     factory :reservation_with_bad_address do
       street { Faker::Address.street_name }

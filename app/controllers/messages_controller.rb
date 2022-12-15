@@ -21,20 +21,6 @@ class MessagesController < ApplicationController
       body: message_body,
       direction: 'incoming'
       )
-
-    # message = "Hello there, thanks for texting me. Your number is #{from_number}."
-
-    # sms = client.messages.create(
-    #   from: to_number,
-    #   to: from_number,
-    #   body: message
-    # )
-
-    # Message.create(
-    #   number: from_number,
-    #   body: message,
-    #   direction: 'outgoing'
-    #   )
   end
 
   private
