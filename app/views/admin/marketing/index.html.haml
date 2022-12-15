@@ -10,7 +10,7 @@
       .row.mb-5
         .col-lg-12
           %h2 Where did you hear about Tree Recycle?
-          - heard_about_source_hash = Reservation.group(:heard_about_source).count
+          - heard_about_source_hash = Reservation.not_archived.group(:heard_about_source).count
           = pie_chart Hash[heard_about_source_hash.map {|key, value| [key&.humanize&.capitalize, value] }]
 
 
