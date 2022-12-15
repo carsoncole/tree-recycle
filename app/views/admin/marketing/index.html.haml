@@ -55,8 +55,7 @@
       .row.mb-5 
         .col-lg-12
           %h2 Total Donations
-          = column_chart [ ["Total", 1239]], prefix: "$", thousands: ",", width: '400px'
-          /'Total Donations': Donation.sum(:amount).to_i }
+          = column_chart [ ["Online", Donation.sum(:amount).to_i]], prefix: "$", thousands: ",", width: '400px'
 
   .row.mt-4
     .col-lg-12
