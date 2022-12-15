@@ -99,6 +99,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    chartkick (4.2.1)
     childprocess (4.1.0)
     clearance (2.6.1)
       actionmailer (>= 5.0)
@@ -144,6 +145,8 @@ GEM
     geocoder (1.8.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    groupdate (6.1.0)
+      activesupport (>= 5.2)
     haml (6.0.12)
       temple (>= 0.8.2)
       thor
@@ -316,6 +319,7 @@ DEPENDENCIES
   bootsnap
   bugsnag (~> 6.24)
   capybara
+  chartkick
   clearance
   debug
   delayed_job_active_record
@@ -323,6 +327,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   geocoder
+  groupdate
   haml-rails (~> 2.0)
   importmap-rails
   jbuilder
