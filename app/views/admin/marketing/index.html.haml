@@ -42,10 +42,11 @@
 
     .col-lg-8
       .row.mb-5
-        .col-lg-6
+        .col-lg-8
           %h2 Reservations by day
           = line_chart Reservation.not_archived.group_by_day(:created_at).count
-        .col-lg-6
+      .row.mb-5
+        .col-lg-8
           %h2 Cumalative reservations
           - t = 0
           - values = Reservation.not_archived.group_by_day(:created_at).count.each_with_object({}) { |(k, v), a| t += v; a[k] = t }
