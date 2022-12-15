@@ -21,57 +21,55 @@ h1 {
   }
 }
 
+.gm-style-iw {
+    width: 90%;
+}
+
 
 .map-info-window {
+  text-align: center;
+  width: 100%;
   box-sizing:border-box;
   .street {
-    line-height: 1.5;
     font-size: 1.3em;
     font-weight: 600;
-
-  }
-  .btn-sm {
-    margin-left: 0.2em;
-    margin-right: 0.2em;
   }
   .notes {
     line-height: 1.2;
     margin-bottom: 1em;
   }
   .status-info {
-    font-size: 1.7em;
-    font-weight: 700;
-
+    text-align: center;
     text-transform: uppercase;
-    margin-left: 2em;
+    .status {
+      font-size: 1.5em;
+      font-weight: 700;
+
+    }
+    .buttons {
+      margin: 0 0.25em 0.5em 0.25em;
+      display: inline-block;
+      a[type=button] {
+        margin: 0.2em 0.15em;
+        font-size: 1em;
+      }
+    }
   }
   .phone {
     display: inline-block;
     margin-bottom: 0.5em;
   }
-  .map-links {
-    clear: both;
-    text-align: right;
-    .map-link {
-      display: inline-block;
-      font-size: 1.7em;
-      padding: 0 0.2em;
-    }
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.4em;
-  }
-  .buttons {
-    float: right;
-    margin-bottom: 0.8em;
-    a {
-      font-size: 1.4em;
-    }
-  }
-  .name {
 
+  .header {
+    margin-bottom: 0.4em;
+    .map-links {
+
+      .map-link {
+        display: inline-block;
+        font-size: 1.5em;
+        padding: 0.5em;
+      }
+    }
   }
   .donation-status {
     font-size: 1.4em;
@@ -79,14 +77,11 @@ h1 {
   }
 
   .donation-info {
-    clear: both;
-    border: 1px solid #999;
-    border-radius: 4px;
-    padding: 0.5em 0.9em;
+
     margin-bottom: 0.5em;
   }
   .actions {
-    line-height: 1.5;
+    line-height: 1.2;
     .choose {
       font-weight: 800;
     }
@@ -101,7 +96,7 @@ h1 {
       display: inline-block;
     }
     input[type=radio] {
-      margin: 0 1em 0.5em 0.3em;
+      margin: 0 0.8em 0.5em 0.2em;
     }
     input[type=button], input[type=submit] {
       background-color: #62529c;
@@ -115,8 +110,10 @@ h1 {
 
     input[type=number] {
       border: 0;
+
       padding: 0.3em 1em;
       background-color: #efefef;
+      text-align: right;
     }
     .checkboxes {
       margin-bottom: 0.25em;
