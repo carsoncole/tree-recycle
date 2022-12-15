@@ -52,6 +52,12 @@
           - values = Reservation.not_archived.group_by_day(:created_at).count.each_with_object({}) { |(k, v), a| t += v; a[k] = t }
           = line_chart values 
 
+      .row.mb-5 
+        .col-lg-12
+          %h2 Total Donations
+          = column_chart [ ["Total", 1239]], prefix: "$", thousands: ",", width: '400px'
+          /'Total Donations': Donation.sum(:amount).to_i }
+
   .row.mt-4
     .col-lg-12
       %hr
