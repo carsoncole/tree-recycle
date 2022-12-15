@@ -13,24 +13,20 @@
     .row
       .col-lg-2.mb-4
         #reservation-status= reservation_status(@reservation)
-        - if current_user.viewer?
-          .text-muted
+        %p.mb-1
+          = link_to edit_admin_reservation_path(@reservation), id: 'edit-link' do
             %i.bi.bi-pencil-fill
             Edit
-        - else
+        - unless @reservation.archived?
           %p.mb-1
-            = link_to edit_admin_reservation_path(@reservation), id: 'edit-link' do
-              %i.bi.bi-pencil-fill
-              Edit
+            = link_to admin_reservation_path(@reservation, reservation: { status: 'archived'} ), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': "This will archive this reservation, removing it from active reservations. "} do
+              %i.bi.bi-archive-fill
+              Archive
         %p.mb-1
-          - if current_user.viewer?
-            .text-muted
-              %i.bi.bi-archive-fill
-              Archive
-          - else
-            = link_to admin_reservation_path(@reservation, reservation: { status: 'archived'} ), method: :patch, data: { 'turbo-method': :patch } do
-              %i.bi.bi-archive-fill
-              Archive
+          = link_to admin_reservation_path(@reservation), method: :delete, data: { 'turbo-method': :delete, 'turbo-confirm': "Are you sure? This is IRREVERSIBLE."} do 
+            %i.bi.bi-trash-fill
+            Destroy
+
 
 
       .col-lg-2.main
