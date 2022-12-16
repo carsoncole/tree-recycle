@@ -24,6 +24,11 @@
       .row.mb-3
         .col-lg-12
           %h2 Donations
+      .row.mb-5
+        .col-lg-12
+          = column_chart [ ["Online", Donation.sum(:amount).to_i]], prefix: "$", title: 'Total Donations', thousands: ",", width: '400px'
+      .row.mb-5
+        .col-lg-12
           %table.table#donations-analysis
             %thead 
             %tbody 
@@ -51,11 +56,6 @@
           - t = 0
           - values = Reservation.not_archived.group_by_day(:created_at).count.each_with_object({}) { |(k, v), a| t += v; a[k] = t }
           = line_chart values 
-
-      .row.mb-5 
-        .col-lg-12
-          %h2 Total Donations
-          = column_chart [ ["Online", Donation.sum(:amount).to_i]], prefix: "$", thousands: ",", width: '400px'
 
   .row.mt-4
     .col-lg-12
