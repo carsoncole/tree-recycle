@@ -1,0 +1,18 @@
+= form_for [:admin, @user] do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this User from being saved:"
+      %ul
+        - @user.errors.full_messages.each do |message|
+          %li= message
+
+  .mb-3
+    .form-group
+      = f.label :email, class: 'form-label'
+      = f.email_field :email, class: 'form-control'
+  .mb-3
+    .form-group
+      = f.select :role, options_for_select(@roles, @user.role), {  }, class: 'form-control', id: 'user-role-dropdown'
+
+  .actions
+    = f.submit 'Save', class: 'btn btn-primary'

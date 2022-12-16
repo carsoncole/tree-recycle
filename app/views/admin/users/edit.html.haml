@@ -1,0 +1,16 @@
+.container
+  .row.mb-3
+    .col-lg-6.offset-lg-3 
+      = link_to admin_users_path do 
+        %i.bi.bi-arrow-left
+        Back
+
+  .row
+    .col-lg-3
+    .col-lg-6
+      %h1 Editing User
+
+  .row
+    .col-lg-3
+    .col-lg-6
+      = render 'form'

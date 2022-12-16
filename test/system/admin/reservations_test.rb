@@ -6,7 +6,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   end
 
   test "show basic" do
-    system_test_signin
+    system_test_signin(:editor)
 
     visit admin_reservation_path(@reservation)
     assert_selector "h1", text: @reservation.street
@@ -16,7 +16,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   end
 
   test "editing a reservation" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_reservation_path(@reservation)
     click_on 'Edit'
     fill_in 'Phone', with: '2065551212'
@@ -33,7 +33,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   end
 
   test "changing status to missing" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_reservation_path(@reservation)
 
     within '#reservation-status' do
@@ -56,7 +56,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   end
 
   test "changing status to picked_up" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_reservation_path(@reservation)
 
     within '#status' do
@@ -75,7 +75,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   end
 
   test "changed status to cancelled" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_reservation_path(@reservation)
 
     within '#status' do
@@ -94,7 +94,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   end
 
   test "changing reservation route" do
-    system_test_signin
+    system_test_signin(:editor)
     create_list(:route, 3)
 
     visit admin_reservation_path(@reservation)

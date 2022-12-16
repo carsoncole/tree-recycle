@@ -11,7 +11,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
   end
 
   test "creating routes that are correctly geocoded" do
-    system_test_signin
+    system_test_signin(:editor)
     click_on 'Routes'
 
     assert_equal 2, find('#admin-zones .zones-table').all(:css, 'tr').count
@@ -64,7 +64,7 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     fill_in "Email", with: 'admin@example.com'
     click_on "Register your address"
 
-    system_test_signin
+    system_test_signin(:editor)
     reservation = Reservation.order(created_at: :desc).first
     click_on 'Reservations'
     click_on "process-route-button-#{reservation.id}"

@@ -1,7 +1,7 @@
 = form_for [:admin, @driver] do |f|
   - if @driver.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@driver.errors.count, "error")} prohibited this admin_driver from being saved:"
+      %h2= "#{pluralize(@driver.errors.count, "error")} prohibited this Driver from being saved:"
       %ul
         - @driver.errors.full_messages.each do |message|
           %li= message

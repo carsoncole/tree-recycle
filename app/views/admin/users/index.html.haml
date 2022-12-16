@@ -5,42 +5,44 @@
         %i.fa-solid.fa-user 
         Users
 
-
   .row
     .col-lg-6.offset-lg-3
-      .table-responsive
-        %table.table.table-borderless.table-users
-          - @users.each do |user|
-            %tr 
-              = form_for [:admin, user], data: { turbo_method: "patch" } do |f|
-                %td.email
-                  = f.text_field :email, class: 'form-control' 
-                %td.role
-                  .row
-                    .col-lg-7          
-                      = f.select :role, options_for_select(@roles, user.role), {  },disabled: (current_user.administrator? ? false : true), class: 'form-control', id: 'user-role-dropdown'
-                    .col-lg-5
-                      - if current_user.administrator?
-                        .text-end
-                          = f.submit 'Update', class: 'btn btn-primary'
-                          - if current_user.administrator?
-                            = link_to admin_user_path(user), method: :delete, data: { "turbo-method": :delete }, class: 'user-delete-icon' do 
-                              %i.bi.bi-trash-fill
-    - if current_user.administrator?
+      %table.table.table-borderless.table-users
+        - @users.each do |user|
+          %tr
+            %td
+              .email= user.email
+              .role
+                = surround("(", ")") do
+                  = user.role.capitalize
+              = link_to edit_admin_user_path(user), class: 'user-edit-icon', id: "user-#{user.id}-edit-icon" do 
+                %i.bi.bi-pencil-fill
+              - unless current_user == user
+                = link_to admin_user_path(user), method: :delete, data: { "turbo-method": :delete }, class: 'user-delete-icon', id: "user-#{user.id}-delete-icon" do 
+                  %i.bi.bi-trash-fill
+    
+
+  .row
+    .col-lg-8.offset-lg-2
       %hr
-      .row
-        .col-lg-8.offset-lg-2
-          .table-responsive
-            %table.table.table-borderless.table-users
-              %tr 
-                %td.new-user
-                  New user
-                = form_for [:admin, @user] do |f|
-                  %td.email= f.email_field :email, class: 'form-control', placeholder: 'email'
-                  %td.password= f.password_field :password, class: 'form-control', placeholder: 'password'
-                  %td.role 
-                    .row
-                      .col-lg-7
-                        = f.select :role, options_for_select(@roles, @user.role), {  }, class: 'form-control', id: 'user-role-dropdown'
-                      .col-lg-5
-                        .text-end= f.submit 'Create', class: 'btn btn-primary'
+      = form_for [:admin, @user], local: true, data: { turbo:false } do |f|
+        .table-responsive
+          %table.table.table-borderless.new-table-users
+            %tr
+              %td.new-user
+                .title New user
+                - if @user.errors.any?
+                  #error_explanation
+                    %h2= "#{pluralize(@user.errors.count, "error")} prohibited this User from being created:"
+                    %ul
+                      - @user.errors.full_messages.each do |message|
+                        %li= message
+
+              %td.email= f.email_field :email, class: 'form-control', placeholder: 'Email'
+              %td.password= f.password_field :password, class: 'form-control', placeholder: 'Password'
+              %td.role 
+                .row
+                  .col-lg-7
+                    = f.select :role, options_for_select(@roles, @user.role), {  }, class: 'form-control', id: 'user-role-dropdown'
+                  .col-lg-5
+                    .text-end= f.submit 'Create', class: 'btn btn-primary'

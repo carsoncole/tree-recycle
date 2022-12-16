@@ -14,7 +14,7 @@ class Driver::SearchTest < ApplicationSystemTestCase
     visit driver_root_path
     click_on "Search"
     within "#search-form" do
-      fill_in "Search", with: reservations[3].name
+      fill_in "Reservation name, email or street", with: reservations[3].name
       click_on "Search"
     end
 

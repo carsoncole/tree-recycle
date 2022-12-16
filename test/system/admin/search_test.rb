@@ -6,7 +6,7 @@ class Admin::SearchTest < ApplicationSystemTestCase
   end
 
   test "searching for a reservation" do
-    system_test_signin
+    system_test_signin(:editor)
 
     visit admin_reservations_path
     fill_in "Search", with: @reservation.name[0..3]
@@ -18,7 +18,7 @@ class Admin::SearchTest < ApplicationSystemTestCase
     reservation = create(:reservation, name: 'John Wilson Doe', is_routed: false)
     archived_reservation = create(:archived_with_coordinates_reservation, is_routed: false, name: 'Wilbur Hester' )
 
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_reservations_path
     fill_in "search", with: 'Wil'
     click_on "Search"

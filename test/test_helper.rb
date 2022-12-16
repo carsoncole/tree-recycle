@@ -18,8 +18,8 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   # fixtures :all
 
-  def system_test_signin
-    @user = create(:editor)
+  def system_test_signin(role)
+    @user = create(role)
     visit '/admin'
     click_on 'Sign in'
     fill_in "Email", with: @user.email

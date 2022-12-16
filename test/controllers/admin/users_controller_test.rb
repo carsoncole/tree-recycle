@@ -31,7 +31,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "updating user as editor" do 
     patch admin_user_path(@administrator, as: @editor), params: { user: { role: 'viewer' } }
-    assert_response :unauthorized
+    assert_redirected_to admin_users_path
     assert_equal 'administrator', @administrator.reload.role
   end
 
@@ -42,14 +42,14 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_users_path
 
     assert_difference('User.count', 0) do 
-      post admin_users_path(as: @viewer), params: { user: attributes_for(:user) }
+      post admin_users_path(as: @viewer), params: { user: attributes_for(:editor) }
     end
-    assert_response :unauthorized
+    assert_redirected_to admin_users_path
 
     assert_difference('User.count', 0) do 
-      post admin_users_path(as: @editor), params: { user: attributes_for(:user) }
+      post admin_users_path(as: @editor), params: { user: attributes_for(:administrator) }
     end
-    assert_response :unauthorized
+    assert_redirected_to admin_users_path
   end
 
 end

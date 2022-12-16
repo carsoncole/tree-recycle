@@ -6,13 +6,13 @@ class Admin::DriversTest < ApplicationSystemTestCase
   end
 
   test "visiting the index" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_drivers_url
     assert_selector "h1", text: "Drivers"
   end
 
   test "should create driver" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_drivers_url
     within "#drivers" do 
       click_on "Driver", match: :first
@@ -29,7 +29,7 @@ class Admin::DriversTest < ApplicationSystemTestCase
   end
 
   test "should update Driver" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_driver_url(@driver)
     click_on "Edit", match: :first
     fill_in "Phone", with: '800-555-1212'
@@ -41,7 +41,7 @@ class Admin::DriversTest < ApplicationSystemTestCase
   end
 
   test "should destroy Driver" do
-    system_test_signin
+    system_test_signin(:editor)
     visit admin_driver_url(@driver)
     accept_confirm do 
       click_on "Destroy Driver"

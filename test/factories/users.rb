@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :user, aliases: [ :viewer ] do
-    email { Faker::Internet.email }
+    email { Faker::Name.first_name.underscore + '@example.com' }
     password { Faker::Internet.password }
+    role { 'viewer'}
 
     factory :editor do 
       role { :editor }
