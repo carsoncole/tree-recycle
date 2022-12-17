@@ -2,8 +2,7 @@
   %nav.navbar.navbar-expand.navbar-dark#driver-navbar
     .container
       = link_to driver_root_path, class: 'navbar-brand' do
-        %i.fa-solid.fa-tree.fa-lg
-        %i.fa-solid.fa-truck-pickup
+        %i.bi.bi-truck-front-fill
         = DRIVER_SITE_TITLE
 
 
@@ -18,19 +17,19 @@
   %ul.nav.justify-content-center#driver-nav
     %li.nav-item
       = link_to driver_zones_path, class: 'nav-link' do
-        %i.fa-solid.fa-road
+        %i.bi.bi-signpost-2-fill
         Routes
     %li.nav-item
       = link_to driver_drivers_path, class: 'nav-link' do
-        %i.fa-solid.fa-car
+        %i.bi.bi-truck-front-fill
         Drivers
     %li.nav-item
       = link_to driver_contacts_path, class: 'nav-link' do
-        %i.fa-solid.fa-phone
+        %i.bi.bi-telephone-fill
         Contact
     %li.nav-item
       = link_to driver_search_path, class: 'nav-link' do
-        %i.fa-solid.fa-magnifying-glass
+        %i.bi.bi-search
         Search
 
 

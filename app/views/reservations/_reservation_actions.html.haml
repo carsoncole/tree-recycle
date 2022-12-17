@@ -5,9 +5,9 @@
     - elsif (@reservation.pending_pickup? || @reservation.unconfirmed?) && @reservation.persisted?
       .actions
       = link_to edit_reservation_path(@reservation), class: 'reservation-action-link' do
-        %i.fa-solid.fa-pencil
+        %i.bi.bi-pencil-fill
         Edit
 
       = link_to reservation_path(@reservation), method: :delete, data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'reservation-action-link' do
-        %i.fa-solid.fa-times
+        %i.bi.bi-x-circle-fill
         Cancel

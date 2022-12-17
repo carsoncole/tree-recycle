@@ -2,7 +2,7 @@
   .row
     .col-lg-12
       %h1
-        %i.fa-solid.fa-car
+        %i.bi.bi-truck-front-fill
         Drivers
 
 
@@ -14,7 +14,7 @@
             %ul.nav.justify-content-end
               %li.nav-item
                 = link_to new_admin_driver_path, class: 'nav-link' do
-                  %i.fa-solid.fa-plus
+                  %i.bi.bi-plus-lg
                   Driver
 
   .row
@@ -35,7 +35,7 @@
               %td.actions-1
                 - if current_user.editor? || current_user.administrator?
                   = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }, id: "driver-#{driver.id}-destroy-link"  do
-                    %i.fa-solid.fa-trash
+                    %i.bi.bi-trash-fill
                   = link_to edit_admin_driver_path(driver), id: "driver-#{driver.id}-edit-link" do
-                    %i.fa-solid.fa-pen
+                    %i.bi.bi-pencil-fill
 

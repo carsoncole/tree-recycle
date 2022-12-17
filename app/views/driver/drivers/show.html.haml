@@ -3,7 +3,7 @@
     .col-md-3
     .col-md-6
       %h1
-        %i.fa-solid.fa-user
+        %i.bi.bi-person-fill
         = @driver.name
 
 
@@ -13,7 +13,7 @@
       - if @driver.phone.present?
         = link_to "tel:#{@driver.phone}" do
           = @driver.phone
-          %i.fa-solid.fa-phone
+          %i.bi.bi-telephone-fill
       %br
       = mail_to @driver.email if @driver.email
 
@@ -28,5 +28,3 @@
         - else
           Not assigned
 
-
-/ %i.fa-solid.fa-tree.icono

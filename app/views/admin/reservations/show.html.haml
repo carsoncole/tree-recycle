@@ -132,7 +132,7 @@
                   %td
                     - if current_user.editor? || current_user.administrator?
                       = link_to admin_reservation_process_geocode_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
-                        %i.fa-solid.fa-location-dot.icon
+                        %i.bi.bi-geo-alt-fill.icon
 
                 %tr
                   %th Is geocoded?
@@ -143,22 +143,22 @@
                   %td
                     - if current_user.editor? || current_user.administrator?
                       = link_to admin_reservation_process_route_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
-                        %i.fa-solid.fa-bolt.icon
+                        %i.bi.bi-lightning-fill.icon
 
               .text-center
                 #direction-links
                   .title Directions
                   = link_to "https://www.google.com/maps/place/#{ @reservation.latitude},#{ @reservation.longitude }", target: '_blank', class: 'map-link' do
-                    %i.fa-solid.fa-map-location-dot
-                    %i.fa-brands.fa-google
+                    %i.bi.bi-geo-alt-fill
+                    %i.bi.bi-google
 
                   = link_to "https://maps.apple.com/?q=#{ @reservation.latitude},#{ @reservation.longitude}", target: '_blank', class: 'map-link' do
-                    %i.fa-solid.fa-map-location-dot
-                    %i.fa-brands.fa-apple
+                    %i.bi.bi-geo-alt-fill
+                    %i.bi.bi-apple
 
                   .title Google Mapped
                   = link_to driver_reservation_map_path(@reservation), class: 'map-link' do
-                    %i.fa-solid.fa-map-location-dot
+                    %i.bi.bi-geo-alt-fill
 
         %section#status
           .row
