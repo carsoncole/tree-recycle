@@ -20,4 +20,19 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
     post reservation_no_donation_path(@reservation)
     assert_redirected_to reservation_confirmed_url(@reservation)
   end
+
+  test "donation without reservation" do
+    get donation_without_reservation_url 
+    assert_response :redirect
+  end
+
+  test "donation success without reservation" do
+    get success_url
+    assert_response :success
+  end
+
+  test "driver assisted donation success without reservation" do
+    get success_url(driver: true)
+    assert_response :success
+  end
 end

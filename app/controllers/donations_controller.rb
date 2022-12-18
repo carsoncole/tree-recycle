@@ -30,7 +30,7 @@ class DonationsController < ApplicationController
           quantity: 1
       }],
       mode: 'payment',
-      success_url: success_url,
+      success_url: success_url(driver: true),
       cancel_url: root_url
     })
     redirect_to @session.url, allow_other_host: true
@@ -58,6 +58,7 @@ class DonationsController < ApplicationController
     if params[:reservation_id] || params[:id]
       @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
     end
+    @driver = true if params[:driver] == true
     flash[:notice] = 'Thank you! Your donation is greatly appreciated and goes a long way towards supporting Scouting on Bainbridge Island.'
   end
 
