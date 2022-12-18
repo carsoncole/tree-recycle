@@ -30,8 +30,8 @@ class DonationsController < ApplicationController
           quantity: 1
       }],
       mode: 'payment',
-      success_url: success_url(driver: true),
-      cancel_url: root_url
+      success_url: success_url(driver: params[:driver] == 'true' ? true : false),
+      cancel_url: params[:driver] && params[:driver] == 'true' ? driver_root_url : root_url
     })
     redirect_to @session.url, allow_other_host: true
   end

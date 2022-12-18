@@ -54,18 +54,21 @@ class StripeCharge
   def payment_intent
     amount = @stripe_event.amount == 0 ? 0 : @stripe_event.amount / 100.0
     donation = Donation.find_or_create_by(stripe_payment_intent_id: @stripe_event.id)
-    donation.update(
-      payment_intent_id: @stripe_event.id,
-      amount: amount,
-      email: @stripe_event&.charges&.data[0]&.receipt_email,
-      customer_name: @stripe_event&.charges&.data[0]&.billing_details&.name,
-      receipt_url: @stripe_event&.charges&.data[0]&.receipt_url,
-      description: @stripe_event.description,
-      payment_status: @stripe_event&.status,
-      last4: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.last4,
-      exp_month: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.exp_month,
-      exp_year: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.exp_year,
-      amount: amount
-      )    
+    # only if paid via phone app
+    if @stripe_event&.charges&.data[0]&.payment_method_details&.respond_to?(:card_present)
+      donation.update(
+        payment_intent_id: @stripe_event.id,
+        amount: amount,
+        email: @stripe_event&.charges&.data[0]&.receipt_email,
+        customer_name: @stripe_event&.charges&.data[0]&.billing_details&.name,
+        receipt_url: @stripe_event&.charges&.data[0]&.receipt_url,
+        description: @stripe_event.description,
+        payment_status: @stripe_event&.status,
+        last4: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.last4,
+        exp_month: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.exp_month,
+        exp_year: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.exp_year,
+        amount: amount
+        )    
+    end
   end
 end

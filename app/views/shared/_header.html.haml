@@ -12,7 +12,7 @@
           %li.nav-item
             = link_to "New reservation", new_reservation_url, class: "nav-link", "aria-current": "page"
           %li.nav-item
-            = link_to "Donate", donation_without_reservation_path(driver: true), local: true, data: { turbo:false } , class: "nav-link", "aria-current": "page"
+            = link_to "Donate", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link", "aria-current": "page"
           %li.nav-item
             = link_to questions_url, class: "nav-link", "aria-current": "page", id: 'question_header_link' do
               = "Questions"

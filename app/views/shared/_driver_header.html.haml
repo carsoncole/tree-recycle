@@ -20,9 +20,9 @@
         %i.bi.bi-signpost-2-fill
         Routes
     %li.nav-item
-      = link_to donation_without_reservation_path, class: 'nav-link' do
+      = link_to donation_without_reservation_path(driver: true), local: true, data: { turbo:false }, class: 'nav-link' do
         %i.bi.bi-credit-card-fill
-        Donation  
+        Donation
 
     %li.nav-item
       = link_to driver_contacts_path, class: 'nav-link' do
