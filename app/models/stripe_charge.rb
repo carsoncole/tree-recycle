@@ -52,7 +52,6 @@ class StripeCharge
   end
 
   def payment_intent
-    reservation = Reservation.where(id: @stripe_event.client_reference_id).first
     amount = @stripe_event.amount == 0 ? 0 : @stripe_event.amount / 100.0
     donation = Donation.find_or_create_by(stripe_payment_intent_id: @stripe_event.id)
     donation.update(
