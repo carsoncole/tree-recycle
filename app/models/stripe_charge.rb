@@ -59,7 +59,7 @@ class StripeCharge
       amount: amount,
       email: @stripe_event&.charges&.data[0]&.billing_details&.email,
       customer_name: @stripe_event&.charges&.data[0]&.billing_details&.name,
-      receipt_url: @stripe_event&charges&.data[0]&.receipt_url,
+      receipt_url: @stripe_event&.charges&.data[0]&.receipt_url,
       description: @stripe_event.description,
       payment_status: @stripe_event&.status,
       last4: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.last4,
