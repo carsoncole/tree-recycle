@@ -56,14 +56,15 @@ class StripeCharge
     donation = Donation.find_or_create_by(stripe_payment_intent_id: @stripe_event.id)
     donation.update(
       payment_intent_id: @stripe_event.id,
-      email: @stripe_event.billing_details.email,
-      customer_name: @stripe_event.billing_details.name,
-      description: @stripe_event.billing_details.description,
-      payment_status: @stripe_event.paid == true ? 'paid' : '',
-      last4: @stripe_event.payment_method_details.last4,
-      exp_month: @stripe_event.payment_method_details.exp_month,
-      exp_year: @stripe_event.payment_method_details.exp_year,
-      receipt_url: @stripe_event.payment_method_details.receipt_url,
+      amount: amount,
+      email: @stripe_event&.charges&.data[0]&.billing_details&.email,
+      customer_name: @stripe_event&.charges&.data[0]&.billing_details&.name,
+      receipt_url: @stripe_event&charges&.data[0]&.receipt_url,
+      description: @stripe_event.description,
+      payment_status: @stripe_event&.status,
+      last4: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.last4,
+      exp_month: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.exp_month,
+      exp_year: @stripe_event&.charges&.data[0]&.payment_method_details&.card_present&.exp_year,
       amount: amount
       )    
   end
