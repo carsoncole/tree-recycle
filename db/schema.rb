@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_13_180806) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_173351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "role", ["viewer", "editor", "administrator"]
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
@@ -45,6 +49,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_180806) do
     t.string "customer_name"
     t.string "checkout_session_status"
     t.string "checkout_session_customer_email"
+    t.string "payment_intent_id"
+    t.string "description"
+    t.string "last4"
+    t.string "exp_month"
+    t.string "exp_year"
     t.index ["reservation_id"], name: "index_donations_on_reservation_id"
   end
 
