@@ -7,13 +7,13 @@
     .col-lg-12
       .table-responsive
         %table.table#donation-table
-          - @donation.attributes.each do | key, value |
+          - @donation.attributes.sort.each do | key, value |
             %tr 
               %th= key.humanize.capitalize
               %td
                 - case key
                 - when 'receipt_url'
-                  = link_to(value) if value.present?
+                  = link_to value, value, target: '_blank' if value.present?
                 - when 'amount'
                   = number_to_currency value
                 - else

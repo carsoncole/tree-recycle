@@ -57,7 +57,7 @@ class StripeCharge
     donation.update(
       payment_intent_id: @stripe_event.id,
       amount: amount,
-      email: @stripe_event&.charges&.data[0]&.billing_details&.email,
+      email: @stripe_event&.charges&.data[0]&.receipt_email,
       customer_name: @stripe_event&.charges&.data[0]&.billing_details&.name,
       receipt_url: @stripe_event&.charges&.data[0]&.receipt_url,
       description: @stripe_event.description,
