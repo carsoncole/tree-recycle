@@ -19,6 +19,7 @@
             %thead
               %tr
                 %th.zone
+                %th.drivers Drivers
                 %th.data Pending
                 %th.data Missing
                 %th.data Picked
@@ -28,6 +29,7 @@
                   = zone.name
                   = link_to driver_reservations_map_path(zone_id: zone.id) do
                     %i.bi.bi-map-fill
+                %th.drivers
                 %td.data.zone-pending-pickup-count= pending_pickup_count
                 %td.data.missing-count= missing_count
                 %td.data.picked-up-count= picked_up_count
@@ -43,6 +45,8 @@
                     %span.div{id: "route-name-" + route.id.to_s }= link_to route.name, driver_route_path(route)
                     = link_to driver_reservations_map_path(route_id: route.id) do
                       %i.bi.bi-map-fill
+                  %td.drivers
+                    = route.drivers.map{|d| d.name}.join(", ")
                   %td.data.pending_pickup.pending-pickup-count#route-pending-pickup-count
                     = pending_pickup_count
                   %td.data.missing.missing-count= missing_count
@@ -57,6 +61,7 @@
             %thead
               %tr
                 %th.zone
+                %th.drivers
                 %th.data Pending
                 %th.data Missing
                 %th.data Picked
@@ -81,6 +86,7 @@
                         %i.bi.bi-wrench-adjustable
                       = link_to admin_route_path(route.id), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure?' } do
                         %i.bi.bi-trash-fill
+                  %td.drivers
                   %td.data.unzoned_pending_pickup.pending-pickup-count= pending_pickup_count
                   %td.data.missing-count= missing_count
                   %td.data.unzoned_picked_up= picked_up_count
@@ -93,6 +99,7 @@
           %thead
             %tr
               %th.zone
+              %th.drivers
               %th.data Pending
               %th.data Missing
               %th.data Picked
@@ -102,6 +109,7 @@
                 All
                 = link_to driver_reservations_map_path, id: 'all-map-link' do
                   %i.bi.bi-map-fill
+              %td.drivers
               %td.data.zone-pending-pickup-count#all-pending-count= @pending_pickups_count
               %td.data.missing-count#all-missing-count= @missing_count
               %td.data#all-picked-count= @picked_up_count

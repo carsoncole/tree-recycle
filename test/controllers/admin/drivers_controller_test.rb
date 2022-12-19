@@ -68,4 +68,31 @@ class Admin::DriversControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unauthorized
   end
+
+  test "assigning and removing a driver route" do 
+    create_list(:route_with_coordinates, 2)
+
+    post admin_driver_routes_path(driver_route: { driver_id: @driver.id, route_id: Route.first.id }, as: @editor)
+    assert_redirected_to edit_admin_driver_url(@driver)
+
+    assert_equal 1, @driver.driver_routes.count
+    delete admin_driver_route_path(@driver.driver_routes.first, as: @editor)
+    assert_equal 0, @driver.driver_routes.count
+  end
+
+  test "not assigning or destroying a driver route as a viewer" do 
+    create_list(:route_with_coordinates, 2)
+
+    post admin_driver_routes_path(driver: @driver, route: Route.first, as: @viewer)
+    assert_redirected_to admin_drivers_url
+    assert_equal "Unauthorized. Editor or Administrator access is required.", flash[:notice] 
+
+    @driver.driver_routes.create(route: Route.first)
+    assert_equal 1, @driver.driver_routes.count
+    delete admin_driver_route_path(@driver.driver_routes.first, as: @viewer)
+    assert_redirected_to admin_drivers_url
+    assert_equal "Unauthorized. Editor or Administrator access is required.", flash[:notice] 
+    assert_equal 1, @driver.driver_routes.count        
+
+  end
 end

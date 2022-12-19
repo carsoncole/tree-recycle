@@ -16,15 +16,5 @@
           %i.bi.bi-telephone-fill
       %br
       = mail_to @driver.email if @driver.email
-
-
-  .row
-    .col-md-3
-    .col-md-6
-      %h2
-        Zone:
-        - if @driver.zone
-          = @driver.zone.name
-        - else
-          Not assigned
+    
 

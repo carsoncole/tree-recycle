@@ -1,6 +1,6 @@
 class Driver::ContactController < Driver::DriverController
   def index
-    @zone_leaders = Driver.leader.includes(:zone).order('zones.name')
-    @zones = Zone.all.includes(:drivers)
+    # @zone_leaders = Driver.leader.includes(:zone).order('zones.name')
+    @zones = Zone.all
   end
 end

@@ -6,7 +6,8 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     visit driver_root_path
     assert_selector "h1", text: "Routes"
 
-    click_on 'Drivers'
+    click_on 'Contact'
+    assert_selector "h1", text: "Contact"
     assert_selector "h1", text: "Drivers"
 
     click_on 'Search'
@@ -25,7 +26,8 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     visit driver_root_path(key: setting.driver_secret_key)
     assert_selector "h1", text: "Routes"
 
-    click_on 'Drivers'
+    click_on 'Contact'
+    assert_selector "h1", text: "Contact"
     assert_selector "h1", text: "Drivers"
 
     click_on 'Search'
@@ -35,9 +37,6 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Routes"
 
     setting.update(driver_secret_key: 'newkey')
-
-    click_on 'Drivers'
-    assert_selector "h1", text: "Sign in"
 
     visit '/driver/search?key=newkey'
     assert_selector "h1", text: "Search"

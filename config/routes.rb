@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     resources :donations, only: [ :index, :show ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update, :create, :destroy, :edit ]
+    resources :driver_routes, only: [:create, :destroy]
     delete 'reservations/archive-all' => 'reservations#archive_all_unarchived', as: 'archive_all_unarchived_reservations'
     delete 'reservations/destroy-all' => 'reservations#destroy_all', as: 'destroy_all_reservations'
     delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'

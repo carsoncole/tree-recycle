@@ -4,6 +4,10 @@ class Route < ApplicationRecord
   default_scope { order(name: :asc) }
 
   has_many :reservations, dependent: :nullify
+
+  has_many :driver_routes, dependent: :destroy
+  has_many :drivers, through: :driver_routes
+
   belongs_to :zone, optional: true
 
   validates :name, presence: true

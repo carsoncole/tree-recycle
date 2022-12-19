@@ -1,0 +1,79 @@
+.row
+  .col-lg-12
+    %h1
+      %i.bi.bi-truck-front-fill
+      Drivers
+
+
+
+- if signed_in? && (current_user.editor? || current_user.administrator?)
+  .row
+    .col-lg-12
+      .admin-nav
+        %nav
+          %ul.nav.justify-content-end
+            %li.nav-item
+              = link_to new_admin_driver_path, class: 'nav-link' do
+                %i.bi.bi-plus-lg
+                Driver
+
+
+
+
+- Zone.all.each do |zone|
+  .row
+    .col-lg-6.offset-lg-3
+      .table-responsive
+        %table.table.drivers-table
+          %tbody
+            %tr.top-section
+              %td.route-zone.zone
+                = zone.name
+              %td
+              %td
+              - if signed_in? && (current_user.editor? || current_user.administrator?)
+                %td
+
+            - Driver.joins(driver_routes: [:route] ).where("routes.zone_id = ?",zone.id).uniq.each do |driver|
+
+              %tr
+                %th.name= driver.name
+                %td.phone
+                  - if driver.phone.present?
+                    = link_to "tel:#{driver.phone}", id: "driver-#{driver.id}-phone-link" do
+                      = driver.phone
+                %td.email= mail_to driver.email
+                - if signed_in? && (current_user.editor? || current_user.administrator?)
+                  %td.actions-1
+                    = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }, id: "driver-#{driver.id}-destroy-link"  do
+                      %i.bi.bi-trash-fill
+                    = link_to edit_admin_driver_path(driver), id: "driver-#{driver.id}-edit-link" do
+                      %i.bi.bi-pencil-fill           
+
+- @drivers_unassigned = Driver.where.not(id: DriverRoute.all.map {|dr| dr.driver_id })
+- if @drivers_unassigned.any?
+  .row
+    .col-lg-6.offset-lg-3
+      .table-responsive
+        %table.table.drivers-table
+          %tbody
+            %tr.top-section
+              %td.zone No Routes Assigned
+              %td 
+              %td 
+              - if signed_in? && (current_user.editor? || current_user.administrator?)
+                %td
+          - @drivers_unassigned.each do |driver|
+            %tr
+              %th.name= driver.name
+              %td.phone
+                - if driver.phone.present?
+                  = link_to "tel:#{driver.phone}", id: "driver-#{driver.id}-phone-link" do
+                    = driver.phone
+              %td.email= mail_to driver.email
+              - if signed_in? && (current_user.editor? || current_user.administrator?)
+                %td.actions-1
+                  = link_to admin_driver_path(driver), method: :delete, data: { "turbo-method": :delete }, id: "driver-#{driver.id}-destroy-link"  do
+                    %i.bi.bi-trash-fill
+                  = link_to edit_admin_driver_path(driver), id: "driver-#{driver.id}-edit-link" do
+                    %i.bi.bi-pencil-fill 

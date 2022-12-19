@@ -19,6 +19,9 @@
                 = link_to new_admin_zone_path, class: 'nav-link' do
                   %i.bi.bi-plus-lg
                   Zone
+              %li.nav-item
+                = link_to admin_drivers_path, class: 'nav-link' do
+                  Drivers
   
 
   / ZONES and their Routes
@@ -35,11 +38,12 @@
           %table.table.zones-table(id="zone-#{zone.id}")
             %thead
               %tr
-                %th
+                %th.zone
                   - if admin_view?
                     = link_to (params[:all_zones] ? admin_zones_path : admin_zones_path(all_zones: true)) do
                       %i.bi.bi-card-list
                       All Zones/Routes
+                %th.drivers Drivers
                 %th.data Pending
                 %th.data Missing
                 %th.data Picked
@@ -54,8 +58,8 @@
                       %i.bi.bi-wrench-adjustable
                     = link_to admin_zone_path(zone.id), method: :delete, data: { "turbo-method": :delete } do
                       %i.bi.bi-trash-fill
-                  - if zone.geocoded?
-                    %i.bi.bi-geo-fill
+
+                %td.drivers
                 %td.data.zone-pending-pickup-count= pending_pickup_count
                 %td.data.missing-count= missing_count
                 %td.data.picked-up-count= picked_up_count
@@ -76,8 +80,9 @@
                         %i.bi.bi-wrench-adjustable
                       = link_to admin_route_path(route.id), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure?' } do
                         %i.bi.bi-trash-fill
-                    - if route.geocoded?
-                      %i.bi.bi-geo-fill
+                  %td.drivers
+                    = route.drivers.map{|d| d.name}.join(", ")
+
                   %td.data.pending_pickup.pending-pickup-count#route-pending-pickup-count
                     = pending_pickup_count
                   %td.data.missing.missing-count= missing_count
@@ -92,12 +97,14 @@
             %thead
               %tr
                 %th.zone
+                %th.drivers
                 %th.data Pending
                 %th.data Missing
                 %th.data Picked
             %tbody
               %tr
                 %th.zone No Zone
+                %td.drivers
                 %td.data.zone-pending-pickup-count#total-no-zone-pending-pickup-count= Reservation.pending_pickup.joins(:route).where("routes.zone_id IS ?", nil).count
                 %td.data.missing-count= Reservation.missing.joins(:route).where("routes.zone_id IS ?", nil).count
                 %td.data=  Reservation.picked_up.joins(:route).where("routes.zone_id IS ?", nil).count
@@ -116,6 +123,7 @@
                         %i.bi.bi-wrench-adjustable
                       = link_to admin_route_path(route.id), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure?' } do
                         %i.bi.bi-trash-fill
+                  %td.drivers
                   %td.data.unzoned_pending_pickup.pending-pickup-count= pending_pickup_count
                   %td.data.missing-count= missing_count
                   %td.data.unzoned_picked_up= picked_up_count
@@ -128,6 +136,7 @@
           %thead
             %tr
               %th.zone
+              %th.drivers
               %th.data Pending
               %th.data Missing
               %th.data Picked
@@ -137,6 +146,7 @@
                 All
                 = link_to driver_reservations_map_path do
                   %i.bi.bi-map-fill
+              %td.drivers
               %td.data.zone-pending-pickup-count= @pending_pickups_count
               %td.data.missing-count= @missing_count
               %td.data= @picked_up_count
@@ -156,12 +166,14 @@
               %thead
                 %tr
                   %th.zone
+                  %th.drivers
                   %th.data Pending
                   %th.data Missing
                   %th.data Picked
               %tbody
                 %tr
                   %th.zone Unrouted
+                  %td.drivers
                   %td.data#total-unrouted-pending-pickup-count.zone-pending-pickup-count= pending_pickup_count
                   %td.data.missing-count= missing_count
                   %td.data#total-picked-up-count= picked_up_count

@@ -6,13 +6,16 @@ class Admin::DriversController < Admin::AdminController
   end
 
   def show
+    @driver_route = @driver.driver_routes.new 
   end
 
   def new
     @driver = Driver.new
+    @driver_route = @driver.driver_routes.new 
   end
 
   def edit
+    @driver_route = @driver.driver_routes.new
   end
 
   def create
@@ -67,6 +70,6 @@ class Admin::DriversController < Admin::AdminController
     end
 
     def driver_params
-      params.require(:driver).permit(:name, :email, :phone, :zone_id, :is_leader)
+      params.require(:driver).permit(:name, :email, :phone, :is_leader)
     end
 end

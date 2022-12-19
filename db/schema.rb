@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_173351) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_234802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -57,15 +57,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_173351) do
     t.index ["reservation_id"], name: "index_donations_on_reservation_id"
   end
 
+  create_table "driver_routes", force: :cascade do |t|
+    t.bigint "driver_id"
+    t.bigint "route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_id"], name: "index_driver_routes_on_driver_id"
+    t.index ["route_id"], name: "index_driver_routes_on_route_id"
+  end
+
   create_table "drivers", force: :cascade do |t|
     t.string "name"
     t.string "phone"
     t.string "email"
-    t.bigint "zone_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_leader"
-    t.index ["zone_id"], name: "index_drivers_on_zone_id"
+    t.bigint "zone_id"
   end
 
   create_table "logs", force: :cascade do |t|

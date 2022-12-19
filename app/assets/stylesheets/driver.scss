@@ -1,6 +1,10 @@
 $scout-red: #CE1126;
 $scout-blue: #003F87;
 
+body#driver {
+  font-size: 14px;
+}
+
 
 
 #driver-search {
@@ -203,21 +207,26 @@ h1 {
 
 }
 
-#contacts, #drivers-table {
-  .section {
-    margin-bottom: 3em;
+#contacts-table, .drivers-table {
+  margin-bottom: 3em;
+  tr.top-section {
+    border-top: 2px solid #000
   }
-  table.table#contacts-table {
-    th, td {
-      &.name {
-        min-width: 11em;
-      }
-      &.phone {
-        min-width: 9em;
-      }
-      &.email {
-       overflow-x: scroll;
-      }
+  th, td {
+    &.name {
+      font-weight: normal;
+      min-width: 15em;
+    }
+    &.phone {
+      min-width: 9em;
+    }
+    &.email { 
+     overflow-x: scroll;
+     text-align: right;
+    }
+    &.zone {
+      text-transform: uppercase;
+      font-weight: 700;
     }
   }
 }
@@ -247,13 +256,16 @@ table.zones-table {
     }
   }
   tbody {
-    th {
-      min-width: 14em;
-    }
     th,td {
       &.zone {
+        min-width: 13em;
         font-weight: 800;
         text-transform: uppercase;
+      }
+      &.drivers {
+        min-width: 14em;
+        text-align: left;
+        font-size: 0.85em;
       }
       &.data {
         text-align: center;
@@ -284,12 +296,6 @@ table.zones-table {
   h2 {
     font-size: 1.2em;
   }
-}
-
-.icono {
-  font-size: 10em;
-  color: lighten($scout-blue,20);
-  padding: 1em;
 }
 
 #map-title {
@@ -451,6 +457,17 @@ table.zones-table {
   }
 }
 
+@media (min-width: 768px) {
 
+  table.zones-table {
+    tbody {
+      th,td {
+        &.drivers {
+          width: 24em;
+        }
+      }
+    }
+  }
+}
 
 

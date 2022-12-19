@@ -3,7 +3,7 @@
     .col-lg-12
       %h1
         %i.bi.bi-telephone-fill
-        Contacts
+        Contact
 
   .row.section
     .col-lg-3
@@ -27,61 +27,8 @@
               %td.phone= setting.donation_notification_sms_number
               %td.email
 
-          %tr
-            %th(colspan='4')
-              Zone leaders
-          - @zone_leaders.each do |driver|
-            %tr.contact
-              %td.name
-                = driver.name
-                - if driver.zone
-                  = surround("(", ")") do
-                    = driver&.zone&.name
-              %td.phone
-                - if driver&.phone
-                  = link_to "tel:#{driver&.phone}" do
-                    =driver&.phone
 
-              %td.email= mail_to driver&.email if driver&.email
 
-  .row
-    .col-lg-12
-      %h1
-        %i.bi.bi-truck-front-fill
-        Drivers
 
-  .row
-    .col-lg-6.offset-lg-3
-      .table-responsive
-        %table.table#drivers-table
-          %tbody
-            - @zones.each do |zone|
-              - next unless zone.drivers.any?
-              %tr
-                %td.route-zone.zone
-                  = zone.name
-                %td
-                %td
-              - zone.drivers.each do |driver|
-                %tr
-                  %th.name= link_to driver.name, driver_driver_path(driver)
-                  %td.phone
-                    - if driver.phone.present?
-                      = link_to "tel:#{driver.phone}" do
-                        = driver.phone
-                  %td.email= mail_to driver.email
-
-            - if Driver.unzoned.any?
-              %tr
-                %td.zone No Zone
-                %td.data
-                %td.data
-
-              - Driver.unzoned.each do |driver|
-                %tr
-                  %th.name= link_to driver.name, driver_driver_path(driver)
-                  %td.phone
-                    - if driver.phone.present?
-                      = link_to "tel:#{driver.phone}" do
-                        = driver.phone
-                  %td.email= mail_to driver.email
+#drivers.container
+  = render 'driver/drivers/drivers'
