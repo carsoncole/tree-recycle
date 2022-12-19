@@ -96,7 +96,8 @@
     = f.text_field :donation_notification_sms_number, class: 'form-control'
   .mb-3
     = f.label :driver_instructions, class: 'form-label'
-    = f.text_area :driver_instructions, class: 'form-control'
+    .text-muted Markdown styling can be used.
+    = f.text_area :driver_instructions, rows: 20, class: 'form-control'
 
   .actions
     = f.submit 'Save', class: 'btn btn-primary'
