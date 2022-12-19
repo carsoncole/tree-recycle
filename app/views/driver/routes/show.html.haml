@@ -6,14 +6,6 @@
         = link_to driver_reservations_map_path(route_id: @route.id) do
           %i.bi.bi-map-fill.d-print-none
     %p 
-      - if @zone_leaders.any?
-        %span.fw-bold Zone Leaders:
-        - if @route.zone
-          - @zone_leaders.each do |l|
-            = l.name
-            - if l.phone.present?
-              = surround("(",")") do
-                = l.phone
       %span.fw-bold Drivers:
       = @drivers.map{|d| d.name + ' (' + d.phone + ')' }.join(", ")
 
