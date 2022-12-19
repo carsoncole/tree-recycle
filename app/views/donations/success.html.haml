@@ -4,8 +4,10 @@
     .important-message.info
       A receipt for your donation will be emailed to you.
 
-.row
-  .col-lg-12.text-center
-    = link_to driver_root_path do
-      %i.bi.bi-arrow-left 
-      Driver
+
+- if params[:driver] == 'true'
+  .row
+    .col-lg-12.text-center
+      = link_to driver_root_path do
+        %i.bi.bi-arrow-left 
+        Driver
