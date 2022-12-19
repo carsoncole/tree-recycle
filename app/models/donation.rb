@@ -2,7 +2,7 @@ class Donation < ApplicationRecord
   belongs_to :reservation, optional: true
 
   after_create :send_receipt_email!, if: -> (obj){ obj.amount != 0 && obj.email.present? &&  obj.payment_status == 'paid' || 'succeeded' }
-  after_create :send_donation_sms!
+  after_save :send_donation_sms!, if: -> (obj){ obj.amount != 0 && !obj.saved_change_to_amount? }
 
 
   def send_receipt_email!

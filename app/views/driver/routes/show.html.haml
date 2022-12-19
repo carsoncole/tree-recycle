@@ -70,6 +70,6 @@
                 = reservation.phone
 
   %p.text-end
-    = link_to '/driver/zones.pdf', target: '_blank' do
+    = link_to driver_route_path(@route, format: :pdf), target: '_blank' do
       %i.bi.bi-file-pdf
       Route

@@ -28,6 +28,7 @@
                 .header
                   .zone= zone.name
                   .route= route.name
+                  .drivers= route.drivers.map{|d| d.name + ' (' + d.phone + ')' }.join(", ")
                 %tr
                   %th.buttons
                   %th Address
