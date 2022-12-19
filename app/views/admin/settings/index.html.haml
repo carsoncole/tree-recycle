@@ -18,283 +18,307 @@
                 %i.bi.bi-pencil-fill.icon
                 EDIT
 
-  .row
+  .row 
+    .col-lg-2
+
+      %ul.nav.flex-column.sticky-top
+        %li.nav-item
+          = link_to 'Reservations', admin_settings_path(anchor: 'reservation-settings'), class: 'nav-link active'
+        %li.nav-item
+          = link_to 'Event details', admin_settings_path(anchor: 'details'),class: 'nav-link active'
+        %li.nav-item
+          = link_to 'Site content', admin_settings_path(anchor: 'content'),class: 'nav-link active'
+        %li.nav-item
+          = link_to 'Mapping', admin_settings_path(anchor: 'mapping'),class: 'nav-link active'
+        %li.nav-item
+          = link_to 'Driver', admin_settings_path(anchor: 'driver'),class: 'nav-link active'
+        %li.nav-item
+          = link_to 'Users', admin_settings_path(anchor: 'users'),class: 'nav-link active'
+        %li.nav-item
+          = link_to 'SEO', admin_settings_path(anchor: 'seo'),class: 'nav-link active'
+        %li.nav-item
+          = link_to 'Operations', admin_settings_path(anchor: 'operations'),class: 'nav-link active'
+
+
+
     .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Reservations
-          .col-lg-8
-            .table-responsive
-              %table.table.settings.table-borderless#stats-table
-                %tr
-                  %th
-                    Reservations
-                  %td
-                    - if setting.is_reservations_open
-                      Open
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#reservation-settings Reservations
+              .col-lg-8
+                .table-responsive
+                  %table.table.settings.table-borderless#stats-table
+                    %tr
+                      %th
+                        Reservations
+                      %td
+                        - if setting.is_reservations_open
+                          Open
 
-                      = button_to "Close", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
-                    - else
-                      Closed
-                      = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+                          = button_to "Close", admin_setting_path(setting, setting: {is_reservations_open: false}), method: :patch, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+                        - else
+                          Closed
+                          = button_to "Open", admin_setting_path(setting, setting: {is_reservations_open: true}), method: :patch, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
 
-                %tr
-                  %th Reservations closed message
-                  %td= setting.reservations_closed_message
+                    %tr
+                      %th Reservations closed message
+                      %td= setting.reservations_closed_message
 
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Event details
-          .col-lg-8
-            .table-responsive
-              %table.table.settings
-                %tbody
-                  %tr
-                    %th
-                      Pick-up date start/end time
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#details Event details
+              .col-lg-8
+                .table-responsive
+                  %table.table.settings
+                    %tbody
+                      %tr
+                        %th
+                          Pick-up date start/end time
 
-                    %td
-                      - if setting.pickup_date_and_time.present?
-                        = nice_date_time(setting.pickup_date_and_time)
-                      - else
-                        No start time set
-                      %br
-                      - if setting.pickup_date_and_end_time.present?
-                        = nice_date_time(setting.pickup_date_and_end_time)
-                      - else
-                        No end time set
-                  %tr
-                    %th Signup deadline
-                    %td= nice_date_time(setting.sign_up_deadline_at)
+                        %td
+                          - if setting.pickup_date_and_time.present?
+                            = nice_date_time(setting.pickup_date_and_time)
+                          - else
+                            No start time set
+                          %br
+                          - if setting.pickup_date_and_end_time.present?
+                            = nice_date_time(setting.pickup_date_and_end_time)
+                          - else
+                            No end time set
+                      %tr
+                        %th Signup deadline
+                        %td= nice_date_time(setting.sign_up_deadline_at)
 
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Site content
-          .col-lg-8
-            .table-responsive
-              %table.table.settings
-                %tbody
-                  %tr
-                    %th Site title
-                    %td= setting.site_title
-                  %tr
-                    %th Site description
-                    %td= setting.site_description
-                  %tr
-                    %th Organization name
-                    %td= ORGANIZATION_NAME
-                  %tr
-                    %th Description
-                    %td= setting.description
-                  %tr
-                    %th Day of pickup instructions
-                    %td= setting.on_day_of_pickup_instructions
-
-
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Mapping
-          .col-lg-8
-            .table-responsive
-              %table.table.settings
-                %tbody
-
-                  %tr
-                    %th Default city
-                    %td= DEFAULT_CITY
-                  %tr
-                    %th Default state
-                    %td= DEFAULT_STATE
-                  %tr
-                    %th Default country
-                    %td= DEFAULT_COUNTRY
-
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Drivers
-          .col-lg-8
-            .table-responsive
-              %table.table.table-borderless.settings
-                %tbody
-                  %tr
-                    %th
-                    %td= link_to "Drivers", admin_drivers_path
-                  %tr 
-                    %th Is Driver Site enabled?
-                    %td
-                      - if setting.is_driver_site_enabled?
-                        = link_to admin_setting_path(setting, setting: { is_driver_site_enabled: false } ), method: :patch, data: { 'turbo-method': 'patch' } do 
-                          %i.bi.bi-check2-square
-                      - else
-                        = link_to admin_setting_path(setting, setting: { is_driver_site_enabled: true } ), method: :patch, data: { 'turbo-method': 'patch' } do 
-                          %i.bi.bi-square
-
-                  %tr
-                    %th Driver Secret Key
-                    %td
-                      - if setting.driver_secret_key.present?
-                        = setting.driver_secret_key
-                      - else
-                        No key
-
-                  %tr 
-                    %th Instructions
-                    %td= setting&.driver_instructions&.html_safe
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#content Site content
+              .col-lg-8
+                .table-responsive
+                  %table.table.settings
+                    %tbody
+                      %tr
+                        %th Site title
+                        %td= setting.site_title
+                      %tr
+                        %th Site description
+                        %td= setting.site_description
+                      %tr
+                        %th Organization name
+                        %td= ORGANIZATION_NAME
+                      %tr
+                        %th Description
+                        %td= setting.description
+                      %tr
+                        %th Day of pickup instructions
+                        %td= setting.on_day_of_pickup_instructions
 
 
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Contact
-          .col-lg-8
-            .table-responsive
-              %table.table.table-borderless.settings
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#mapping Mapping
+              .col-lg-8
+                .table-responsive
+                  %table.table.settings
+                    %tbody
 
-                %tbody
+                      %tr
+                        %th Default city
+                        %td= DEFAULT_CITY
+                      %tr
+                        %th Default state
+                        %td= DEFAULT_STATE
+                      %tr
+                        %th Default country
+                        %td= DEFAULT_COUNTRY
 
-                  %tr
-                    %th Contact name
-                    %td= setting.contact_name
-                  %tr
-                    %th Contact email
-                    %td= setting.contact_email
-                  %tr
-                    %th Contact phone
-                    %td= setting.contact_phone
-                  %tr
-                    %th
-                      Email delivery
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#driver Driver
+              .col-lg-8
+                .table-responsive
+                  %table.table.table-borderless.settings
+                    %tbody
+                      %tr
+                        %th
+                        %td= link_to "Drivers", admin_drivers_path
+                      %tr 
+                        %th Is Driver Site enabled?
+                        %td
+                          - if setting.is_driver_site_enabled?
+                            = link_to admin_setting_path(setting, setting: { is_driver_site_enabled: false } ), method: :patch, data: { 'turbo-method': 'patch' } do 
+                              %i.bi.bi-check2-square
+                          - else
+                            = link_to admin_setting_path(setting, setting: { is_driver_site_enabled: true } ), method: :patch, data: { 'turbo-method': 'patch' } do 
+                              %i.bi.bi-square
 
-                    %td
-                      - if setting.is_emailing_enabled
-                        Delivering
-                        - if current_user.administrator?
-                          = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
-                      - else
-                        Stopped
-                        - if current_user.administrator?
-                          = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
+                      %tr
+                        %th Driver Secret Key
+                        %td
+                          - if setting.driver_secret_key.present?
+                            = setting.driver_secret_key
+                          - else
+                            No key
 
-                  %tr
-                    %th
-                      SMS from phone
-                    %td 
-                      = Rails.application.credentials.twilio.production.number
-
-                  %tr
-                    %th
-                      Email batch size
-                    %td
-                      = setting.email_batch_quantity
-
-                  %tr
-                    %th
-                      Donation notification SMS number
-                    %td
-                      = setting.donation_notification_sms_number
-
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Users
-          .col-lg-8
-            .table-responsive
-              %table.table.table-borderless.settings
-                %tr
-                  %th
-                  %td.text-end
-                    = link_to "Users", admin_users_path
-
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 SEO META
-          .col-lg-8
-            .table-responsive
-              %table.table.settings
-                %tr
-                  %th Meta Title
-                  %td.text-end
-                    = setting.meta_title
-                %tr
-                  %th Meta Site Name
-                  %td.text-end
-                    = setting.meta_site_name
-                %tr
-                  %th Meta Description
-                  %td.text-end
-                    = setting.meta_description
-                %tr
-                  %th Meta Image filename
-                  %td.text-end
-                    = setting.meta_image_filename
-                %tr
-                  %th Facebook Page ID
-                  %td.text-end
-                    = setting.facebook_page_id
+                      %tr 
+                        %th Instructions
+                        %td= setting&.driver_instructions&.html_safe
 
 
-  .row
-    .col-lg-10
-      .section
-        .row
-          .col-lg-4
-            %h3 Operations
-          .col-lg-8
-            .table-responsive
-              %table.table.table-borderless.settings
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#contact Contact
+              .col-lg-8
+                .table-responsive
+                  %table.table.table-borderless.settings
 
-                %tr
-                  %th Archive all Unarchived reservations
-                  %td
-                    = button_to "ARCHIVE ALL", admin_archive_all_unarchived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived Reservations to be archived' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
+                    %tbody
 
-                %tr
-                  %th Merge unarchived reservations with archived (removing older duplicates), then archive all
-                  %td
-                    = button_to "MERGE UNARCHIVED", admin_merge_unarchived_reservations_path, method: :post, data: { "turbo-method": :post, turbo_confirm: 'Are you sure? This will merge all unarchived (not unconfirmed) reservations with the existing archived reservations, removing the older duplicates.' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
+                      %tr
+                        %th Contact name
+                        %td= setting.contact_name
+                      %tr
+                        %th Contact email
+                        %td= setting.contact_email
+                      %tr
+                        %th Contact phone
+                        %td= setting.contact_phone
+                      %tr
+                        %th
+                          Email delivery
 
-                %tr
-                  %th Destroy all Unconfirmed reservations
-                  %td
-                    = button_to "DESTROY UNCONFIRMED", admin_destroy_unconfirmed_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all UNCONFIRMED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+                        %td
+                          - if setting.is_emailing_enabled
+                            Delivering
+                            - if current_user.administrator?
+                              = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}), method: :patch, class: 'btn btn-danger btn-sm'
+                          - else
+                            Stopped
+                            - if current_user.administrator?
+                              = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}), method: :patch, class: 'btn btn-danger btn-sm'
 
-                %tr
-                  %th Destroy all Archived reservations
-                  %td
-                    = button_to "DESTROY ARCHIVED", admin_destroy_all_archived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all ARCHIVED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+                      %tr
+                        %th
+                          SMS from phone
+                        %td 
+                          = Rails.application.credentials.twilio.production.number
 
-                %tr
-                  %th Destroy reservations older than N months
-                  %td
-                    = form_tag '/admin/reservations/destroy-reservations' do
-                      .row 
-                        .col-lg-6
-                          = text_field_tag :months, {}, class: 'form-control'
-                        .col-lg-6
-                          = submit_tag "DESTROY", class: 'btn btn-danger btn-sm', data: { 'turbo-confirm': 'Are you sure? This is IRREVERSIBLE and will DESTROY reservations.' }
+                      %tr
+                        %th
+                          Email batch size
+                        %td
+                          = setting.email_batch_quantity
 
-                %tr
-                  %th Destroy ALL reservations
-                  %td
-                    = button_to "DESTROY ALL", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+                      %tr
+                        %th
+                          Donation notification SMS number
+                        %td
+                          = setting.donation_notification_sms_number
+
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#users Users
+              .col-lg-8
+                .table-responsive
+                  %table.table.table-borderless.settings
+                    %tr
+                      %th
+                      %td.text-end
+                        = link_to "Users", admin_users_path
+
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#seo SEO
+              .col-lg-8
+                .table-responsive
+                  %table.table.settings
+                    %tr
+                      %th Meta Title
+                      %td.text-end
+                        = setting.meta_title
+                    %tr
+                      %th Meta Site Name
+                      %td.text-end
+                        = setting.meta_site_name
+                    %tr
+                      %th Meta Description
+                      %td.text-end
+                        = setting.meta_description
+                    %tr
+                      %th Meta Image filename
+                      %td.text-end
+                        = setting.meta_image_filename
+                    %tr
+                      %th Facebook Page ID
+                      %td.text-end
+                        = setting.facebook_page_id
+
+
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#operations Operations
+              .col-lg-8
+                .table-responsive
+                  %table.table.table-borderless.settings
+
+                    %tr
+                      %th Archive all Unarchived reservations
+                      %td
+                        = button_to "ARCHIVE ALL", admin_archive_all_unarchived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived Reservations to be archived' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
+
+                    %tr
+                      %th Merge unarchived reservations with archived (removing older duplicates), then archive all
+                      %td
+                        = button_to "MERGE UNARCHIVED", admin_merge_unarchived_reservations_path, method: :post, data: { "turbo-method": :post, turbo_confirm: 'Are you sure? This will merge all unarchived (not unconfirmed) reservations with the existing archived reservations, removing the older duplicates.' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
+
+                    %tr
+                      %th Destroy all Unconfirmed reservations
+                      %td
+                        = button_to "DESTROY UNCONFIRMED", admin_destroy_unconfirmed_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all UNCONFIRMED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+
+                    %tr
+                      %th Destroy all Archived reservations
+                      %td
+                        = button_to "DESTROY ARCHIVED", admin_destroy_all_archived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all ARCHIVED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
+
+                    %tr
+                      %th Destroy reservations older than N months
+                      %td
+                        = form_tag '/admin/reservations/destroy-reservations' do
+                          .row 
+                            .col-lg-6
+                              = text_field_tag :months, {}, class: 'form-control'
+                            .col-lg-6
+                              = submit_tag "DESTROY", class: 'btn btn-danger btn-sm', data: { 'turbo-confirm': 'Are you sure? This is IRREVERSIBLE and will DESTROY reservations.' }
+
+                    %tr
+                      %th Destroy ALL reservations
+                      %td
+                        = button_to "DESTROY ALL", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
 
