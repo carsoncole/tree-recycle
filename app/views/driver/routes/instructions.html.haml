@@ -1,0 +1,12 @@
+#driver-instructions.container
+  .row 
+    .col-lg-12
+      %h1 Driver Instructions
+
+  .row
+    .col-lg-6.offset-lg-3
+      %p
+        - if @instructions.present?
+          = @instructions.html_safe
+        - else
+          No instructions.

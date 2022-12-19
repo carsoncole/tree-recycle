@@ -5,6 +5,10 @@
         %i.bi.bi-signpost-2-fill
         Routes
 
+  .row
+    .col-lg-3
+      %p= link_to "Driver Instructions", driver_instructions_path
+
   / ZONES and their routes
   - @zones.each do |zone|
     - next if zone.routes.empty?
@@ -13,7 +17,8 @@
     - picked_up_count = zone.reservations.picked_up.count
     - next if pending_pickup_count == 0 && picked_up_count == 0 && missing_count == 0 && !@all_zones
     .row
-      .col-lg-6.offset-lg-3
+      .col-lg-3
+      .col-lg-6
         .table-responsive
           %table.table.zones-table(id="zone-#{zone.id}")
             %thead

@@ -53,6 +53,7 @@ Rails.application.routes.draw do
 
   namespace :driver do
     root 'zones#index'
+    get 'instructions' => 'routes#instructions', as: 'instructions'
     get 'contact' => 'contact#index', as: 'contacts'
     get 'reservations/map' => 'reservations#map', as: 'reservations_map'
     get 'search' => 'reservations#search', as: 'search'
