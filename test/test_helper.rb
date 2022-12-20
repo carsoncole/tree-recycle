@@ -35,7 +35,7 @@ class ActiveSupport::TestCase
   end
 
   def random_email
-    Faker::Name.first_name.underscore + '@example.com'
+    Faker::Name.first_name.downcase + '.' + Faker::Name.last_name.downcase + '@example.com'
   end
 
 end
