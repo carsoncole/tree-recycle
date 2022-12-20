@@ -13,4 +13,8 @@ class HomeController < ApplicationController
   def software
     @site_title = 'Learn more about the software'
   end
+
+  def sitemap
+    render format: :xml
+  end
 end

@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   get '/tree-program', to: redirect('/about') # this redirect old web links to this site
 
+  get '/sitemap', to: 'home#sitemap', as: 'sitemap'
+
   resources :reservations, except: [:index] do
 
     get 'address-verification', as: 'address_verification'
