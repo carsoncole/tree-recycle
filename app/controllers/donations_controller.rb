@@ -38,11 +38,13 @@ class DonationsController < ApplicationController
 
   def cash_or_check
     @reservation.cash_or_check_donation!
+    @reservation.logs.create(message: 'Cash or check donation option selected.')
     redirect_to reservation_confirmed_url(@reservation), notice: "Your tree pick-up is confirmed. You can leave your donation with your tree."
   end
 
   def no_donation
     @reservation.no_donation!
+    @reservation.logs.create(message: 'No donation option selected.')
     redirect_to reservation_confirmed_url(@reservation)
   end
 
@@ -57,6 +59,7 @@ class DonationsController < ApplicationController
   def success
     if params[:reservation_id] || params[:id]
       @reservation = Reservation.find(params[:id] ||= params[:reservation_id])
+      @reservation.logs.create(message: 'Online donation successful.')
     end
     @driver = true if params[:driver] == true
     flash[:notice] = 'Thank you! Your donation is greatly appreciated and goes a long way towards supporting Scouting on Bainbridge Island.'
