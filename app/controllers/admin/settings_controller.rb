@@ -10,11 +10,7 @@ class Admin::SettingsController < Admin::AdminController
   def update
     if current_user.editor? || current_user.administrator?
       if helpers.setting.update(setting_params)
-        if params[:source] && params[:source] == 'marketing'
-          redirect_to admin_marketing_path, notice: 'Settings updated.'
-        else
-          redirect_to admin_settings_path
-        end
+        redirect_to admin_settings_path
       else
         render :edit, status: :unprocessable_entity
       end
