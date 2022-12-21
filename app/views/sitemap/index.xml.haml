@@ -2,7 +2,12 @@
 %urlset(xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
   %url
     %loc https://treerecycle.net
-    %lastmod>= Setting.first.updated_at.strftime("%Y-%m-%d")
+    %lastmod
+      - if Setting.first
+        = Setting.first.updated_at.strftime("%Y-%m-%d")
+      - else
+        = Date.today.strftime("%Y-%m-%d")
+
     %priority 1.0
 
   %url
