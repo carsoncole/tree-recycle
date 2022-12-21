@@ -32,7 +32,7 @@
   var map;
   function initMap() {
 
-    // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected, collected_amount, name]]
+    // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected, collected_amount, name, route, zone]]
     let locations =  <%= raw @reservations %>;
 
     // Create the map, centered at gfg_office
@@ -87,7 +87,7 @@
       let html_content = 
             `<div class='map-info-window'>` +
               `<div class='header'>` +
-                `<a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a><br>`+
+                `<a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a> / ${locations[i][11]}-${locations[i][12]}<br>`+
                 `<div class='map-links'>`+
                   `<a href="https://maps.apple.com/?q=${locations[i][2]},${ locations[i][3]}" target='_blank' class= 'map-link'><i class='bi bi-apple'></i></a>` +
                   `<a href="https://www.google.com/maps/place/${locations[i][2]},${ locations[i][3]}", target='_blank' class='map-link'><i class='bi bi-google'></i></a>` +
