@@ -6,8 +6,10 @@ class Admin::MarketingController < Admin::AdminController
     @donation_count = Donation.joins(:reservation).where.not("reservations.status IN(0, 4, 99)").count
     @total_donations = Donation.joins(:reservation).where.not("reservations.status IN (0,4,99)").sum(:amount)
     donations_ordered = Donation.joins(:reservation).order(:amount).where.not("reservations.status IN (0,4,99)")
-    @median = if @donation_count.odd?
-        donations_ordered[(@donation_count/2.0).ceil]
+    @median = if @donation_count == 0
+        0
+      elsif @donation_count.odd?
+        donations_ordered[(@donation_count/2.0).ceil].amount
       else
         (donations_ordered[ (@donation_count/2.0).ceil ].amount + donations_ordered[ (@donation_count/2.0).floor-1 ].amount)/ 2.0
       end
