@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   get '/tree-program', to: redirect('/about') # this redirect old web links to this site
 
-  get '/sitemap', to: 'sitemap#index', as: 'sitemap', :defaults => {:format => 'xml'}
+  get '/sitemap.xml', to: 'sitemap#index', as: 'sitemap', :defaults => {:format => 'xml'}
 
   resources :reservations, except: [:index] do
 

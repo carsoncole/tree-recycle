@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://treerecycle.net</loc>
+    <lastmod>
+      <%- if Setting.first %>
+        <%= Setting.first.updated_at.strftime("%Y-%m-%d") %>
+      <%- else %>
+        <%= Date.today.strftime("%Y-%m-%d") %>
+      <%- end %>
+    </lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://treerecycle.net/reservations/new</loc>
+    <lastmod><%= File.mtime("app/views/reservations/new.html.haml").strftime("%Y-%m-%d") %></lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://treerecycle.net/donation</loc>
+    <lastmod><%= (Date.today - 15.days).strftime("%Y-%m-%d") %></lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://treerecycle.net/questions</loc>
+    <lastmod><%= File.mtime("app/views/home/questions.html.haml").strftime("%Y-%m-%d") %></lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://treerecycle.net/about</loc>
+    <lastmod><%= File.mtime("app/views/home/about.html.haml").strftime("%Y-%m-%d") %></lastmod>
+    <priority>0.9</priority>
+  </url>
+</urlset>
