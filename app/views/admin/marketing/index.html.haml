@@ -27,22 +27,43 @@
       .row.mb-5
         .col-lg-12
           = column_chart [ ["Online", Donation.sum(:amount).to_i]], prefix: "$", title: 'Total Donations', thousands: ",", width: '400px'
+
       .row.mb-5
         .col-lg-12
-          %table.table#donations-analysis
-            %thead 
-            %tbody 
-              - @donation_counts.each do |type, count|
-                %tr
-                  %th
-                    - if type.nil?
-                      No selection
-                    - else
-                      = type.humanize.capitalize
-                  %td.count
-                    = count
-                    = surround("(", ")") do 
-                      = number_to_percentage(count.to_f / @reservations_count * 100, precision: 1)
+          %table.table#donation-averages
+            %tr
+              %th Total # donations
+              %td.count= @donation_count
+            %tr
+              %th Total donations
+              %td.count= number_to_currency(@total_donations)
+            %tr
+              %th Median donation
+              %td.count= number_to_currency(@median)
+            %tr
+              %th Average donation
+              %td.count= number_to_currency(@average_donation)
+
+
+      .row.mb-5
+        .col-lg-12
+          / %table.table#donations-analysis
+          /   %thead
+          /   %tbody
+          /     - @donation_counts.each do |type, count|
+          /       %tr
+          /         %th
+          /           - if type.nil?
+          /             No selection
+          /           - else
+          /             = type.humanize.capitalize
+          /         %td.count
+          /           = count
+          /           = surround("(", ")") do
+          /             = number_to_percentage(count.to_f / @reservations_count * 100, precision: 1)
+
+          = pie_chart Hash[@donation_counts.map {|type, count| [type&.humanize&.capitalize || 'No Selection', count] }]
+
 
 
     .col-lg-7.offset-lg-1

@@ -14,20 +14,21 @@
     }
   }
 
-  table.table#donations-analysis {
-    th, td {
-      &.count {
-        text-align: right;
+  table.table {
+    &#donations-analysis, &#donation-averages {
+      th, td {
+        &.count {
+          text-align: right;
+        }
+      }
+      td {
+        font-weight: 900;
+      }
+      th {
+        font-weight: 400;
       }
     }
-    td {
-      font-weight: 900;
-    }
-    th {
-      font-weight: 400;
-    }
   }
-
 
 
 }
