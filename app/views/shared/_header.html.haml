@@ -10,15 +10,15 @@
       .collapse.navbar-collapse#navbarSupportedContent
         %ul.navbar-nav.me-auto.mb-2.mb-lg-0
           %li.nav-item
-            = link_to "New reservation", new_reservation_url, class: "nav-link", "aria-current": "page"
+            = link_to "New reservation", new_reservation_url, class: "nav-link #{ controller_name == 'reservations' ? 'active' : nil }", "aria-current": "page"
           %li.nav-item
-            = link_to "Donate", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link", "aria-current": "page"
+            = link_to "Donate", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link #{ controller_name == 'donations' ? 'active' : nil }", "aria-current": "page"
           %li.nav-item
-            = link_to questions_url, class: "nav-link", "aria-current": "page", id: 'question_header_link' do
+            = link_to questions_url, class: "nav-link #{ controller_name == 'home' && action_name == 'questions' ? 'active' : nil }", "aria-current": "page", id: 'question_header_link' do
               = "Questions"
               %i.bi.bi-question-lg
           %li.nav-item
-            = link_to "About", about_url, class: "nav-link"
+            = link_to "About", about_url, class: "nav-link #{ controller_name == 'home' && action_name == 'about' ? 'active' : nil }"
 
         - if signed_in?
           %ul.navbar-nav.my-2.my-lg-0

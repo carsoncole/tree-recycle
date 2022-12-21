@@ -6,8 +6,6 @@
         %i.bi.bi-gear-fill
         Settings
 
-
-
   .row
     .col-lg-12
       .admin-nav
@@ -23,25 +21,23 @@
 
       %ul.nav.flex-column.sticky-top
         %li.nav-item
-          = link_to 'Reservations', admin_settings_path(anchor: 'reservation-settings'), class: 'nav-link'
+          = link_to 'Reservations', admin_settings_path(anchor: 'reservation-settings'), class: "nav-link"
         %li.nav-item
-          = link_to 'Event details', admin_settings_path(anchor: 'details'),class: 'nav-link'
+          = link_to 'Event details', admin_settings_path(anchor: 'details'),class: "nav-link"
         %li.nav-item
-          = link_to 'Website', admin_settings_path(anchor: 'content'),class: 'nav-link'
+          = link_to 'Website', admin_settings_path(anchor: 'content'),class: "nav-link"
         %li.nav-item
-          = link_to 'Mapping', admin_settings_path(anchor: 'mapping'),class: 'nav-link'
+          = link_to 'Mapping', admin_settings_path(anchor: 'mapping'),class: "nav-link"
         %li.nav-item
-          = link_to 'Driver', admin_settings_path(anchor: 'driver'),class: 'nav-link'
+          = link_to 'Driver', admin_settings_path(anchor: 'driver'),class: "nav-link"
         %li.nav-item
-          = link_to 'Users', admin_settings_path(anchor: 'users'),class: 'nav-link'
+          = link_to 'Users', admin_settings_path(anchor: 'users'),class: "nav-link"
         %li.nav-item
-          = link_to 'SEO', admin_settings_path(anchor: 'seo'),class: 'nav-link'
+          = link_to 'SEO', admin_settings_path(anchor: 'seo'),class: "nav-link"
         %li.nav-item
-          = link_to 'Email', admin_settings_path(anchor: 'campaigns'),class: 'nav-link'
+          = link_to 'Email', admin_settings_path(anchor: 'campaigns'),class: "nav-link"
         %li.nav-item
-          = link_to 'Operations', admin_settings_path(anchor: 'operations'),class: 'nav-link active'
-
-
+          = link_to 'Operations', admin_settings_path(anchor: 'operations'),class: "nav-link"
 
     .col-lg-10
       .row
@@ -322,9 +318,6 @@
                     .col-lg-4
                       - if current_user.administrator?
                         = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}, source: 'marketing'), method: :patch, class: 'btn btn-danger'
-
-
-
 
       .row
         .col-lg-10
