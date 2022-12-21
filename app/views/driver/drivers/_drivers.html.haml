@@ -5,7 +5,6 @@
       Drivers
 
 
-
 - if signed_in? && (current_user.editor? || current_user.administrator?)
   .row
     .col-lg-12
@@ -22,13 +21,14 @@
 
 - Zone.all.each do |zone|
   .row
-    .col-lg-6.offset-lg-3
+    .col-lg-8.offset-lg-2
       .table-responsive
         %table.table.drivers-table
           %tbody
             %tr.top-section
               %td.route-zone.zone
                 = zone.name
+              %td
               %td
               %td
               - if signed_in? && (current_user.editor? || current_user.administrator?)
@@ -38,6 +38,7 @@
 
               %tr
                 %th.name= driver.name
+                %td.routes= driver.routes.order(:name).map {|r| r.name }.join(", ")
                 %td.phone
                   - if driver.phone.present?
                     = link_to "tel:#{driver.phone}", id: "driver-#{driver.id}-phone-link" do
@@ -53,12 +54,13 @@
 - @drivers_unassigned = Driver.where.not(id: DriverRoute.all.map {|dr| dr.driver_id })
 - if @drivers_unassigned.any?
   .row
-    .col-lg-6.offset-lg-3
+    .col-lg-8.offset-lg-2
       .table-responsive
         %table.table.drivers-table
           %tbody
             %tr.top-section
               %td.zone No Routes Assigned
+              %td
               %td 
               %td 
               - if signed_in? && (current_user.editor? || current_user.administrator?)
@@ -66,6 +68,7 @@
           - @drivers_unassigned.each do |driver|
             %tr
               %th.name= driver.name
+              %td.routes
               %td.phone
                 - if driver.phone.present?
                   = link_to "tel:#{driver.phone}", id: "driver-#{driver.id}-phone-link" do

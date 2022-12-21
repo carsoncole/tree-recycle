@@ -217,6 +217,10 @@ h1 {
       font-weight: normal;
       min-width: 15em;
     }
+    &.routes {
+      width: 18em;
+      overflow-x: scroll;
+    }
     &.phone {
       min-width: 9em;
     }
