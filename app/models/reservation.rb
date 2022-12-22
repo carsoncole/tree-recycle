@@ -147,6 +147,9 @@ class Reservation < ApplicationRecord
       order(:email)
   end
 
+  def routed_manually?
+    !is_routed
+  end
 
   private
 

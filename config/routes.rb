@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'sitemap/index'
-
   match "(*any)",
     to: redirect(subdomain: ""),
     via: :all,
@@ -78,6 +76,7 @@ Rails.application.routes.draw do
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update, :create, :destroy, :edit ]
     resources :driver_routes, only: [:create, :destroy]
+    resources :points, only: [:create, :update, :destroy]
     delete 'reservations/archive-all' => 'reservations#archive_all_unarchived', as: 'archive_all_unarchived_reservations'
     delete 'reservations/destroy-all' => 'reservations#destroy_all', as: 'destroy_all_reservations'
     delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'

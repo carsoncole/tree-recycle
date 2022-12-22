@@ -7,6 +7,7 @@ class Route < ApplicationRecord
 
   has_many :driver_routes, dependent: :destroy
   has_many :drivers, through: :driver_routes
+  has_many :points, dependent: :destroy
 
   belongs_to :zone, optional: true
 
@@ -24,5 +25,17 @@ class Route < ApplicationRecord
 
   def zone!
     Router.new(self).zone!
+  end
+
+  def polygon?
+    points.any? && points.count > 3
+  end
+
+  def contains?(lat, lon)
+    return false unless polygon?
+    polygon_array = points.map {|point| Geokit::LatLng.new(point.latitude, point.longitude)}
+    polygon = Geokit::Polygon.new(polygon_array)
+    point = Geokit::LatLng.new(lat, lon)
+    polygon.contains?(point)
   end
 end

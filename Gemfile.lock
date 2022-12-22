@@ -143,6 +143,7 @@ GEM
       ffi (>= 1.0.0)
       rake
     geocoder (1.8.1)
+    geokit (1.13.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
     groupdate (6.1.0)
@@ -331,6 +332,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   geocoder
+  geokit
   groupdate
   haml-rails (~> 2.0)
   importmap-rails

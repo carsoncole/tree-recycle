@@ -140,6 +140,10 @@
                   %td= @reservation.is_geocoded?
 
                 %tr 
+                  %th Is polygon mapped?
+                  %td= @reservation.is_route_polygon?
+
+                %tr 
                   %th Route
                   %td
                     - if current_user.editor? || current_user.administrator?

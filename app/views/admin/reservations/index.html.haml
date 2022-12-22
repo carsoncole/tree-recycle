@@ -115,8 +115,10 @@
                       - if reservation.distance_to_route
                         = surround("(", ")") do
                           = pluralize(reservation.distance_to_route.round(2), "mile")
-                  - if reservation.is_geocoded?
-                    %i.bi.bi-geo-fill(data-bs-toggle="tooltip" data-bs-placement="top" title="Reservation is automatically geocoded.")
+                  - if reservation.is_route_polygon?
+                    %i.bi.bi-pentagon(data-bs-toggle="tooltip" data-bs-placement="top" title="Reservation is routed in a pentagon.")
+                  - if reservation.routed_manually?
+                    %i.bi.bi-pin-map(data-bs-toggle="tooltip" data-bs-placement="top" title="Reservation is routed manually.")
                 %td.actions
                   = link_to edit_admin_reservation_path(reservation) do
                     %i.bi.bi-pencil-fill.icon

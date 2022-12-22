@@ -6,6 +6,8 @@ class Admin::RoutesController < Admin::AdminController
   end
 
   def edit
+    @point = @route.points.build
+    @points = @route.points
   end
 
   def create
