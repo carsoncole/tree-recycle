@@ -22,6 +22,13 @@
     = f.label :country, class: 'form-label'
     = f.text_field :country, class: 'form-control'
   .mb-3
+    = f.label :latitude, class: 'form-label'
+    = f.text_field :latitude, class: 'form-control'
+  .mb-3
+    = f.label :longitude, class: 'form-label'
+    = f.text_field :longitude, class: 'form-control'
+
+  .mb-3
     = f.label :distance, "Distance (Miles)", class: 'form-label'
     = f.text_field :distance, class: 'form-control'
     .form-text Route distance from this address.
