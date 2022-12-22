@@ -76,12 +76,17 @@
         glyphColor: "white"
       });
 
+      const pinViewBackgroundArchived = new google.maps.marker.PinView({
+        background: "#aaaaaa",
+        glyphColor: "#000000"
+      });
+
       const marker = new google.maps.marker.AdvancedMarkerView({
         map,
         position: { lat: locations[i][2], lng: locations[i][3] },
         title: locations[i][1],
         map: map,
-        content: locations[i][5]=='Pending pickup' ? pinViewBackgroundPending.element : locations[i][5]=='Missing' ? pinViewBackgroundMissing.element : pinViewBackgroundPickedUp.element,
+        content: locations[i][5]=='Pending pickup' ? pinViewBackgroundPending.element : locations[i][5]=='Missing' ? pinViewBackgroundMissing.element : locations[i][5]== 'Picked up' ? pinViewBackgroundPickedUp.element : pinViewBackgroundArchived.element
       });
 
       let html_content = 

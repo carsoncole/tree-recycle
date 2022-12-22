@@ -107,6 +107,7 @@
                       \|
                       - if @reservation.route
                         = link_to @reservation&.route&.name, admin_route_map_path(@reservation.route)
+                        %i.bi.bi-map-fill
                       - else
                         No Route set
                       - if !@reservation.is_routed
