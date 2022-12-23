@@ -121,7 +121,7 @@ class Admin::ReservationsController < Admin::AdminController
 
   def process_all_routes
     if current_user.editor? || current_user.administrator?
-      Reservation.process_all_routes!
+      ProcessRoutesJob.perform_later
       redirect_to admin_reservations_path
     else
       redirect_to admin_reservations_path(pending_pickup: true), alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
