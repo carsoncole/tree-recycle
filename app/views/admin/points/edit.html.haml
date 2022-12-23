@@ -1,0 +1,16 @@
+.container
+  .row
+    .col-lg-4
+
+      = form_for [:admin, @point] do |f|
+        .form-group.mb-2
+          = f.label :latitude
+          = f.text_field :latitude, class: 'form-control'
+        .form-group.mb-2
+          = f.label :longitude
+          = f.text_field :longitude, class: 'form-control'
+        .form-group.mb-2
+          = f.label :order
+          = f.text_field :order, class: 'form-control'
+
+        = f.submit class: 'btn btn-primary'

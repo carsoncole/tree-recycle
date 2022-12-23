@@ -1,10 +1,30 @@
 <div class='container-fluid'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-lg-12 text-center'>
+        <h3>
+          <%= @route&.name || @zone&.name %>
+          <%- if @route %>
+            <%= link_to edit_admin_route_path(@route) do %>
+              <i><span class='bi bi-pencil-fill'></span></i>
+            <%- end %>
+          <%- elsif @zone %>
+            <%= link_to edit_admin_zone_path(@zone) do %>
+              <i><span class='bi bi-pencil-fill'></span></i>
+            <%- end %>
+          <%- end %>          
+        </h3>
+
+        <p>
+          <%= link_to "Routes", admin_zones_path %>
+
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div id="map"></div>
-
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_maps.api_key %>&callback=initMap&libraries=&v=weekly" async></script>
-
-
-
   <script>
 
       // Initialize and add the map
@@ -12,16 +32,24 @@
 
           var locations = <%= @reservations %>;
 
-          // Create the map, centered at gfg_office
-          const map = new google.maps.Map(
-                  document.getElementById("map"), {
+          <%= render 'shared/map_js' %>
 
-              // Set the zoom of the map
-              zoom: 12,
-              center: new google.maps.LatLng(47.64483,-122.54827),
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          });
           var infowindow = new google.maps.InfoWindow();
+
+          // Define the LatLng coordinates for the polygon's path.
+          const routeCoordinates = <%= raw @route_coordinates.to_json %>;
+
+          // Construct the polygon.
+          const routePolygon = new google.maps.Polygon({
+            paths: routeCoordinates,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+          });
+
+          routePolygon.setMap(map);
 
           var marker, i;
 

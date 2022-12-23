@@ -35,51 +35,13 @@
     // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected, collected_amount, name, route, zone]]
     let locations =  <%= raw @reservations %>;
 
-    // Create the map, centered at gfg_office
-    var map = new google.maps.Map(
-            document.getElementById("map"), {
-
-        // Set the zoom of the map
-        <%- if @route %>
-          zoom: 14,
-          center: new google.maps.LatLng(<%= @route.latitude %>, <%= @route.longitude %>),
-        <%- elsif @reservation %>
-          zoom: 19,
-          center: new google.maps.LatLng(<%= @reservation.latitude %>, <%= @reservation.longitude %>),
-        <%- elsif @zone %>
-          zoom: 13,
-          center: new google.maps.LatLng(<%= @zone.latitude %>, <%= @zone.longitude %>),
-        <%- else %>
-          zoom: 12,
-          center: new google.maps.LatLng(47.64483,-122.54827),
-        <%- end %>
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        mapId: "4504f8b37365c3d0"
-    });
+    <%= render 'shared/map_js' %>
 
     var infowindow = new google.maps.InfoWindow();
 
     for (i = 0; i < locations.length; i++) {
 
-      const pinViewBackgroundPickedUp = new google.maps.marker.PinView({
-        background: "#efefef",
-        scale: 0.7,
-      });
-
-      const pinViewBackgroundPending = new google.maps.marker.PinView({
-        background: "#003F87",
-        glyphColor: "white"
-      });
-
-      const pinViewBackgroundMissing = new google.maps.marker.PinView({
-        background: "#CE1126",
-        glyphColor: "white"
-      });
-
-      const pinViewBackgroundArchived = new google.maps.marker.PinView({
-        background: "#aaaaaa",
-        glyphColor: "#000000"
-      });
+      <%= render 'shared/pin_colors_js' %>
 
       const marker = new google.maps.marker.AdvancedMarkerView({
         map,

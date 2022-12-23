@@ -5,6 +5,11 @@ class Admin::PointsController < Admin::AdminController
     redirect_to edit_admin_route_path(@route)
   end
 
+  def edit
+    @point = Point.find(params[:id])
+  end
+
+
   def update
     point = Point.find(params[:id])
     @route = point.route
@@ -25,7 +30,7 @@ class Admin::PointsController < Admin::AdminController
   private
 
   def point_params
-    params.require(:point).permit(:route_id, :latitude, :longitude)
+    params.require(:point).permit(:route_id, :latitude, :longitude, :order)
   end
 end
 

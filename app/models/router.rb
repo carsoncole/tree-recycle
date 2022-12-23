@@ -16,17 +16,14 @@ class Router
       if z.polygon? && z.contains?(location.latitude, location.longitude)
         location.route_id = z.id
         location.is_route_polygon = true
-        puts "*"*80
         break
-        puts "&"*80
-      else
-        # puts z.coordinates
-        distance_to_new_route = location.distance_to(z.coordinates)
-        # puts distance_to_new_route
-        if (location.route && location.distance_to_route > distance_to_new_route) || location.route.nil?
-          location.route_id = z.id
-          location.distance_to_route = distance_to_new_route
-        end
+      end
+      # puts z.coordinates
+      distance_to_new_route = location.distance_to(z.coordinates)
+      # puts distance_to_new_route
+      if (location.route && location.distance_to_route > distance_to_new_route) || location.route.nil?
+        location.route_id = z.id
+        location.distance_to_route = distance_to_new_route
       end
     end
     location.routed?

@@ -7,7 +7,8 @@ class Admin::RoutesController < Admin::AdminController
 
   def edit
     @point = @route.points.build
-    @points = @route.points
+    @points = @route.points.order(:order)
+    @point.order = @points.count + 1
   end
 
   def create

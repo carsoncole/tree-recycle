@@ -1,0 +1,21 @@
+// Create the map, centered at gfg_office
+var map = new google.maps.Map(
+        document.getElementById("map"), {
+
+    // Set the zoom of the map
+    <%- if @route %>
+      zoom: 15,
+      center: new google.maps.LatLng(<%= @route.latitude %>, <%= @route.longitude %>),
+    <%- elsif @reservation %>
+      zoom: 19,
+      center: new google.maps.LatLng(<%= @reservation.latitude %>, <%= @reservation.longitude %>),
+    <%- elsif @zone %>
+      zoom: 13,
+      center: new google.maps.LatLng(<%= @zone.latitude %>, <%= @zone.longitude %>),
+    <%- else %>
+      zoom: 12,
+      center: new google.maps.LatLng(47.64483,-122.54827),
+    <%- end %>
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapId: "4504f8b37365c3d0"
+});

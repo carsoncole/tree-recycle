@@ -21,6 +21,9 @@
             .form-group.mb-2
               = f.label :longitude
               = f.text_field :longitude, class: 'form-control'
+            .form-group.mb-2
+              = f.label :order
+              = f.text_field :order, class: 'form-control'
 
             = f.submit class: 'btn btn-primary'
 
@@ -29,6 +32,10 @@
         .col-lg-12
           - @points.all.each do |p|
             = p.latitude.to_s + ', ' + p.longitude.to_s
+            = surround("(", ")") do 
+              = p.order
             = link_to admin_point_path(p), method: :delete, data: { 'turbo-method': :delete } do
               %i.bi.bi-trash-fill
+            = link_to edit_admin_point_path(p) do 
+              %i.bi.bi-pencil-fill
             %br
