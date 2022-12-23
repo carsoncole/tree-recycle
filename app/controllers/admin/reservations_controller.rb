@@ -73,12 +73,14 @@ class Admin::ReservationsController < Admin::AdminController
   def map
     if params[:route_id]
       @route = Route.find(params[:route_id])
+      if params[:archived]
+        @reservations = Reservation.where.not(status: ['unconfirmed', 'cancelled']).where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || ""] }
+      else
+        @reservations = Reservation.pending.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || ""] }
+      end
       @center = [@route.latitude, @route.longitude]
-      @reservations = Reservation.pending_pickup.where(route_id: params[:route_id]).geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
       @route_coordinates = @route.points.order(:order).map{ |p| { lat: p.latitude.to_s.to_f, lng: p.longitude.to_s.to_f } }
-    # elsif params[:zone_id]
-    #   @zone = Zone.find(params[:zone_id])
-    #   @reservations = Reservation.pending_pickup.joins(route: [:zone]).where("zones.id = ?", @zone.id).geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
+
     else
       @reservations = Reservation.pending_pickup.geocoded.map{|r| [ r.latitude.to_s.to_f, r.longitude.to_s.to_f, 1]}
       @center = [47.64483,-122.54827]

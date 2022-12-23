@@ -24,47 +24,103 @@
   </div>
 
   <div id="map"></div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_maps.api_key %>&callback=initMap&libraries=&v=weekly" async></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_maps.api_key %>&callback=initMap&libraries=marker&v=beta"></script>
+
   <script>
+    // Initialize and add the map
+    function initMap() {
 
-      // Initialize and add the map
-      function initMap() {
+      var locations = <%= raw @reservations %>;
 
-          var locations = <%= @reservations %>;
+      <%= render 'shared/map_js' %>
 
-          <%= render 'shared/map_js' %>
+      var infowindow = new google.maps.InfoWindow();
 
-          var infowindow = new google.maps.InfoWindow();
+      // Define the LatLng coordinates for the polygon's path.
+      const routeCoordinates = <%= raw @route_coordinates.to_json %>;
 
-          // Define the LatLng coordinates for the polygon's path.
-          const routeCoordinates = <%= raw @route_coordinates.to_json %>;
+      // Construct the polygon.
+      const routePolygon = new google.maps.Polygon({
+        paths: routeCoordinates,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+      });
 
-          // Construct the polygon.
-          const routePolygon = new google.maps.Polygon({
-            paths: routeCoordinates,
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
-          });
+      routePolygon.setMap(map);
 
-          routePolygon.setMap(map);
+      for (i = 0; i < locations.length; i++) {
 
-          var marker, i;
+        <%= render 'shared/pin_colors_js' %>
 
-          for (i = 0; i < locations.length; i++) {
-            var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(locations[i][0], locations[i][1]),
-              map: map
-            });
+        const marker = new google.maps.marker.AdvancedMarkerView({
+          map,
+          position: { lat: locations[i][2], lng: locations[i][3] },
+          title: locations[i][1],
+          map: map,
+          content: locations[i][5]=='Pending pickup' ? pinViewBackgroundPending.element : locations[i][5]=='Missing' ? pinViewBackgroundMissing.element : locations[i][5]== 'Picked up' ? pinViewBackgroundPickedUp.element : pinViewBackgroundArchived.element
+        });
+
+
+        let html_content = 
+              `<div class='map-info-window'>` +
+                `<div class='header'>` +
+                  `<a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a> / ${locations[i][11]}-${locations[i][12]}<br>`+
+                  `<div class='map-links'>`+
+                    `<a href="https://maps.apple.com/?q=${locations[i][2]},${ locations[i][3]}" target='_blank' class= 'map-link'><i class='bi bi-apple'></i></a>` +
+                    `<a href="https://www.google.com/maps/place/${locations[i][2]},${ locations[i][3]}", target='_blank' class='map-link'><i class='bi bi-google'></i></a>` +
+                  `</div>` +
+                `</div>` 
+        html_content +=
+                `<div class='status-info'><div class='status'>${locations[i][5]}</div>` +
+                  `<div class='buttons'>` +
+                    `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-success btn-sm' href='/driver/reservations/${locations[i][0]}?status=picked_up&view=map'>Picked Up</a> ` +
+                    `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm' href='/driver/reservations/${locations[i][0]}?status=missing&view=map'>Missing</a>` +
+                  `</div>` +
+                `</div>`+
+                
+                `<div class='name'>${locations[i][10]}</div>`
+        html_content +=
+              `<div class='phone'>${locations[i][6] ? locations[i][6] : ""}</div>` +
+              `<div class='notes'>${locations[i][4]}</div>`
+        html_content +=
+              `<div class='donation-info'>`+
+                `<div class='donation-status'>` +
+                  `<div class='badge bg-primary'>Donation: ${locations[i][7]=='online_donation' ? "Online Donation" : 
+                    locations[i][7]=='cash_or_check_donation' ? "Cash/Check donation" : locations[i][7]=='no_donation' ? "No Donation" : "No Selection" } </div>` +
+                `</div>` +
+              `</div>`
+        if (locations[i][7] != 'online_donation'){
+          html_content +=
+              `<div class='actions'>` +
+                `<form action='/driver/reservations/${locations[i][0]}' method="patch" data-turbo-method="patch" data-method='patch'>` +
+                  `<div class='checkboxes'><div class='choose'>Choose one:</div>` +
+
+                  `<label>Doorhanger</label>` +
+                  `<input type="radio" name="collected" id="collected_door_hanger" value="door_hanger" ${locations[i][8]=="door_hanger" ? "checked" : "" }>` +
+                  `<label>Cash collected</label>` +
+                  `<input type="radio" name="collected" id="collected_cash" value="cash" ${locations[i][8]=="cash" ? "checked" : "" }>` +
+                  `<label>Check collected</label>` +
+                  `<input type="radio" name="collected" id="collected_check" value="check" ${locations[i][8]=="check" ? "checked" : "" }>` +
+                  `</br>` +
+                  `<input type="number" name="collected_amount" placeholder="Cash or check amount" step="0.01" value=${locations[i][9]}>`+
+                  `<input type="hidden" name="view" value="map" />` +
+                  `<input type="submit" value="Submit">` +
+                `</form>`+
+              `</div>`
           }
-          google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-              infowindow.setContent(locations[i][0]);
-              infowindow.open(map, marker);
-            }
-          })(marker, i));
+
+        html_content += `</div>`
+
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+          return function () {
+            infowindow.setContent(html_content);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
       }
+    }
   </script>
 </div>
