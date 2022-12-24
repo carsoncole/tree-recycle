@@ -181,6 +181,7 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
 
     post admin_process_all_routes_path(as: @editor)
     assert_redirected_to admin_reservations_path
+    sleep 1
     @reservation.reload
     assert @reservation.route
   end

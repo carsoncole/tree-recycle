@@ -19,6 +19,7 @@ class Reservation < ApplicationRecord
   scope :pending, -> { where.not(status: ['archived', 'cancelled', 'unconfirmed'])}
   scope :unrouted, -> { where(route_id: nil) }
   scope :routed, -> { where.not(route_id: nil) }
+  scope :not_polygon_routed, -> { where.not(route_id: nil).where.not(is_route_polygon: true)}
 
   validates :name, :email, presence: true
 

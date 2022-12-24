@@ -9,6 +9,8 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.not_archived.picked_up.includes(:route).order(created_at: :desc))
     elsif params[:unrouted]
       @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(created_at: :desc))
+    elsif params[:not_polygon_routed]
+      @pagy, @reservations = pagy(Reservation.not_archived.not_polygon_routed.order(created_at: :desc))      
     elsif params[:cancelled]
       @pagy, @reservations = pagy(Reservation.not_archived.cancelled.includes(:route).order(created_at: :desc))
     elsif params[:missing]      
@@ -29,6 +31,7 @@ class Admin::ReservationsController < Admin::AdminController
     @count_cancelled = Reservation.cancelled.count
     @count_archived = Reservation.archived.count
     @count_unconfirmed = Reservation.unconfirmed.count
+    @count_not_polygon_routed = Reservation.not_archived.not_polygon_routed.count
   end
 
   def edit

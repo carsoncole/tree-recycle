@@ -21,6 +21,10 @@
           = surround("(",")") do 
             = @count_not_routed
           %br
+          = link_to "Not Polygon Routed", admin_reservations_path(not_polygon_routed: true), class: 'link'
+          = surround("(",")") do 
+            = @count_not_polygon_routed
+          %br
           = link_to "Picked up", admin_reservations_path(picked_up: true), class: 'link'
           = surround("(",")") do 
             = @count_picked_up
