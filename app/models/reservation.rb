@@ -25,7 +25,7 @@ class Reservation < ApplicationRecord
 
   attribute :is_routed, :boolean, default: true
 
-  after_validation :route!, if: ->(obj){ obj.geocoded? && obj.is_routed? && (obj.latitude_changed? && (obj.persisted? || obj.route_id.nil?)) }
+  after_save :route_reservation, if: ->(obj){ obj.geocoded? && obj.is_routed? && (obj.latitude_changed? && (obj.persisted? || obj.route_id.nil?)) }
 
   # email delivery
   after_save :send_confirmed_reservation_email!, if: -> (obj){ obj.pending_pickup? && obj.saved_change_to_status? }
@@ -68,6 +68,10 @@ class Reservation < ApplicationRecord
 
   def route!
     Router.new(self).route!
+  end
+
+  def route_reservation
+    RouteReservationJob.perform_later(self.id)
   end
 
   def send_confirmed_reservation_email!

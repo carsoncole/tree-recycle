@@ -17,7 +17,8 @@ module TreeRecycle
     # in config/environments, which are processed later.
     #
     config.active_job.queue_name_prefix = Rails.env
-    
+    config.active_job.queue_name_delimiter = '.'
+
     config.time_zone = "Pacific Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
   end
