@@ -228,15 +228,26 @@
                 %tr
                   %th Confirmed Reservation email sent?
                   %td
-                    = @reservation.is_confirmed_reservation_email_sent?
+                    - if @reservation.is_confirmed_reservation_email_sent?
+                      %i.bi.bi-check-square
+                    - else
+                      %i.bi.bi-square
+                    = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch } do
+                      %i.bi.bi-send
                 %tr
                   %th Marketing Email #1 email sent?
                   %td
-                    = @reservation.is_marketing_email_1_sent?
+                    - if @reservation.is_marketing_email_1_sent?
+                      %i.bi.bi-check-square
+                    - else
+                      %i.bi.bi-square
                 %tr
                   %th Marketing Email #2 email sent?
                   %td
-                    = @reservation.is_marketing_email_2_sent?
+                    - if @reservation.is_marketing_email_2_sent?
+                      %i.bi.bi-check-square
+                    - else
+                      %i.bi.bi-square
 
         %section#actions
           .row

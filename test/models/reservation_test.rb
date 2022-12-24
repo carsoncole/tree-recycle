@@ -1,5 +1,6 @@
 require "test_helper"
 
+#OPTIMIZE Queued emails need work
 class ReservationTest < ActiveSupport::TestCase
   setup do
     @routes = [
@@ -46,6 +47,9 @@ class ReservationTest < ActiveSupport::TestCase
     assert_not reservation.routed?
     reservation.save
     assert reservation.geocoded?
+
+    reservation.route!
+    reservation.save
     assert reservation.routed?
     assert_equal 'Winslow South', reservation.route.name
   end

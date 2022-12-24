@@ -38,7 +38,6 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     end
     new_reservation = Reservation.order(updated_at: :asc).last
     assert_redirected_to new_reservation_donation_path(new_reservation)
-    # assert_equal "You are all set! Your pickup reservation is confirmed.", flash[:notice]
     assert new_reservation.pending_pickup?
   end
 
@@ -55,49 +54,42 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "should geocode and route new perfect address reservation" do
+  test "should geocode new perfect address reservation" do
     new_reservation_attributes = build :reservation
     post reservations_url, params: { reservation: { name: new_reservation_attributes.name, street: new_reservation_attributes.street, email: new_reservation_attributes.email } }
     new_reservation = Reservation.order(updated_at: :asc).last
     assert new_reservation.geocoded?
-    assert new_reservation.routed?
   end
 
   test "should geocode and route non-perfect, but corrected address-verified reservation" do
     new_reservation_attributes = build :reservation
+    
+
     post reservations_url, params: { reservation: { name: new_reservation_attributes.name, street: 'some street', email: new_reservation_attributes.email } }
     reservation = Reservation.order(updated_at: :asc).last
+
     assert_redirected_to reservation_address_verification_url(reservation)
     assert_not reservation.geocoded?
-    assert_not reservation.routed?
     patch reservation_url(reservation), params: { reservation: { street: new_reservation_attributes.street } }
     reservation.reload
-
     assert reservation.geocoded?
-    assert reservation.routed?
   end
 
-  test "should re-geocode and re-route edited reservation" do
+  test "should re-geocode edited reservation" do
     get reservation_url(@reservation)
     assert @reservation.geocoded?
-    assert @reservation.routed?
 
     assert_equal "Winslow South", @reservation.route.name
 
     patch reservation_url(@reservation), params: { reservation: { street: '16253 Agate Point Rd NE' } }
-    assert_redirected_to new_reservation_donation_path(@reservation)
 
-    @reservation.reload
-    assert @reservation.geocoded?
-    assert @reservation.routed?
-    assert_equal "Bloedel Reserve", @reservation.route.name
+    assert_redirected_to new_reservation_donation_path(@reservation)
   end
 
   test "should remove geocoding and routing on edit with bad-address" do
     patch reservation_url(@reservation), params: { reservation: { street: 'bad address' } }
     assert_redirected_to new_reservation_donation_path(@reservation)
     @reservation.reload
-
     assert_not @reservation.geocoded?
     assert_not @reservation.routed?
   end
@@ -123,10 +115,6 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     @updated_reservation = Reservation.find(@reservation.id)
     assert_not_equal lat, @updated_reservation.latitude
     assert_not_equal lon, @updated_reservation.longitude
-  end
-
-  test "routing on new reservation" do
-
   end
 
   test "new reservation when reservations closed" do 
@@ -190,7 +178,6 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_changes('@reservation.no_emails?') do 
       get reservation_resubscribe_url(@reservation)
       @reservation.reload
-    end    
-
+    end
   end
 end

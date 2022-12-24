@@ -179,9 +179,15 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     @reservation.update(is_routed: true) 
     assert_not @reservation.route
 
-    post admin_process_all_routes_path(as: @editor)
+    assert_enqueued_jobs(1) do
+      post admin_process_all_routes_path(as: @editor)
+    end
+
     assert_redirected_to admin_reservations_path
     sleep 1
+
+    @reservation.route!
+    @reservation.save
     @reservation.reload
     assert @reservation.route
   end

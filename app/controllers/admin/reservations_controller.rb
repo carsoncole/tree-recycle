@@ -39,7 +39,10 @@ class Admin::ReservationsController < Admin::AdminController
 
   def update
     if current_user.editor? || current_user.administrator?
-      if @reservation.update(reservation_params)
+      if params[:send_confirmed_reservation_email]
+        ReservationsMailer.with(reservation: @reservation).confirmed_reservation_email.deliver_later
+        redirect_to admin_reservation_url(@reservation), notice: 'Confirmed reservation email queued for sending. The email will not be sent if the reservation is flagged as already having been sent this email.'
+      elsif @reservation.update(reservation_params)
         redirect_to admin_reservation_url(@reservation)
       else
         render :edit, status: :unprocessable_entity
@@ -197,6 +200,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :no_sms, :is_routed, :unit, :is_geocoded)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :no_sms, :is_routed, :unit, :is_geocoded, :is_confirmed_reservation_email_sent)
     end
 end

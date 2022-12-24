@@ -65,9 +65,6 @@ class DonationsController < ApplicationController
     flash[:notice] = 'Thank you! Your donation is greatly appreciated and goes a long way towards supporting Scouting on Bainbridge Island.'
   end
 
-  def cancel
-  end
-
   private
     def donation_params
       params.require(:donation).permit(:amount)

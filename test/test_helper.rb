@@ -11,6 +11,7 @@ require "rails/test_help"
 class ActiveSupport::TestCase
   include ApplicationHelper
   include FactoryBot::Syntax::Methods
+  include ActiveJob::TestHelper
   # Run tests in parallel with specified workers
   # parallelize(workers: :number_of_processors)
   parallelize(workers: 1)
