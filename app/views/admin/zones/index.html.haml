@@ -5,24 +5,27 @@
         %i.bi.bi-signpost-2-fill
         Routes
 
-  - if admin_view? && current_user.editor? || current_user.administrator?
+  - if admin_view?
     .row
       .col-lg-12
         .admin-nav
           %nav
             %ul.nav.justify-content-end
-              %li.nav-item
-                = link_to new_admin_route_path, class: 'nav-link' do
-                  %i.bi.bi-plus-lg
-                  Route
-              %li.nav-item
-                = link_to new_admin_zone_path, class: 'nav-link' do
-                  %i.bi.bi-plus-lg
-                  Zone
+              - if current_user.editor? || current_user.administrator?
+                %li.nav-item
+                  = link_to new_admin_route_path, class: 'nav-link' do
+                    %i.bi.bi-plus-lg
+                    Route
+                %li.nav-item
+                  = link_to new_admin_zone_path, class: 'nav-link' do
+                    %i.bi.bi-plus-lg
+                    Zone
               %li.nav-item
                 = link_to admin_drivers_path, class: 'nav-link' do
                   Drivers
-  
+              %li.nav-item
+                = link_to admin_drivers_path, class: 'nav-link' do
+                  Master Map
 
   / ZONES and their Routes
   - @zones.each do |zone|
@@ -146,7 +149,7 @@
             %tr.total
               %th.route-zone.zone
                 All
-                = link_to driver_reservations_map_path do
+                = link_to admin_routes_map_all_path do
                   %i.bi.bi-map-fill
               %td.drivers
               %td.data.zone-pending-pickup-count= @pending_pickups_count

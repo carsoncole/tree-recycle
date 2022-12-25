@@ -69,6 +69,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'reservations#index'
+    get '/routes/map-all' => 'routes#map_all', as: 'routes_map_all'
     resources :zones
     resources :drivers
     resources :messages, only: [:index, :create, :destroy ]

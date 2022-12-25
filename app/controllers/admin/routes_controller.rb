@@ -58,6 +58,18 @@ class Admin::RoutesController < Admin::AdminController
     @route_center_reservation = [average_lat, average_lon]
   end
 
+  def map_all
+    @routes = []
+    Route.all.each do |route|
+      @routes << { 
+        route_name: route.name,
+        lat: route.latitude,
+        lon: route.longitude,
+        coordinates: route.points.order(:order).map{ |p| { lat: p.latitude.to_s.to_f, lng: p.longitude.to_s.to_f } }
+        }
+    end
+  end
+
   private
     def set_route
       @route = Route.find(params[:id] || params[:route_id])
