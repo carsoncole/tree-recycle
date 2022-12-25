@@ -21,15 +21,6 @@ class StripeCharge
     refunded = @stripe_event.refunded
     if donation && refunded
       donation.update(amount: amount - amount_refunded, status: 'refunded', receipt_url: @stripe_event.receipt_url )
-    else
-      # Donation.create(
-      #   reservation_id: reservation&.id,
-      #   checkout_session_id: @stripe_event.id,
-      #   amount: amount,
-      #   status: @stripe_event.status,
-      #   payment_status: @stripe_event.payment_status,
-      #   email: @stripe_event.customer_details&.email,
-      #   )
     end
   end
 
