@@ -81,6 +81,9 @@
                       %i.bi.bi-lightning-fill
                       Process routes
 
+
+      .pagination= pagy_bootstrap_nav(@pagy, pagy_id: 'pagination').html_safe
+
       .table-responsive-xxl
         %table.table#reservations-table
           %thead

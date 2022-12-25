@@ -128,21 +128,33 @@
                 %tr
                   %th Longitude
                   %td= @reservation.longitude
+
+                %tr
+                  %th Is geocoded?
+                  %td
+                    - if @reservation.is_geocoded?
+                      %i.bi.bi-check-lg
+
+                %tr 
+                  %th Is routed?
+                  %td
+                    - if @reservation.is_routed?
+                      %i.bi.bi-check-lg
+                    - else
+                      %i.bi.bi-x-lg
+                %tr 
+                  %th Is polygon mapped?
+                  %td
+                    - if @reservation.is_route_polygon?
+                      %i.bi.bi-check-lg
+                    - else
+                      %i.bi.bi-x-lg
                 %tr 
                   %th Geocode 
                   %td
                     - if current_user.editor? || current_user.administrator?
                       = link_to admin_reservation_process_geocode_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
                         %i.bi.bi-geo-alt-fill.icon
-
-                %tr
-                  %th Is geocoded?
-                  %td= @reservation.is_geocoded?
-
-                %tr 
-                  %th Is polygon mapped?
-                  %td= @reservation.is_route_polygon?
-
                 %tr 
                   %th Route
                   %td
@@ -229,25 +241,25 @@
                   %th Confirmed Reservation email sent?
                   %td
                     - if @reservation.is_confirmed_reservation_email_sent?
-                      %i.bi.bi-check-square
+                      %i.bi.bi-check-lg
                     - else
-                      %i.bi.bi-square
+                      %i.bi.bi-x-lg
                     = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch } do
                       %i.bi.bi-send
                 %tr
                   %th Marketing Email #1 email sent?
                   %td
                     - if @reservation.is_marketing_email_1_sent?
-                      %i.bi.bi-check-square
+                      %i.bi.bi-check-lg
                     - else
-                      %i.bi.bi-square
+                      %i.bi.bi-x-lg
                 %tr
                   %th Marketing Email #2 email sent?
                   %td
                     - if @reservation.is_marketing_email_2_sent?
-                      %i.bi.bi-check-square
+                      %i.bi.bi-check-lg
                     - else
-                      %i.bi.bi-square
+                      %i.bi.bi-x-lg
 
         %section#actions
           .row

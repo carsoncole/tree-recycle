@@ -59,7 +59,7 @@ class Reservation < ApplicationRecord
   end
 
   def online_donated?
-    donations.any?
+    donations.sum(:amount) > 0
   end
 
   def routed?
