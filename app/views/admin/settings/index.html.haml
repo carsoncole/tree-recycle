@@ -19,7 +19,7 @@
   .row 
     .col-lg-2
 
-      %ul.nav.flex-column.sticky-top
+      %ul.nav.flex-column.sticky-top#side-settings-nav
         %li.nav-item
           = link_to 'Reservations', admin_settings_path(anchor: 'reservation-settings'), class: "nav-link"
         %li.nav-item
@@ -232,10 +232,10 @@
 
       .row
         .col-lg-10
-          .section
+          .section#users
             .row
               .col-lg-4
-                %h3#users Users
+                %h3 Users
               .col-lg-8
                 .table-responsive
                   %table.table.table-borderless.settings

@@ -44,6 +44,8 @@ class Admin::RoutesTest < ApplicationSystemTestCase
     reservation = create(:reservation_with_coordinates, route_id: route.id)
     click_on 'Routes'
 
+    click_on 'All Zones/Routes', match: :first
+
     within "#zone-#{route.zone.id}" do
       assert_text route.name
       assert_text route.zone.name.upcase
