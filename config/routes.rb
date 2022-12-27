@@ -73,7 +73,9 @@ Rails.application.routes.draw do
     resources :zones
     resources :drivers
     resources :messages, only: [:index, :create, :destroy ]
-    resources :donations, only: [ :index, :show ]
+    resources :donations, only: [ :index, :show ] do
+      post 'send-donation-receipt' => 'donations#send_donation_receipt', as: 'send_donation_receipt'
+    end
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update, :create, :destroy, :edit ]
     resources :driver_routes, only: [:create, :destroy]
