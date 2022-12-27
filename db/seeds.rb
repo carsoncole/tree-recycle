@@ -1,4 +1,4 @@
-drequire 'faker'
+require 'faker'
 include FactoryBot::Syntax::Methods
 
 User.create(email: 'admin@example.com', password: 'password')
@@ -531,10 +531,10 @@ ldovgren = [
 
 
 
-route = Route.find(35)
-rotary.each do |lat, lon, order|
- route.points.create(latitude: lat, longitude: lon, order: order)
-end
+# route = Route.find(35)
+# rotary.each do |lat, lon, order|
+#  route.points.create(latitude: lat, longitude: lon, order: order)
+# end
 
 
 

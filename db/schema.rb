@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_23_041619) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_26_020139) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -182,9 +182,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_23_041619) do
     t.boolean "is_reservations_open", default: true
     t.boolean "is_emailing_enabled", default: true
     t.datetime "pickup_date_and_time"
-    t.string "default_city"
-    t.string "default_state"
-    t.string "default_country", default: "United States"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "sign_up_deadline_at"

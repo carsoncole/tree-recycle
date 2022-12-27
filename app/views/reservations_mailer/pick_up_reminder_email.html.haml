@@ -14,7 +14,7 @@
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
               This is a reminder that we will pick up your tree at
-              = @reservation.address
+              = @reservation.short_address
               on
               = succeed(".") do
                 = Setting.first.pickup_date_and_time.strftime("%B %-d, %Y")
@@ -31,40 +31,46 @@
             %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; margin: 0; padding: 0;")
               Regarding Donations
 
-            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
-              Tree recycling is both a community service and a fundraising event for our scout troops. We suggest a donation of $25 to $30 for the collection service.
+            - if @reservation.online_donated?
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+                Thank you for your online donation! It will go a long way towards helping our Scout program.
 
-            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
-              If you made an online donation, you will receive a receipt from Stripe. You may return to donate online at any time.
+            - else
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+                Tree recycling is both a community service and a fundraising event for our Scout Troops. We suggest a donation of $25 to $30 for the collection service. You can easily
+                = link_to "donate online at any time.", new_reservation_donation_url(@reservation)
 
-            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
-              If you elect to donate on the day of collection, we accept checks or cash.
 
-            %ul(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+                If you elect to donate on the day of collection, we accept checks or cash.
 
-              %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
-                make checks payable to BSA Troop 1564
+              %ul(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
 
-              %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
-                place your donation in an envelope
+                %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
+                  make checks payable to 'BSA Troops 1804 and 1564'
 
-              %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
-                place that envelope in a baggie
+                %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
+                  place your donation in an envelope
 
-              %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
-                secure the baggie to your tree
+                %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
+                  place that envelope in a baggie
+
+                %li(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; list-style-position: inside; margin: 0 0 0 5px; padding: 0;")
+                  secure the baggie to your tree
 
 
             %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; margin: 0; padding: 0;")
               Making Changes
 
-            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 30px; padding: 0;")
               You may
               = link_to "make a change", reservation_url(@reservation)
               or cancel your reservation at any time. If you have any questions, please
               = link_to "contact us.", questions_url
 
-            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 50px; padding: 0;")
               Thank You,
               %br
               Bainbridge Island Troop 1564 and Troop 1804
+
+            = render 'shared/mailer_footer'

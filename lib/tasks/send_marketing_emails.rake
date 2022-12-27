@@ -11,7 +11,7 @@ namespace :marketing do
     reservations_to_send = Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent')
     Rails.logger.info "Total eligible emails to send to: #{ reservations_to_send.count }"
 
-    reservations_to_send = reservations_to_send.limit(Setting.first.email_batch_quantity)
+    reservations_to_send = reservations_to_send.limit(Setting&.first&.email_batch_quantity || 300)
 
     #removes dupes
     reservations_to_send = reservations_to_send.uniq { |r| r.email }
@@ -28,7 +28,7 @@ namespace :marketing do
     reservations_to_send = Reservation.reservations_to_send_marketing_emails('is_marketing_email_2_sent')
     Rails.logger.info "Total eligible emails to send to: #{ reservations_to_send.count }"
 
-    reservations_to_send = reservations_to_send.limit(Setting.first.email_batch_quantity)
+    reservations_to_send = reservations_to_send.limit(Setting&.first&.email_batch_quantity || 300)
 
     #removes dupes
     reservations_to_send = reservations_to_send.uniq { |r| r.email }

@@ -26,7 +26,7 @@ class MarketingMailer < ApplicationMailer
     return if @reservation.is_marketing_email_1_sent?
     return unless @reservation.archived? # don't send to current reservations
     mail(to: @reservation.email, subject: "Tree recycling on #{nice_long_date(setting.pickup_date_and_time)}")
-    @reservation.logs.create(message: 'Marketing email 1 sent to archived')
+    @reservation.logs.create(message: 'Marketing email 1 sent.')
     @reservation.update(is_marketing_email_1_sent: true)
   end
 
@@ -36,7 +36,7 @@ class MarketingMailer < ApplicationMailer
     return if @reservation.is_marketing_email_2_sent?
     return unless @reservation.archived? # don't send to current reservations
     mail(to: @reservation.email, subject: "Tree recycling last reminder for #{nice_long_date(setting.pickup_date_and_time)}")
-    @reservation.logs.create(message: 'Marketing email 2 sent to archived')
+    @reservation.logs.create(message: 'Marketing email 2 sent.')
     @reservation.update(is_marketing_email_2_sent: true)
   end
 end

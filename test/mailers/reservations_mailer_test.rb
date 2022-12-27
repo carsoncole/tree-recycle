@@ -1,6 +1,7 @@
 require "test_helper"
 
 class ReservationsMailerTest < ActionMailer::TestCase
+
   test "confirmed reservation email" do
     reservation = create(:reservation_with_coordinates)
     email = ReservationsMailer.with(reservation: reservation).confirmed_reservation_email

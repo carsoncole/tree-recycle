@@ -1,6 +1,8 @@
 DRIVER_SITE_TITLE = 'Driver'
 ADMIN_SITE_TITLE = 'Admin'
 ORGANIZATION_NAME = 'Troops 1564 & 1804'
+MAIL_FOOTER = 'Bainbridge Island BSA Scout Troops 1804 & 1564, P.O. Box 10705, Bainbridge Island, WA 98110'
+MAIL_FROM = 'Bainbridge Tree Recycle <bainbridgeislandscouts@gmail.com>'
 HOME_PAGE_YEAR = '2023'
 HOME_PAGE_TITLE = 'Bainbridge Island'
 HOME_PAGE_LEAD = 'Scout Troops 1564 & 1804. Recycling Bainbridge Christmas trees since 1997'
