@@ -5,6 +5,5 @@ class RouteReservationJob < ApplicationJob
     reservation = Reservation.find(reservation_id)
     return unless reservation.is_routed? && reservation.geocoded?
     reservation.route!
-    reservation.save
   end
 end

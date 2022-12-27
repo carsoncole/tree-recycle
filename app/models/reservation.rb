@@ -2,6 +2,7 @@ require 'csv'
 
 class Reservation < ApplicationRecord
   include Geocodable
+  include Routeable
 
   # default_scope { order(:street_name, :house_number) }
 
@@ -50,7 +51,6 @@ class Reservation < ApplicationRecord
   def self.process_all_routes!
     all.each do |r|
       r.route!
-      r.save
     end
   end
 
@@ -66,14 +66,13 @@ class Reservation < ApplicationRecord
     route.present?
   end
 
-  def route!
-    Router.new(self).route!
-  end
+  # def route!
+  #   Router.new(self).route!
+  # end
 
   def route_reservation
     if Rails.env.test?
       self.route!
-      self.save
     else
       RouteReservationJob.perform_later(self.id)
     end
