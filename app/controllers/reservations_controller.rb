@@ -16,6 +16,7 @@ class ReservationsController < ApplicationController
       @reservation.street = old_reservation.street
       @reservation.email = old_reservation.email
       @reservation.name = old_reservation.name
+      @reservation.notes = old_reservation.notes
     end
   end
 
