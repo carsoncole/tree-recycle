@@ -12,11 +12,15 @@ class ReservationsController < ApplicationController
     end
     @reservation = Reservation.new
     if params[:reservation_id]
-      old_reservation = Reservation.find(params[:reservation_id])
-      @reservation.street = old_reservation.street
-      @reservation.email = old_reservation.email
-      @reservation.name = old_reservation.name unless old_reservation.name.downcase == 'no name provided'
-      @reservation.notes = old_reservation.notes
+      begin
+        old_reservation = Reservation.find(params[:reservation_id])
+        @reservation.street = old_reservation.street
+        @reservation.email = old_reservation.email
+        @reservation.name = old_reservation.name unless old_reservation.name.downcase == 'no name provided'
+        @reservation.notes = old_reservation.notes
+      rescue => e
+        Rollbar.log('error', e)
+      end
     end
   end
 
