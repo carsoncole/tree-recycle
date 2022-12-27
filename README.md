@@ -165,6 +165,11 @@ With a driver secret key of `happy`: `/driver/key=happy`. So the URL for accessi
 https://example.com/driver?key=happy
 ```
 
+### Sending marketing emails
+
+Marketing emails can be sent in Settings and there are two configured (Marketing Email #1, Marketing Email #2). The batch email size refers to the number of emails to send at a time. Depending on your mail provider, you may want to set this to a number that does not exceed any daily sending limit. If sending through Gmail, the estimated limit is 500 per day. When you send a batch, it will send the next set (if any) of emails that have not already been sent the email, so there will be no duplicates. It is reflected in a reservation when marketing emails have been sent. It is also reflected in the reservation log.
+
+
 ## Mapping
 
 Reservations are grouped by admin-defined routes with a center point and a set radius. In all cases, each reservation will be grouped into the Route that is nearest to it. This approach is not without problems as its possible that reservations that border multiple routes, may not be grouped the most efficiently.

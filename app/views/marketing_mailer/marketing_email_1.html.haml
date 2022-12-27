@@ -12,7 +12,7 @@
               Register for a tree pickup!
 
 
-            - if @reservation.name.present?
+            - if @reservation.name.present? && @reservation.name.downcase != 'no name provided'
               %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
                 = 'Hello ' + @reservation.name + ','
 
