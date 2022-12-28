@@ -122,15 +122,10 @@ class Reservation < ApplicationRecord
     end
   end
 
-  def self.archive_all_unarchived!
-    Reservation.not_archived.update_all(status: :archived)
-  end
-
   def self.destroy_all_archived!
     Reservation.archived.destroy_all
   end
 
-  #OPTIMIZE remove anyone that unsubscribed also
   def self.merge_unarchived_with_archived!
     Reservation.not_archived.not_unconfirmed.each do |r|
       Reservation.archived.where(email: r.email).destroy_all

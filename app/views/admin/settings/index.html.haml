@@ -315,14 +315,9 @@
                   %table.table.table-borderless.settings
 
                     %tr
-                      %th Archive all Unarchived reservations
+                      %th Archive all Reservation data
                       %td
-                        = button_to "ARCHIVE ALL", admin_archive_all_unarchived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will change the status on all un-archived Reservations to be archived' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
-
-                    %tr
-                      %th Merge unarchived reservations with archived (removing older duplicates), then archive all
-                      %td
-                        = button_to "MERGE UNARCHIVED", admin_merge_unarchived_reservations_path, method: :post, data: { "turbo-method": :post, turbo_confirm: 'Are you sure? This will merge all unarchived (not unconfirmed) reservations with the existing archived reservations, removing the older duplicates.' }, class: 'btn btn-warning btn-sm', disabled: current_user.administrator? ? false : true
+                        = button_to "ARCHIVE", admin_post_event_archive_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will 1) destroy all unconfirmed reservations, 2) destroy all archived reservations that unsubscribed to marketing emails, 3) archives all reservations, destroying any older duplicates, and 4) disables all geocoding/routing on reservations. This should normally be done at the end of every event.' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
 
                     %tr
                       %th Destroy all Unconfirmed reservations

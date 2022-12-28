@@ -80,12 +80,11 @@ Rails.application.routes.draw do
     resources :users, only: [ :index, :update, :create, :destroy, :edit ]
     resources :driver_routes, only: [:create, :destroy]
     resources :points, only: [:create, :update, :destroy, :edit]
-    delete 'reservations/archive-all' => 'reservations#archive_all_unarchived', as: 'archive_all_unarchived_reservations'
+    delete 'reservations/archive-all' => 'reservations#post_event_archive', as: 'post_event_archive_reservations'
     delete 'reservations/destroy-all' => 'reservations#destroy_all', as: 'destroy_all_reservations'
     delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'
     delete 'reservations/destroy-unconfirmed' => 'reservations#destroy_unconfirmed', as: 'destroy_unconfirmed_reservations'
     post 'reservations/destroy-reservations' => 'reservations#destroy_reservations', as: 'destroy_reservations'
-    post 'reservations/merge-unarchived' => 'reservations#merge_unarchived', as: 'merge_unarchived_reservations'
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
       get 'logs' => 'logs#index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
