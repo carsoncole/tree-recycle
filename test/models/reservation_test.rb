@@ -94,4 +94,20 @@ class ReservationTest < ActiveSupport::TestCase
     Reservation.destroy_reservations_older_than_months(12)
     assert_equal 4, Reservation.count 
   end
+
+  test "merging unarchived with archived" do
+    create_list(:reservation_with_coordinates, 10, status: :pending_pickup, is_routed: false)
+    assert_equal 10, Reservation.not_archived.count
+    assert_difference 'Reservation.archived.count', 10 do
+      Reservation.merge_unarchived_with_archived!
+    end
+  end
+
+  test "process post event" do
+    create_list(:reservation_with_coordinates, 10, status: :pending_pickup, is_routed: false)
+    assert_equal 10, Reservation.not_archived.count
+    assert_difference "Reservation.not_archived.count", -10 do
+      Reservation.process_post_event!
+    end
+  end
 end

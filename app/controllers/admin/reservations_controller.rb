@@ -1,5 +1,5 @@
 class Admin::ReservationsController < Admin::AdminController
-  before_action :set_reservation, except: %i[ new index search process_all_routes post_event_archive destroy_all_archived destroy_unconfirmed destroy_all destroy_reservations upload]
+  before_action :set_reservation, except: %i[ new index search process_all_routes post_event_archive destroy_all_archived destroy_unconfirmed destroy_all destroy_reservations upload map]
 
 
   def index
@@ -136,7 +136,7 @@ class Admin::ReservationsController < Admin::AdminController
 
   def post_event_archive
     if current_user.administrator?
-      system "rake post_event:archive_data"
+      Reservation.process_post_event!
       redirect_to admin_settings_path, notice: 'All Reservation data has been archived.'
     else
       redirect_to admin_settings_path, alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized

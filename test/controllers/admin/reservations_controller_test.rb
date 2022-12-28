@@ -200,25 +200,26 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "archiving all reservations as administrator" do
-    create_list(:reservation_with_coordinates, 10, is_routed: false)
+    create_list(:reservation_with_coordinates, 10, status: :picked_up, is_routed: false)
+
     assert_difference('Reservation.archived.count', 11) do
-      delete admin_archive_all_unarchived_reservations_path(as: @administrator)
+      delete admin_post_event_archive_reservations_path(as: @administrator)
     end
   end
 
   test "not archiving all reservations as viewer" do
-    create_list(:reservation_with_coordinates, 10, is_routed: false)
+    create_list(:reservation_with_coordinates, 10, status: :picked_up, is_routed: false)
     assert_difference('Reservation.archived.count', 0) do
-      delete admin_archive_all_unarchived_reservations_path(as: @viewer)
+      delete admin_post_event_archive_reservations_path(as: @viewer)
     end
     assert_response :unauthorized
   end
 
 
   test "not archiving all reservations as editor" do
-    create_list(:reservation_with_coordinates, 10, is_routed: false)
+    create_list(:reservation_with_coordinates, 10, status: :picked_up, is_routed: false)
     assert_difference('Reservation.archived.count', 0) do
-      delete admin_archive_all_unarchived_reservations_path(as: @editor)
+      delete admin_post_event_archive_reservations_path(as: @editor)
     end
     assert_response :unauthorized
   end
@@ -263,21 +264,21 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     archived = create_list(:reservation_with_coordinates, 5, status: 'archived', is_routed: false, no_emails: true )
 
     # unarchived = 10 (+1 created in setup above)
-    create_list(:reservation_with_coordinates, 10, status: 'picked_up', is_routed: false, no_emails: true)
+    create_list(:reservation_with_coordinates, 10, status: :picked_up, is_routed: false, no_emails: true)
 
     # unarchived with same as existing archived emails = 5
     archived[0..4].each do |r|
-      create(:reservation_with_coordinates, email: r.email, status: 'picked_up', is_routed: false, no_emails: true)
+      create(:reservation_with_coordinates, email: r.email, status: :picked_up, is_routed: false, no_emails: true)
     end
 
     create_list(:reservation_with_coordinates, 3, status: 'unconfirmed', is_routed: false, no_emails: true)
     assert_equal 6, Reservation.archived.count
     
     assert_difference('Reservation.archived.count', 11) do 
-      post admin_merge_unarchived_reservations_path(as: @administrator)
+      delete admin_post_event_archive_reservations_path(as: @administrator)
     end
     
-    assert_equal 3, Reservation.unconfirmed.count
+    assert_equal 0, Reservation.unconfirmed.count
     assert_equal 0, Reservation.not_archived.not_unconfirmed.count 
     assert_equal 17, Reservation.archived.count
   end

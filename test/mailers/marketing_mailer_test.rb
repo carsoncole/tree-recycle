@@ -11,7 +11,7 @@ class MarketingMailerTest < ActionMailer::TestCase
 
     # assert_equal ["me@example.com"], email.from
     assert_equal [reservation.email], email.to
-    assert_equal "Tree recycling on #{nice_long_date(Setting.first.pickup_date_and_time)}", email.subject
+    assert_equal "Tree recycling #{nice_long_date_short(Setting.first.pickup_date_and_time)}. Register today.", email.subject
     assert email.html_part.body.to_s.include? "It's our 26th year of recycling Christmas trees on Bainbridge"
   end
 
