@@ -1,16 +1,50 @@
 # Tree Recycle
 
-Host and manage a tree recycling fundraiser website with Tree Recycle. It provides a customizable public website, and handles the multiple jobs of 1) taking tree recycle pick-up reservations, 2) taking donations, and 3) route management, organizing reservations into zones and routes for an organized pickup process.
+Host and manage a tree recycling fundraiser website with Tree Recycle. It does all of the following:
 
-## Requirements
+- customizable public website;
+- accepts tree recycle pick-up reservations with addresses;
+- maps addresses into pre-defined routes for easy pickup;
+- accepts online donations;
+- sends reservation confirmation, donation receipts and marketing emails.
 
-This is a Ruby on Rails 7 application, dependent on Ruby ~> 3.0.0, and PostgreSQL as the database.
+You can view our Troop's site at [https://treerecycle.net](https://treerecycle.net).
+
 
 ## Installation
 
-This application has been configured to run on [Heroku](https://heroku.com/), but is easily modified to work on any cloud provider. Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to install the necessary gems.
+This application has been configured to run on [Heroku](https://heroku.com/), but is easily modified to work on any cloud provider. 
 
-### Database
+### Heroku
+
+To install on Heroku;
+
+- Create an account on Heroku.com;
+- Download the Heroku CLI, to enable the uploading of code and management of the server from your own computer;
+- Install git on your computer;
+- Download the code via git: `# git clone https://github.com/carsoncole/tree-recycle.git`
+- Create a new Heroku app: `# heroku create -a example-app`;
+- From the directory of the app on your computer: `# git push heroku main`;
+
+#### Configuration
+
+On the Heroku Config Vars page, add the Rails master key for decrypting the credentials to `RAILS_MASTER KEY`.
+
+The included `Procfile` has instructions to migrate the database on every deploy.
+
+To sign-in, you will need to create an admin user through the console.
+
+```
+% heroku console
+> User.create(email: 'john.doe@example.com', password: [password])
+```
+
+
+### Local installation
+
+Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to install the necessary gems.
+
+#### Database
 
 To setup the database, which gets its configuration from `db/database.yml`:
 
@@ -26,7 +60,7 @@ rails db:seed
 
 In production, Heroku will configure settings when you initially deploy.
 
-### App Credentials
+#### App Credentials
 
 Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to securely hold all environment variables, including access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
 
@@ -42,11 +76,11 @@ On Heroku, you need to provide the master key so the file can be decrypted. You 
 heroku config:set RAILS_MASTER_KEY=<your-master-key>
 ```
 
-### App Constants
+#### App Constants
 
 Basic settings and information for the site is stored in a constants file, `config/initializers/constants.rb`. Edit these accordingly.
 
-#### Reservation sources
+##### Reservation sources
 
 When taking reservations, users select from a drop down where they heard about the event. The choices are hard-coded as an Enum in `reservation.rb` and should be configured.
 
@@ -55,12 +89,14 @@ reservation.rb
 enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
 ```
 
-### USPS API Access
+#### USPS API Access
 
 This app requires USPS API access for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the Credentials `credentials.yml.enc` file.
 
 
-### Email notifications
+#### Email
+
+An email provider, such as Gmail, can be configured for reservation notifications, reminders, cancellations, marketing emails, and donation receipts. The default configuration is Gmail, as it is free and normally would provide a high enough daily limit (200-400 emails) to meet the needs of most users. 
 
 Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file. The sample settings have the correct values if you use Gmail for sending emails. If you use a differnt service, you may need to modify or add to the settings in the individual environment files.
 
@@ -94,39 +130,22 @@ The default URL for mail is set in the environment configuration file:
 config.action_mailer.default_url_options = { host: 'site@example.com' }
 ```
 
-### SMS notifications
+#### SMS notifications
 
 SMS notifications are configured to send via Twilio, but this could be modified for any service in the Sms class `sms.rb`. Keys must be set in the Rails credentials file.
 
 
-### Error monitoring
+#### Error monitoring
 
 Rollbar.io is integrating for error monitoring. This can be easily replaced with other services. The configuration file is `config/initializers/rollbar.rb` and the access token is stored in the Rails credentials file, which is the only thing that needs to be updated for it to work within your own Rollbar account. Rollbar is free for 5,000 errors a month, which should easily cover it.
 
-### Setup
+#### Setup
 
 To start up the application:
 
 ```
 bundle install
 rails s
-```
-
-
-### Heroku
-The following instruction apply to installations on Heroku.
-
-#### Configuration
-
-Create a new app in Heroku. On the Heroku Config Vars page, add the Rails master key for decrypting the credentials to `RAILS_MASTER KEY`.
-
-The included `Procfile` has instructions to migrate the database on every deploy.
-
-To sign-in, you will need to create an admin user through the console.
-
-```
-% heroku console
-> User.create(email: 'john.doe@example.com', password: [password])
 ```
 
 
