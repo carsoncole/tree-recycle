@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     get '/routes/map-all' => 'routes#map_all', as: 'routes_map_all'
     resources :zones
     resources :drivers
+    get 'logs/all' => 'logs#all', as: :all_logs
     resources :messages, only: [:index, :create, :destroy ]
     resources :donations, only: [ :index, :show ] do
       post 'send-donation-receipt' => 'donations#send_donation_receipt', as: 'send_donation_receipt'

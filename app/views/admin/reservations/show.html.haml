@@ -262,6 +262,14 @@
                     = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a confirmation email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
                       %i.bi.bi-send
                 %tr
+                  %th Reminder email sent?
+                  %td
+                    - if @reservation.is_pickup_reminder_email_sent?
+                      %i.bi.bi-check-lg
+                    - else
+                      %i.bi.bi-x-lg
+
+                %tr
                   %th Marketing Email #1 email sent?
                   %td
                     - if @reservation.is_marketing_email_1_sent?

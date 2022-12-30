@@ -5,4 +5,8 @@ class Admin::LogsController < Admin::AdminController
     @logs = @reservation.logs.order(created_at: :desc)
   end
 
+  def all
+    @logs = Log.order(created_at: :desc)
+  end
+
 end
