@@ -1,3 +1,5 @@
-.log
-  .message= log.message 
-  .date= nice_date(log.created_at)
+%article.log
+  .id= truncate(log.reservation.name, length: 13, omission: '')
+  .message= log.message
+  = '|'
+  .date= nice_short_date_time(log.created_at)

@@ -1,8 +1,14 @@
 #logs {
-  .log {
+  article.log {
     margin-bottom: 1.5em;
-    .log, .date {
+    .message, .date, .id {
       display: inline-block;
+    }
+    .id {
+      background-color: #efefef;
+      padding: 0.1em 0.3em;
+      margin-right: 0.75em;
+      width: 9em;
     }
   }
 }

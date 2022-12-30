@@ -1,7 +1,12 @@
 .container
-  
+  .row
+    .col-lg-12
+      %h1 Logs
 
-  = turbo_stream_from "logs"
+  .row
+    .col-lg-12
 
-  #logs
-    = render partial: 'admin/logs/log', collection: @logs
+      = turbo_stream_from "logs"
+
+      #logs
+        = render partial: 'admin/logs/log', collection: @logs

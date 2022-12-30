@@ -9,4 +9,9 @@ class Admin::LogsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "logs index" do
+    get admin_logs_path(as: create(:user))
+    assert_response :success
+  end
+
 end
