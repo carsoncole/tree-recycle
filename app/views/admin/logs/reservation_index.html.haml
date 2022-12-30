@@ -1,0 +1,6 @@
+= turbo_frame_tag @reservation do
+  #reservation-log
+    - @logs.each do |log|
+      = log.message
+      = nice_date_time log.created_at
+      %br

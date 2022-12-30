@@ -1,6 +1,7 @@
-= turbo_frame_tag @reservation do
-  #reservation-log
-    - @logs.each do |log|
-      = log.message
-      = nice_date_time log.created_at
-      %br
+.container
+  
+
+  = turbo_stream_from "logs"
+
+  #logs
+    = render partial: 'admin/logs/log', collection: @logs
