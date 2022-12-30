@@ -12,7 +12,7 @@ class Reservation < ApplicationRecord
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
   enum :collected, { door_hanger: 1, cash: 2, check: 3 }
 
-  enum :heard_about_source, { newspaper: 8, 'Prior recycler, knew about it': 10, facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2,  roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
+  enum :heard_about_source, { word_of_mouth: 4, 'Prior recycler, knew about it': 10, roadside_sign: 3, christmas_tree_lot_flyer: 7, email_reminder_from_us: 5, facebook: 1, 'Safeway/Ace Hardware flyer': 6,    'Town & Country reader board': 9, nextdoor: 2, newspaper: 8, other: 99 }
 
   scope :pending, -> { where.not(status: ['archived', 'cancelled', 'unconfirmed'])}
   scope :unrouted, -> { where(route_id: nil) }
