@@ -1,5 +1,5 @@
 %article.log
-  .id
+  = link_to admin_reservation_path(log.reservation_id), class: 'id' do
     .name= truncate(log.reservation.name, length: 13, omission: '')
     .res-id= truncate(log.reservation.id, length: 8, omission: '')
   .message= log.message
