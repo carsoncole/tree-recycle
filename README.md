@@ -26,6 +26,19 @@ To install on Heroku;
 - Create a new Heroku app: `# heroku create -a example-app`;
 - From the directory of the app on your computer: `# git push heroku main`;
 
+#### PostgreSQL
+
+A PostgreSQL addon must enabled on Heroku for the database.
+
+#### Worker
+
+A worker addon must be enabled, to allow for the processing of the many jobs of sending emails, SMS's, and routing.
+
+#### Redis
+
+Optionally, a Redis addon must be enabled on Heroku to provide live logging in the Admin section. This is not required.
+
+
 #### Configuration
 
 On the Heroku Config Vars page, add the Rails master key for decrypting the credentials to `RAILS_MASTER KEY`.
@@ -38,7 +51,6 @@ To sign-in, you will need to create an admin user through the console.
 % heroku console
 > User.create(email: 'john.doe@example.com', password: [password])
 ```
-
 
 ### Local installation
 
