@@ -5,10 +5,18 @@
       display: inline-block;
     }
     .id {
+      font-weight: 500;
       background-color: #efefef;
-      padding: 0.1em 0.3em;
+      padding: 0.1em 0.5em;
       margin-right: 0.75em;
-      width: 9em;
+      .name, .res-id {
+        display: inline-block;
+        width: 8em;
+      }
+      .res-id {
+        text-align: right;
+        width: 5em;
+      }
     }
   }
 }

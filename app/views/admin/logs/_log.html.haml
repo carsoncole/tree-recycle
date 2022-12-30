@@ -1,5 +1,7 @@
 %article.log
-  .id= truncate(log.reservation.name, length: 13, omission: '')
+  .id
+    .name= truncate(log.reservation.name, length: 13, omission: '')
+    .res-id= truncate(log.reservation.id, length: 8, omission: '')
   .message= log.message
   = '|'
   .date= nice_short_date_time(log.created_at)
