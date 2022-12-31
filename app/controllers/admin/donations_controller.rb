@@ -14,6 +14,7 @@ class Admin::DonationsController < Admin::AdminController
   def new
     @reservation = Reservation.find(params[:reservation_id]) if params[:reservation_id]
     @donation = Donation.new
+    @donation.form = "cash_or_check"
   end
 
   def update
