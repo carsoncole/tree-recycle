@@ -46,7 +46,7 @@
           %tr
             %th Reservation
             %td
-              - if @reservation
+              - if @donation.reservation
                 = link_to @donation.reservation.name, admin_reservation_path(@donation.reservation)
               - else
                 No related Reservation
