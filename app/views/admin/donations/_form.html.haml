@@ -6,7 +6,8 @@
         - @donation.errors.full_messages.each do |message|
           %li= message
 
-  = f.hidden_field :reservation_id, value: @reservation&.id
+  - if @reservation
+    = f.hidden_field :reservation_id, value: @reservation&.id
   .mb-3
     = f.label :email, class: 'form-label'
     = f.text_field :email, class: 'form-control'

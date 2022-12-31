@@ -10,8 +10,8 @@ class DonationsMailer < ApplicationMailer
 
   def receipt_email
     @donation = params[:donation]
+    return unless @donation.amount.positive? || !@donation.is_receipt_email_sent
     @reservation = @donation.reservation
-    return if @donation.is_receipt_email_sent
     mail(to: @donation.email, subject: 'Thank you for your donation')
     @donation.update(is_receipt_email_sent: true) if setting.is_emailing_enabled
     @reservation.logs.create(message: 'Donation receipt email sent.') if @reservation

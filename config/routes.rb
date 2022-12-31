@@ -34,7 +34,6 @@ Rails.application.routes.draw do
   get '/sitemap.xml', to: 'sitemap#index', as: 'sitemap', :defaults => {:format => 'xml'}
 
   resources :reservations, except: [:index] do
-
     get 'address-verification', as: 'address_verification'
 
     resources :donations, only: %i[ new create ]
@@ -99,7 +98,7 @@ Rails.application.routes.draw do
     post '/marketing/send-email-1' => 'marketing#send_marketing_email_1', as: 'marketing_send_email_1'
     post '/marketing/send-email-2' => 'marketing#send_marketing_email_2', as: 'marketing_send_email_2'
     post '/marketing/reset-sent-campaigns' => 'marketing#reset_sent_campaigns', as: 'marketing_reset_sent_campaigns'
-    get '/marketing' => 'marketing#index', as: 'marketing'
+    get '/analytics' => 'analytics#index', as: 'analytics'
 
     post 'process-all-routes' => 'reservations#process_all_routes', as: 'process_all_routes'
     get 'map' => 'reservations#map', as: 'map'

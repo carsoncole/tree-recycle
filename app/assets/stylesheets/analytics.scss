@@ -1,7 +1,18 @@
-#marketing {
+#analytics {
   h2 {
-    font-size: 1.4em;
+    border-top: 1px solid #000;
+    text-transform: uppercase;
+    padding-top: 0.5em;
+    font-size: 1.6em;
     line-height: 1.5;
+    margin-bottom: 1em;
+    font-weight: 700;
+  }
+  h3 {
+    font-weight: 500;
+    font-size: 1.3em;
+    line-height: 1.5;
+    margin-bottom: 1em;
   }
 
   #heard-from-source-table {
@@ -30,5 +41,11 @@
     }
   }
 
-
+  #routes-table {
+    td {
+      text-align: right;
+    }
+  }
 }
+
+

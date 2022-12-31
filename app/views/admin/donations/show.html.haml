@@ -9,20 +9,73 @@
           Edit
 
   .row
-    .col-lg-7
+    .col-lg-6
       .table-responsive
-        %table.table#donation-table
-          - @donation.attributes.sort.each do | key, value |
-            %tr 
-              %th= key.humanize.capitalize
-              %td
-                - case key
-                - when 'receipt_url'
-                  = link_to value, value, target: '_blank' if value.present?
-                - when 'amount'
-                  = number_to_currency value
-                - when 'reservation_id'
-                  = link_to value, admin_reservation_path(reservation: @donation.reservation)
-                - else
-                  = value
+        %table.table.donation-table
+          %tr 
+            %th Type
+            %td= @donation&.form&.humanize&.titleize
+          %tr 
+            %th Amount
+            %td= number_to_currency @donation.amount
+          %tr 
+            %th Email
+            %td= @donation.email
+          %tr 
+            %th Receipt email sent?
+            %td
+              - if @donation.is_receipt_email_sent?
+                %i.bi.bi-check-lg
+              - else
+                %i.bi.bi-x-lg
+              - if @donation.email.present?
+                = link_to admin_donation_send_donation_receipt_path(donation_id: @donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will send a donation receipt.' } do
+                  %i.bi.bi-send
+          %tr 
+            %th Created at
+            %td= nice_date_time(@donation.created_at)
+          %tr 
+            %th Updated at
+            %td= nice_date_time(@donation.updated_at)
+
+  .row
+    .col-lg-6
+      %h2 Reservation
+      .table-responsive
+        %table.table.donation-table
+          %tr
+            %th Reservation
+            %td
+              - if @reservation
+                = link_to @donation.reservation.name, admin_reservation_path(@donation.reservation)
+              - else
+                No related Reservation
+
+  .row
+    .col-lg-6
+      %h2 Stripe
+      .table-responsive
+        %table.table.donation-table
+          %tr 
+            %th Payment Intent ID
+            %td= @donation.stripe_payment_intent_id
+          %tr 
+            %th Customer name
+            %td= @donation.customer_name
+          %tr 
+            %th Payment status 
+            %td= @donation.payment_status
+          %tr 
+            %th Description
+            %td= @donation.description
+          %tr 
+            %th Last 4
+            %td= @donation.last4
+          %tr 
+            %th Exp Month
+            %td= @donation.exp_month
+          %tr 
+            %th Exp Year
+            %td= @donation.exp_year
+
 

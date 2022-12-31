@@ -1,0 +1,84 @@
+#analytics.container
+  .row
+    .col-lg-12
+      %h1
+        %i.bi.bi-graph-up
+        Analytics
+
+  .row
+    .col-lg-4
+      .row.mb-5
+        .col-lg-12
+          %h2 Advertising
+
+          %h3 Where did you hear about Tree Recycle?
+          - heard_about_source_hash = Reservation.not_archived.group(:heard_about_source).count
+          = pie_chart Hash[heard_about_source_hash.map {|key, value| [key&.humanize&.capitalize, value] }]
+
+
+          %table.table#heard-from-source-table
+
+            - @sources.each do |source|
+              %tr
+                %th= source[0].humanize.capitalize
+                %td= Reservation.where(heard_about_source: source[0]).count
+
+      .row.mb-3
+        .col-lg-12
+          %h2 Donations
+      .row.mb-5
+        .col-lg-12
+          = column_chart [ ["Online", Donation.sum(:amount).to_i]], prefix: "$", title: 'Total Donations', thousands: ",", width: '400px'
+
+      .row.mb-5
+        .col-lg-12
+          %table.table#donation-averages
+            %tr
+              %th Total # donations
+              %td.count= @donation_count
+            %tr
+              %th Total donations
+              %td.count= number_to_currency(@total_donations)
+            %tr
+              %th Median Online donation
+              %td.count= number_to_currency(@median_online)
+            %tr
+              %th Average Online donation
+              %td.count= number_to_currency(@average_online_donation)
+
+
+      .row.mb-5
+        .col-lg-12
+          = pie_chart Hash[@donation_counts.map {|type, count| [type&.humanize&.capitalize || 'No Selection', count] }]
+
+    .col-lg-7.offset-lg-1
+      .row
+        .col-lg-12
+          %h2 Reservations
+
+      .row.mb-5
+        .col-lg-12
+          %h3 Reservations by day
+          = line_chart Reservation.not_archived.group_by_day(:created_at).count
+      .row.mb-5
+        .col-lg-12
+          %h3 Cumulative reservations
+          - t = 0
+          - values = Reservation.not_archived.group_by_day(:created_at).count.each_with_object({}) { |(k, v), a| t += v; a[k] = t }
+          = line_chart values 
+
+      .row.mb-5
+        .col-lg-12
+          %h2 Pickups
+          %h3 Pickups by Zone
+          - zone_hash = @zone_counts
+          = pie_chart Hash[zone_hash.map {|key, value| [key&.humanize&.capitalize, value] }]
+
+      .row.mb-5
+        .col-lg-6
+          %h3 Routes
+          %table.table#routes-table
+            - @route_counts.each do |route, count|
+              %tr 
+                %th= route
+                %td= count

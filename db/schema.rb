@@ -15,6 +15,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_31_004954) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "role", ["viewer", "editor", "administrator"]
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
@@ -67,11 +71,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_31_004954) do
     t.string "name"
     t.string "phone"
     t.string "email"
-    t.bigint "zone_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_leader"
-    t.index ["zone_id"], name: "index_drivers_on_zone_id"
+    t.bigint "zone_id"
   end
 
   create_table "logs", force: :cascade do |t|

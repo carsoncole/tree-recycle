@@ -1,21 +1,4 @@
 class Admin::MarketingController < Admin::AdminController
-  def index
-    @sources = Reservation.not_archived.heard_about_sources
-    @donation_counts = Reservation.not_archived.group(:donation).count
-    @reservations_count = Reservation.not_archived.count
-    @donation_count = Donation.joins(:reservation).where.not("reservations.status IN(0, 4, 99)").count
-    @total_donations = Donation.joins(:reservation).where.not("reservations.status IN (0,4,99)").sum(:amount)
-    donations_ordered = Donation.joins(:reservation).order(:amount).where.not("reservations.status IN (0,4,99)")
-    @median = if @donation_count == 0
-        0
-      elsif @donation_count.odd?
-        donations_ordered[(@donation_count/2.0).ceil].amount
-      else
-        (donations_ordered[ (@donation_count/2.0).ceil ].amount + donations_ordered[ (@donation_count/2.0).floor-1 ].amount)/ 2.0
-      end
-    @average_donation = @total_donations / @donation_count
-  end
-
   def send_marketing_email_1
     if current_user.administrator?
       system "rake marketing:send_email_1_to_archived_customers"

@@ -136,7 +136,6 @@ body#admin {
   }
 }
 
-
 #reservations {
   section.menu {
     margin-bottom: 2em;
@@ -181,12 +180,24 @@ body#admin {
 }
 
 #donation {
-  #donation-table {
+  .donation-table {
+    margin-bottom: 4em;
     th {
       width: 20em;
     }
     td {
       text-align: right;
+    }
+  }
+}
+
+#donations-table {
+  th, td {
+    &.name {
+      min-width: 11em;
+    }
+    &.email {
+      width: 9em;
     }
   }
 }

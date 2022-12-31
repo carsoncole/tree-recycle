@@ -230,7 +230,7 @@
                   - @donations.each do |donation|
                     %tr
                       %th= link_to 'Donation', admin_donation_path(donation)
-                      %td= donation.form.humanize.titleize
+                      %td= donation&.form&.humanize&.titleize
                       %td= donation.payment_status.capitalize if donation.payment_status
                       %td= nice_short_date_time(donation.created_at)
                       %td

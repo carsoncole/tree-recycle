@@ -33,14 +33,18 @@ class Admin::DonationsController < Admin::AdminController
     @donation = Donation.new(donation_params)
     @donation.payment_status = 'paid'
 
-    if @donation.save
-      if @donation.reservation_id.present?
-        redirect_to admin_reservation_url(@donation.reservation_id)
+    if current_user.editor? || current_user.administrator?
+      if @donation.save
+        if @donation.reservation_id.present?
+          redirect_to admin_reservation_url(@donation.reservation_id)
+        else
+          redirect_to admin_donations_path
+        end
       else
-        redirect_to admin_donations_path
+        render :new, status: :unprocessable_entity
       end
     else
-      render :new, status: :unprocessable_entity
+      redirect_to admin_donations_url, alert: 'Unauthorized. Editor or Administrator access is required', status: :unauthorized
     end
   end
 
