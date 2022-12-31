@@ -3,6 +3,11 @@
     .col-lg-12
       %h1 Donation
 
+      %p
+        = link_to edit_admin_donation_path(@donation) do
+          %i.bi.bi-pencil-fill
+          Edit
+
   .row
     .col-lg-7
       .table-responsive
@@ -16,6 +21,8 @@
                   = link_to value, value, target: '_blank' if value.present?
                 - when 'amount'
                   = number_to_currency value
+                - when 'reservation_id'
+                  = link_to value, admin_reservation_path(reservation: @donation.reservation)
                 - else
                   = value
 

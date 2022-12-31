@@ -5,6 +5,11 @@
         %i.bi.bi-credit-card-fill
         Donations
 
+      .text-right
+        = link_to new_admin_donation_path do
+          %i.bi.bi-plus-lg
+          New
+
       %p.text-end
         %span.fw-bold Total donated:
         = number_to_currency(Donation.sum(:amount))
@@ -18,6 +23,7 @@
             %tr
               %th
               %th.name Name
+              %th
               %th Amount
               %th Status
               %th
@@ -25,7 +31,10 @@
             - @donations.each do |donation|
               %tr
                 %td= link_to donation.id, [:admin, donation]
-                %td.name= link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
+                %td.name
+                  - if donation.reservation
+                    = link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
+                %td= donation&.form&.humanize&.titleize
                 %td= number_to_currency donation.amount
                 %td= donation&.status&.capitalize
                 %td.text-end= nice_short_date_time(donation.created_at)

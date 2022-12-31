@@ -74,7 +74,7 @@ Rails.application.routes.draw do
     resources :drivers
     get 'logs' => 'logs#index', as: :logs
     resources :messages, only: [:index, :create, :destroy ]
-    resources :donations, only: [ :index, :show ] do
+    resources :donations do
       post 'send-donation-receipt' => 'donations#send_donation_receipt', as: 'send_donation_receipt'
     end
     resources :settings, only: [ :index, :edit, :update ]
@@ -87,6 +87,7 @@ Rails.application.routes.draw do
     delete 'reservations/destroy-unconfirmed' => 'reservations#destroy_unconfirmed', as: 'destroy_unconfirmed_reservations'
     post 'reservations/destroy-reservations' => 'reservations#destroy_reservations', as: 'destroy_reservations'
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
+      resources :donations
       get 'logs' => 'logs#reservation_index', as: 'logs'
       post 'process-route' => 'reservations#process_route', as: 'process_route'
       post 'process-geocode' => 'reservations#process_geocode', as: 'process_geocode'

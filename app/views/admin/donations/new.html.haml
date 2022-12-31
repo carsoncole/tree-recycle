@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-lg-6
+      .fw-bold= link_to @reservation.name, admin_reservation_path(@reservation) if @reservation
+      %h1 New Cash or Check Donation
+
+      - unless @reservation
+        %p.text-muted For entering non-reservation-related donations. Any donations related to a pickup should be entered through a reservation.
+
+      %p.fw-bold An email receipt will be sent if an email is provided
+
+  .row
+    .col-lg-6
+      = render 'form'

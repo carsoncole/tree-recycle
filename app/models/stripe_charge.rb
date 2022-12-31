@@ -1,4 +1,4 @@
-class StripeCharge
+ class StripeCharge
 
   def initialize(event)
     @stripe_event = event.data.object

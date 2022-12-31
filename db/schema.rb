@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_29_231328) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_31_004954) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_231328) do
     t.string "last4"
     t.string "exp_month"
     t.string "exp_year"
+    t.integer "form"
     t.index ["reservation_id"], name: "index_donations_on_reservation_id"
   end
 
