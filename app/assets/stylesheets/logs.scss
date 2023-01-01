@@ -1,5 +1,7 @@
 #logs {
   article.log {
+    border-radius: 4px;
+    padding: 0.2em 0.6em;
     margin-bottom: 1.5em;
     .message, .date, .id {
       display: inline-block;

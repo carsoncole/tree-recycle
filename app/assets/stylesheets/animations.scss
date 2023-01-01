@@ -1,0 +1,11 @@
+/* The animation code */
+@keyframes fade {
+  from {background-color: #999999;}
+  to {background-color: #fff;}
+}
+
+/* The element to apply the animation to */
+article.log {
+  animation-name: fade;
+  animation-duration: 6s;
+}
