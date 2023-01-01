@@ -25,6 +25,10 @@
           = surround("(",")") do 
             = @count_not_geocoded
           %br
+          = link_to "Manually Routed", admin_reservations_path(routed: false), class: 'link'
+          = surround("(",")") do 
+            = @count_not_routed
+          %br
           = link_to "Not Polygon Routed", admin_reservations_path(not_polygon_routed: true), class: 'link'
           = surround("(",")") do 
             = @count_not_polygon_routed

@@ -11,6 +11,8 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(created_at: :desc))
     elsif params[:geocoded]
       @pagy, @reservations = pagy(Reservation.not_archived.where(is_geocoded: false).order(created_at: :desc))
+    elsif params[:routed]
+      @pagy, @reservations = pagy(Reservation.not_archived.where(is_routed: false).order(created_at: :desc))
     elsif params[:not_polygon_routed]
       @pagy, @reservations = pagy(Reservation.not_archived.not_polygon_routed.order(created_at: :desc))      
     elsif params[:cancelled]
@@ -35,6 +37,7 @@ class Admin::ReservationsController < Admin::AdminController
     @count_unconfirmed = Reservation.unconfirmed.count
     @count_not_polygon_routed = Reservation.not_archived.not_polygon_routed.count
     @count_not_geocoded = Reservation.not_archived.where(is_geocoded: false).count
+    @count_not_routed = Reservation.not_archived.where(is_routed: false).count
   end
 
   def edit
