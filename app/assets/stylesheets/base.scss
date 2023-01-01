@@ -608,3 +608,10 @@ nav.navbar {
   }
 }
 
+.admin-notes {
+  display: inline-block;
+  background-color: lighten($scout-red, 15%);
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  color: #fff;
+}

@@ -56,6 +56,11 @@
           %tr
             %th Pickup notes
             %td= @reservation.notes
+        - if @reservation.admin_notes.present?
+          %tr 
+            %th Admin Notes
+            %td
+              .admin-notes= @reservation.admin_notes
         %tr
           %th Email
           %td= mail_to @reservation.email

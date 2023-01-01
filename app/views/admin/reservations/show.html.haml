@@ -73,6 +73,11 @@
                     - else
                       No special instructions
 
+                %tr
+                  %th Admin Notes
+                  %td
+                    - if @reservation.admin_notes.present?
+                      .admin-notes= @reservation.admin_notes
 
         %section#contact-details
           .row
