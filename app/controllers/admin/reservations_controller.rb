@@ -37,7 +37,7 @@ class Admin::ReservationsController < Admin::AdminController
     @count_unconfirmed = Reservation.unconfirmed.count
     @count_not_polygon_routed = Reservation.not_archived.not_polygon_routed.count
     @count_not_geocoded = Reservation.not_archived.where(is_geocoded: false).count
-    @count_not_routed = Reservation.not_archived.where(is_routed: false).count
+    @count_not_routed = Reservation.not_archived.unrouted.count
   end
 
   def edit
