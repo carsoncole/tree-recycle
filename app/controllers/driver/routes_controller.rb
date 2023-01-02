@@ -15,6 +15,8 @@ class Driver::RoutesController < Driver::DriverController
 
   def show
     @route = Route.find(params[:id])
+    @drivers = @route.drivers
+    @reservations = @route.reservations.pending
     flash[:notice] = "Reservation status changes are NOT enabled." unless helpers.setting.is_driver_site_enabled?
     respond_to do |format|
       format.html

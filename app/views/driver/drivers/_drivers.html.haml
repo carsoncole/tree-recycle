@@ -37,7 +37,10 @@
             - Driver.joins(driver_routes: [:route] ).where("routes.zone_id = ?",zone.id).uniq.each do |driver|
 
               %tr
-                %th.name= driver.name
+                %th.name
+                  - name = driver.name
+                  - name += ' (Leader)' if driver.is_leader?
+                  = name
                 %td.routes= driver.routes.order(:name).map {|r| r.name }.join(", ")
                 %td.phone
                   - if driver.phone.present?

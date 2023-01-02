@@ -6,7 +6,7 @@
           .zone= route.zone.name
           .route= route.name
           .drivers
-            = route.drivers.map{|d| d.name + ' (' + d.phone + ')' }.join(", ")
+            = route.drivers.map{|d| d.name + ' (' + d.phone + ')' +  (d.is_leader? ? ' LEADER' : '') }.join(", ")
             Printed:
             = Time.now.strftime('%H:%M %F')
         %tr
