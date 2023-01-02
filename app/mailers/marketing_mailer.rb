@@ -35,7 +35,7 @@ class MarketingMailer < ApplicationMailer
     return if @reservation.no_emails? || !setting.is_emailing_enabled
     return if @reservation.is_marketing_email_2_sent?
     return unless @reservation.archived? # don't send to current reservations
-    mail(to: @reservation.email, subject: "Tree recycling last reminder for #{nice_long_date(setting.pickup_date_and_time)}")
+    mail(to: @reservation.email, subject: "Last call! Tree recycling #{nice_long_date_short(setting.pickup_date_and_time)}")
     @reservation.logs.create(message: 'Marketing email 2 sent.')
     @reservation.update(is_marketing_email_2_sent: true)
   end
