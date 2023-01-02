@@ -36,7 +36,9 @@
                     .text Missing
               %td.street= link_to reservation.street, driver_reservation_path(reservation)
 
-              %td.notes= reservation.notes
+              %td.notes
+                .reg-notes= reservation.notes
+                .driver-admin-notes= reservation.admin_notes
               %td.donation
                 .d-print-none
                   - if reservation.donation

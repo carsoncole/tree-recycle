@@ -118,13 +118,14 @@
                   %td#route-name
                     .mb-2
                       - if @reservation&.route&.zone
-                        = link_to @reservation.route.zone.name, admin_zone_path(@reservation.route.zone)
+                        = @reservation.route.zone.name
                       - else
                         No Zone selected
-                      \|
+                      \-
                       - if @reservation.route
-                        = link_to @reservation&.route&.name, admin_route_map_path(@reservation.route)
-                        %i.bi.bi-map-fill
+                        = link_to admin_map_path(@reservation.route, route_id: @reservation.route.id) do 
+                          = @reservation&.route&.name
+                          %i.bi.bi-map-fill
                       - else
                         No Route set
                       - if !@reservation.is_routed

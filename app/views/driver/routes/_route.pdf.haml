@@ -1,0 +1,94 @@
+#driver-route.driver-route.pdf
+  .table-responsive
+    %table.table.driver-routes
+      %thead
+        .header
+          .zone= route.zone.name
+          .route= route.name
+          .drivers
+            = route.drivers.map{|d| d.name + ' (' + d.phone + ')' }.join(", ")
+            Printed:
+            = Time.now.strftime('%H:%M %F')
+        %tr
+          %th.status ID
+          %th Address
+
+          %th.notes Notes / Admin Notes
+          %th Donation
+          %th.name Name/Phone
+      %tbody
+        - route.reservations.each do |reservation|
+          %tr
+            %td.status
+              .id= route.reservations.index(reservation) + 1
+              - if reservation.picked_up?
+                .selection
+                  %i.bi.bi-check-square
+                  .status Picked Up
+              - else
+                .selection
+                  %i.bi.bi-square
+                  .status Picked Up
+              .selection
+                %i.bi.bi-square
+                .status Missing
+            %td.street= reservation.street
+
+            %td.notes
+              - if reservation.notes.present?
+                .reg-notes= reservation.notes
+              - if reservation.admin_notes.present?
+                .driver-admin-notes= reservation.admin_notes
+            %td.donation
+              - if reservation.online_donation?
+                .selection
+                  %i.bi.bi-check-square
+                  .status Online
+              - else 
+                - if reservation.cash_or_check_donation?
+                  .selection
+                    %i.bi.bi-check-square
+                    .status Cash/Check $______
+                - else
+                  .selection
+                    %i.bi.bi-square
+                    .status Cash/Check $______
+                .selection
+                  %i.bi.bi-square.clear
+                  .status Door hanger
+
+
+            %td.name.smaller
+              = reservation.name
+              %br
+              = reservation.phone
+
+  #notes
+    %h1
+      Pickup notes
+      \|
+      = route.zone.name
+      \|
+      = route.name
+    %h2
+      Donations
+      .small-text Please note all donations. Donations will receive an email receipt.
+    %table.table.notes
+      - (1..5).each do
+        %tr 
+          %td.id
+            ID or email
+          %td.form
+            check / cash (circle one)                    
+          %td.amount
+            amount
+
+    %table.table.notes
+      - (1..5).each do
+        %tr                 
+          %td.id
+            ID or email
+          %td.form 
+            check / cash (circle one)
+          %td.amount
+            amount

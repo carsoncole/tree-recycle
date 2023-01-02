@@ -60,7 +60,7 @@ Rails.application.routes.draw do
     resources :reservations, only: %i( update show ) do
       get 'map' => 'reservations#map', as: 'map'
     end
-    resources :routes, only: %i( show )
+    resources :routes, only: %i( show index )
     resources :drivers, only: %i( index show )
     get '/routing' => 'zones#index', as: 'routing'
     get '/zones' => 'zones#index', as: 'zones'

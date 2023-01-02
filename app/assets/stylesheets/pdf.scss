@@ -1,6 +1,6 @@
 .driver-route.pdf {
   font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  font-size: 1.1em;
+  font-size: 14px;
 
 
   .header {
@@ -66,28 +66,97 @@
           font-size: 1.8em;
         }
       }
+      .id {
+        display: inline-block;
+        color: #aaa;
+      }
 
-      &.buttons, &.donation {
+      &.status, &.donation {
         font-weight: 800;
         text-transform: uppercase;
       }
-      &.buttons {
-        width: 285px;
+      &.status {
+        width: 300px;
       }
       &.street {
-        width: 250px;
+        width: 240px;
         font-weight: 800;
         vertical-align: middle;
       }
       &.donation {
-        width: 250px;
+        width: 240px;
       }
       &.notes {
-        width: 250px;
+        font-size: 0.9em;
+        .reg-notes, .driver-admin-notes {
+          width: 30em;
+          display: inline-block;
+          white-space: wrap;
+        }
+        .driver-admin-notes {
+          clear: both;
+          padding: 0.2em 0.7em;
+          border-radius: 3px;
+          background-color: lighten(#000000, 20%);
+          color: #fff;
+          font-weight: 600;
+        }
       }
       &.name {
         text-align: right;
         width: 165px;
+      }
+    }
+  }
+  #notes {
+    page-break-before: always;
+    p {
+      font-size: 0.9em;
+    }
+    margin-top: 3em;
+    h1, h2 {
+      margin-bottom: 0.5em;
+    }
+    h2 {
+      .small-text {
+        font-size: 0.6em;
+        color: #bbb;
+        display: inline-block;
+      }
+    }
+    h1 {
+      font-size: 1.5em;
+    }
+    h2 {
+      font-size: 1.2em;
+    }
+    table.table.notes {
+      width: 40%;
+      margin-bottom: 3em;
+      float: left;
+      margin-right: 2em;
+      border-collapse: collapse;
+      tr {
+        
+        th, td {
+          font-size: 16px;
+          padding: 0.6em;
+          border-bottom: 1px solid #000;
+          border-left: 1px solid #000;
+        }
+        td {
+          color: #ccc;
+          &.id {
+            width: 10em;
+          }
+          &.amount {
+            width: 6em;
+          }
+          &.form {
+            width: 12em;
+            color: #333333;
+          }
+        }
       }
     }
   }

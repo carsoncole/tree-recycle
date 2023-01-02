@@ -153,15 +153,24 @@ body#driver {
       vertical-align: middle;
       line-height: 1.4;
     }
-    td {
-
-    }
     th, td {
       padding: 0.9em 0.6em;
       &.notes {
-        min-width: 29em;
+        font-size: 0.8em;
+        min-width: 30em;
         white-space: wrap;
-
+        .reg-notes, .admin-notes {
+          display: inline-block;
+          font-size: 0.8em;
+        }
+        .driver-admin-notes {
+          clear: both;
+          padding: 0.1em 0.3em;
+          border-radius: 3px;
+          background-color: lighten(#000000, 20%);
+          color: #fff;
+          font-weight: 500;
+        }
       }
       &.name {
         min-width: 11em;
