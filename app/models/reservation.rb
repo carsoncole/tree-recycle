@@ -108,20 +108,6 @@ class Reservation < ApplicationRecord
     end
   end
 
-  # sends hello email to ARCHIVED reservations that have not been previously sent this email.
-  def self.send_hello_email!
-    archived.each do |archived_reservation|
-      UserMailer.with(reservation: archived_reservation).hello_email.deliver_later
-    end
-  end
-
-  # sends last call email to ARCHIVED reservations that have not been previously sent this email.
-  def self.send_last_call_email!
-    archived.each do |archived_reservation|
-      UserMailer.with(reservation: archived_reservation).last_call_email.deliver_later
-    end
-  end
-
   def self.destroy_all_archived!
     Reservation.archived.destroy_all
   end

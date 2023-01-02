@@ -97,6 +97,7 @@ Rails.application.routes.draw do
 
     post '/marketing/send-email-1' => 'marketing#send_marketing_email_1', as: 'marketing_send_email_1'
     post '/marketing/send-email-2' => 'marketing#send_marketing_email_2', as: 'marketing_send_email_2'
+    post '/send-pickup-reminders' => 'reservations#send_pickup_reminders', as: 'send_pickup_reminders'
     post '/marketing/reset-sent-campaigns' => 'marketing#reset_sent_campaigns', as: 'marketing_reset_sent_campaigns'
     get '/analytics' => 'analytics#index', as: 'analytics'
 

@@ -15,7 +15,7 @@ class Admin::AnalyticsController < Admin::AdminController
       @median_online = if @donation_count == 0
         0
       elsif @donation_count.odd?
-        donations_ordered[(@donation_online_count/2.0).ceil].amount
+        donations_ordered[(@donation_online_count/2.0).ceil]&.amount
       else
         (donations_ordered[ (@donation_online_count/2.0).ceil ].amount + donations_ordered[ (@donation_online_count/2.0).floor-1 ].amount)/ 2.0
       end

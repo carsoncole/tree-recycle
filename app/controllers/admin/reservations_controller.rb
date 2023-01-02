@@ -1,5 +1,5 @@
 class Admin::ReservationsController < Admin::AdminController
-  before_action :set_reservation, except: %i[ new index search process_all_routes post_event_archive destroy_all_archived destroy_unconfirmed destroy_all destroy_reservations upload map]
+  before_action :set_reservation, except: %i[ new index search process_all_routes post_event_archive destroy_all_archived destroy_unconfirmed destroy_all destroy_reservations upload map send_pickup_reminders]
 
 
   def index
@@ -48,6 +48,9 @@ class Admin::ReservationsController < Admin::AdminController
       if params[:send_confirmed_reservation_email]
         ReservationsMailer.with(reservation: @reservation).confirmed_reservation_email.deliver_later
         redirect_to admin_reservation_url(@reservation), notice: 'Confirmed reservation email queued for sending. The email will not be sent if the reservation is flagged as already having been sent this email.'
+      elsif params[:send_pickup_reminder_email]
+        ReservationsMailer.with(reservation: @reservation).pick_up_reminder_email.deliver_later
+        redirect_to admin_reservation_url(@reservation), notice: 'Pick-up reminder email queued for sending. The email will not be sent if the reservation is flagged as already having been sent this email.'
       elsif @reservation.update(reservation_params)
         redirect_to admin_reservation_url(@reservation)
       else
@@ -109,6 +112,11 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.not_archived.where("name ILIKE ? OR street ILIKE ? OR email ILIKE ?", "%" + Reservation.sanitize_sql_like(params[:search]) + "%", "%" + Reservation.sanitize_sql_like(params[:search]) + "%", "%" + Reservation.sanitize_sql_like(params[:search]) + "%"))
     end
     render :index
+  end
+
+  def send_pickup_reminders
+    Reservation.pending.order(:email).where(is_pickup_reminder_email_sent: false).each { |r| ReservationsMailer.with(reservation: r).pick_up_reminder_email.deliver_later }
+    redirect_to admin_settings_path(anchor: 'email'), notice: "Pickup reminder emails have been queued, with a batch size of #{ helpers.setting.email_batch_quantity } "
   end
 
   def process_route
