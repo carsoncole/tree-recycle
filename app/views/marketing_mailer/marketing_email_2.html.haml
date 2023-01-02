@@ -46,7 +46,7 @@
               - if setting.pickup_date_and_end_time.present?
                 The deadline for reserving a pickup is
                 = succeed(".") do
-                  = setting.pickup_date_and_end_time.strftime("%B %e at %l:%M %p")
+                  = setting.sign_up_deadline_at.strftime("%B %e at %l:%M %p")
               If you have any questions, please contact us at
               = succeed(", ") do 
                 = mail_to setting.contact_email
