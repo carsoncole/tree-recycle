@@ -11,7 +11,7 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(created_at: :desc))
     elsif params[:geocoded]
       @pagy, @reservations = pagy(Reservation.not_archived.where(is_geocoded: false).order(created_at: :desc))
-    elsif params[:routed]
+    elsif params[:is_routed]
       @pagy, @reservations = pagy(Reservation.not_archived.where(is_routed: false).order(created_at: :desc))
     elsif params[:not_polygon_routed]
       @pagy, @reservations = pagy(Reservation.not_archived.not_polygon_routed.order(created_at: :desc))      
