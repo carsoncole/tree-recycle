@@ -17,10 +17,10 @@
           %th Donation
           %th.name Name/Phone
       %tbody
-        - route.reservations.each do |reservation|
+        - route.reservations.pending.each do |reservation|
           %tr
             %td.status
-              .id= route.reservations.index(reservation) + 1
+              .id= route.reservations.pending.index(reservation) + 1
               - if reservation.picked_up?
                 .selection
                   %i.bi.bi-check-square
