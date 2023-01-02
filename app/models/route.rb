@@ -33,7 +33,7 @@ class Route < ApplicationRecord
 
   def contains?(lat, lon)
     return false unless polygon?
-    polygon_array = points.map {|point| Geokit::LatLng.new(point.latitude, point.longitude)}
+    polygon_array = points.order(:order).map {|point| Geokit::LatLng.new(point.latitude, point.longitude)}
     polygon = Geokit::Polygon.new(polygon_array)
     point = Geokit::LatLng.new(lat, lon)
     polygon.contains?(point)
