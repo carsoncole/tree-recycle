@@ -28,6 +28,7 @@
   }
 
   table.table.driver-routes {
+    border-collapse: collapse;
     thead {
       color: #aaa;
       font-size: 0.7em;
@@ -43,20 +44,20 @@
       }
       th, td {
         border-top: 1px solid #999; 
-        height:  3em; 
+        min-height:  2.7em; 
       }
     }
 
     th, td {
       text-align: left;
       vertical-align: middle;
-      padding: 0.5em 0.8em 0.5em 0em;
+      padding: 0.5em 0.8em 0.4em 0em;
 
       .selection {
         vertical-align: middle;
         display: inline-block;
         margin-right: 0.25em;
-        line-height: 1.8em;
+        line-height: 1.7em;
         .status {
           vertical-align: top;
           display: inline-block;
@@ -75,15 +76,20 @@
         font-weight: 800;
         text-transform: uppercase;
       }
+      &.street, &.notes, &.name {
+        background-color: lighten(#333, 70%);
+      }
       &.status {
         width: 300px;
       }
       &.street {
+        padding-left: 0.3em;
         width: 240px;
         font-weight: 800;
         vertical-align: middle;
       }
       &.donation {
+        padding-left: 0.3em;
         width: 240px;
       }
       &.notes {

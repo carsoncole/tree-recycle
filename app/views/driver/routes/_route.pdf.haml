@@ -10,12 +10,12 @@
             Printed:
             = Time.now.strftime('%H:%M %F')
         %tr
-          %th.status ID
+          %th ID
           %th Address
 
-          %th.notes Notes / Admin Notes
+          %th Notes / Admin Notes
           %th Donation
-          %th.name Name/Phone
+          %th Name/Phone
       %tbody
         - route.reservations.pending.each do |reservation|
           %tr
