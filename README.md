@@ -1,49 +1,72 @@
 # Tree Recycle
 
-Host and manage a tree recycling fundraiser website with Tree Recycle. It does all of the following:
+With Tree Recycle, you can host and manage a tree recycling fundraiser website with Tree Recycle, which can do the following:
 
-- customizable public website;
-- accepts tree recycle pick-up reservations with addresses;
-- maps addresses into pre-defined routes for easy pickup;
-- accepts online donations;
-- sends reservation confirmation, donation receipts and marketing emails.
+- Provide a customizable, SEO-friendly, public website;
+- Take tree recycle pick-up reservations;
+- Organize pick-up addresses within your pre-defind Zones and Routes;
+- Take online donations utilizing Stripe;
+- Archive function to save emails for subsequent year marketing;
+- Send out email reservation confirmations, donation receipts and marketing emails.
 
-You can view our Troop's site at [https://treerecycle.net](https://treerecycle.net).
+Our Troop uses this application and it can be viewed at [https://treerecycle.net](https://treerecycle.net).
 
+## What is Required?
+
+Tree Recycle has been designed to be simple to use and install on [Heroku](https://heroku.com/), which has a simple UI, a straight-forward process, and is hosted on AWS, all for a reasonable price. Once installed, the application is designed for continuous running from year-to-year, carrying over reservations and their emails for marketing to prior year recyclers.
 
 ## Installation
 
-This application has been configured to run on [Heroku](https://heroku.com/), but is easily modified to work on any cloud provider. 
+This application has been configured to run on [Heroku](https://heroku.com/), but could be modified to work on any cloud provider.  Heroku is a good choice as it provides a simple interface for managing applications, and the deployment process is straight-forward.
 
-### Heroku
+### 1. Heroku
 
-To install on Heroku;
+To install on Heroku:
 
 - Create an account on Heroku.com;
-- Download the Heroku CLI, to enable the uploading of code and management of the server from your own computer;
+- Download the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), which will be used for connecting to, and deploying the application code to Heroku;
 - Install git on your computer;
-- Download the code via git: `# git clone https://github.com/carsoncole/tree-recycle.git`
-- Create a new Heroku app: `# heroku create -a example-app`;
-- From the directory of the app on your computer: `# git push heroku main`;
+- Download the code via git, and change to the code directory: 
+  ```
+  git clone https://github.com/carsoncole/tree-recycle.git
+  cd tree-reycle
+  ```
 
-#### PostgreSQL
+- Add a master.key to `/config/master.key`
 
-A PostgreSQL addon must enabled on Heroku for the database.
+  ```
+  EDITOR=vim rails credentials:edit
+  ```
 
-#### Worker
+This will create your initial credentials files that will hold all of your application secrets. Copy `/config/credentials_sample.yml` as your initial template. Exit the credentials file with `esc-:-q`. This will save the file and then key for decrypting it into `config/master.key`. Copy this key and add it to your Heroku vars (see App Credentials below) with a key value of `RAILS_MASTER_KEY`. This key is what Heroku will use to access the credentials file.
 
-A worker addon must be enabled, to allow for the processing of the many jobs of sending emails, SMS's, and routing.
+- Create a new Heroku app.
+  ```
+  heroku create -a example-app`;
+  ```
 
-#### Redis
+  You should now see the appplication listed in your Heroku account.
 
-Optionally, a Redis addon must be enabled on Heroku to provide live logging in the Admin section. This is not required.
+- Push the application code on your computer to Heroku.
 
+  ```
+  git push heroku main
+  ```
+  There will be errors as a few more things need to be set up on Heroku to fully function.
+
+#### 2. Enable PostgreSQL
+
+A PostgreSQL addon must enabled on Heroku as the database. On Heroku, search the addons for 'Heroku Postgres' and add it to your account. This will addon will serve as your database. You can select the least expensive plan as you have the ability to upsize at a later time.
+
+#### 3. Enable a Worker
+
+The application does a lot of bacground work in the handling of emails and routing, so you will need a Worker enabled. Under Resources, there should a a worker listed, which you will need to enable.
+
+#### 4. Enable Redis
+
+A Redis addon must be enabled on Heroku to provide live logging in the Admin section. This is required as the appliation will not function without it. Search the addons for 'Heroku Data for Redis' and at it with the least expensive plan.
 
 #### Configuration
-
-On the Heroku Config Vars page, add the Rails master key for decrypting the credentials to `RAILS_MASTER KEY`.
-
-The included `Procfile` has instructions to migrate the database on every deploy.
 
 To sign-in, you will need to create an admin user through the console.
 
