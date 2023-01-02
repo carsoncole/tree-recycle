@@ -46,7 +46,7 @@ class Reservation < ApplicationRecord
   end
 
   def self.process_all_routes!
-    all.each do |r|
+    not_archived.each do |r|
       r.route_reservation
       r.save
     end
