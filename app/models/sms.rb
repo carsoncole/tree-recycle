@@ -29,7 +29,7 @@ class Sms
 
       rescue => exception
         if Rails.env.production?
-          Bugsnag.notify(exception)
+          Rollbar.log('error', e)
         else 
           exception
         end

@@ -55,7 +55,6 @@ gem "pagy" #pagination
 gem 'usps' #address verification
 gem "faker"
 gem "factory_bot_rails"
-gem "bugsnag", "~> 6.24"
 gem 'twilio-ruby', '~> 5.73.3'
 gem 'aws-sdk-locationservice'
 gem 'delayed_job_active_record'
