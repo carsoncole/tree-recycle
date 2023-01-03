@@ -24,7 +24,7 @@
             %li.nav-item
               = link_to admin_messages_path, class: "nav-link #{ controller_name == 'messages' ? 'active' : nil }" do
                 Messages
-                - count = Message.where(viewed: false).count
+                - count = Message.incoming.where(viewed: false).count
                 - if count > 0
                   %span.badge.bg-info= count
             %li.nav-item
