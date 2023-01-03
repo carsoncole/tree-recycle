@@ -28,7 +28,7 @@
           %h2 Donations
       .row.mb-5
         .col-lg-12
-          = column_chart [ ["Online", Donation.sum(:amount).to_i]], prefix: "$", title: 'Total Donations', thousands: ",", width: '400px'
+          = column_chart [{ name: "Online", stack: 1, data: [[ "Total", Donation.online.sum(:amount).to_i]]}, {name: "Cash/Check", stack: 1, data: [[ "Total", Donation.cash_or_check.sum(:amount).to_i]]}], prefix: "$", title: 'Total Donations', thousands: ",", width: '400px', stacked: true
 
       .row.mb-5
         .col-lg-12
