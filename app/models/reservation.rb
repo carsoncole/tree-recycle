@@ -144,14 +144,9 @@ class Reservation < ApplicationRecord
   end
 
   def self.reservations_to_send_marketing_emails(attribute)
-    # collect Archived,
-    #    not also in [:archived, :unconfirmed]
-    #    not sent to attribute
-    #    not no_emails
-    #    max count of email_batch_quantity
     reservations_to_send =
       Reservation.archived.
-      where.not(email:  Reservation.where(status: :pending_pickup).map{ |r| r.email } ).
+      where("LOWER(email) NOT IN (?)", Reservation.where(status: :pending_pickup).map { |r| r.email.downcase } ).
       where(attribute.to_sym => false).
       where(no_emails: false).
       order(:email)

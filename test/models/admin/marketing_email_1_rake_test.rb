@@ -7,6 +7,12 @@ class MarketingEmailRakeTest < ActiveSupport::TestCase
     # 4 pending_pickup reservations
     pending_pickups = create_list(:reservation_with_coordinates, 20, status: 'pending_pickup', is_routed: false)    
 
+    # 2 pending_pickups with capitalized emails, 2 of same archived with different case
+    pending_1 = create(:reservation_with_coordinates, email: 'CarsonCole@example.com', status: 'pending_pickup', is_routed: false)
+    pending_2 = create(:reservation_with_coordinates, email: 'JACKJONES@EXAMPLE.COM', status: 'pending_pickup', is_routed: false)
+    pending_3 = create(:reservation_with_coordinates, email: 'carsoncole@example.com', status: 'pending_pickup', is_routed: false)
+    pending_4 = create(:reservation_with_coordinates, email: 'jackjones@example.com', status: 'pending_pickup', is_routed: false)
+
     # 1 archived, no_emails reservations
     create(:reservation_with_coordinates, status: 'archived', is_routed: false, no_emails: true)
 
