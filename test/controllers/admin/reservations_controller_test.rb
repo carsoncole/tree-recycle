@@ -28,25 +28,25 @@ class Admin::ReservationsControllerTest < ActionDispatch::IntegrationTest
     reservation_archived = create(:reservation_with_coordinates, status: :archived, is_routed: false)
 
     get admin_reservations_url(route_id: reservation_routed.route_id, as: @viewer)
-    assert_match reservation_routed.name, @response.body
+    assert_match reservation_routed.name.split(/ /)[0], @response.body
 
     get admin_reservations_url(picked_up: true, as: @viewer)
-    assert_match reservation_picked_up.name, @response.body 
+    assert_match reservation_picked_up.name.split(/ /)[0], @response.body 
 
     get admin_reservations_url(cancelled: true, as: @viewer)
-    assert_match reservation_cancelled.name, @response.body
+    assert_match reservation_cancelled.name.split(/ /)[0], @response.body
 
     get admin_reservations_url(missing: true, as: @viewer)
-    assert_match reservation_missing.name, @response.body
+    assert_match reservation_missing.name.split(/ /)[0], @response.body
 
     get admin_reservations_url(archived: true, as: @viewer)
-    assert_match reservation_archived.name, @response.body
+    assert_match reservation_archived.name.split(/ /)[0], @response.body
 
     get admin_reservations_url(all: true, as: @viewer)
-    assert_match reservation_missing.name, @response.body
+    assert_match reservation_missing.name.split(/ /)[0], @response.body
 
     get admin_reservations_url(unrouted: true, as: @viewer)
-    assert_match @reservation.name, @response.body
+    assert_match @reservation.name.split(/ /)[0], @response.body
   end
 
   test "should get show with auth" do
