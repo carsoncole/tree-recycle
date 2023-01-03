@@ -31,7 +31,7 @@
             %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; margin: 0; padding: 0;")
               Regarding Donations
 
-            - if @reservation.online_donated?
+            - if @reservation.donated_online?
               %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
                 Thank you for your online donation! It will go a long way towards helping our Scout program.
 

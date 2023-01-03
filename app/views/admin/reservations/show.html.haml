@@ -38,7 +38,7 @@
             %i.bi.bi-send
             Re-send pickup reminder email
           %br
-        - if @reservation.online_donated?
+        - if @reservation.donated_online?
           - @reservation.donations.each do |donation|
             = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt.' } do
               %i.bi.bi-send
@@ -236,7 +236,7 @@
                       Not selected
 
 
-              - if @reservation.online_donated?
+              - if @reservation.donated_online?
                 %table.mt-4.table.table-borderless.reservation
                   - @donations.each do |donation|
                     %tr

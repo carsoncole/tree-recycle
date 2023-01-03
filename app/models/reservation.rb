@@ -41,6 +41,14 @@ class Reservation < ApplicationRecord
   after_commit :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_archived!, if: ->(obj){ obj.archived? && obj.saved_change_to_status? && obj.persisted? }
 
+  # turbo stream
+  # after_update ReservationCallbacks
+  after_update -> { broadcast_prepend_to "missing_reservations", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? && obj.status == 'missing'}
+  after_update -> { broadcast_prepend_to "pending_pickup_reservations", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? && obj.status == 'pending_pickup'}
+  after_update -> { broadcast_prepend_to "picked_up_reservations", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? && obj.status == 'picked_up'}
+
+
+
   def self.open?
     Setting.first_or_create.is_reservations_open?
   end
@@ -53,7 +61,7 @@ class Reservation < ApplicationRecord
   end
 
   def donation_status
-    if online_donated?
+    if donated_online?
       'online_donation'
     elsif donation == :cash_or_check_donation
       'cash_or_check_donation'
@@ -68,7 +76,7 @@ class Reservation < ApplicationRecord
     donations.sum(:amount)
   end
 
-  def online_donated?
+  def donated_online?
     donations.sum(:amount) > 0
   end
 

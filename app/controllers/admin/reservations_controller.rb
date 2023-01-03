@@ -5,6 +5,8 @@ class Admin::ReservationsController < Admin::AdminController
   def index
     if params[:route_id]
       @pagy, @reservations = pagy(Reservation.not_archived.includes(:route).order(created_at: :desc).where(route_id: params[:route_id]))
+    elsif params[:pending_pickup]
+      @pagy, @reservations = pagy(Reservation.pending_pickup.includes(:route).order(created_at: :desc))
     elsif params[:picked_up]
       @pagy, @reservations = pagy(Reservation.not_archived.picked_up.includes(:route).order(created_at: :desc))
     elsif params[:unrouted]
