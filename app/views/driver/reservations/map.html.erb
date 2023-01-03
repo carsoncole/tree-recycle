@@ -32,7 +32,7 @@
   var map;
   function initMap() {
 
-    // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected, collected_amount, name, route, zone]]
+    // reservations = [[id, street, lat, lon, notes, status, phone, donation, collected, collected_amount, name, route, zone_name, admin_notes]]
     let locations =  <%= raw @reservations %>;
 
     <%= render 'shared/map_js' %>
@@ -54,24 +54,25 @@
       let html_content = 
             `<div class='map-info-window'>` +
               `<div class='header'>` +
-                `<a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a> / ${locations[i][11]}-${locations[i][12]}<br>`+
+                `<a class='street' href='/driver/reservations/${locations[i][0]}'>${locations[i][1]}</a>`+
                 `<div class='map-links'>`+
                   `<a href="https://maps.apple.com/?q=${locations[i][2]},${ locations[i][3]}" target='_blank' class= 'map-link'><i class='bi bi-apple'></i></a>` +
                   `<a href="https://www.google.com/maps/place/${locations[i][2]},${ locations[i][3]}", target='_blank' class='map-link'><i class='bi bi-google'></i></a>` +
                 `</div>` +
               `</div>` 
       html_content +=
-              `<div class='status-info'><div class='status'>${locations[i][5]}</div>` +
+              `<div class='status-info'>` +
                 `<div class='buttons'>` +
-                  `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-success btn-sm' href='/driver/reservations/${locations[i][0]}?status=picked_up&view=map'>Picked Up</a> ` +
-                  `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm' href='/driver/reservations/${locations[i][0]}?status=missing&view=map'>Missing</a>` +
+                  `<a type="button" disabled=true data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm ${locations[i][5]=="Pending pickup" ? "selected" : "" }' href='/driver/reservations/${locations[i][0]}?status=pending_pickup&view=map'>Pick-up</a>` +
+                  `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-danger btn-sm ${locations[i][5]=="Picked up" ? "selected" : "" }' href='/driver/reservations/${locations[i][0]}?status=picked_up&view=map'>Picked</a> ` +
+                  `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm ${locations[i][5]=="Missing" ? "selected" : "" }' href='/driver/reservations/${locations[i][0]}?status=missing&view=map'>Missing</a>` +
                 `</div>` +
               `</div>`+
               
-              `<div class='name'>${locations[i][10]}</div>`
+              `<div class='name'>${locations[i][10]}${locations[i][6] ? " / " + locations[i][6] : ""}</div>`
       html_content +=
-            `<div class='phone'>${locations[i][6] ? locations[i][6] : ""}</div>` +
-            `<div class='notes'>${locations[i][4]}</div>`
+            `<div class='notes'>${locations[i][4]}</div>`+
+            `<div class='admin_notes'>${locations[i][13]=="" ? "" : "Admin: " + locations[i][13]}</div>`
       html_content +=
             `<div class='donation-info'>`+
               `<div class='donation-status'>` +

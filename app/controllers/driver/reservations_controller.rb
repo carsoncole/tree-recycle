@@ -15,22 +15,22 @@ class Driver::ReservationsController < Driver::DriverController
     if params[:route_id]
       @route = Route.find(params[:route_id])
       if params[:archived]
-        @reservations = Reservation.where.not(status: ['unconfirmed', 'cancelled']).where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || ""] }
+        @reservations = Reservation.where.not(status: ['unconfirmed', 'cancelled']).where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation_status || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || "", r.admin_notes || "" ] }
       else
-        @reservations = Reservation.pending.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || ""] }
+        @reservations = Reservation.pending.where(route: @route ).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation_status || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || "", r.admin_notes || "" ] }
       end
     elsif params[:zone_id]
       @zone = Zone.find(params[:zone_id])
       if params[:archived]
-        @reservations = @zone.reservations.where.not(status: ['unconfirmed', 'cancelled']).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || ""] }        
+        @reservations = @zone.reservations.where.not(status: ['unconfirmed', 'cancelled']).geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation_status || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || "", r.admin_notes || "" ] }        
       else
-        @reservations = @zone.reservations.pending.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || ""] }
+        @reservations = @zone.reservations.pending.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation_status || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || "", r.admin_notes || "" ] }
       end
     elsif params[:reservation_id]
       @reservation = Reservation.find(params[:reservation_id])
-      @reservations = [ @reservation.id.to_s, @reservation.street.to_s, @reservation.latitude.to_s.to_f, @reservation.longitude.to_s.to_f, @reservation.notes || "", @reservation.status.humanize.capitalize, @reservation.phone || "", @reservation.donation || "", @reservation.collected || "", @reservation.collected_amount || "", @reservation.name || "", @reservation.route.name || "", @reservation.route.zone.name || ""]
+      @reservations = [ @reservation.id.to_s, @reservation.street.to_s, @reservation.latitude.to_s.to_f, @reservation.longitude.to_s.to_f, @reservation.notes || "", @reservation.status.humanize.capitalize, @reservation.phone || "", @reservation.donation || "", @reservation.collected || "", @reservation.collected_amount || "", @reservation.name || "", @reservation.route.name || "", @reservation.route.zone.name || "", @reservation.admin_notes || "" ]
     else
-      @reservations = Reservation.pending.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || ""] }
+      @reservations = Reservation.pending.geocoded.map{ |r| [ r.id.to_s, r.street.to_s, r.latitude.to_s.to_f, r.longitude.to_s.to_f, r.notes || "", r.status.humanize.capitalize, r.phone || "", r.donation_status || "", r.collected || "", r.collected_amount || "", r.name || "", r.route.name || "", r.route.zone.name || "", r.admin_notes || "" ] }
     end
   end
 

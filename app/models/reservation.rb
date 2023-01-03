@@ -52,6 +52,18 @@ class Reservation < ApplicationRecord
     end
   end
 
+  def donation_status
+    if online_donated?
+      'online_donation'
+    elsif donation == :cash_or_check_donation
+      'cash_or_check_donation'
+    elsif donation == :no_donation
+      'no_donation'
+    else
+      nil
+    end
+  end
+
   def total_donations_amount
     donations.sum(:amount)
   end
