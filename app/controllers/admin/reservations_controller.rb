@@ -117,7 +117,7 @@ class Admin::ReservationsController < Admin::AdminController
   end
 
   def send_pickup_reminders
-    Reservation.pending.order(:email).where(is_pickup_reminder_email_sent: false).each { |r| ReservationsMailer.with(reservation: r).pick_up_reminder_email.deliver_later }
+    Reservation.pending_pickup.order(:email).where(is_pickup_reminder_email_sent: false).limit(Setting&.first&.email_batch_quantity || 300).each { |r| ReservationsMailer.with(reservation: r).pick_up_reminder_email.deliver_later }
     redirect_to admin_settings_path(anchor: 'email'), notice: "Pickup reminder emails have been queued, with a batch size of #{ helpers.setting.email_batch_quantity } "
   end
 
