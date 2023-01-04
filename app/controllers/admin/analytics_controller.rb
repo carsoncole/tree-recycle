@@ -29,6 +29,6 @@ class Admin::AnalyticsController < Admin::AdminController
     @route_counts = Reservation.not_archived.joins(:route).group('routes.name').count.sort_by {|_key, value| value}.reverse
 
     @recycler_counts = Reservation.not_archived.group(:years_recycling).count
-    @recycler_counts.each {|key, count| @recycler_counts[key] = count / @reservations_count.to_f * 100 }
+    @recycler_counts.each {|key, count| @recycler_counts[key] = (count / @reservations_count.to_f * 100).round(1) }
   end
 end
