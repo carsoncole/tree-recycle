@@ -14,7 +14,7 @@
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
               This is a reminder that we will pick up your tree at
-              = @reservation.short_address
+              = @reservation.street
               on
               = succeed(".") do
                 = Setting.first.pickup_date_and_time.strftime("%B %-d, %Y")
@@ -23,10 +23,7 @@
               On the Day of Collection
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
-              Remove all decorations and tinsel from your tree. Before 8am on the morning of
-              = succeed(",") do
-                = Setting.first.pickup_date_and_time.strftime("%B %-d")
-              place your tree in a visible location at the curb. Scouts will collect your tree between 8am and 4pm and recycle it into mulch. We cannot take wreaths, flocked trees, or artificial trees.
+              = Setting&.first.on_day_of_pickup_instructions
 
             %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; margin: 0; padding: 0;")
               Regarding Donations
