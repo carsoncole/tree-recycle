@@ -1,6 +1,8 @@
 class Message < ApplicationRecord
   belongs_to :reservation, optional: true
 
+  after_create_commit -> { broadcast_replace_to "messages-count", partial: "admin/messages/count" , target: 'messages-count'}, if: -> (obj) { obj.incoming? }
+
   validates :number, :body, :direction, presence: true
 
   enum :direction, { outgoing: 1, incoming: 2 }

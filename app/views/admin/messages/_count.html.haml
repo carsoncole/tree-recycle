@@ -1,0 +1,4 @@
+#messages-count
+  - count = Message.incoming.where(viewed: false).count
+  - if count > 0
+    %span.badge.bg-info= count

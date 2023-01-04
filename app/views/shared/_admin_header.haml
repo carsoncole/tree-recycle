@@ -21,12 +21,11 @@
               = link_to "Routes", admin_routing_path, class: "nav-link #{ controller_name == 'zones' ? 'active' : nil }"
             %li.nav-item
               = link_to "Donations", admin_donations_path, class: "nav-link #{ controller_name == 'donations' ? 'active' : nil }"
-            %li.nav-item
+            %li.nav-item.message
               = link_to admin_messages_path, class: "nav-link #{ controller_name == 'messages' ? 'active' : nil }" do
                 Messages
-                - count = Message.incoming.where(viewed: false).count
-                - if count > 0
-                  %span.badge.bg-info= count
+              = turbo_stream_from "messages-count"
+              = render 'admin/messages/count'
             %li.nav-item
               = link_to "Analytics", admin_analytics_path, class: "nav-link #{ controller_name == 'marketing' ? 'active' : nil }"
             %li.nav-item

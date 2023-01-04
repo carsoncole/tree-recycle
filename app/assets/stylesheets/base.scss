@@ -471,6 +471,20 @@ nav.navbar {
 
 #admin-navbar {
   background-color: $scout-red;
+  li.nav-item.message {
+    .nav-link {
+      display: inline-block !important;
+      padding-right: 0;
+    }
+  }
+  #messages-count {
+    display: inline-block;
+    padding-right: 0.4em;
+    .badge.bg-info {
+      background-color: $scout-blue !important;
+    }
+  }
+
 }
 
 #users {
