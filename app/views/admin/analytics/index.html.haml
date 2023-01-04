@@ -51,6 +51,12 @@
         .col-lg-12
           = pie_chart Hash[@donation_counts.map {|type, count| [type&.humanize&.capitalize || 'No Selection', count] }]
 
+
+      .row.mb-5 
+        .col-lg-12
+          %h2 Recyclers
+          = pie_chart @recycler_counts, suffix: "%", title: "Years Recycling"
+
     .col-lg-7.offset-lg-1
       .row
         .col-lg-12
