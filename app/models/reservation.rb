@@ -143,6 +143,7 @@ class Reservation < ApplicationRecord
     Reservation.where("created_at > ?", Time.now + months.to_i.months).destroy_all
   end
 
+  # archived reservations that are not also pending (but they could be unconfirmed or cancelled)
   def self.reservations_to_send_marketing_emails(attribute)
     reservations_to_send =
       Reservation.archived.

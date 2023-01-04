@@ -38,6 +38,16 @@
                 = link_to "donate online at any time.", new_reservation_donation_url(@reservation)
 
 
+              %div(style='width:100%; text-align:center; margin: 0 auto 20px auto')
+                %table(width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 20px")
+                  %tr
+                    %td(style='width:100%')
+                      %table(cellspacing="0" cellpadding="0" width="100%")
+                        %tr
+                          %td(width="100%" style='text-align:center;')
+                            %a(href="#{new_reservation_donation_url(@reservation)}" target="_blank" style="padding: 8px 12px; padding-left: 30px;padding-right:30px;border: 1px solid #ED2939;border-radius: 4px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff !important;background-color:#ED2939; text-decoration: none;font-weight:bold;display: inline-block;")
+                              Donate Online Now
+
               %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
                 If you elect to donate on the day of collection, we accept checks or cash.
 
