@@ -1,6 +1,7 @@
 class Admin::AnalyticsController < Admin::AdminController
   def index
     @sources = Reservation.not_archived.heard_about_sources
+    @sources_count = Reservation.not_archived.group(:heard_about_source).count.sort_by {|_key, value| value}.reverse
     @donation_counts = Donation.group(:form).sum(:amount)
     @reservations_count = Reservation.not_archived.count
     
