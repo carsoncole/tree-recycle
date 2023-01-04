@@ -2,7 +2,7 @@ class Donation < ApplicationRecord
   belongs_to :reservation, optional: true
   validates :form, presence: true
 
-  after_update :send_receipt_email!, if: -> (obj){ obj.amount.positive? && obj.email.present? }
+  after_update :send_receipt_email!, if: -> (obj){ obj.amount.positive? && obj.email.present? && !obj.saved_change_to_is_receipt_email_sent? }
   after_save :send_donation_sms!, if: -> (obj){ obj.amount != 0 && !obj.saved_change_to_amount? }
 
   enum :form, { online: 1, cash_or_check: 2 }, default: 1

@@ -40,7 +40,7 @@
           %br
         - if @reservation.donated_online?
           - @reservation.donations.each do |donation|
-            = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt.' } do
+            = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt to the email on the donation record.' } do
               %i.bi.bi-send
               Resend donation receipt -
               = number_to_currency(donation.amount)
