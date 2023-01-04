@@ -6,6 +6,8 @@
         - @reservation.errors.full_messages.each do |message|
           %li= message
 
+  = f.hidden_field :years_recycling, value: @reservation.years_recycling
+
   .row
     .col-md-12
       .mb-4

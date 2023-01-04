@@ -18,6 +18,7 @@ class ReservationsController < ApplicationController
         @reservation.email = old_reservation.email
         @reservation.name = old_reservation.name unless old_reservation.name.downcase == 'no name provided'
         @reservation.notes = old_reservation.notes
+        @reservation.years_recycling = old_reservation.years_recycling + 1
       rescue => e
         Rollbar.log('error', e)
       end
@@ -122,6 +123,6 @@ class ReservationsController < ApplicationController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :notes, :heard_about_source)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :latitude, :longitude, :notes, :heard_about_source, :years_recycling)
     end
 end

@@ -256,6 +256,9 @@
               %h3 Misc
               %table.table.table-borderless.reservation
                 %tr 
+                  %th Number of years recycling
+                  %td= @reservation.years_recycling
+                %tr 
                   %th How did you hear about us?
                   %td
                     - if @reservation&.heard_about_source?
