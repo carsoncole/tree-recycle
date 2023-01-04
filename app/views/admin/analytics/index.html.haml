@@ -78,10 +78,20 @@
           = pie_chart Hash[zone_hash.map {|key, value| [key&.humanize&.capitalize, value] }]
 
       .row.mb-5
-        .col-lg-6
+        .col-lg-12
           %h3 Routes
-          %table.table#routes-table
-            - @route_counts.each do |route, count|
-              %tr 
-                %th= route
-                %td= count
+
+          .row 
+            .col-lg-6
+              %table.table#routes-table
+                - half_counts = (@route_counts.length / 2).floor
+                - @route_counts[0..(half_counts-1)].each do |route, count|
+                  %tr 
+                    %th= route
+                    %td= count
+            .col-lg-6
+              %table.table#routes-table
+                - @route_counts[half_counts..-1].each do |route, count|
+                  %tr 
+                    %th= route
+                    %td= count
