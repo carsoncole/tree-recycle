@@ -23,8 +23,6 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.not_archived.missing.includes(:route).order(created_at: :desc))
     elsif params[:unconfirmed]      
       @pagy, @reservations = pagy(Reservation.not_archived.unconfirmed.includes(:route).order(created_at: :desc))
-    elsif params[:all]
-      @pagy, @reservations = pagy(Reservation.not_archived.not_unconfirmed.includes(:route).order(created_at: :desc).order(created_at: :asc))
     elsif params[:archived]
       @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(created_at: :desc))
     else

@@ -44,7 +44,7 @@ class Reservation < ApplicationRecord
   # turbo stream
   # after_update ReservationCallbacks
   after_update -> { broadcast_prepend_to "missing_reservations", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? && obj.status == 'missing'}
-  after_update -> { broadcast_prepend_to "pending_pickup_reservations", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? && obj.status == 'pending_pickup'}
+  after_update -> { broadcast_prepend_to "reservation-status-changes", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? }
   after_update -> { broadcast_prepend_to "picked_up_reservations", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? && obj.status == 'picked_up'}
 
 
