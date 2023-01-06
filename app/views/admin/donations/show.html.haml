@@ -7,6 +7,9 @@
         = link_to edit_admin_donation_path(@donation) do
           %i.bi.bi-pencil-fill
           Edit
+        = link_to admin_donation_path(@donation), method: :delete, data: { 'turbo-method': :delete, 'turbo-confirm': 'Are you sure? This is irreversible.'} do
+          %i.bi.bi-trash-fill
+          Delete
 
   .row
     .col-lg-6
