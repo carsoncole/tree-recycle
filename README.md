@@ -1,19 +1,18 @@
 # Tree Recycle
 
-With Tree Recycle, you can host and manage a tree recycling fundraiser website with Tree Recycle, which can do the following:
+Host and manage a Christmas tree recycling event fundraiser with Tree Recycle. Inspired by the needs of our Scout Troop and the complexity of taking donations and figuring out how to organize the pickup of trees over a wide area, Tree Recycle can at a minimum do the following:
 
-- Provide a customizable, SEO-friendly, public website;
-- Take tree recycle pick-up reservations;
-- Organize pick-up addresses within your pre-defind Zones and Routes;
+- Provide a public website for taking tree pickup reservations;
+- Organize pick-up addresses within your pre-defined Zones and Routes;
 - Take online donations utilizing Stripe;
-- Archive function to save emails for subsequent year marketing;
+- Handle the retention of reservations year-over-year to allow for contacting prior year customers to tell them about this years' event;
 - Send out email reservation confirmations, donation receipts and marketing emails.
 
 Our Troop uses this application and it can be viewed at [https://treerecycle.net](https://treerecycle.net).
 
 ## What is Required?
 
-Tree Recycle has been designed to be simple to use and install on [Heroku](https://heroku.com/), which has a simple UI, a straight-forward process, and is hosted on AWS, all for a reasonable price. Once installed, the application is designed for continuous running from year-to-year, carrying over reservations and their emails for marketing to prior year recyclers.
+Tree Recycle has been designed to be simple to use and install on [Heroku](https://heroku.com/), which has a simple UI, a straight-forward deployment process, and is hosted on AWS, all for a reasonable price. Once installed, the application is designed for continuous running from year-to-year, carrying over reservations and their emails for marketing to prior year recyclers.
 
 ## Installation
 
@@ -24,7 +23,7 @@ This application has been configured to run on [Heroku](https://heroku.com/), bu
 To install on Heroku:
 
 - Create an account on Heroku.com;
-- Download the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), which will be used for connecting to, and deploying the application code to Heroku;
+- Download the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), which will be used for connecting to, and deploying the application code to Heroku from your computer;
 - Install git on your computer;
 - Download the code via git, and change to the code directory: 
   ```
@@ -32,39 +31,42 @@ To install on Heroku:
   cd tree-reycle
   ```
 
-- Add a master.key to `/config/master.key`
-
-  ```
-  EDITOR=vim rails credentials:edit
-  ```
-
-This will create your initial credentials files that will hold all of your application secrets. Copy `/config/credentials_sample.yml` as your initial template. Exit the credentials file with `esc-:-q`. This will save the file and then key for decrypting it into `config/master.key`. Copy this key and add it to your Heroku vars (see App Credentials below) with a key value of `RAILS_MASTER_KEY`. This key is what Heroku will use to access the credentials file.
-
 - Create a new Heroku app.
-  ```
-  heroku create -a example-app`;
-  ```
+    ```
+    % heroku create -a example-app;
+    ```
 
-  You should now see the appplication listed in your Heroku account.
+  You should now see the appplication listed in your Heroku account, but without any running code. You'll need to push the code from your computer to Heroku. 
 
 - Push the application code on your computer to Heroku.
 
-  ```
-  git push heroku main
-  ```
-  There will be errors as a few more things need to be set up on Heroku to fully function.
+    ```
+    % git push heroku main
+    ```
 
-#### 2. Enable PostgreSQL
+  With that command, Heroku will receive the code and deploy it. At the end of the screen logging, it will report the url at which it can be reached. But likely, there will be errors as a few more things need configuring.
+
+
+#### 2. Add a database - PostgreSQL
 
 A PostgreSQL addon must enabled on Heroku as the database. On Heroku, search the addons for 'Heroku Postgres' and add it to your account. This will addon will serve as your database. You can select the least expensive plan as you have the ability to upsize at a later time.
 
-#### 3. Enable a Worker
+#### 3. Add a Worker
 
-The application does a lot of bacground work in the handling of emails and routing, so you will need a Worker enabled. Under Resources, there should a a worker listed, which you will need to enable.
+The application does a lot of background work in the handling of emails and routing, so you will need a Worker enabled. Under Resources, there should a a worker listed, which you will need to enable.
 
 #### 4. Enable Redis
 
-A Redis addon must be enabled on Heroku to provide live logging in the Admin section. This is required as the appliation will not function without it. Search the addons for 'Heroku Data for Redis' and at it with the least expensive plan.
+A Redis addon must be enabled on Heroku to provide the live functionality such as Admin header new messages counts, and live updating of reservations, in the Admin section. This is required as the appliation will not function without it. Search the addons for 'Heroku Data for Redis' and at it with the least expensive plan.
+
+#### 5. Add a master.key to `/config/master.key`
+
+    ```
+    % EDITOR=vim rails credentials:edit
+    ```
+
+This will create your initial credentials files that will hold all of your application secrets. Copy the contents of `/config/credentials_sample.yml` as your initial template. Exit the credentials file with `esc-:-q`. This will save the file and the key for decrypting it into `config/master.key`. Copy this key and add it to your Heroku Vars (see App Credentials below), under your application settings, with a key value of `RAILS_MASTER_KEY`. This key is what Heroku will use to access the credentials file.
+
 
 #### Configuration
 
@@ -117,11 +119,12 @@ Basic settings and information for the site is stored in a constants file, `conf
 
 ##### Reservation sources
 
-When taking reservations, users select from a drop down where they heard about the event. The choices are hard-coded as an Enum in `reservation.rb` and should be configured.
+When taking reservations, users select from a drop down where they heard about the event. The choices are hard-coded as an Enum in `reservation.rb` and should be configured to fit your own community.
 
 reservation.rb
+
 ```
-enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
+  enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
 ```
 
 #### USPS API Access
@@ -131,7 +134,7 @@ This app requires USPS API access for address verification (https://www.usps.com
 
 #### Email
 
-An email provider, such as Gmail, can be configured for reservation notifications, reminders, cancellations, marketing emails, and donation receipts. The default configuration is Gmail, as it is free and normally would provide a high enough daily limit (200-400 emails) to meet the needs of most users. 
+An email provider, such as Gmail, can be configured for reservation notifications, reminders, cancellations, marketing emails, and donation receipts. The default configuration is Gmail, as it is free and normally would provide a high enough daily limit (300-500 emails) to meet the needs of most users. 
 
 Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file. The sample settings have the correct values if you use Gmail for sending emails. If you use a differnt service, you may need to modify or add to the settings in the individual environment files.
 
@@ -170,9 +173,11 @@ config.action_mailer.default_url_options = { host: 'site@example.com' }
 SMS notifications are configured to send via Twilio, but this could be modified for any service in the Sms class `sms.rb`. Keys must be set in the Rails credentials file.
 
 
-#### Error monitoring
+#### Error monitoring (optional)
 
-Rollbar.io is integrating for error monitoring. This can be easily replaced with other services. The configuration file is `config/initializers/rollbar.rb` and the access token is stored in the Rails credentials file, which is the only thing that needs to be updated for it to work within your own Rollbar account. Rollbar is free for 5,000 errors a month, which should easily cover it.
+Rollbar.io is integrated for error monitoring, This can be easily replaced with other services. The configuration file is `config/initializers/rollbar.rb` and the access token is stored in the Rails credentials file, which is the only thing that needs to be updated for it to work within your own Rollbar account. Rollbar is free for 5,000 errors a month, which should easily cover it.
+
+To remove Rollbar completely, removed from the ```Gemfile``` and ```initializers/rollbar.rb```.
 
 #### Setup
 
@@ -261,4 +266,4 @@ You can replace the favicons and Apple touch icons, which are reference in `shar
 
 ## Copyright
 
-Copyright (c) 2022 [Carson Cole](https://carsonrcole.com). See MIT-LICENSE for details.
+Copyright (c) 2022, 2023 [Carson Cole](https://carsonrcole.com). See MIT-LICENSE for details.
