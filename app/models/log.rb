@@ -7,3 +7,4 @@ class Log < ApplicationRecord
     where(message: ['Donation receipt email sent.', 'Confirmed reservation email sent.', 'Marketing email 2 sent.', 'Pick up reminder email sent.' ]).where("created_at > ?", Time.now - 24.hours).count
   end
 end
+

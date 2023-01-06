@@ -6,7 +6,8 @@ class Admin::LogsController < Admin::AdminController
   end
 
   def index
-    @logs = Log.order(created_at: :desc).limit(20)
+    @pagy, @logs = pagy(Log.order(created_at: :desc))
+
   end
 
 end

@@ -8,5 +8,9 @@
 
       = turbo_stream_from "logs"
 
+      .pagination= pagy_bootstrap_nav(@pagy, pagy_id: 'pagination').html_safe
+
       #logs
         = render partial: 'admin/logs/log', collection: @logs
+
+      .pagination= pagy_bootstrap_nav(@pagy, pagy_id: 'pagination').html_safe
