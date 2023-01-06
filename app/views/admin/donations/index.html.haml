@@ -16,7 +16,10 @@
 
 
   .row
-    .col-lg-8.offset-lg-2
+    .col-lg-2
+      %p= link_to "All donations", admin_donations_path
+      %p= link_to "Donations with no reservation", admin_donations_path(no_reservation: true)
+    .col-lg-8
 
 
       .pagination= pagy_bootstrap_nav(@pagy).html_safe

@@ -1,6 +1,10 @@
 class Admin::DonationsController < Admin::AdminController
   def index
-    @pagy, @donations = pagy(Donation.order(id: :desc))
+    if params[:no_reservation]
+      @pagy, @donations = pagy(Donation.where(reservation_id: nil).order(id: :desc))
+    else
+      @pagy, @donations = pagy(Donation.order(id: :desc))
+    end
   end
 
   def show
