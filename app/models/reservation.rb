@@ -107,7 +107,7 @@ class Reservation < ApplicationRecord
 
   def send_missing_sms!
     message = "Hello, it's Bainbridge Tree Recycle! We can't find your tree for pickup. "
-    message += "Possibly your tree has not been put out or in an easily observable location. Please reply to this text message ASAP"
+    message += "Perhaps your tree has not been put out, or perhaps you no longer need it picked up. We want to make sure we pick it up for you. Please let us know by replying to this text message ASAP"
     message += ", or call us at #{ Setting&.first&.contact_phone }," if Setting&.first&.contact_phone.present?
     message += " if you would like us to  attempt a second pick-up of your tree today. "
     Sms.new.send_with_object(self, message)

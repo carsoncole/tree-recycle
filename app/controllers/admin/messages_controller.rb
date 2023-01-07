@@ -11,7 +11,15 @@ class Admin::MessagesController < Admin::AdminController
   def create
     if current_user.administrator? || current_user.editor?
       @message = Message.new(message_params)
-      if @message.save
+      if @message.outgoing? && @message.body.include?('special:drivers')
+        body = 'ALL DRIVERS: '
+        body += @message.body.gsub(' special:drivers','')
+        Driver.all.each do |driver|
+          next unless driver.phone.present?
+          Message.create(direction: 'outgoing', body: body, number: driver.phone)
+        end
+        redirect_to admin_messages_path(number: @message.number)
+      elsif @message.save
         redirect_to admin_messages_path(number: @message.number)
       else
         redirect_to admin_messages_path(number: @message.number)
