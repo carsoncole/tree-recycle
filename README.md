@@ -18,64 +18,48 @@ Tree Recycle has been designed to be simple to use and install on [Heroku](https
 
 This application has been configured to run on [Heroku](https://heroku.com/), but could be modified to work on any cloud provider.  Heroku is a good choice as it provides a simple interface for managing applications, and the deployment process is straight-forward.
 
-### 1. Heroku
+### 1. Create a Heroku.com account
 
-To install on Heroku:
+Create an account, initialize your app. Instructions for doing this on Heroku is well documented on Heroku.com.
 
-- Create an account on Heroku.com;
-- Download the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), which will be used for connecting to, and deploying the application code to Heroku from your computer;
-- Install git on your computer;
-- Download the code via git, and change to the code directory: 
-  ```
-  git clone https://github.com/carsoncole/tree-recycle.git
-  cd tree-reycle
-  ```
-
-- Create a new Heroku app.
-    ```
-    % heroku create -a example-app;
-    ```
-
-  You should now see the appplication listed in your Heroku account, but without any running code. You'll need to push the code from your computer to Heroku. 
-
-- Push the application code on your computer to Heroku.
-
-    ```
-    % git push heroku main
-    ```
-
-  With that command, Heroku will receive the code and deploy it. At the end of the screen logging, it will report the url at which it can be reached. But likely, there will be errors as a few more things need configuring.
-
-
-#### 2. Add a database - PostgreSQL
+### 2. Add a database - PostgreSQL
 
 A PostgreSQL addon must enabled on Heroku as the database. On Heroku, search the addons for 'Heroku Postgres' and add it to your account. This will addon will serve as your database. You can select the least expensive plan as you have the ability to upsize at a later time.
 
-#### 3. Add a Worker
-
-The application does a lot of background work in the handling of emails and routing, so you will need a Worker enabled. Under Resources, there should a a worker listed, which you will need to enable.
-
-#### 4. Enable Redis
+### 3. Add Redis
 
 A Redis addon must be enabled on Heroku to provide the live functionality such as Admin header new messages counts, and live updating of reservations, in the Admin section. This is required as the appliation will not function without it. Search the addons for 'Heroku Data for Redis' and at it with the least expensive plan.
 
-#### 5. Add a master.key to `/config/master.key`
+### 4. Download the repo locally, deploy to Heroku
 
-    ```
+Download this repo with Git.
+
+### 5. Add a master.key to `/config/master.key`
+
+The app maintains its secrets in a credential files within the codebase. You will add your own secrets locally, and then deploy them to be used in Production on Heroku.
+
+
+
     % EDITOR=vim rails credentials:edit
-    ```
 
-This will create your initial credentials files that will hold all of your application secrets. Copy the contents of `/config/credentials_sample.yml` as your initial template. Exit the credentials file with `esc-:-q`. This will save the file and the key for decrypting it into `config/master.key`. Copy this key and add it to your Heroku Vars (see App Credentials below), under your application settings, with a key value of `RAILS_MASTER_KEY`. This key is what Heroku will use to access the credentials file.
 
+This will create your initial credentials file and open it in an editor. Copy the contents of `/config/credentials_sample.yml` as your initial template. Exit the credentials file with `esc-:-q`. This will save the file and the key for decrypting it into `config/master.key`. Copy this key and add it to your Heroku Vars (see App Credentials below), under your application settings, with a key value of `RAILS_MASTER_KEY`. This key is what Heroku will use to access the credentials file.
+
+
+### 6. Add a Worker
+
+The application does a lot of background work in the handling of emails and routing, so you will need a Worker enabled. Under Resources, there should a a worker listed, which you will need to enable.
+
+### 7. Deploy to Heroku.com
+
+Deploy the code to Heroku.com.
 
 #### Configuration
 
 To sign-in, you will need to create an admin user through the console.
 
-```
-% heroku console
-> User.create(email: 'john.doe@example.com', password: [password])
-```
+  % heroku console
+> % User.create(email: 'john.doe@example.com', password: [password])
 
 ### Local installation
 
@@ -85,15 +69,15 @@ Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to 
 
 To setup the database, which gets its configuration from `db/database.yml`:
 
-```
-rails db:create
-```
+
+    rails db:create
+
 
 For development use, there is seed data that can be loaded if you want to see the site configured with zones, routes, and reservations and other data by
 
-```
-rails db:seed
-```
+
+    rails db:seed
+
 
 In production, Heroku will configure settings when you initially deploy.
 
@@ -101,17 +85,17 @@ In production, Heroku will configure settings when you initially deploy.
 
 Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to securely hold all environment variables, including access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
 
-```
-EDITOR=vim rails credentials:edit
-```
+
+    EDITOR=vim rails credentials:edit
+
 
 See the sample credentials file `config/credentials_sample.yml` for all of the necessary secrets.
 
 On Heroku, you need to provide the master key so the file can be decrypted. You can do this through the Heroku UI, or in the Heroku console:
 
-```
-heroku config:set RAILS_MASTER_KEY=<your-master-key>
-```
+
+    heroku config:set RAILS_MASTER_KEY=<your-master-key>
+
 
 #### App Constants
 
@@ -123,9 +107,9 @@ When taking reservations, users select from a drop down where they heard about t
 
 reservation.rb
 
-```
-  enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
-```
+
+    enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
+
 
 #### USPS API Access
 
@@ -141,32 +125,31 @@ Configure each environment with mail settings. Setting and credentials are manag
 
 production.rb
 
-```
-  config.action_mailer.smtp_settings = {
-    :address              => Rails.application.credentials.mailer.development.address,
-    :port                 => Rails.application.credentials.mailer.development.port,
-    :user_name            => Rails.application.credentials.mailer.development.user_name,
-    :password             => Rails.application.credentials.mailer.development.password,
-    :authentication       => Rails.application.credentials.mailer.development.authentication,
-    :tls                  => Rails.application.credentials.mailer.development.tls,
-    :enable_starttls_auto => Rails.application.credentials.mailer.development.enable_starttls_auto
-```
+
+      config.action_mailer.smtp_settings = {
+      :address              => Rails.application.credentials.mailer.development.address,
+      :port                 => Rails.application.credentials.mailer.development.port,
+      :user_name            => Rails.application.credentials.mailer.development.user_name,
+      :password             => Rails.application.credentials.mailer.development.password,
+      :authentication       => Rails.application.credentials.mailer.development.authentication,
+      :tls                  => Rails.application.credentials.mailer.development.tls,
+      :enable_starttls_auto => Rails.application.credentials.mailer.development.enable_starttls_auto
+
 
 The mailer itself should be updated to default to the sending address:
 
 application_mailer.rb
-```
-class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
-  layout "mailer"
-end
-```
+
+    class ApplicationMailer < ActionMailer::Base
+      default from: "from@example.com"
+      layout "mailer"
+    end
+
 
 The default URL for mail is set in the environment configuration file:
 
-```
-config.action_mailer.default_url_options = { host: 'site@example.com' }
-```
+    config.action_mailer.default_url_options = { host: 'site@example.com' }
+
 
 #### SMS notifications
 
@@ -183,25 +166,20 @@ To remove Rollbar completely, removed from the ```Gemfile``` and ```initializers
 
 To start up the application:
 
-```
-bundle install
-rails s
-```
-
+    % bundle install
+    % rails s
 
 ## Use
 
 Users in the application are only necessary for management of the event. The initial adminstrator/owner user should be created directly in the console.
 
-```
-User.create(email: 'admin email', password: 'admin password', role: 'administrator')
-```
+    %  User.create(email: 'admin email', password: 'admin password', role: 'administrator')
+
 
 Once the initial user is setup, you can manage the user roles (`viewer`, `editor`, `administrator`) through the UI, after any user signs up at `/sign_up`. The ability to sign up is configured in `initializers/clearance.rb`
 
-```
-config.allow_sign_up = true
-```
+    config.allow_sign_up = true
+
 
 ### Marketing Sources
 
@@ -209,9 +187,8 @@ Update the Reservation class with the sources enum for where a reservation heard
 
 reservation.rb
 
-```
-enum :heard_about_source, { newspaper: 8, facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2,  roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
-```
+    enum :heard_about_source, { newspaper: 8, facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2,  roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
+
 
 
 ### Driver
@@ -220,9 +197,8 @@ The driver component of the app is at `/driver`. By default, resources under thi
 
 With a driver secret key of `happy`: `/driver/key=happy`. So the URL for accessing the driver part of the app:
 
-```
-https://example.com/driver?key=happy
-```
+    https://example.com/driver?key=happy
+
 
 ### Sending marketing emails
 
@@ -243,22 +219,15 @@ There are Rails minitest tests, including system tests.
 
 For mailers, previews exist for the confirmation and reminder emails. To view in `development`:
 
-```
-http://localhost:3000/rails/mailers/reservations_mailer/confirmed_reservation.html
-```
-
-```
-http://localhost:3000/rails/mailers/reservations_mailer/pick_up_reminder_email.html
-```
+    http://localhost:3000/rails/mailers/
 
 
 ## Seed Data
 
 For testing and trial use, seed configuration, reservation, and admin user data can be loaded with
 
-```
-rails db:seed
-```
+    rails db:seed
+
 
 ## Favicons
 
