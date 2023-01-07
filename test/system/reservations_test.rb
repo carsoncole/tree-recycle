@@ -144,15 +144,13 @@ class ReservationsTest < ApplicationSystemTestCase
   end
 
   test "reservations are closed" do
-    Setting.first_or_create.update(is_reservations_open: false)
+    Setting.first_or_create.update(is_reservations_open: false, reservations_closed_message: 'Reservations are CLOSED.')
 
     visit '/'
     click_on "New reservation"
     within("#flash") do
       assert_text "Reservations are CLOSED."
-      click_on "Contact us"
     end
-    assert_selector 'h1', text: 'Have a question?'
   end
 
   test "reservations are no longer editable" do

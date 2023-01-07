@@ -64,7 +64,7 @@ class Driver::RoutesTest < ApplicationSystemTestCase
     # ALL row, Blank row
     route = create(:route_with_zone)
     route_without_zone = create(:route, is_zoned: false)
-    reservations = create_list(:reservation_with_coordinates, 5, route_id: route.id)
+    reservations = create_list(:reservation_with_coordinates, 5, route_id: route.id, is_routed: false)
     reservations_without_routed_zones = create_list(:reservation_with_coordinates, 3, is_routed: false, route: route_without_zone)
     reservations_without_routes = create_list(:reservation_with_coordinates, 2, is_routed: false)
 

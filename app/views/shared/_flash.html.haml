@@ -3,4 +3,4 @@
     #flash
       - flash.each do |key, value|
         .alert{class: key == 'notice' ? 'alert-primary' : 'alert-warning'}
-          = value.html_safe
+          = value.html_safe if value.present?
