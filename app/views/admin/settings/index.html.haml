@@ -282,7 +282,7 @@
                 .mb-2
                   = button_to "Send Pickup Reminders", admin_send_pickup_reminders_path, class: 'btn btn-primary', data: { 'turbo-confirm': 'Are you sure? This will send out emails, limited in quantity by the batch size setting, to reservations that have a status of pending-pickup that have not already been sent a reminder.'}
                   %p
-                    = Reservation.pending.where(is_pickup_reminder_email_sent: false).count
+                    = Reservation.pending_pickup.where(is_pickup_reminder_email_sent: false).count
                     available
                     %br
                     Email to all reservations that are 'Pending Pickup'
