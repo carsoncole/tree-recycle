@@ -14,7 +14,7 @@ class Admin::MessagesController < Admin::AdminController
       if @message.outgoing? && @message.body.include?('special:drivers')
         body = 'ALL DRIVERS: '
         body += @message.body.gsub(' special:drivers','')
-        Driver.all.each do |driver|
+        Driver.all.map{|d| d.phone}.uniq.each do |driver|
           next unless driver.phone.present?
           Message.create(direction: 'outgoing', body: body, number: driver.phone)
         end

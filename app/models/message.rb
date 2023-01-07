@@ -18,7 +18,7 @@ class Message < ApplicationRecord
 
   # removes spaces, hypens
   def normalize_number!
-    self.number = E164.normalize(number) if number
+    self.number = E164.normalize(number) if number.present?
   end
 
   def self.unviewed?(number)
