@@ -63,7 +63,7 @@
       html_content +=
               `<div class='status-info'>` +
                 `<div class='buttons'>` +
-                  `<a type="button" disabled=true data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm ${locations[i][5]=="Pending pickup" ? "selected" : "" }' href='/driver/reservations/${locations[i][0]}?status=pending_pickup&view=map'>Pick-up</a>` +
+                  `<a type="button" disabled=true data-turbo-method="patch" data-method="patch" data-turbo-confirm="Change back to Pending?" class='btn btn-outline-danger btn-sm ${locations[i][5]=="Pending pickup" ? "selected" : "" }' href='/driver/reservations/${locations[i][0]}?status=pending_pickup&view=map'>Pick-up</a>` +
                   `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Picked up? Are you sure?" class='btn btn-outline-danger btn-sm ${locations[i][5]=="Picked up" ? "selected" : "" }' href='/driver/reservations/${locations[i][0]}?status=picked_up&view=map'>Picked</a> ` +
                   `<a type="button" data-turbo-method="patch" data-method="patch" data-turbo-confirm="Missing? Are you sure? This will trigger an SMS message to the resident asking them to contact us." class='btn btn-outline-danger btn-sm ${locations[i][5]=="Missing" ? "selected" : "" }' href='/driver/reservations/${locations[i][0]}?status=missing&view=map'>Missing</a>` +
                 `</div>` +
