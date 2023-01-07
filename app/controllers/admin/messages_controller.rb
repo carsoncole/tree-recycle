@@ -16,6 +16,7 @@ class Admin::MessagesController < Admin::AdminController
         body += @message.body.gsub(' special:drivers','')
         Driver.all.map{|d| d.phone}.uniq.each do |driver|
           next unless driver.phone.present?
+          next if driver.phone == '???'
           Message.create(direction: 'outgoing', body: body, number: driver.phone)
         end
         redirect_to admin_messages_path(number: @message.number)
