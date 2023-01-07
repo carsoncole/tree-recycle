@@ -11,7 +11,6 @@
       .sub-line
         = HOME_PAGE_LEAD
 
-
   .row
     .col-md-12
 
@@ -23,18 +22,6 @@
         = link_to new_reservation_path, class: 'btn btn-primary btn-lg', id: 'reservation-button' do 
           Reserve now
           %i.bi.bi-arrow-right-circle
-
-
-
-  / .row
-  /   .col-md-10.offset-lg-1.description
-  /     %p= setting.description.html_safe if setting.description.present?
-
-
-  / .row
-  /   .col-md-10.offset-lg-1
-  /     .get-started Reserve now for a tree pickup. Donations accepted and can be made online or left with the tree.
-
 
   .row
     .col-md-8.offset-lg-2.important-date

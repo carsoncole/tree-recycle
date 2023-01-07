@@ -8,7 +8,7 @@ class ReservationsController < ApplicationController
   def new
     @site_title = 'Register for a tree pickup'
     unless signed_in?
-      redirect_to root_url, alert: "Reservations are CLOSED. #{view_context.link_to('Contact us', '/questions')} if you have questions." unless Reservation.open?
+      redirect_to root_url unless Reservation.open?
     end
     @reservation = Reservation.new
     if params[:reservation_id]

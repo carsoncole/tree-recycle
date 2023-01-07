@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
+  include ApplicationHelper
+
   def index
+    flash[:warning] = setting.reservations_closed_message unless setting.is_reservations_open?
   end
 
   def about
