@@ -109,6 +109,14 @@
                     - elsif @reservation.phone.present? && !@reservation.no_sms?
                       &nbsp;
                       %i.bi.bi-telephone-fill.success
+                - if @reservation.phone.present?
+                  %tr
+                    %th
+                    %td
+                      = link_to admin_phone_url(phone: @reservation.phone) do
+                        Text Messages
+                        = surround("(", ")") do
+                          = Message.where(phone: @reservation.phone, viewed: false).count
 
         %section#delivery
           .row
