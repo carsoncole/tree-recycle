@@ -1,45 +1,27 @@
 #messages.container
+  = render 'header'
+
+
+  .col-lg-8.offset-lg-2
+    = render 'new_message'
+
 
   .row
-    .col-lg-12
-      %h1
-        %i.bi.bi-chat-dots-fill
-        Messages
+    .col-lg-12#messages-by-number
+      - @phone_numbers.each do |phone|
+        .row
+          .col-lg-12
+            - Reservation.where(phone: phone).all.each do |r|
+              = link_to r.name, [:admin, r]
+            = link_to phone, admin_phone_path(phone: phone), class: Message.incoming.unviewed?(phone) ? 'unviewed' : 'viewed'
+            - count = Message.where(phone: phone, viewed: false).count
+            - if count > 0
+              = surround("(", ")") do
+                = Message.where(phone: phone, viewed: false).count
+            %hr
 
 
-  .row
-    .col-lg-2#messages-by-number
-      .row
-        - @numbers.each do |number|
-          = link_to number, admin_messages_path(number: number), class: Message.incoming.unviewed?(number) ? 'unviewed' : 'viewed'
-          %br
-
-    .col-lg-8.offset-lg-1
-      = render 'new_message'
 
 
-      .number-header
-        %h2= @number
-        - if @messages.any? && (current_user.administrator? || current_user.editor?)
-          = link_to admin_message_path(@messages.first.id), method: :delete, data: { "turbo-method": :delete, "turbo-confirm": 'Are you sure? This will delete the entire thread of messages to this number.' } do
-            %i.bi.bi-trash-fill
-            Delete
-      .table-responsive
-        %table.table.table-borderless#messages-table
-          %tbody
-            - @messages.each do |message|
-              %tr
-                %td.body{class: message.outgoing? ? 'outgoing' : 'incoming'}
-                  .message= message.body
-                %td.datetime= nice_date_time_no_year(message.created_at)
 
-      - if @messages.any?
-        = form_for [:admin, @message] do |f|
-          .row.mb-4
-            = f.hidden_field :number, value: @number
-            .col-lg-3
-            .col-lg-6
-              .form-group
-                = f.text_field :body, class: 'form-control'
-            .col-lg-2.text-left
-              = f.submit "Send",disabled: (current_user.administrator? || current_user.editor?) ? false : true, class: "btn btn-primary"
+

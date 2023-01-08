@@ -58,7 +58,7 @@ gem "factory_bot_rails"
 gem 'twilio-ruby', '~> 5.73.3'
 gem 'aws-sdk-locationservice'
 gem 'delayed_job_active_record'
-gem 'e164'
+gem 'phonelib'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'rollbar'

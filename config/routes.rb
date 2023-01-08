@@ -93,7 +93,7 @@ Rails.application.routes.draw do
       post 'archive' => 'reservations#archive', as: 'archive'
     end
     get '/routing' => 'zones#index', as: 'routing'
-
+    get '/phone' => 'messages#show', as: 'phone'
 
     post '/marketing/send-email-1' => 'marketing#send_marketing_email_1', as: 'marketing_send_email_1'
     post '/marketing/send-email-2' => 'marketing#send_marketing_email_2', as: 'marketing_send_email_2'

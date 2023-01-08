@@ -120,7 +120,6 @@ GEM
       activerecord (>= 3.0, < 8.0)
       delayed_job (>= 3.0, < 5)
     docile (1.4.0)
-    e164 (0.3.2)
     email_validator (2.2.4)
       activemodel
     erubi (1.12.0)
@@ -199,6 +198,7 @@ GEM
       racc (~> 1.4)
     pagy (6.0.0)
     pg (1.4.5)
+    phonelib (0.7.6)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -329,7 +329,6 @@ DEPENDENCIES
   clearance
   debug
   delayed_job_active_record
-  e164
   factory_bot_rails
   faker
   geocoder
@@ -340,6 +339,7 @@ DEPENDENCIES
   jbuilder
   pagy
   pg
+  phonelib
   pry-rails
   puma (~> 5.0)
   rails (~> 7.0.3)

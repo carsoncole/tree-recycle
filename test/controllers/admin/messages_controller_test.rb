@@ -23,22 +23,29 @@ class Admin::MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to :sign_in
   end
 
+  test "viewing show" do
+    message = create(:message)
+
+    get admin_phone_url(phone: message.phone, as: @viewer)
+    assert_response :success
+  end
+
   test "creating a message as administrator" do
     assert_difference('Message.count') do
-      post admin_messages_url(message: { number: '+12065551212', body: 'how are you?' }, as: @administrator)
+      post admin_messages_url(message: { phone: '+12065551212', body: 'how are you?' }, as: @administrator)
     end
-    assert_redirected_to admin_messages_path(number: '+12065551212')
+    assert_redirected_to admin_phone_path(phone: '+12065551212')
   end
 
   test "creating a message as editor" do
     assert_difference('Message.count') do
-      post admin_messages_url(message: { number: '+12065551212', body: 'how are you?' }, as: @editor)
+      post admin_messages_url(message: { phone: '+12065551212', body: 'how are you?' }, as: @editor)
     end
-    assert_redirected_to admin_messages_path(number: '+12065551212')
+    assert_redirected_to admin_phone_path(phone: '+12065551212')
   end
 
   test "should NOT create as viewer" do
-    post admin_messages_url(message: { number: '2065551212', body: 'how are you?' },as: @viewer)
+    post admin_messages_url(message: { phone: '2065551212', body: 'how are you?' },as: @viewer)
     assert_response :unauthorized
   end
 

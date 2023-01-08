@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_04_163630) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_08_182332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -83,7 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_04_163630) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string "number"
+    t.string "phone"
     t.string "body"
     t.uuid "reservation_id"
     t.string "service_status"
