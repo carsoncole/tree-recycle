@@ -37,8 +37,23 @@
               %th Total # donations
               %td.count= @donation_count
             %tr
+              %th Total # online donations
+              %td.count= @donation_online_count
+            %tr
+              %th Total # cash/check donations
+              %td.count= @donation_offline_count
+            %tr
               %th Total donations
               %td.count= number_to_currency(@total_donations)
+            %tr
+              %th Total cash/check donations
+              %td.count= number_to_currency(@total_offline_donations)
+            %tr
+              %th Average cash/check donation
+              %td.count= number_to_currency(@average_offline_donation)
+            %tr
+              %th Total online donations
+              %td.count= number_to_currency(@total_donations_online)
             %tr
               %th Median Online donation
               %td.count= number_to_currency(@median_online)

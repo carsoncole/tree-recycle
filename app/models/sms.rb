@@ -29,7 +29,7 @@ class Sms
 
       rescue => exception
         if Rails.env.production?
-          Rollbar.log('error', e)
+          Rollbar.log('error', exception)
         else 
           exception
         end
