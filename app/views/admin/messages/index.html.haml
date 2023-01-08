@@ -11,7 +11,7 @@
       - @phone_numbers.each do |phone|
         .row
           .col-lg-12
-            - Reservation.where(phone: phone).all.each do |r|
+            - Reservation.not_archived.where(phone: phone).all.each do |r|
               = link_to r.name, [:admin, r]
               \|
             = link_to phone, admin_phone_path(phone: phone), class: Message.incoming.unviewed?(phone) ? 'unviewed' : 'viewed'

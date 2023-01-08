@@ -21,11 +21,6 @@
                   = setting.contact_phone
 
             %td.email= mail_to(setting.contact_email) if setting.contact_email
-          - if setting.donation_notification_sms_number.present?
-            %tr
-              %td.name SMS only
-              %td.phone= setting.donation_notification_sms_number
-              %td.email
 
 
 

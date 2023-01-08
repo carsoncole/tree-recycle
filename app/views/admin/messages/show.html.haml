@@ -12,7 +12,7 @@
   .row
     .col-lg-12
       %h2
-        - Reservation.where(phone: @phone).all.each do |r|
+        - @reservations.each do |r|
           = link_to r.name, [:admin, r]
           \|
         = @phone

@@ -10,6 +10,7 @@ class Admin::MessagesController < Admin::AdminController
     @phone = params[:phone]
     @new_message = Message.new(phone: @phone)
     @messages = Message.order(created_at: :desc).where(phone: @phone)
+    @reservations = Reservation.not_archived.where(phone: @phone)
     @messages.update_all(viewed: true) if @messages.any?
   end
 

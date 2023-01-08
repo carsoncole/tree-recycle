@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_08_182332) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_08_224447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -92,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_182332) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["phone"], name: "index_messages_on_phone"
   end
 
   create_table "points", force: :cascade do |t|
@@ -144,6 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_182332) do
     t.integer "years_recycling", default: 1
     t.index ["email"], name: "index_reservations_on_email"
     t.index ["name"], name: "index_reservations_on_name"
+    t.index ["phone", "status"], name: "index_reservations_on_phone_and_status"
     t.index ["route_id"], name: "index_reservations_on_route_id"
     t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"
     t.index ["status"], name: "index_reservations_on_status"
@@ -196,7 +198,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_182332) do
     t.string "reservations_closed_message"
     t.boolean "is_driver_site_enabled", default: true
     t.integer "email_batch_quantity", default: 300
-    t.string "donation_notification_sms_number"
     t.text "driver_instructions"
   end
 
