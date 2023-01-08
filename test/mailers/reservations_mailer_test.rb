@@ -44,6 +44,34 @@ class ReservationsMailerTest < ActionMailer::TestCase
     assert email.html_part.body.to_s.include? 'This is a reminder that we will pick up your tree at'
   end
 
+  test "missing tree email with notes" do
+    reservation = create(:reservation_with_coordinates, notes: 'by the mailbox')
+    email = ReservationsMailer.with(reservation: reservation).missing_tree_email
+
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    # assert_equal ["me@example.com"], email.from
+    assert_equal [reservation.email], email.to
+    assert_equal "We can not find your tree", email.subject
+    assert email.html_part.body.to_s.include? 'Let us know if there are changes to your address or pickup notes you already gave us'
+  end
+
+  test "missing tree email without notes" do
+    reservation = create(:reservation_with_coordinates, notes: '')
+    email = ReservationsMailer.with(reservation: reservation).missing_tree_email
+
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    # assert_equal ["me@example.com"], email.from
+    assert_equal [reservation.email], email.to
+    assert_equal "We can not find your tree", email.subject
+    assert email.html_part.body.to_s.include? 'Let us know if there are changes to your address and any additional details about the location of your tree.'
+  end
+
   test "delivery of emails on status changes" do
     assert_emails 1 do # confirmed
       @reservation = create(:reservation_with_coordinates)

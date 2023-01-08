@@ -32,6 +32,7 @@ class Reservation < ApplicationRecord
 
   # sms delivery
   after_commit :send_missing_sms!, if: ->(obj){ obj.missing? && obj.phone.present? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :send_missing_email!, if: ->(obj){ obj.missing? && !obj.phone.present? && obj.saved_change_to_status? && obj.persisted? }
 
   # logging
   after_commit :log_unconfirmed!, if: ->(obj){ obj.unconfirmed? && obj.saved_change_to_status? && obj.persisted? }
@@ -111,6 +112,11 @@ class Reservation < ApplicationRecord
     message += ", or call us at #{ Setting&.first&.contact_phone }," if Setting&.first&.contact_phone.present?
     message += " if you would like us to  attempt a second pick-up of your tree today. "
     Sms.new.send_with_object(self, message)
+  end
+
+  def send_missing_email!
+    return if self.phone.present?
+    ReservationsMailer.with(reservation: self).missing_tree_email.deliver_later
   end
 
   # method to import data from existing tree recycle system csv export

@@ -22,4 +22,9 @@ class ReservationsMailerPreview < ActionMailer::Preview
     @reservation = create(:reservation_with_coordinates)
     ReservationsMailer.with(reservation: @reservation).cancelled_reservation_email
   end
+
+  def missing_tree_email
+    @reservation = create(:reservation_with_coordinates, notes: 'tree will be next to the mailboxes at the end of the street')
+    ReservationsMailer.with(reservation: @reservation).missing_tree_email
+  end
 end

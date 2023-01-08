@@ -1,0 +1,40 @@
+%table(style="width:100%; border:0;cellspacing:0;cellpadding:0")
+  %tr(style='padding: 0;border:0')
+    %td(style="width: 100%;padding: 0;border:0")
+      %table(style="max-width:800px;margin-left: auto;margin-right: auto;")
+        %tr
+          %td(style="text-align:left;padding: 0;border:0")
+            %h1(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; font-weight: 300; font-size: 40px; margin: 20px auto 70px auto;text-align: center;padding: 0;line-height: 1.5;")
+              Missing tree
+
+            %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5;box-sizing: border-box; font-size: 16px; margin: 0 0 20px; padding: 0;")
+              Dear
+              = succeed(",") do
+                = @reservation.name
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+              Perhaps your tree has not been put out, or perhaps you no longer need it picked up? We want to make sure we pick it up for you. If you'd like us to try again today, please let us know by replying to this email ASAP or call us at
+              = succeed(".") do
+                = link_to Setting.first.contact_phone, "telno: #{Setting.first.contact_phone}"
+
+            - if @reservation.notes.present?
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 15px 0; padding: 0;")
+                Let us know if there are changes to your address or pickup notes you already gave us:
+
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 30px 60px 30px; padding: 0;")
+                = @reservation.street
+                %br
+                = surround('"', '"') do
+                  = @reservation.notes
+            - else
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 15px 0; padding: 0;")
+                Let us know if there are changes to your address and any additional details about the location of your tree.
+
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 30px 60px 30px; padding: 0;")
+                = @reservation.street
+
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
+              Thank You,
+              %br
+              Bainbridge Island Troop 1564 and Troop 1804

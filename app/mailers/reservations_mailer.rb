@@ -35,4 +35,10 @@ class ReservationsMailer < ApplicationMailer
     mail(to: @reservation.email, subject: "Your tree pickup reservation has been cancelled")
     @reservation.logs.create(message: 'Cancelled reservation email sent.')
   end
+
+  def missing_tree_email
+    return if @reservation.no_emails? || !setting.is_emailing_enabled
+    mail(to: @reservation.email, subject: "We can not find your tree")
+    @reservation.logs.create(message: 'Missing tree email sent.')
+  end
 end
