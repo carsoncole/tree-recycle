@@ -9,7 +9,7 @@ class Admin::AnalyticsController < Admin::AdminController
 
     @donation_count = @donation_online_count + Donation.not_online.count
 
-    @total_offline_reservations = Reservation.not_archived.where.not(id: Donation.all.map {|d| d.reservation_id}).count
+    @total_offline_reservations_count = Reservation.not_archived.where.not(id: Donation.all.map {|d| d.reservation_id}).count
 
     @total_donations_online = Donation.online.joins(:reservation).where.not("reservations.status IN (99)").sum(:amount)
 
