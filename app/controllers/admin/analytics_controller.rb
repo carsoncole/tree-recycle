@@ -9,14 +9,16 @@ class Admin::AnalyticsController < Admin::AdminController
 
     @donation_count = @donation_online_count + Donation.not_online.count
 
-    @total_offline_reservations_count = Reservation.not_archived.where.not(id: Donation.all.map {|d| d.reservation_id}).count
-
     @total_donations_online = Donation.online.joins(:reservation).where.not("reservations.status IN (99)").sum(:amount)
+
+    @total_no_donation_reservations_count = Reservation.no_donation.count
+
+    @total_cash_check_reservations_count = Reservation.not_archived.where.not(id: Donation.all.map {|d| d.reservation_id}).count - @total_no_donation_reservations_count
 
     @total_donations = Donation.sum(:amount)
 
     @total_offline_donations = @total_donations - @total_donations_online
-    @average_offline_donation = @total_offline_donations / @total_offline_reservations_count.to_f
+    @average_offline_donation = @total_offline_donations / @total_cash_check_reservations_count.to_f
 
     online_donations_ordered = Donation.online.joins(:reservation).order(:amount).where.not("reservations.status IN (99)")
     

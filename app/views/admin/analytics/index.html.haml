@@ -40,8 +40,11 @@
               %th Total # online donations
               %td.count= @donation_online_count
             %tr
-              %th Total # cash/check/no donation reservations
-              %td.count= @total_offline_reservations_count
+              %th Total # cash/check reservations
+              %td.count= @total_cash_check_reservations_count
+            %tr
+              %th Total # no donation reservations
+              %td.count= @total_no_donation_reservations_count
             %tr
               %th Total donations
               %td.count= number_to_currency(@total_donations)
