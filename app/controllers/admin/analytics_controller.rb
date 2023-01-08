@@ -16,7 +16,7 @@ class Admin::AnalyticsController < Admin::AdminController
     @total_donations = Donation.sum(:amount)
 
     @total_offline_donations = @total_donations - @total_donations_online
-    @average_offline_donation = @total_offline_donations / @donation_offline_count.to_f
+    @average_offline_donation = @total_offline_donations / @total_offline_reservations_count.to_f
 
     online_donations_ordered = Donation.online.joins(:reservation).order(:amount).where.not("reservations.status IN (99)")
     
