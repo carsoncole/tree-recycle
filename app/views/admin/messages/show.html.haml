@@ -15,7 +15,9 @@
         - @reservations.each do |r|
           = link_to r.name, [:admin, r]
           \|
-        = @phone
+        - parsed_phone = Phonelib.parse(@phone)
+        - formatted_phone = parsed_phone.invalid? ? @phone : parsed_phone.full_national
+        = formatted_phone
 
 
 

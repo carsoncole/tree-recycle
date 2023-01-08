@@ -110,4 +110,18 @@ class ReservationTest < ActiveSupport::TestCase
       Reservation.process_post_event!
     end
   end
+
+  test "normalizig of phone" do
+    reservation = create(:reservation_with_coordinates, is_routed: false, phone: '206 555 1 212')
+    assert_equal '+12065551212', reservation.phone
+
+    reservation = create(:reservation_with_coordinates, is_routed: false, phone: '3035559850')
+    assert_equal '+13035559850', reservation.phone
+
+    reservation = create(:reservation_with_coordinates, is_routed: false, phone: '13035559850')
+    assert_equal '+13035559850', reservation.phone
+
+    reservation = create(:reservation_with_coordinates, is_routed: false, phone: '(206) 123-1234')
+    assert_equal '+12061231234', reservation.phone
+  end
 end

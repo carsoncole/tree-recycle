@@ -9,12 +9,14 @@
   .row
     .col-lg-12#messages-by-number
       - @phone_numbers.each do |phone|
+        - parsed_phone = Phonelib.parse(phone)
+        - formatted_phone = parsed_phone.invalid? ? phone : parsed_phone.full_national
         .row
           .col-lg-12
             - Reservation.not_archived.where(phone: phone).all.each do |r|
               = link_to r.name, [:admin, r]
               \|
-            = link_to phone, admin_phone_path(phone: phone), class: Message.incoming.unviewed?(phone) ? 'unviewed' : 'viewed'
+            = link_to formatted_phone, admin_phone_path(phone: phone), class: Message.incoming.unviewed?(phone) ? 'unviewed' : 'viewed'
             - count = Message.where(phone: phone, viewed: false).count
             - if count > 0
               = surround("(", ")") do

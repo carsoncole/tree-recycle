@@ -1,3 +1,4 @@
+#OPTIMIZE View status is not specific to any user--should be
 class Message < ApplicationRecord
   belongs_to :reservation, optional: true
   has_many :reservations, foreign_key: "phone"

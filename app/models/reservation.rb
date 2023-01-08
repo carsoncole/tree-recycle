@@ -23,6 +23,8 @@ class Reservation < ApplicationRecord
 
   attribute :is_routed, :boolean, default: true
 
+  before_save :normalize_phone!
+
   after_commit :route_reservation, if: ->(obj){ obj.geocoded? && obj.is_routed? && (obj.saved_change_to_latitude? && (obj.persisted? || obj.route_id.nil?)) }
 
   # email delivery
@@ -183,6 +185,10 @@ class Reservation < ApplicationRecord
 
 
   private
+
+  def normalize_phone!
+    self.phone = Phonelib.parse(phone).full_e164.presence
+  end
 
   def log_unconfirmed!
     logs.create(message: "Reservation unconfirmed")
