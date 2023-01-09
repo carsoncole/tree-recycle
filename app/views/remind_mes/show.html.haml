@@ -1,19 +1,21 @@
-.container
+#remind-me-success.container
 
   .row
     .col-lg-12
-      %h3.mt-4.mb-4 Signed up!
-      %p
+      %h1.mt-5 You are signed up.
+      %p.fw-bold
         = succeed(",") do
           = @remind_me.name
-        you are all signed up for a reminder we send out after Christmas with tne details of our next Christmas tree recycling pickup!
-
-      %p.mb-5
-        We will it to:
-
-        %span.fw-bold= @remind_me.email
-
-      %p Thank you!
+      %p
+        Every year just after Christmas, we send out reminder emails with details concerning our next tree recycling pickup. We'll send you the reminder at
+        = succeed(".") do
+          %span.email= @remind_me.email
 
 
-      %p.mt-3= link_to "Tree Recycle", root_url
+      %p.mt-4 Thank you!
+
+      %p= Setting.first.organization_name
+
+
+
+      %p.mt-5= link_to "Tree Recycle", root_url
