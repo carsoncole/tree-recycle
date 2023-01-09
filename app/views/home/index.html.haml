@@ -21,19 +21,23 @@
 
   .row
     .col-md-12
+      %div{class: setting.is_reservations_open? ? '' : 'mute-all' }
 
-      .text-center.pickup_date
-        = nice_date(setting&.pickup_date_and_time)
+        .text-center.pickup_date
+          = nice_date(setting&.pickup_date_and_time)
 
 
-      .text-center.d-grid.gap-2
-        = link_to new_reservation_path, class: 'btn btn-primary btn-lg', id: 'reservation-button' do 
-          Reserve now
-          %i.bi.bi-arrow-right-circle
-
-  .row
-    .col-md-8.offset-lg-2.important-date
-      - if setting&.sign_up_deadline_at
-        Reservations close
-        = nice_date_time_no_year(setting&.sign_up_deadline_at)
+        .text-center.d-grid.gap-2
+          - if setting.is_reservations_open?
+            = link_to new_reservation_path, class: 'btn btn-primary btn-lg', id: 'reservation-button' do
+              Reserve now
+              %i.bi.bi-arrow-right-circle
+          - else
+            .btn.btn-primary.btn-lg#reservation-button
+              Reserve now
+              %i.bi.bi-arrow-right-circle
+        .important-date
+          - if setting&.sign_up_deadline_at
+            Reservations close
+            = nice_date_time_no_year(setting&.sign_up_deadline_at)
 
