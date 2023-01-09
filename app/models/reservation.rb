@@ -151,11 +151,11 @@ class Reservation < ApplicationRecord
     Reservation.where("created_at > ?", Time.now + months.to_i.months).destroy_all
   end
 
-  # archived reservations that are not also pending (but they could be unconfirmed or cancelled)
+  # archived reservations that 1) have not been sent marketing, 2) are not pending (pending_pickup, picked_up, missing)
   def self.reservations_to_send_marketing_emails(attribute)
     reservations_to_send =
       Reservation.archived.
-      where("LOWER(email) NOT IN (?)", Reservation.where(status: :pending_pickup).map { |r| r.email.downcase } ).
+      where("LOWER(email) NOT IN (?)", Reservation.pending.map { |r| r.email.downcase } ).
       where(attribute.to_sym => false).
       where(no_emails: false).
       order(:email)
