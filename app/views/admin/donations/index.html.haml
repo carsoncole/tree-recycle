@@ -19,7 +19,7 @@
     .col-lg-2
       %p= link_to "All donations", admin_donations_path
       %p= link_to "Donations with no reservation", admin_donations_path(no_reservation: true)
-    .col-lg-8
+    .col-lg-10
 
 
       .pagination= pagy_bootstrap_nav(@pagy).html_safe
@@ -33,6 +33,7 @@
               %th.amount Amount
               %th.email Email
               %th Reservation
+              %th Note
               %th
           %tbody
             - @donations.each do |donation|
@@ -44,6 +45,7 @@
                 %td.name
                   - if donation.reservation
                     = link_to donation&.reservation&.name, admin_reservation_path(donation.reservation) if donation.reservation
+                %td= donation.note
                 %td.text-end= nice_short_date_time(donation.created_at)
 
       .pagination= pagy_bootstrap_nav(@pagy).html_safe

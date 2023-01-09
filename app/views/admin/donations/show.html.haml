@@ -3,6 +3,8 @@
     .col-lg-12
       %h1 Donation
 
+      %p= link_to "< All Donations", admin_donations_path
+
       %p
         = link_to edit_admin_donation_path(@donation) do
           %i.bi.bi-pencil-fill
@@ -34,7 +36,11 @@
               - if @donation.email.present?
                 = link_to admin_donation_send_donation_receipt_path(donation_id: @donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will send a donation receipt.' } do
                   %i.bi.bi-send
-          %tr 
+          %tr
+            %th Note
+            %td= @donation.note
+
+          %tr
             %th Created at
             %td= nice_date_time(@donation.created_at)
           %tr 

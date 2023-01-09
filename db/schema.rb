@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_08_235822) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_09_040709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_235822) do
     t.string "exp_month"
     t.string "exp_year"
     t.integer "form"
+    t.string "note"
     t.index ["reservation_id"], name: "index_donations_on_reservation_id"
   end
 

@@ -85,6 +85,6 @@ class Admin::DonationsController < Admin::AdminController
   private
 
     def donation_params
-      params.require(:donation).permit(:email, :amount, :form, :reservation_id)
+      params.require(:donation).permit(:email, :amount, :form, :reservation_id, :note)
     end
 end
