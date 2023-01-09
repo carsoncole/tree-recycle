@@ -1,0 +1,16 @@
+#remind-mes.container
+  .row
+    .col-lg-12
+      %h1
+        %i.bi.bi-envelope-plus-fill
+        Remind Mes
+
+  .row
+    .col-lg-12
+      .pagination= pagy_bootstrap_nav(@pagy).html_safe
+
+  .row
+    .col-lg-6
+      .table-responsive
+        %table.table.table-condensed#remind-mes-table
+          = render partial: 'remind_me', collection: @remind_mes

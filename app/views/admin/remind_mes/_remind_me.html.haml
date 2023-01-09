@@ -1,0 +1,7 @@
+%tr
+  %td.name= remind_me.name
+  %td.email= remind_me.email
+  %td.date= nice_short_date(remind_me.created_at)
+  %td.actions
+    = link_to admin_remind_me_path(remind_me), method: :delete, data: { 'turbo-method': :delete } do
+      %i.bi.bi-trash-fill

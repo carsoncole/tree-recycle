@@ -78,6 +78,8 @@ Rails.application.routes.draw do
     resources :donations do
       post 'send-donation-receipt' => 'donations#send_donation_receipt', as: 'send_donation_receipt'
     end
+    resources :marketing, only: [ :index ]
+    resources :remind_mes, only: [ :index, :destroy ]
     resources :settings, only: [ :index, :edit, :update ]
     resources :users, only: [ :index, :update, :create, :destroy, :edit ]
     resources :driver_routes, only: [:create, :destroy]

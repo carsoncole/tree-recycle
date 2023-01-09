@@ -13,6 +13,10 @@ module ApplicationHelper
     date&.strftime('%B %e, %Y')
   end
 
+  def nice_short_date(datetime) # Jan 09 '23
+    datetime&.strftime("%b %e '%y")
+  end
+
   def nice_long_date_short(date)
     date&.strftime('%a, %b %e')
   end

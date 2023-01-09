@@ -27,7 +27,9 @@
               = turbo_stream_from "messages-count"
               = render 'admin/messages/count'
             %li.nav-item
-              = link_to "Analytics", admin_analytics_path, class: "nav-link #{ controller_name == 'marketing' ? 'active' : nil }"
+              = link_to "Analytics", admin_analytics_path, class: "nav-link #{ controller_name == 'analytics' ? 'active' : nil }"
+            %li.nav-item
+              = link_to "Marketing", admin_marketing_index_path, class: "nav-link #{ controller_name == 'marketing' ? 'active' : nil }"
             %li.nav-item
               = link_to admin_settings_path, class: "nav-link #{ controller_name == 'settings' ? 'active' : nil }", id: 'settings-link' do
                 %i.bi.bi-gear-fill

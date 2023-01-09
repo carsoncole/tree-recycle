@@ -258,48 +258,6 @@
               .col-lg-4
                 %h3#campaigns Email
               .col-lg-8
-                %p.text-muted Emails will only be sent once in a campaign. Each year, archived reservations will need to be reset to enable resending.
-                .mb-2
-                  = button_to "Send Marketing Email #1", admin_marketing_send_email_1_path, class: 'btn btn-primary', data: { 'turbo-confirm': 'Are you sure? This will send out emails, limited in quantity by the batch size setting, to archived reservations that do not have current pending reservations with the same email address. Reservations sent this mailing will be flagged to avoid sending the same email twice. '}
-                  %p
-                    = Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
-                    available
-                    %br
-                    Email reminder to all Archived reservations, that have not signed up with a 'Pending Pickup'
-                .mb-2
-                  = button_to "Send Marketing Email #2", admin_marketing_send_email_2_path, class: 'btn btn-primary', data: { 'turbo-confirm': 'Are you sure? This will send out emails, limited in quantity by the batch size setting, to archived reservations that do not have current pending reservations with the same email address. Reservations sent this mailing will be flagged to avoid sending the same email twice. '}
-                  %p
-                    = Reservation.reservations_to_send_marketing_emails('is_marketing_email_2_sent').count
-                    available
-                    %br
-                    Email last call to all Archived reservations, that have not signed up with a 'Pending Pickup'
-                .mb-2
-                  = button_to "Send Pickup Reminders", admin_send_pickup_reminders_path, class: 'btn btn-primary', data: { 'turbo-confirm': 'Are you sure? This will send out emails, limited in quantity by the batch size setting, to reservations that have a status of pending-pickup that have not already been sent a reminder.'}
-                  %p
-                    = Reservation.pending_pickup.where(is_pickup_reminder_email_sent: false).count
-                    available
-                    %br
-                    Email to all reservations that are 'Pending Pickup'
-                .mb-2
-                  .mb-2= button_to "Reset Archived reservations for campaigns", admin_marketing_reset_sent_campaigns_path, class: 'btn btn-info', data: { 'turbo-confirm': 'Are you sure? This will reset the flags on reservations that have been sent marketing emails, to enable the sending of these same marketing emails anew. '}
-                  %p Campaign emails will only be sent to Archived reservations and only once. Reseting here will allow for new sends.
-
-                .mb-4
-                  %p
-                    %span.fw-bold Email count last 24 hours:
-                    = Log.email_count_last_24_hours
-
-                = form_for [:admin, setting] do |f|
-                  = hidden_field_tag :source, "marketing"
-                  .row.g-3.align-items-center.mb-4
-                    .col-lg-5.fw-bold
-                      = f.label :email_batch_quantity
-                    .col-lg-3  
-                      = f.text_field :email_batch_quantity, class: 'form-control'
-                    .col-lg-4
-                      = f.submit 'Update', class: 'btn btn-primary'
-
-
                 - if setting.is_emailing_enabled
                   .row
                     .col-lg-5
