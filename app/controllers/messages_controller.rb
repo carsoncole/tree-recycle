@@ -17,7 +17,7 @@ class MessagesController < ApplicationController
     to_number = params["To"]
 
     m = Message.create(
-      number: from_number,
+      phone: from_number,
       body: message_body,
       direction: 'incoming'
       )
