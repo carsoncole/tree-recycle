@@ -12,7 +12,7 @@
               This email is to confirm that the pick up of your tree at
               = @reservation.short_address
               on
-              = Setting&.first&.pickup_date_and_time&.strftime("%B %-d, %Y")
+              = Time.parse(EVENT_DATE_AND_PICKUP_TIME).strftime("%B %-d, %Y")
               has been cancelled.
 
 

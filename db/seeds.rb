@@ -4,16 +4,11 @@ include FactoryBot::Syntax::Methods
 User.create(email: 'admin@example.com', password: 'password')
 
 Setting.first_or_create  do |setting|
-  setting.site_title = 'Troop 100 Tree Recycle'
   setting.site_description = "This is the annual Tree Recycle fundraiser for Troop 100. Residents of Anytown, USA can have their Christmas trees recycle by making an online reservation and make an optional donation to support the Troop and it's Scouts."
   setting.description = 'Anytown Troop 100 holds an annual Christmas tree recycling fundraiser to support its annual programs, assisting Scouts in attending camps and other outdoor adventures. '
   setting.contact_email = 'admin@example.com'
   setting.contact_name = 'John Doe'
   setting.contact_phone = '206-555-1212'
-  setting.pickup_date_and_time = Date.today + 2.month
-  setting.pickup_date_and_end_time = Date.today + 2.month + 6.hours
-  setting.sign_up_deadline_at = Date.today + 2.month - 1.day
-  setting.organization_name = 'BSA Troop 100'
 end
 
 zones = [

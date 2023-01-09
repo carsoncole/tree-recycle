@@ -24,13 +24,13 @@
     .section.pickup-details
       %h2 Pickup details
       %h3 Date
-      #pickup-date= nice_date(setting.pickup_date_and_time)
+      #pickup-date= nice_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
 
       %h3 Pickup-time
       #pickup-time
-        = nice_time(setting.pickup_date_and_time)
+        = nice_time(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
         \-
-        = nice_time(setting.pickup_date_and_end_time)
+        = nice_time(Time.parse(EVENT_DATE_AND_PICKUP_END_TIME))
 
     - if @reservation.email
       .section.contact-info

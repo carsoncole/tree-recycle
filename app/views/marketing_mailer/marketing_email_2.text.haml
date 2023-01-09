@@ -3,11 +3,11 @@ Tree Pickup Time!
 
 We noticed that you haven't signed up yet, so we are sending a friendly reminder that the Scouts of Bainbridge Island Troop 1564 and Troop 1804 are picking up trees on Bainbridge Island on
 = succeed(".") do
-  = nice_long_date(setting.pickup_date_and_time)
+  = nice_long_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
 
 If you would like us to pick up a tree again this year, please register at our website (https://TreeRecycle.net). Once registered we will send you a confirmation email and then pick up your tree on
 = succeed(".") do
-  = nice_long_date(setting.pickup_date_and_time)
+  = nice_long_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
 
 
 Thank You, Bainbridge Island Troop 1564 and Troop 1804

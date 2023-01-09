@@ -17,7 +17,7 @@
               We noticed you have not signed up this year for a tree pickup, so we wanted to reach out with this last friendly reminder that we will be picking up trees 
               on
               = succeed(".") do
-                = setting.pickup_date_and_time.strftime("%B %e at %l:%M %p")
+                = Time.parse(EVENT_DATE_AND_PICKUP_TIME).strftime("%B %e at %l:%M %p")
 
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 30px; padding: 0;")
@@ -40,13 +40,12 @@
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
               Once registered we will send you a confirmation email and then pick up your tree on
               = succeed(".") do
-                = nice_long_date(setting.pickup_date_and_time)
+                = nice_long_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
-              - if setting.pickup_date_and_end_time.present?
-                The deadline for reserving a pickup is
-                = succeed(".") do
-                  = setting.sign_up_deadline_at.strftime("%B %e at %l:%M %p")
+              The deadline for reserving a pickup is
+              = succeed(".") do
+                = Time.parse(EVENT_SIGN_UP_DEADLINE).strftime("%B %e at %l:%M %p")
               If you have any questions, please contact us at
               = succeed(", ") do 
                 = mail_to setting.contact_email

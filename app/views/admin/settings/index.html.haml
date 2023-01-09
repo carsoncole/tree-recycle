@@ -84,18 +84,12 @@
                           Pick-up date start/end time
 
                         %td
-                          - if setting.pickup_date_and_time.present?
-                            = nice_date_time(setting.pickup_date_and_time)
-                          - else
-                            No start time set
+                          = nice_date_time(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
                           %br
-                          - if setting.pickup_date_and_end_time.present?
-                            = nice_date_time(setting.pickup_date_and_end_time)
-                          - else
-                            No end time set
+                          = nice_date_time(Time.parse(EVENT_DATE_AND_PICKUP_END_TIME))
                       %tr
                         %th Signup deadline
-                        %td= nice_date_time(setting.sign_up_deadline_at)
+                        %td= nice_date_time_no_year(Time.parse(EVENT_SIGN_UP_DEADLINE))
 
       .row
         .col-lg-10
@@ -109,7 +103,7 @@
                     %tbody
                       %tr
                         %th Site title
-                        %td= setting.site_title
+                        %td= SITE_TITLE
                       %tr
                         %th Site description
                         %td= setting.site_description

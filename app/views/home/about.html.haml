@@ -13,19 +13,18 @@
     %p.mb-4
       = setting&.description&.html_safe
 
-
     %H5 On the day of pickup
     %p.mb-4
       = setting.on_day_of_pickup_instructions
 
     %h5 Date of pick-up
-    .mb-4= setting&.pickup_date_and_time&.strftime('%B %e, %Y')
+    .mb-4= Time.parse(EVENT_DATE_AND_PICKUP_TIME).strftime('%B %e, %Y')
 
     %h5 Trees should be ready for pickup between
     .mb-4
-      = setting&.pickup_date_and_time&.strftime('%l:%M %p')
+      = Time.parse(EVENT_DATE_AND_PICKUP_TIME).strftime('%l:%M %p')
       \-
-      = setting&.pickup_date_and_end_time&.strftime('%l:%M %p')
+      = Time.parse(EVENT_DATE_AND_PICKUP_END_TIME)&.strftime('%l:%M %p')
 
     %h5= link_to 'Have a question?', questions_path
 

@@ -6,9 +6,6 @@
         - setting.errors.full_messages.each do |message|
           %li= message
   .mb-3
-    = f.label :site_title, class: 'form-label'
-    = f.text_field :site_title, class: 'form-control'
-  .mb-3
     = f.label :site_description, class: 'form-label'
     = f.text_area :site_description, class: 'form-control'
     .form-text.text-muted Shown as the META description in the website headers for SEO
@@ -34,9 +31,6 @@
     = f.label :is_driver_site_enabled, class: 'form-label'
     = f.check_box :is_driver_site_enabled, class: 'form-check-input'
   .mb-3
-    = f.label :organization_name, class: 'form-label'
-    = f.text_field :organization_name, class: 'form-control'
-  .mb-3
     = f.label :contact_name, class: 'form-label'
     = f.text_field :contact_name, class: 'form-control'
     .form-text.text-muted Shown on the 'Contact' page
@@ -48,15 +42,6 @@
     = f.label :contact_phone, class: 'form-label'
     = f.text_field :contact_phone, class: 'form-control'
     .form-text.text-muted Shown on the 'Contact' page
-  .mb-3
-    = f.label :pickup_date_and_time, class: 'form-label'
-    = f.datetime_select :pickup_date_and_time, class: 'form-control'
-  .mb-3
-    = f.label :pickup_date_and_and_end_time, class: 'form-label'
-    = f.datetime_select :pickup_date_and_end_time, class: 'form-control'
-  .mb-3
-    = f.label :sign_up_deadline_at, class: 'form-label'
-    = f.datetime_select :sign_up_deadline_at, class: 'form-control'
   .mb-3
     = f.label :driver_secret_key, class: 'form-label'
     = f.text_field :driver_secret_key, class: 'form-control'

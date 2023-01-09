@@ -17,7 +17,7 @@
               = @reservation.street
               on
               = succeed(".") do
-                = Setting.first.pickup_date_and_time.strftime("%B %-d, %Y")
+                = Time.parse(EVENT_DATE_AND_PICKUP_TIME).strftime("%B %-d, %Y")
 
             %h2(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; line-height: 1.5; margin-top: 14px; box-sizing: border-box; font-size: 16px; margin: 0; padding: 0;")
               On the Day of Collection

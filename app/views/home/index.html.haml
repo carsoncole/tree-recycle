@@ -24,7 +24,7 @@
       %div{class: setting.is_reservations_open? ? '' : 'mute-all' }
 
         .text-center.pickup_date
-          = nice_date(setting&.pickup_date_and_time)
+          = nice_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
 
 
         .text-center.d-grid.gap-2
@@ -37,7 +37,6 @@
               Reserve now
               %i.bi.bi-arrow-right-circle
         .important-date
-          - if setting&.sign_up_deadline_at
-            Reservations close
-            = nice_date_time_no_year(setting&.sign_up_deadline_at)
+          Reservations close
+          = nice_date_time_no_year(Time.parse(EVENT_SIGN_UP_DEADLINE))
 

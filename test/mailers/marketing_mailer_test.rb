@@ -11,7 +11,7 @@ class MarketingMailerTest < ActionMailer::TestCase
 
     # assert_equal ["me@example.com"], email.from
     assert_equal [reservation.email], email.to
-    assert_equal "Tree recycling #{nice_long_date_short(Setting.first.pickup_date_and_time)}. Register today.", email.subject
+    assert_equal "Tree recycling #{nice_long_date_short(Time.parse(EVENT_DATE_AND_PICKUP_TIME))}. Register today.", email.subject
     assert email.html_part.body.to_s.include? "It's our 26th year of recycling Christmas trees on Bainbridge"
   end
 
@@ -25,7 +25,7 @@ class MarketingMailerTest < ActionMailer::TestCase
 
     # assert_equal ["me@example.com"], email.from
     assert_equal [reservation.email], email.to
-    assert_equal "Last call! Tree recycling #{nice_long_date_short(Setting.first.pickup_date_and_time)}", email.subject
+    assert_equal "Last call! Tree recycling #{nice_long_date_short(Time.parse(EVENT_DATE_AND_PICKUP_TIME))}", email.subject
     assert email.html_part.body.to_s.include? "We noticed you have not signed up this year"
   end
 end
