@@ -11,6 +11,14 @@
       .sub-line
         = HOME_PAGE_LEAD
 
+
+  - unless setting.is_reservations_open?
+    .row
+      .col-lg-8.offset-lg-2
+        = render 'remind_me'
+
+
+
   .row
     .col-md-12
 

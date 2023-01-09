@@ -1,0 +1,12 @@
+= form_for @remind_me do |f|
+  .row
+    .col-lg-12
+      %p.text-center.fw-bold
+        Want to be reminded about our next pickup details?
+        %span.text-muted Not needed if you reserved last time.
+      .mb-2
+        = f.text_field :name, placeholder: 'Name', class: 'form-control', required: true
+      .mb-3
+        = f.email_field :email, placeholder: 'Email', class: 'form-control', required: true
+      .mb-4.text-center
+        = f.submit "Remind me", class: 'btn btn-primary btn-sm'

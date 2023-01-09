@@ -3,6 +3,7 @@ class HomeController < ApplicationController
 
   def index
     flash[:warning] = setting.reservations_closed_message unless setting.is_reservations_open?
+    @remind_me = RemindMe.new
   end
 
   def about
