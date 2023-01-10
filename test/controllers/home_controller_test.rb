@@ -20,4 +20,19 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get software_url
     assert_response :success
   end
+
+  test "should get index with remind mes enabled" do
+    get root_url
+    setting.update(is_remind_mes_enabled: true)
+    get root_url
+    assert_response :success
+  end
+
+  test "should get index with reservations closed" do
+    get root_url
+    setting.update(is_reservations_open: false, reservations_closed_message: 'We are closed')
+    get root_url
+    assert_response :success
+    assert flash[:warning] == 'We are closed'
+  end
 end

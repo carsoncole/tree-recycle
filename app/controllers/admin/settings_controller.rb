@@ -21,6 +21,6 @@ class Admin::SettingsController < Admin::AdminController
 
   private
     def setting_params
-      params.require(:setting).permit(:site_description, :contact_name, :contact_email, :contact_phone, :description, :is_reservations_open, :is_reservations_editable, :is_emailing_enabled, :on_day_of_pickup_instructions, :driver_secret_key, :meta_site_name, :meta_title, :meta_description, :meta_image_filename, :facebook_page_id, :reservations_closed_message, :is_driver_site_enabled, :email_batch_quantity, :driver_instructions)
+      params.require(:setting).permit(:site_description, :contact_name, :contact_email, :contact_phone, :description, :is_reservations_open, :is_reservations_editable, :is_emailing_enabled, :on_day_of_pickup_instructions, :driver_secret_key, :meta_site_name, :meta_title, :meta_description, :meta_image_filename, :facebook_page_id, :reservations_closed_message, :is_driver_site_enabled, :email_batch_quantity, :driver_instructions, :is_remind_mes_enabled)
     end
 end

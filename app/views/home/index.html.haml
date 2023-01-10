@@ -12,12 +12,10 @@
         = HOME_PAGE_LEAD
 
 
-  - unless setting.is_reservations_open?
-    .row
+  - if setting.is_remind_mes_enabled?
+    #remind-me.row
       .col-lg-8.offset-lg-2
         = render 'remind_me'
-
-
 
   .row
     .col-md-12
@@ -39,4 +37,3 @@
         .important-date
           Reservations close
           = nice_date_time_no_year(Time.parse(EVENT_SIGN_UP_DEADLINE))
-

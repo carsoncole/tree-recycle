@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_09_221849) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_10_063725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -204,6 +204,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_221849) do
     t.boolean "is_driver_site_enabled", default: true
     t.integer "email_batch_quantity", default: 300
     t.text "driver_instructions"
+    t.boolean "is_remind_mes_enabled", default: false
   end
 
   create_table "users", force: :cascade do |t|
