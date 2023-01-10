@@ -174,10 +174,10 @@ table.reservation {
     color: #fff;
     text-align: center;
     padding: 0.6em 1.4em;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1.1em;
-    line-height: 1.66em;
-    letter-spacing: 0.02em;
+    line-height: 1.5em;
+    letter-spacing: -0.01em;
     &.alert-primary {
       background-color: lighten($scout-blue, 20%);
       border-color: $scout-blue;
