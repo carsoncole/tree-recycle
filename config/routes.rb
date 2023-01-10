@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 
   get '/about' => 'home#about', as: 'about'
   get '/questions' => 'home#questions', as: 'questions'
+  get '/search' => 'reservations#search', as: 'reservation_lookup'
+  post '/search' => 'reservations#search'
 
   get '/donation' => 'donations#donation_without_reservation', as: 'donation_without_reservation'
   get '/thank-you-for-your-donation' => 'donations#success', as: 'success'

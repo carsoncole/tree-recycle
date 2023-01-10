@@ -84,6 +84,17 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def search
+    @search = params[:search]&.strip
+    if @search
+      if @search.match(/^\d+/) && @search.length > 3 + @search.match(/^\d+/).to_s.length  # does it start with a number (house) and is there more than a number?
+        @reservations = Reservation.where("street ILIKE ?", "%#{Reservation.sanitize_sql_like(@search)}%").limit(2)
+      else
+        @result = "Search should start with a house number"
+      end
+    end
+  end
+
   def submit_confirmed_reservation
     @reservation.pending_pickup!
     redirect_to new_reservation_donation_url(@reservation)

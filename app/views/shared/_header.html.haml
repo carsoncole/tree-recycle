@@ -10,18 +10,21 @@
       .collapse.navbar-collapse#navbarSupportedContent
         %ul.navbar-nav.me-auto.mb-2.mb-lg-0
           %li.nav-item
-            = link_to "New reservation", new_reservation_url, class: "nav-link #{ controller_name == 'reservations' ? 'active' : nil }", "aria-current": "page"
+            = link_to "New reservation", new_reservation_url, class: "nav-link #{ controller_name == 'reservations' && action_name == 'new' ? 'active' : nil }", "aria-current": "page"
           %li.nav-item
             = link_to "Donate", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link #{ controller_name == 'donations' ? 'active' : nil }", "aria-current": "page"
+          - if setting.is_reservations_open?
+            %li.nav-item
+              = link_to reservation_lookup_url, class: "nav-link #{ action_name == 'lookup' ? 'active' : nil }", "aria-current": "page", id: 'question_header_link' do
+                Reservation Lookup
           %li.nav-item
             = link_to questions_url, class: "nav-link #{ controller_name == 'home' && action_name == 'questions' ? 'active' : nil }", "aria-current": "page", id: 'question_header_link' do
-              = "Questions"
-              %i.bi.bi-question-lg
+              Questions?
           %li.nav-item
             = link_to "About", about_url, class: "nav-link #{ controller_name == 'home' && action_name == 'about' ? 'active' : nil }"
 
         - if signed_in?
-          %ul.navbar-nav.my-2.my-lg-0
+          %ul.navbar-nav.my-2.my-lg-0#admin-nav-links
             %li.nav-item
               = link_to "Admin", admin_root_path, class: "btn btn-outline-light btn-site"
             %li.nav-item

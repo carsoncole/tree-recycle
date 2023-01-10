@@ -638,3 +638,11 @@ nav.navbar {
   border-radius: 3px;
   color: #fff;
 }
+
+#search {
+  .search-result {
+    margin-bottom: 2em;
+    padding-top: 1.25em;
+    border-top: 1px solid #cccccc;
+  }
+}

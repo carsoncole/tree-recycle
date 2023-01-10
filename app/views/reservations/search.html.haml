@@ -1,0 +1,21 @@
+#search.container
+  .row
+    .col-lg-12
+      %h1 Reservation lookup
+
+      %p
+        Search with your street address.
+        = link_to "Contact us", questions_path
+        for further assistance.
+
+      .mb-5
+        = form_tag '/search', "data-turbo": false do
+          .mb-3
+            = text_field_tag :search, "", width: '100',  placeholder: 'Street address', class: 'form-control', required: true, value: @search
+          .text-center= submit_tag "Search", class: 'btn btn-primary'
+
+      = render partial: 'reservation', collection: @reservations
+
+      = "No reservations found" if @reservations&.empty?
+
+      = @result
