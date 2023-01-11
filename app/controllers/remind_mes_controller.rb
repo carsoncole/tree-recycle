@@ -18,6 +18,6 @@ class RemindMesController < ApplicationController
   private
 
   def remind_me_params
-    params.require(:remind_me).permit(:name, :email)
+    params.require(:reservation).permit(:name, :email)
   end
 end
