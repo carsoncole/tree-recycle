@@ -17,33 +17,34 @@
           = link_to edit_admin_reservation_path(@reservation), id: 'edit-link' do
             %i.bi.bi-pencil-fill
             Edit
-        - unless @reservation.archived?
+        - unless @reservation.remind_me?
+          - unless @reservation.archived?
+            %p.mb-1
+              = link_to admin_reservation_path(@reservation, reservation: { status: 'archived'} ), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': "This will archive this reservation, removing it from active reservations. "} do
+                %i.bi.bi-archive-fill
+                Archive
           %p.mb-1
-            = link_to admin_reservation_path(@reservation, reservation: { status: 'archived'} ), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': "This will archive this reservation, removing it from active reservations. "} do
-              %i.bi.bi-archive-fill
-              Archive
-        %p.mb-1
-          = link_to admin_reservation_path(@reservation), method: :delete, data: { 'turbo-method': :delete, 'turbo-confirm': "Are you sure? This is IRREVERSIBLE."} do 
-            %i.bi.bi-trash-fill
-            Destroy
+            = link_to admin_reservation_path(@reservation), method: :delete, data: { 'turbo-method': :delete, 'turbo-confirm': "Are you sure? This is IRREVERSIBLE."} do
+              %i.bi.bi-trash-fill
+              Destroy
 
-        %hr 
+          %hr
 
-        = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a confirmation email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
-          %i.bi.bi-send
-          Re-send confirmed pickup email
-        %br
-        - if @reservation.pending_pickup?
-          = link_to admin_reservation_path(@reservation, send_pickup_reminder_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a pickp reminder email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
+          = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a confirmation email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
             %i.bi.bi-send
-            Re-send pickup reminder email
+            Re-send confirmed pickup email
           %br
-        - if @reservation.donated_online?
-          - @reservation.donations.each do |donation|
-            = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt to the email on the donation record.' } do
+          - if @reservation.pending_pickup?
+            = link_to admin_reservation_path(@reservation, send_pickup_reminder_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a pickp reminder email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
               %i.bi.bi-send
-              Resend donation receipt -
-              = number_to_currency(donation.amount)
+              Re-send pickup reminder email
+            %br
+          - if @reservation.donated_online?
+            - @reservation.donations.each do |donation|
+              = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt to the email on the donation record.' } do
+                %i.bi.bi-send
+                Resend donation receipt -
+                = number_to_currency(donation.amount)
 
 
       .col-lg-2.main
@@ -60,29 +61,30 @@
                 %tr
                   %th Name
                   %td= @reservation.name
-                %tr
-                  %th Address
-                  %td
-                    = @reservation.short_address
-                    - if @reservation.geocoded?
-                      &nbsp;
-                      %i.bi.bi-check-circle-fill.success
-                    - else
-                      &nbsp;
-                      %i.bi.bi-exclamation-circle-fill.danger
-                %tr
-                  %th Notes
-                  %td
-                    - if @reservation.notes.present?
-                      = @reservation.notes
-                    - else
-                      No special instructions
+                - unless @reservation.remind_me?
+                  %tr
+                    %th Address
+                    %td
+                      = @reservation.short_address
+                      - if @reservation.geocoded?
+                        &nbsp;
+                        %i.bi.bi-check-circle-fill.success
+                      - else
+                        &nbsp;
+                        %i.bi.bi-exclamation-circle-fill.danger
+                  %tr
+                    %th Notes
+                    %td
+                      - if @reservation.notes.present?
+                        = @reservation.notes
+                      - else
+                        No special instructions
 
-                %tr
-                  %th Admin Notes
-                  %td
-                    - if @reservation.admin_notes.present?
-                      .admin-notes= @reservation.admin_notes
+                  %tr
+                    %th Admin Notes
+                    %td
+                      - if @reservation.admin_notes.present?
+                        .admin-notes= @reservation.admin_notes
 
         %section#contact-details
           .row
@@ -99,16 +101,17 @@
                     - elsif !@reservation.no_emails?
                       &nbsp;
                       %i.bi.bi-envelope-fill.success
-                %tr
-                  %th Phone
-                  %td
-                    = @reservation.phone
-                    - if @reservation.phone.present? && @reservation.no_sms?
-                      &nbsp;
-                      %i.bi.bi-telephone-x-fill.danger
-                    - elsif @reservation.phone.present? && !@reservation.no_sms?
-                      &nbsp;
-                      %i.bi.bi-telephone-fill.success
+                - unless @reservation.remind_me?
+                  %tr
+                    %th Phone
+                    %td
+                      = @reservation.phone
+                      - if @reservation.phone.present? && @reservation.no_sms?
+                        &nbsp;
+                        %i.bi.bi-telephone-x-fill.danger
+                      - elsif @reservation.phone.present? && !@reservation.no_sms?
+                        &nbsp;
+                        %i.bi.bi-telephone-fill.success
                 - if @reservation.phone.present?
                   %tr
                     %th
@@ -118,183 +121,179 @@
                         = surround("(", ")") do
                           = Message.where(phone: @reservation.phone, viewed: false).count
 
-        %section#delivery
-          .row
-            .col-lg-12
-              %h3 Routing
-              %table.table.table-borderless.reservation
-                %tr
-                  %th Street
-                  %td= @reservation.street
-                %tr
-                  %th Route
-                  %td#route-name
-                    .mb-2
-                      - if @reservation&.route&.zone
-                        = @reservation.route.zone.name
+        - unless @reservation.remind_me?
+          %section#delivery
+            .row
+              .col-lg-12
+                %h3 Routing
+                %table.table.table-borderless.reservation
+                  %tr
+                    %th Street
+                    %td= @reservation.street
+                  %tr
+                    %th Route
+                    %td#route-name
+                      .mb-2
+                        - if @reservation&.route&.zone
+                          = @reservation.route.zone.name
+                        - else
+                          No Zone selected
+                        \-
+                        - if @reservation.route
+                          = link_to admin_map_path(@reservation.route, route_id: @reservation.route.id) do
+                            = @reservation&.route&.name
+                            %i.bi.bi-map-fill
+                        - else
+                          No Route set
+                        - if !@reservation.is_routed
+                          .badge.bg-warning Manual Routing
+
+
+                      .row
+                        .col-lg-8.offset-lg-4
+                          = form_for [:admin, @reservation] do |f|
+                            .mb-2
+                              = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
+                            - if current_user.editor? || current_user.administrator?
+                              = f.submit 'Update Route', class: 'btn btn-primary'
+
+                  %tr
+                    %th Latitude
+                    %td= @reservation.latitude
+                  %tr
+                    %th Longitude
+                    %td= @reservation.longitude
+
+                  %tr
+                    %th Is geocoded?
+                    %td
+                      - if @reservation.is_geocoded?
+                        %i.bi.bi-check-lg
+
+                  %tr
+                    %th Is routed?
+                    %td
+                      - if @reservation.is_routed?
+                        %i.bi.bi-check-lg
                       - else
-                        No Zone selected
-                      \-
-                      - if @reservation.route
-                        = link_to admin_map_path(@reservation.route, route_id: @reservation.route.id) do 
-                          = @reservation&.route&.name
-                          %i.bi.bi-map-fill
+                        %i.bi.bi-x-lg
+                  %tr
+                    %th Is polygon mapped?
+                    %td
+                      - if @reservation.is_route_polygon?
+                        %i.bi.bi-check-lg
                       - else
-                        No Route set
-                      - if !@reservation.is_routed
-                        .badge.bg-warning Manual Routing
-
-
-                    .row
-                      .col-lg-8.offset-lg-4
-                        = form_for [:admin, @reservation] do |f|
-                          .mb-2
-                            = f.collection_select(:route_id, Route.all.order(:name), :id, :name, { include_blank: 'Select a Route'},{ class: 'form-control', id: 'route-dropdown' })
-                          - if current_user.editor? || current_user.administrator?
-                            = f.submit 'Update Route', class: 'btn btn-primary'
-
-                %tr
-                  %th Latitude
-                  %td= @reservation.latitude
-                %tr
-                  %th Longitude
-                  %td= @reservation.longitude
-
-                %tr
-                  %th Is geocoded?
-                  %td
-                    - if @reservation.is_geocoded?
-                      %i.bi.bi-check-lg
-
-                %tr 
-                  %th Is routed?
-                  %td
-                    - if @reservation.is_routed?
-                      %i.bi.bi-check-lg
-                    - else
-                      %i.bi.bi-x-lg
-                %tr 
-                  %th Is polygon mapped?
-                  %td
-                    - if @reservation.is_route_polygon?
-                      %i.bi.bi-check-lg
-                    - else
-                      %i.bi.bi-x-lg
-                %tr 
-                  %th Geocode 
-                  %td
-                    - if current_user.editor? || current_user.administrator?
-                      = link_to admin_reservation_process_geocode_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
-                        %i.bi.bi-geo-alt-fill.icon
-                %tr 
-                  %th Route
-                  %td
-                    - if current_user.editor? || current_user.administrator?
-                      = link_to admin_reservation_process_route_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
-                        %i.bi.bi-lightning-fill.icon
-
-              .text-center
-                #direction-links
-                  .title Directions
-                  = link_to "https://www.google.com/maps/place/#{ @reservation.latitude},#{ @reservation.longitude }", target: '_blank', class: 'map-link' do
-                    %i.bi.bi-geo-alt-fill
-                    %i.bi.bi-google
-
-                  = link_to "https://maps.apple.com/?q=#{ @reservation.latitude},#{ @reservation.longitude}", target: '_blank', class: 'map-link' do
-                    %i.bi.bi-geo-alt-fill
-                    %i.bi.bi-apple
-
-                  .title Google Mapped
-                  = link_to driver_reservation_map_path(@reservation), class: 'map-link' do
-                    %i.bi.bi-geo-alt-fill
-
-        %section#status
-          .row
-            .col-lg-12
-              %h3 Pick-up Status
-              - if @reservation.archived?
-                = reservation_status(@reservation)
-              - if current_user.administrator? || !@reservation.archived?
-                .row
-                  .col-lg-6
-                  .col-lg-6
-                    = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
-                      .form-group.mb-2
-                        = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+                        %i.bi.bi-x-lg
+                  %tr
+                    %th Geocode
+                    %td
                       - if current_user.editor? || current_user.administrator?
-                        .text-end= f.submit 'Update status', class: 'btn btn-primary'
+                        = link_to admin_reservation_process_geocode_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
+                          %i.bi.bi-geo-alt-fill.icon
+                  %tr
+                    %th Route
+                    %td
+                      - if current_user.editor? || current_user.administrator?
+                        = link_to admin_reservation_process_route_path(@reservation), method: :post, id: "process-route-button-#{@reservation.id}", data: { "turbo-method": :post } do
+                          %i.bi.bi-lightning-fill.icon
 
-        %section#donations
-          .row
-            .col-lg-12
-              %h3 Donations
-              = link_to new_admin_reservation_donation_path(@reservation) do
-                %i.bi.bi-plus-lg
-                New
-              %table.table.table-borderless.reservation
-                %tr 
-                  %th Total donations
-                  %td= number_to_currency(@reservation.total_donations_amount)
-                %tr
-                  %th Donation type
-                  %td
-                    - if @reservation&.donation
-                      = @reservation&.donation&.humanize
-                    - else
-                      Not selected
+                .text-center
+                  #direction-links
+                    .title Directions
+                    = link_to "https://www.google.com/maps/place/#{ @reservation.latitude},#{ @reservation.longitude }", target: '_blank', class: 'map-link' do
+                      %i.bi.bi-geo-alt-fill
+                      %i.bi.bi-google
+
+                    = link_to "https://maps.apple.com/?q=#{ @reservation.latitude},#{ @reservation.longitude}", target: '_blank', class: 'map-link' do
+                      %i.bi.bi-geo-alt-fill
+                      %i.bi.bi-apple
+
+                    .title Google Mapped
+                    = link_to driver_reservation_map_path(@reservation), class: 'map-link' do
+                      %i.bi.bi-geo-alt-fill
+
+          %section#status
+            .row
+              .col-lg-12
+                %h3 Pick-up Status
+                - if @reservation.archived?
+                  = reservation_status(@reservation)
+                - if current_user.administrator? || !@reservation.archived?
+                  .row
+                    .col-lg-6
+                    .col-lg-6
+                      = form_for [:admin, @reservation], data: { turbo_method: "patch" } do |f|
+                        .form-group.mb-2
+                          = f.select :status, options_for_select(@statuses, @reservation.status), {},class: 'form-control', id: 'reservation-status-dropdown'
+                        - if current_user.editor? || current_user.administrator?
+                          .text-end= f.submit 'Update status', class: 'btn btn-primary'
+
+          %section#donations
+            .row
+              .col-lg-12
+                %h3 Donations
+                = link_to new_admin_reservation_donation_path(@reservation) do
+                  %i.bi.bi-plus-lg
+                  New
+                %table.table.table-borderless.reservation
+                  %tr
+                    %th Total donations
+                    %td= number_to_currency(@reservation.total_donations_amount)
+                  %tr
+                    %th Donation type
+                    %td
+                      - if @reservation&.donation
+                        = @reservation&.donation&.humanize
+                      - else
+                        Not selected
 
 
-              - if @reservation.donated_online?
-                %table.mt-4.table.table-borderless.reservation
-                  - @donations.each do |donation|
-                    %tr
-                      %th= link_to 'Donation', admin_donation_path(donation)
-                      %td= donation&.form&.humanize&.titleize
-                      %td= donation.payment_status.capitalize if donation.payment_status
-                      %td= nice_short_date_time(donation.created_at)
-                      %td
-                        = number_to_currency(donation.amount)
-                        - if donation.email.present?
-                          = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt.' } do
-                            %i.bi.bi-send
+                - if @reservation.donated_online?
+                  %table.mt-4.table.table-borderless.reservation
+                    - @donations.each do |donation|
+                      %tr
+                        %th= link_to 'Donation', admin_donation_path(donation)
+                        %td= donation&.form&.humanize&.titleize
+                        %td= donation.payment_status.capitalize if donation.payment_status
+                        %td= nice_short_date_time(donation.created_at)
+                        %td
+                          = number_to_currency(donation.amount)
+                          - if donation.email.present?
+                            = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt.' } do
+                              %i.bi.bi-send
 
         %section#donations
           .row
             .col-lg-12
               %h3 Misc
               %table.table.table-borderless.reservation
-                %tr 
-                  %th Number of years recycling
-                  %td= @reservation.years_recycling
-                %tr 
-                  %th How did you hear about us?
-                  %td
-                    - if @reservation&.heard_about_source?
-                      = @reservation&.heard_about_source&.humanize
-                    - else
-                      Not selected
-                %tr 
-                  %th Log
-                  %td
-                    = turbo_frame_tag @reservation do
-                      .div
-                        = link_to "View Log", admin_reservation_logs_path(@reservation)
-                %tr
-                  %th Confirmed Reservation email sent?
-                  %td
-                    - if @reservation.is_confirmed_reservation_email_sent?
-                      %i.bi.bi-check-lg
-                    - else
-                      %i.bi.bi-x-lg
-                    = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a confirmation email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
-                      %i.bi.bi-send
-                %tr
-                  %th Reminder email sent?
-                  %td
-                    - if @reservation.is_pickup_reminder_email_sent?
-                      %i.bi.bi-check-lg
-                    - else
-                      %i.bi.bi-x-lg
+                - unless @reservation.remind_me?
+                  %tr
+                    %th Number of years recycling
+                    %td= @reservation.years_recycling
+                  %tr
+                    %th How did you hear about us?
+                    %td
+                      - if @reservation&.heard_about_source?
+                        = @reservation&.heard_about_source&.humanize
+                      - else
+                        Not selected
+                  %tr
+                    %th Confirmed Reservation email sent?
+                    %td
+                      - if @reservation.is_confirmed_reservation_email_sent?
+                        %i.bi.bi-check-lg
+                      - else
+                        %i.bi.bi-x-lg
+                      = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a confirmation email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
+                        %i.bi.bi-send
+                  %tr
+                    %th Reminder email sent?
+                    %td
+                      - if @reservation.is_pickup_reminder_email_sent?
+                        %i.bi.bi-check-lg
+                      - else
+                        %i.bi.bi-x-lg
 
                 %tr
                   %th Marketing Email #1 email sent?
@@ -310,6 +309,12 @@
                       %i.bi.bi-check-lg
                     - else
                       %i.bi.bi-x-lg
+                %tr
+                  %th Log
+                  %td
+                    = turbo_frame_tag @reservation do
+                      .div
+                        = link_to "View Log", admin_reservation_logs_path(@reservation)
 
         %section#actions
           .row

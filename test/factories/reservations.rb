@@ -19,6 +19,11 @@ FactoryBot.define do
       status { 1 }
     end
 
+    factory :remind_me do
+      street { nil }
+      status { :remind_me }
+    end
+
     factory :reservation_with_route do
       route
     end

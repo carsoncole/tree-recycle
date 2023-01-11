@@ -9,12 +9,15 @@ class Reservation < ApplicationRecord
   has_many :logs, dependent: :destroy
 
   enum :donation, { online_donation: 1, cash_or_check_donation: 2, no_donation: 3 }
-  enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99 }, default: :unconfirmed
+  enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99, remind_me: 999 }, default: :unconfirmed
   enum :collected, { door_hanger: 1, cash: 2, check: 3 }
 
   enum :heard_about_source, { word_of_mouth: 4, 'Prior recycler, knew about it': 10, roadside_sign: 3, christmas_tree_lot_flyer: 7, email_reminder_from_us: 5, facebook: 1, 'Safeway/Ace Hardware flyer': 6,    'Town & Country reader board': 9, nextdoor: 2, newspaper: 8, other: 99 }
 
-  scope :pending, -> { where.not(status: ['archived', 'cancelled', 'unconfirmed'])}
+
+  scope :pending, -> { where.not(status: ['archived', 'cancelled', 'unconfirmed', 'remind_me'])}
+  scope :active, -> { where.not(status: ['archived', 'remind_me'])}
+  scope :not_active, -> { where(status: ['archived', 'remind_me'])}
   scope :unrouted, -> { where(route_id: nil) }
   scope :routed, -> { where.not(route_id: nil) }
   scope :not_polygon_routed, -> { where.not(route_id: nil).where.not(is_route_polygon: true)}
@@ -43,6 +46,7 @@ class Reservation < ApplicationRecord
   after_commit :log_cancelled!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_archived!, if: ->(obj){ obj.archived? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :log_remind_me!, if: ->(obj){ obj.remind_me? && obj.saved_change_to_status? && obj.persisted? }
 
   # turbo stream
   # after_update ReservationCallbacks
@@ -140,9 +144,10 @@ class Reservation < ApplicationRecord
     Reservation.archived.destroy_all
   end
 
+  # merges active with not-active (archived + remind mes) reservations
   def self.merge_unarchived_with_archived!
-    Reservation.not_archived.not_unconfirmed.each do |r|
-      Reservation.archived.where(email: r.email).destroy_all
+    Reservation.active.not_unconfirmed.each do |r|
+      Reservation.not_active.where(email: r.email).destroy_all
       r.archived!
     end
   end
@@ -154,7 +159,7 @@ class Reservation < ApplicationRecord
   # archived reservations that 1) have not been sent marketing, 2) are not pending (pending_pickup, picked_up, missing)
   def self.reservations_to_send_marketing_emails(attribute)
     reservations_to_send =
-      Reservation.archived.
+      Reservation.not_active.
       where("LOWER(email) NOT IN (?)", Reservation.pending.map { |r| r.email.downcase } ).
       where(attribute.to_sym => false).
       where(no_emails: false).
@@ -165,7 +170,6 @@ class Reservation < ApplicationRecord
     !is_routed
   end
 
-
   def self.process_post_event!
     # destroy unconfirmed
     Reservation.unconfirmed.destroy_all
@@ -173,7 +177,8 @@ class Reservation < ApplicationRecord
 
     # destroy unsubscribed
     Reservation.archived.where(no_emails: true).destroy_all
-    Rails.logger.info "Destroyed archived emails that unsubscribed."
+    Reservation.remind_me.where(no_emails: true).destroy_all
+    Rails.logger.info "Destroyed archived and remind me emails that unsubscribed."
 
     # merge records, deleting older duplicate archived records
     Reservation.merge_unarchived_with_archived!
@@ -187,19 +192,19 @@ class Reservation < ApplicationRecord
   private
 
   def normalize_phone!
-    self.phone = Phonelib.parse(phone).full_e164.presence
+    self.phone = Phonelib.parse(phone).full_e164.presence if phone.present?
   end
 
   def log_unconfirmed!
-    logs.create(message: "Reservation unconfirmed")
+    logs.create(message: "Reservation unconfirmed.")
   end
 
   def log_pending_pickup!
-    logs.create(message: 'Tree is pending pickup')
+    logs.create(message: 'Tree is pending pickup.')
   end
 
   def log_picked_up!
-    logs.create(message: 'Tree picked up')
+    logs.create(message: 'Tree picked up.')
   end
 
   def log_missing!
@@ -207,11 +212,15 @@ class Reservation < ApplicationRecord
   end
 
   def log_cancelled!
-    logs.create(message: 'Reservation cancelled')
+    logs.create(message: 'Reservation cancelled,')
   end
 
   def log_archived!
-    logs.create(message: 'Reservation archived')
+    logs.create(message: 'Reservation archived.')
+  end
+
+  def log_remind_me!
+    logs.create(message: 'Remind me created.')
   end
 
 end

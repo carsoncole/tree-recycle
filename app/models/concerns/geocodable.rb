@@ -4,7 +4,7 @@ module Geocodable
   included do
     geocoded_by :address
 
-    validates :street, :city, :state, :country, presence: true
+    validates :street, :city, :state, :country, presence: true, unless: -> (obj) { obj.class == Reservation && obj.remind_me? }
 
     attribute :city, :string, default: DEFAULT_CITY
     attribute :state, :string, default: DEFAULT_STATE

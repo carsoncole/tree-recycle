@@ -1,6 +1,6 @@
 class Admin::MarketingController < Admin::AdminController
   def index
-    @remind_mes_count = RemindMe.count
+    @remind_mes_count = Reservation.remind_me.count
   end
 
   def send_marketing_email_1

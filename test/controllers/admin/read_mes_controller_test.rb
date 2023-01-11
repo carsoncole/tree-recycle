@@ -31,21 +31,21 @@ class Admin::ReadMesControllerTest < ActionDispatch::IntegrationTest
     @remind_me = create(:remind_me)
     delete admin_remind_me_path(@remind_me, as: @administrator)
     assert_redirected_to admin_remind_mes_path
-    assert_equal 0, RemindMe.count
+    assert_equal 0, Reservation.remind_me.count
   end
 
   test "destroying as editor" do
     @remind_me = create(:remind_me)
     delete admin_remind_me_path(@remind_me, as: @editor)
     assert_redirected_to admin_remind_mes_path
-    assert_equal 0, RemindMe.count
+    assert_equal 0, Reservation.remind_me.count
   end
 
   test "destroying as viewer" do
     @remind_me = create(:remind_me)
     delete admin_remind_me_path(@remind_me, as: @viewer)
     assert_response :unauthorized
-    assert_equal 1, RemindMe.count
+    assert_equal 1, Reservation.remind_me.count
   end
 
   test "destroying" do

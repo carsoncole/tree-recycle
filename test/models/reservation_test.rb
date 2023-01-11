@@ -97,7 +97,8 @@ class ReservationTest < ActiveSupport::TestCase
 
   test "merging unarchived with archived" do
     create_list(:reservation_with_coordinates, 10, status: :pending_pickup, is_routed: false)
-    assert_equal 10, Reservation.not_archived.count
+    create_list(:remind_me, 5)
+    assert_equal 15, Reservation.not_archived.count
     assert_difference 'Reservation.archived.count', 10 do
       Reservation.merge_unarchived_with_archived!
     end
@@ -105,10 +106,13 @@ class ReservationTest < ActiveSupport::TestCase
 
   test "process post event" do
     create_list(:reservation_with_coordinates, 10, status: :pending_pickup, is_routed: false)
-    assert_equal 10, Reservation.not_archived.count
-    assert_difference "Reservation.not_archived.count", -10 do
+    create_list(:remind_me, 10)
+    assert_equal 10, Reservation.active.count # pending pickups: 10
+    assert_equal 10, Reservation.not_active.count # remind mes: 10
+    assert_difference "Reservation.active.count", -10 do
       Reservation.process_post_event!
     end
+    assert_equal 20, Reservation.not_active.count # remind_mes: 10 + archived: 10
   end
 
   test "normalizig of phone" do

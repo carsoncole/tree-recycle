@@ -54,6 +54,10 @@
           = link_to "Not Polygon Routed", admin_reservations_path(not_polygon_routed: true), class: 'link'
           = surround("(",")") do 
             = @count_not_polygon_routed
+          %br
+          = link_to "Remind Mes", admin_reservations_path(remind_me: true), class: 'link'
+          = surround("(",")") do
+            = @count_remind_me
 
 
         %section.menu

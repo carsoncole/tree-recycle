@@ -12,7 +12,7 @@ class Admin::LogTest < ActiveSupport::TestCase
       @reservation.unconfirmed!
       sleep 0.25
     end
-    assert_equal "Reservation unconfirmed", @reservation.logs.last.message
+    assert_equal "Reservation unconfirmed.", @reservation.logs.last.message
   end
 
   #OPTIMIZE messages no longer queued?
@@ -27,7 +27,7 @@ class Admin::LogTest < ActiveSupport::TestCase
       @reservation.picked_up!
       sleep 0.25
     end
-    assert_equal "Tree picked up", @reservation.logs.last.message
+    assert_equal "Tree picked up.", @reservation.logs.last.message
   end
 
   #OPTIMIZE messages no longer queued?

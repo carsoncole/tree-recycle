@@ -8,25 +8,27 @@ class Admin::ReservationsController < Admin::AdminController
     elsif params[:pending_pickup]
       @pagy, @reservations = pagy(Reservation.pending_pickup.includes(:route).order(created_at: :desc))
     elsif params[:picked_up]
-      @pagy, @reservations = pagy(Reservation.not_archived.picked_up.includes(:route).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.picked_up.includes(:route).order(created_at: :desc))
     elsif params[:unrouted]
-      @pagy, @reservations = pagy(Reservation.not_archived.unrouted.order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.unrouted.order(created_at: :desc))
     elsif params[:geocoded]
-      @pagy, @reservations = pagy(Reservation.not_archived.where(is_geocoded: false).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.where(is_geocoded: false).order(created_at: :desc))
     elsif params[:is_routed]
-      @pagy, @reservations = pagy(Reservation.not_archived.where(is_routed: false).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.where(is_routed: false).order(created_at: :desc))
     elsif params[:not_polygon_routed]
-      @pagy, @reservations = pagy(Reservation.not_archived.not_polygon_routed.order(created_at: :desc))      
+      @pagy, @reservations = pagy(Reservation.active.not_polygon_routed.order(created_at: :desc))
     elsif params[:cancelled]
-      @pagy, @reservations = pagy(Reservation.not_archived.cancelled.includes(:route).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.cancelled.includes(:route).order(created_at: :desc))
     elsif params[:missing]      
-      @pagy, @reservations = pagy(Reservation.not_archived.missing.includes(:route).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.missing.includes(:route).order(created_at: :desc))
     elsif params[:unconfirmed]      
-      @pagy, @reservations = pagy(Reservation.not_archived.unconfirmed.includes(:route).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.unconfirmed.includes(:route).order(created_at: :desc))
     elsif params[:archived]
       @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(created_at: :desc))
+    elsif params[:remind_me]
+      @pagy, @reservations = pagy(Reservation.remind_me.order(created_at: :desc))
     else
-      @pagy, @reservations = pagy(Reservation.not_archived.not_unconfirmed.includes(:route).order(created_at: :desc))
+      @pagy, @reservations = pagy(Reservation.active.not_unconfirmed.includes(:route).order(created_at: :desc))
     end
     @count_pending_pickups = Reservation.pending_pickup.count
     @count_not_routed = Reservation.not_archived.not_unconfirmed.unrouted.count
@@ -38,6 +40,7 @@ class Admin::ReservationsController < Admin::AdminController
     @count_not_polygon_routed = Reservation.not_archived.not_polygon_routed.count
     @count_not_geocoded = Reservation.not_archived.where(is_geocoded: false).count
     @count_is_not_routed = Reservation.not_archived.where(is_routed: false).count
+    @count_remind_me = Reservation.remind_me.count
   end
 
   def edit

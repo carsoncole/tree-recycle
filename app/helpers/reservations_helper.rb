@@ -35,6 +35,8 @@ module ReservationsHelper
         ['Archived', 'info']
       elsif reservation.unconfirmed?
         ['Unconfirmed', 'warning']
+      elsif reservation.remind_me?
+        ['Remind Me', 'info']
       end
     if status
       out = ''
