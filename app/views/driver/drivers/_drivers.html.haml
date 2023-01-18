@@ -4,6 +4,12 @@
       %i.bi.bi-truck-front-fill
       Drivers
 
+    - if admin_view?
+      %p
+        = link_to admin_settings_path do
+          %i.bi.bi-arrow-left
+          Settings
+
 
 - if signed_in? && (current_user.editor? || current_user.administrator?)
   .row

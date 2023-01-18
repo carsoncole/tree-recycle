@@ -1,0 +1,23 @@
+%ul.nav.flex-column.sticky-top#side-settings-nav
+  %li.nav-item
+    = link_to 'Reservations', admin_settings_path(anchor: 'reservation-settings'), class: "nav-link"
+  %li.nav-item
+    = link_to 'Event details', admin_settings_path(anchor: 'details'),class: "nav-link"
+  %li.nav-item
+    = link_to 'Website', admin_settings_path(anchor: 'content'),class: "nav-link"
+  %li.nav-item
+    = link_to 'Mapping', admin_settings_path(anchor: 'mapping'),class: "nav-link"
+  %li.nav-item
+    = link_to 'Driver', admin_settings_path(anchor: 'driver'),class: "nav-link"
+  %li.nav-item
+    = link_to 'Contact', admin_settings_path(anchor: 'contact'),class: "nav-link"
+  %li.nav-item
+    = link_to 'Users', admin_users_path,class: "nav-link"
+  %li.nav-item
+    = link_to 'SEO', admin_settings_path(anchor: 'seo'),class: "nav-link"
+  %li.nav-item
+    = link_to 'Email', admin_settings_path(anchor: 'campaigns'),class: "nav-link"
+  %li.nav-item
+    = link_to 'Operations', admin_operations_path,class: "nav-link"
+  %li.nav-item
+    = link_to 'Logs', admin_logs_path,class: "nav-link"

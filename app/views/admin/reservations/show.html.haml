@@ -315,6 +315,13 @@
                     = turbo_frame_tag @reservation do
                       .div
                         = link_to "View Log", admin_reservation_logs_path(@reservation)
+                %tr
+                  %th Created at
+                  %td= nice_date_time(@reservation.created_at)
+
+                %tr
+                  %th Updated at
+                  %td= nice_date_time(@reservation.updated_at)
 
         %section#actions
           .row

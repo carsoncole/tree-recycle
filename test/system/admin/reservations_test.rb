@@ -110,7 +110,7 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
   test "reservations not being open yet" do
     Setting.first_or_create.update(is_reservations_open: false, reservations_closed_message: 'Reservations are CLOSED.')
     visit '/'
-    click_on "Reserve now"
+    assert_no_link "Reserve now"
     assert_text "Reservations are CLOSED."
   end
 end

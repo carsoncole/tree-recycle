@@ -15,33 +15,9 @@
               = link_to edit_admin_setting_path(setting) do
                 %i.bi.bi-pencil-fill.icon
                 EDIT
-
-  .row 
+  .row
     .col-lg-2
-
-      %ul.nav.flex-column.sticky-top#side-settings-nav
-        %li.nav-item
-          = link_to 'Reservations', admin_settings_path(anchor: 'reservation-settings'), class: "nav-link"
-        %li.nav-item
-          = link_to 'Event details', admin_settings_path(anchor: 'details'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Website', admin_settings_path(anchor: 'content'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Mapping', admin_settings_path(anchor: 'mapping'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Driver', admin_settings_path(anchor: 'driver'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Contact', admin_settings_path(anchor: 'contact'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Users', admin_settings_path(anchor: 'users'),class: "nav-link"
-        %li.nav-item
-          = link_to 'SEO', admin_settings_path(anchor: 'seo'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Email', admin_settings_path(anchor: 'campaigns'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Operations', admin_settings_path(anchor: 'operations'),class: "nav-link"
-        %li.nav-item
-          = link_to 'Logs', admin_logs_path,class: "nav-link"
+      = render 'menu'
 
     .col-lg-10
       .row
@@ -208,20 +184,6 @@
 
       .row
         .col-lg-10
-          .section#users
-            .row
-              .col-lg-4
-                %h3 Users
-              .col-lg-8
-                .table-responsive
-                  %table.table.table-borderless.settings
-                    %tr
-                      %th
-                      %td.text-end
-                        = link_to "Users", admin_users_path
-
-      .row
-        .col-lg-10
           .section
             .row
               .col-lg-4
@@ -273,43 +235,5 @@
                       - if current_user.administrator?
                         = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}, source: 'marketing'), method: :patch, class: 'btn btn-danger'
 
-      .row
-        .col-lg-10
-          .section
-            .row
-              .col-lg-4
-                %h3#operations Operations
-              .col-lg-8
-                .table-responsive
-                  %table.table.table-borderless.settings
 
-                    %tr
-                      %th Archive all Reservation data
-                      %td
-                        = button_to "ARCHIVE", admin_post_event_archive_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will 1) destroy all unconfirmed reservations, 2) destroy all archived reservations that unsubscribed to marketing emails, 3) archives all reservations, destroying any older duplicates, and 4) disables all geocoding/routing on reservations. This should normally be done at the end of every event.' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
-
-                    %tr
-                      %th Destroy all Unconfirmed reservations
-                      %td
-                        = button_to "DESTROY UNCONFIRMED", admin_destroy_unconfirmed_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all UNCONFIRMED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
-
-                    %tr
-                      %th Destroy all Archived reservations
-                      %td
-                        = button_to "DESTROY ARCHIVED", admin_destroy_all_archived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all ARCHIVED Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
-
-                    %tr
-                      %th Destroy reservations older than N months
-                      %td
-                        = form_tag '/admin/reservations/destroy-reservations' do
-                          .row 
-                            .col-lg-6
-                              = text_field_tag :months, {}, class: 'form-control'
-                            .col-lg-6
-                              = submit_tag "DESTROY", class: 'btn btn-danger btn-sm', data: { 'turbo-confirm': 'Are you sure? This is IRREVERSIBLE and will DESTROY reservations.' }
-
-                    %tr
-                      %th Destroy ALL reservations
-                      %td
-                        = button_to "DESTROY ALL", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations' }, class: 'btn btn-danger btn-sm', disabled: current_user.administrator? ? false : true
 

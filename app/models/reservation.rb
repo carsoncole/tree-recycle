@@ -153,7 +153,10 @@ class Reservation < ApplicationRecord
   end
 
   def self.destroy_reservations_older_than_months(months)
-    Reservation.where("created_at > ?", Time.now + months.to_i.months).destroy_all
+    query = Reservation.where("created_at > ?", Time.now + months.to_i.months)
+    count = query.count
+    query.destroy_all
+    count
   end
 
   # archived reservations that 1) have not been sent marketing, 2) are not pending (pending_pickup, picked_up, missing)

@@ -15,7 +15,7 @@
             = link_to "Donate", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link #{ controller_name == 'donations' ? 'active' : nil }", "aria-current": "page"
           - if setting.is_reservations_open?
             %li.nav-item
-              = link_to reservation_lookup_url, class: "nav-link #{ action_name == 'lookup' ? 'active' : nil }", "aria-current": "page", id: 'question_header_link' do
+              = link_to reservation_lookup_url, class: "nav-link #{ action_name == 'lookup' ? 'active' : nil }", "aria-current": "page", id: 'reservation_lookup_link' do
                 Reservation Lookup
           %li.nav-item
             = link_to questions_url, class: "nav-link #{ controller_name == 'home' && action_name == 'questions' ? 'active' : nil }", "aria-current": "page", id: 'question_header_link' do

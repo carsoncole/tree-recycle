@@ -10,7 +10,7 @@ class Admin::DriversTest < ApplicationSystemTestCase
   test "as a Viewer, get index, edit, and create users" do
     system_test_signin(:viewer)
     click_on 'settings-link'
-    within "#users" do 
+    within "#side-settings-nav" do
       click_on 'Users'
     end
 
@@ -93,10 +93,6 @@ class Admin::DriversTest < ApplicationSystemTestCase
     within "#side-settings-nav" do 
       click_on 'Users'
     end
-    within "#users" do 
-      click_on 'Users'
-    end
-
 
     assert_selector 'h1', text: 'Users'
 
@@ -158,7 +154,7 @@ class Admin::DriversTest < ApplicationSystemTestCase
   test "as an Adminstrator, get index, create, destroy users" do
     system_test_signin(:administrator)
     click_on 'settings-link'
-    within "#users" do 
+    within "#side-settings-nav" do
       click_on 'Users'
     end
 

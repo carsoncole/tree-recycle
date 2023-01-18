@@ -31,15 +31,15 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.active.not_unconfirmed.includes(:route).order(created_at: :desc))
     end
     @count_pending_pickups = Reservation.pending_pickup.count
-    @count_not_routed = Reservation.not_archived.not_unconfirmed.unrouted.count
+    @count_not_routed = Reservation.active.unrouted.count
     @count_picked_up = Reservation.picked_up.count
     @count_missing = Reservation.missing.count
     @count_cancelled = Reservation.cancelled.count
     @count_archived = Reservation.archived.count
     @count_unconfirmed = Reservation.unconfirmed.count
-    @count_not_polygon_routed = Reservation.not_archived.not_polygon_routed.count
-    @count_not_geocoded = Reservation.not_archived.where(is_geocoded: false).count
-    @count_is_not_routed = Reservation.not_archived.where(is_routed: false).count
+    @count_not_polygon_routed = Reservation.active.not_polygon_routed.count
+    @count_not_geocoded = Reservation.active.where(is_geocoded: false).count
+    @count_is_not_routed = Reservation.active.where(is_routed: false).count
     @count_remind_me = Reservation.remind_me.count
   end
 
@@ -154,27 +154,27 @@ class Admin::ReservationsController < Admin::AdminController
   def post_event_archive
     if current_user.administrator?
       Reservation.process_post_event!
-      redirect_to admin_settings_path, notice: 'All Reservation data has been archived.'
+      redirect_to admin_operations_path, notice: 'All Reservation data has been archived.'
     else
-      redirect_to admin_settings_path, alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
+      redirect_to admin_operations_path, alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end
   end
 
   def destroy_unconfirmed
     if current_user.administrator?
       Reservation.unconfirmed.destroy_all
-      redirect_to admin_settings_path, notice: 'Destroying unconfirmed was successful.'
+      redirect_to admin_operations_path, notice: 'Destroying unconfirmed was successful.'
     else
-      redirect_to admin_settings_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
+      redirect_to admin_operations_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end
   end
 
   def destroy_reservations
     if current_user.administrator?
-      Reservation.destroy_reservations_older_than_months(params[:months])
-      redirect_to admin_settings_path, notice: "Destroying reservations older than #{params[:months]} months was successful."
+      count = Reservation.destroy_reservations_older_than_months(params[:months])
+      redirect_to admin_operations_path, notice: "Destroying #{count} reservations that were older than #{params[:months]} months was successful."
     else
-      redirect_to admin_settings_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
+      redirect_to admin_operations_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end    
   end
 
@@ -182,18 +182,18 @@ class Admin::ReservationsController < Admin::AdminController
   def destroy_all
     if current_user.administrator?
       Reservation.destroy_all
-      redirect_to admin_settings_path, notice: 'All Reservations destroyed'
+      redirect_to admin_operations_path, notice: 'All Reservations destroyed'
     else
-      redirect_to admin_settings_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
+      redirect_to admin_operations_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end
   end
 
   def destroy_all_archived
     if current_user.administrator?
       Reservation.destroy_all_archived!
-      redirect_to admin_root_path, notice: 'All archived Reservations destroyed'
+      redirect_to admin_operations_path, notice: 'All archived Reservations destroyed'
     else
-      redirect_to admin_settings_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
+      redirect_to admin_operations_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
     end
   end
 

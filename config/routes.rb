@@ -71,6 +71,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get 'operations/index' => 'operations#index', as: 'operations'
+    patch 'operations/update'
+
     root 'reservations#index'
     get '/routes/map-all' => 'routes#map_all', as: 'routes_map_all'
     resources :zones
@@ -82,7 +85,10 @@ Rails.application.routes.draw do
     end
     resources :marketing, only: [ :index ]
     resources :remind_mes, only: [ :index, :destroy ]
+
     resources :settings, only: [ :index, :edit, :update ]
+
+
     resources :users, only: [ :index, :update, :create, :destroy, :edit ]
     resources :driver_routes, only: [:create, :destroy]
     resources :points, only: [:create, :update, :destroy, :edit]

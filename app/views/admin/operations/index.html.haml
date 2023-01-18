@@ -1,0 +1,82 @@
+#operations.container
+  .row
+    .col-lg-12
+      %h1
+        %i.bi.bi-folder
+        Operations
+
+      %p
+        = link_to admin_settings_path do
+          %i.bi.bi-arrow-left
+          Settings
+
+  .row
+    .col-lg-12
+      .table-responsive
+        %table.table.table-borderless.settings
+          %tr
+            %th
+              %p Archive all Reservation data
+              %p.text-muted
+                This will 1) destroy all unconfirmed reservations, 2) destroy all archived reservations that unsubscribed to marketing emails, 3) archives all reservations, destroying any older duplicates, and 4) disables all geocoding/routing on reservations. This should normally be done at the end of every event.
+
+            %td
+
+            %td.action-button
+              = button_to "ARCHIVE ALL", admin_post_event_archive_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will 1) destroy all unconfirmed reservations, 2) destroy all archived reservations that unsubscribed to marketing emails, 3) archives all reservations, destroying any older duplicates, and 4) disables all geocoding/routing on reservations. This should normally be done at the end of every event.' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+
+          %tr
+            %th
+              %p
+                Destroy all Unconfirmed
+                = surround("(", ")") do
+                  = @unconfirmed_reservations_count
+                reservations
+
+              %p.text-muted
+                This destroys unconfirmed reservations, which are reservations that have been started, but were not confirmed upon receiving a message regarding issues with their address.
+
+            %td
+
+            %td.action-button
+              = button_to "DESTROY UNCONFIRMED", admin_destroy_unconfirmed_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all UNCONFIRMED Reservations' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+
+          %tr
+            %th
+              %p
+                Destroy all Archived
+                = surround("(", ")") do
+                  = @archived_reservations_count
+                reservations
+
+            %td
+
+            %td.action-button
+              = button_to "DESTROY ARCHIVED", admin_destroy_all_archived_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all ARCHIVED Reservations' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+
+          %tr
+            %th
+              %p Destroy reservations older than N months
+
+            %td
+
+            %td.action-button
+              = form_tag '/admin/reservations/destroy-reservations', params: { operations: true } do
+                .row
+                  .col-lg-6
+                    = text_field_tag :months, {}, class: 'form-control'
+                  .col-lg-6
+                    = submit_tag "DESTROY", class: 'btn btn-danger', data: { 'turbo-confirm': 'Are you sure? This is IRREVERSIBLE and will DESTROY reservations.' }
+
+          %tr
+            %th
+              %p
+                Destroy ALL
+                = surround("(", ")") do
+                  = @reservations_count
+                reservations
+
+            %td
+
+            %td.action-button
+              = button_to "DESTROY ALL", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
