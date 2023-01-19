@@ -13,7 +13,7 @@
             = link_to "New reservation", new_reservation_url, class: "nav-link #{ controller_name == 'reservations' && action_name == 'new' ? 'active' : nil }", "aria-current": "page"
           %li.nav-item
             = link_to "Donate", donation_without_reservation_path, local: true, data: { turbo:false } , class: "nav-link #{ controller_name == 'donations' ? 'active' : nil }", "aria-current": "page"
-          - if setting.is_reservations_open?
+          - if setting.is_reservations_open? && RESERVATION_LOOKUP_ENABLED == true
             %li.nav-item
               = link_to reservation_lookup_url, class: "nav-link #{ action_name == 'lookup' ? 'active' : nil }", "aria-current": "page", id: 'reservation_lookup_link' do
                 Reservation Lookup
