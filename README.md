@@ -2,66 +2,21 @@
 
 Host and manage a Christmas tree recycling event fundraiser with Tree Recycle. Inspired by the needs of our Scout Troop and the complexity of taking donations and figuring out how to organize the pickup of trees over a wide area, Tree Recycle can at a minimum do the following:
 
-- Provide a public website for taking tree pickup reservations;
-- Organize pick-up addresses within your pre-defined Zones and Routes;
-- Take online donations utilizing Stripe;
-- Handle the retention of reservations year-over-year to allow for contacting prior year customers to tell them about this years' event;
-- Send out email reservation confirmations, donation receipts and marketing emails.
+- provide a public website for taking tree pickup reservations;
+- organize pick-up addresses within your pre-defined Zones and Routes;
+- take online donations utilizing Stripe;
+- retain reservations year-over-year to allow for marketing to prior year customers with email reminders of a current years' event;
+- send out email reservation confirmations, donation receipts and marketing emails.
 
 Our Troop uses this application and it can be viewed at [https://treerecycle.net](https://treerecycle.net).
 
+If you have any questions concerning this application, feel free to email me at carson.cole@gmail.com.
+
 ## What is Required?
 
-Tree Recycle has been designed to be simple to use and install on [Heroku](https://heroku.com/), which has a simple UI, a straight-forward deployment process, and is hosted on AWS, all for a reasonable price. Once installed, the application is designed for continuous running from year-to-year, carrying over reservations and their emails for marketing to prior year recyclers.
+Tree Recycle has been configured for installation on [Heroku](https://heroku.com/), with instructions detailed below. It can installed elsewhere with minor modifications required.
 
-## Installation
-
-This application has been configured to run on [Heroku](https://heroku.com/), but could be modified to work on any cloud provider.  Heroku is a good choice as it provides a simple interface for managing applications, and the deployment process is straight-forward.
-
-### 1. Create a Heroku.com account
-
-Create an account, initialize your app. Instructions for doing this on Heroku is well documented on Heroku.com.
-
-### 2. Add a database - PostgreSQL
-
-A PostgreSQL addon must enabled on Heroku as the database. On Heroku, search the addons for 'Heroku Postgres' and add it to your account. This will addon will serve as your database. You can select the least expensive plan as you have the ability to upsize at a later time.
-
-### 3. Add Redis
-
-A Redis addon must be enabled on Heroku to provide the live functionality such as Admin header new messages counts, and live updating of reservations, in the Admin section. This is required as the appliation will not function without it. Search the addons for 'Heroku Data for Redis' and at it with the least expensive plan.
-
-### 4. Download the repo locally, deploy to Heroku
-
-Download this repo with Git.
-
-### 5. Add a master.key to `/config/master.key`
-
-The app maintains its secrets in a credential files within the codebase. You will add your own secrets locally, and then deploy them to be used in Production on Heroku.
-
-
-
-    % EDITOR=vim rails credentials:edit
-
-
-This will create your initial credentials file and open it in an editor. Copy the contents of `/config/credentials_sample.yml` as your initial template. Exit the credentials file with `esc-:-q`. This will save the file and the key for decrypting it into `config/master.key`. Copy this key and add it to your Heroku Vars (see App Credentials below), under your application settings, with a key value of `RAILS_MASTER_KEY`. This key is what Heroku will use to access the credentials file.
-
-
-### 6. Add a Worker
-
-The application does a lot of background work in the handling of emails and routing, so you will need a Worker enabled. Under Resources, there should a a worker listed, which you will need to enable.
-
-### 7. Deploy to Heroku.com
-
-Deploy the code to Heroku.com.
-
-#### Configuration
-
-To sign-in, you will need to create an admin user through the console.
-
-  % heroku console
-> % User.create(email: 'john.doe@example.com', password: [password])
-
-### Local installation
+## Local Installation
 
 Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to install the necessary gems.
 
@@ -83,13 +38,15 @@ In production, Heroku will configure settings when you initially deploy.
 
 #### App Credentials
 
-Tree Recycle uses Rails' custom credentials, stored in `config/credentials.yml.enc`, to securely hold all environment variables, including access keys to various external services. A master key to access it is stored in `config/master.key` or alternatively is in the environment variable ENV["RAILS_MASTER_KEY"]. You will need to generate a new master key for this file, which will happen automatically when you open the file with:
+The app maintains application secrets in a credential file within the codebase at `/credentials.yml.enc`. The secrets include passwords and keys to access email providers, Twilio and more. You will add your own secrets to this file, which will be encrypted, and then deployed within your codebase to be used in Production on Heroku.
 
+Delete any existing `config/credentials.yml.enc` file. Initialize your own secrets file:
 
-    EDITOR=vim rails credentials:edit
+    % EDITOR=vim rails credentials:edit
 
+This will create your initial credentials file and open it in an editor. Copy the contents of `/config/credentials_sample.yml` as your initial template and edit it accordingly. 
 
-See the sample credentials file `config/credentials_sample.yml` for all of the necessary secrets.
+Exit the credentials file with `esc-:-q`. This will save the file and the key for decrypting it into `config/master.key`. Copy this key and add it to your Heroku Vars (see App Credentials below), under your application settings, with a key value of `RAILS_MASTER_KEY`. This key is what Heroku will use to access the credentials file.
 
 On Heroku, you need to provide the master key so the file can be decrypted. You can do this through the Heroku UI, or in the Heroku console:
 
@@ -119,6 +76,8 @@ This app requires USPS API access for address verification (https://www.usps.com
 #### Email
 
 An email provider, such as Gmail, can be configured for reservation notifications, reminders, cancellations, marketing emails, and donation receipts. The default configuration is Gmail, as it is free and normally would provide a high enough daily limit (300-500 emails) to meet the needs of most users. 
+
+It is not recommended that you send out marketing emails in large quantities as they could be flagged as spam by both Gmail and the receiving email servers. There is a batch quantity limit setting where you can set the maximum number of emails to send at a time. The exact limits that Gmail applies to outgoing quantity limits are uncertain, but believed to be 20/hour, or 500 over a rolling 24 hour period. Depending on your emailing needs, there are alternate commercial email providers that you can integrate at substantially higher outgoing levels.
 
 Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file. The sample settings have the correct values if you use Gmail for sending emails. If you use a differnt service, you may need to modify or add to the settings in the individual environment files.
 
@@ -207,11 +166,60 @@ Marketing emails can be sent in Settings and there are two configured (Marketing
 
 ## Mapping
 
-Reservations are grouped by admin-defined routes with a center point and a set radius. In all cases, each reservation will be grouped into the Route that is nearest to it. This approach is not without problems as its possible that reservations that border multiple routes, may not be grouped the most efficiently.
+Reservations are mapped into admin-defined routes. When entered, reservations will be checked for existence within Routes by either 1) a Route that is nearest to it (each Route has a base address), or 2) with a Route that has polygon defined for it. Multi-point polygons can be entered for each route.
+
+### Routes
+
+Routes need to be defined by first, a base address, and optionally, a polygon made up of 3 or more coordinates (entered counter-clockwise). Polygons can be defined to contain specific roads and addresses, and generally polygons should abut, not overlay, other Route polygons.
+
+Routes should essentially be an area that could contain a manageable group of tree pickups. A pickup driver could be assigned to one or more Routes.
 
 Maps of all pickups within a route are available in `Routes` in the adminstration section of the application. Clicking on each pickup on the map will show if its been picked up and has a link to directions to the pick-up.
 
 ![Screenshot](app/assets/images/map.png)
+
+### Zones
+
+Zones are made up of Routes and are used for organizational purposes so that Zone leaders can be defined to oversee groups of Routes.
+
+## Installation on Heroku
+
+### 1. Create Heroku.com account and application
+
+Create a Heroku account, and then create a new application through the web interface.  Instructions for doing this on Heroku is well documented on Heroku.com.
+
+### 2. Add a database - PostgreSQL
+
+A database for the application is required and Heroku provides a number of choices that you can add directly through the web interface. For this application, I recommend the 'Heroku Postgres' addon, and you should add it to your application. You can select the least expensive plan as you have the ability to upsize at a later time. There may be a free plan that provides for up to 10,000 rows, which you can use initially and upgrade as your needs change.
+
+### 3. Add Redis
+
+A Redis addon must be enabled on Heroku to provide the live functionality such as Admin header new messages counts, and live updating of reservations, in the Admin section. This is required as the appliation will not function without it. Search the addons for 'Heroku Data for Redis' and add it with the least expensive plan.
+
+### 4. Download the repo locally, deploy to Heroku
+
+The application needs to be downloaded locally, with modifications made concerning your own deployment, then deployed to Heroku. 
+
+Download this repo from Github. Instructions on doing this are widely available.
+
+
+### 5. Deploy to Heroku.com
+
+Deploy the code to Heroku.com. Instructions can be found on Heroku.com.
+
+### 6. Add a Worker
+
+The application does a lot of background work in the handling of emails and routing, such as sending a confirmation email when a reservation is made, or cancellation email, if cancelled, so you will need a Worker enabled. The worker will look for jobs that are stored in your database in the `delayed_jobs` table. 
+
+Once your code has been deployed, there will a Worker listed under Resources, which you will need to enable. Until you enable it, no emails will be sent from your application.
+
+#### Configuration
+
+Once your application has been deployed to Heroku, you should be able to access to public portal, but you will need a login to access the Admin portal. You will need to create an admin user through the console that can be access via your local installation of the applicdation:
+
+    % heroku console
+    % User.create(email: 'john.doe@example.com', password: [password])
+
 
 ## Testing
 
@@ -224,7 +232,7 @@ For mailers, previews exist for the confirmation and reminder emails. To view in
 
 ## Seed Data
 
-For testing and trial use, seed configuration, reservation, and admin user data can be loaded with
+Trial seed data can be loaded. This will create the initial admin user (admin@example.com, password: password), route, zone and reservation data. Use this data to only preview the apps functionality, not for production purposes.
 
     rails db:seed
 
