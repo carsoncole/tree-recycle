@@ -50,33 +50,37 @@ Configure each environment with mail settings. Setting and credentials are manag
 
 Mail settings in `production.rb`.
 
-      config.action_mailer.smtp_settings = {
-      :address              => Rails.application.credentials.mailer.development.address,
-      :port                 => Rails.application.credentials.mailer.development.port,
-      :user_name            => Rails.application.credentials.mailer.development.user_name,
-      :password             => Rails.application.credentials.mailer.development.password,
-      :authentication       => Rails.application.credentials.mailer.development.authentication,
-      :tls                  => Rails.application.credentials.mailer.development.tls,
-      :enable_starttls_auto => Rails.application.credentials.mailer.development.enable_starttls_auto
-
+``` ruby
+    config.action_mailer.smtp_settings = {
+    :address              => Rails.application.credentials.mailer.development.address,
+    :port                 => Rails.application.credentials.mailer.development.port,
+    :user_name            => Rails.application.credentials.mailer.development.user_name,
+    :password             => Rails.application.credentials.mailer.development.password,
+    :authentication       => Rails.application.credentials.mailer.development.authentication,
+    :tls                  => Rails.application.credentials.mailer.development.tls,
+    :enable_starttls_auto => Rails.application.credentials.mailer.development.enable_starttls_auto
+```
 
 The mailer itself should be updated to default to the sending address in `application_mailer.rb`.
 
+``` ruby
     class ApplicationMailer < ActionMailer::Base
       default from: "from@example.com"
       layout "mailer"
     end
-
+```
 
 The default URL for mail is set in the environment configuration file `production.rb` or `development.rb`.
 
+```ruby
     config.action_mailer.default_url_options = { host: 'site@example.com' }
-
+```
 
 ### SMS notifications
 
 An SMS service is needed if you want to be able to send SMS notifications. This is particularly useful when a driver can not locate a tree pickup. They can indicate a missing tree in the app and it will immediately send an SMS notification. It is not uncommon for people to forget to put their trees out for pickup. SMS notifications are configured to send via Twilio, but this could be modified for any service in the Sms class `sms.rb`. Keys must be set in the Rails ```config/credentials.yml.enc``` file.
 
+---
 
 ## Installation
 
@@ -88,11 +92,14 @@ Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to 
 
 To setup the database, which gets its configuration from `db/database.yml`:
 
+```ruby
     rails db:create
-
+```
 For development use, there is seed data that can be loaded if you want to see the site configured with zones, routes, and reservations and other data by
 
+```ruby
     rails db:seed
+```
 
 In production, Heroku will configure settings when you initially deploy.
 
@@ -106,18 +113,22 @@ When taking reservations, users select from a drop down where they heard about t
 
 To start up the application:
 
+``` ruby
     % bundle install
     % rails s
-
+```
 
 Configure admin users for management access. The initial adminstrator/owner user should be created directly in the console.
 
+```ruby
     %  User.create(email: 'admin email', password: 'admin password', role: 'administrator')
-
+```
 
 Once the initial user is setup, you can manage the user roles (`viewer`, `editor`, `administrator`) through the UI, after any user signs up at `/sign_up`. The ability to sign up is configured in `initializers/clearance.rb`
 
+```ruby
     config.allow_sign_up = true
+```
 
 The application does a lot of background work in the handling of emails and routing, such as sending a confirmation email when a reservation is made, or cancellation email, if cancelled, so you will need a Worker enabled. The worker will look for jobs that are stored in your database in the `delayed_jobs` table.
 
@@ -129,9 +140,10 @@ On Heroku, once your code has been deployed, there will a Worker listed under Re
 
 To start up the application:
 
+```ruby
     % bundle install
     % rails s
-
+```
 
 ### Driver
 
@@ -173,7 +185,9 @@ The app maintains application secrets in a credential file within the codebase a
 
 Delete any existing `config/credentials.yml.enc` file. Initialize your own secrets file:
 
+```ruby
     % EDITOR=vim rails credentials:edit
+```
 
 This will create your initial credentials file and open it in an editor. Copy the contents of `/config/credentials_sample.yml` as your initial template and edit it accordingly.
 
@@ -182,8 +196,9 @@ Exit the credentials file with `esc-:-q`. This will save the file and the key fo
 On Heroku, you need to provide the master key so the file can be decrypted. You can do this through the Heroku UI, or in the Heroku console:
 
 
+```ruby
     heroku config:set RAILS_MASTER_KEY=<your-master-key>
-
+```
 
 ## Error monitoring (optional)
 
@@ -212,7 +227,7 @@ Download this repo from Github. Instructions on doing this are widely available.
 
 ### 5. Deploy to Heroku.com
 
-Deploy the code to Heroku.com. Instructions can be found on Heroku.com.
+Instructions can be found on [Heroku.com](https://devcenter.heroku.com/articles/git)
 
 ### 6. Add a Worker
 
@@ -224,9 +239,12 @@ Once your code has been deployed, there will a Worker listed under Resources, wh
 
 Once your application has been deployed to Heroku, you should be able to access to public portal, but you will need a login to access the Admin portal. You will need to create an admin user through the console that can be access via your local installation of the applicdation:
 
+```ruby
     % heroku console
     % User.create(email: 'john.doe@example.com', password: [password])
+```
 
+---
 
 ## Testing
 
@@ -234,20 +252,20 @@ There are Rails minitest tests, including system tests.
 
 For mailers, previews exist for the confirmation and reminder emails. To view in `development`:
 
+```ruby
     http://localhost:3000/rails/mailers/
-
+```
 
 ## Seed Data
 
 Trial seed data can be loaded. This will create the initial admin user (admin@example.com, password: password), route, zone and reservation data. Use this data to only preview the apps functionality, not for production purposes.
 
+```ruby
     rails db:seed
+```
 
-
-## Favicons
-
-You can replace the favicons and Apple touch icons, which are reference in `shared/_head.html.haml`, on the site `https://iconifier.net/index.php?iconified=20221118063655_tree-red-touch-icon.png`.
+---
 
 ## Copyright
 
-Copyright (c) 2022, 2023 [Carson Cole](https://carsonrcole.com). See MIT-LICENSE for details.
+Copyright (c) 2022, 2023 [Carson Cole](https://carsonrcole.com). It is free software, and may be redistributed under the terms specified in the LICENSE file.
