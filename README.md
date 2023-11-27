@@ -2,13 +2,14 @@
 
 # Tree Recycle
 
-Host and manage a Christmas tree recycling event fundraiser with Tree Recycle. Inspired by the needs of our Scout Troop and the complexity of taking donations and figuring out how to organize the pickup of trees over a wide area, Tree Recycle can at a minimum do the following:
+Organize a Christmas tree recycling fundraiser seamlessly with Tree Recycle. Streamlining the tree pickup reservation and donation process and the logistics of tree pickup across a broad area, Tree Recycle offers the following features:
 
-- provide a public website for taking tree pickup reservations;
-- organize pick-up addresses within your pre-defined Zones and Routes;
-- take online donations utilizing Stripe;
-- retain reservations year-over-year to allow for marketing to prior year customers with email reminders of a current years' event;
-- send out email reservation confirmations, donation receipts and marketing emails.
+- Establish a user-friendly public website for reserving tree pickups.
+- Process pickup reservations and geocode addresses for mapping purposes.
+- Efficiently categorize addresses into pre-defined Routes, grouped within Zones and assigned to designated drivers.
+- Facilitate online donations through a secure platform.
+- Retain reservation data from year to year, enabling targeted marketing to previous customers through email reminders for the current year's event.
+- Issue SMS and email notifications in cases where drivers cannot locate a tree (a common occurrence when individuals forget to place them out). Deliver email confirmations for reservations, donation receipts, and promotional emails.
 
 Our Troop uses this application and it can be viewed at [https://treerecycle.net](https://treerecycle.net).
 
@@ -19,16 +20,15 @@ If you have any questions concerning this application, feel free to email me at 
 
 ### Heroku
 
-Tree Recycle can be installed on, and instructions are for, [Heroku](https://heroku.com/), a PaaS cloud hosting service, however there is nothing directly configured for Heroku so it could be installed in the cloud or locally.
+The instructions provide for installation details on [Heroku](https://heroku.com/), a PaaS cloud hosting service. However, it's important to note that there is no direct configuration for Heroku, providing flexibility for installation either in other cloud providers or on a baremetal server.
 
 ### Database
 
-A database for the application is required and Heroku provides a number of choices that you can add directly through the web interface. For this application, I recommend the 'Heroku Postgres' addon, and you should add it to your application. You can select the least expensive plan as you have the ability to upsize at a later time. There may be a free plan that provides for up to 10,000 rows, which you can use initially and upgrade as your needs change.
+A database is required and Heroku provides a number of choices that you can add directly through the web interface. For this application, I recommend the 'Heroku Postgres' addon, and you should add it to your application. You can select the least expensive plan as you have the ability to upsize at a later time. There may be a free plan that provides for up to 10,000 rows, which you can use initially and upgrade as your needs change.
 
 ### Redis
 
 A Redis addon must be enabled on Heroku to provide the live functionality such as Admin header new messages counts, and live updating of reservations, in the Admin section. This is required as the appliation will not function without it. Search the addons for 'Heroku Data for Redis' and add it with the least expensive plan.
-
 
 ### Mapping service
 
@@ -45,11 +45,10 @@ An email provider, such as Gmail, can be configured for reservation notification
 
 It is not recommended that you send out marketing emails in large quantities as they could be flagged as spam by both Gmail and the receiving email servers. There is a batch quantity limit setting where you can set the maximum number of emails to send at a time. The exact limits that Gmail applies to outgoing quantity limits are uncertain, but believed to be 20/hour, or 500 over a rolling 24 hour period. Depending on your emailing needs, there are alternate commercial email providers that you can integrate at substantially higher outgoing levels.
 
-Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file. The sample settings have the correct values if you use Gmail for sending emails. If you use a differnt service, you may need to modify or add to the settings in the individual environment files.
+Configure each environment with mail settings. Setting and credentials are managed in the Rails credentials file. The sample settings have the correct values if you use Gmail for sending emails. If you use a different service, you may need to modify or add to the settings in the individual environment files.
 
 
-production.rb
-
+Mail settings in `production.rb`.
 
       config.action_mailer.smtp_settings = {
       :address              => Rails.application.credentials.mailer.development.address,
@@ -61,9 +60,7 @@ production.rb
       :enable_starttls_auto => Rails.application.credentials.mailer.development.enable_starttls_auto
 
 
-The mailer itself should be updated to default to the sending address:
-
-application_mailer.rb
+The mailer itself should be updated to default to the sending address in `application_mailer.rb`.
 
     class ApplicationMailer < ActionMailer::Base
       default from: "from@example.com"
@@ -71,7 +68,7 @@ application_mailer.rb
     end
 
 
-The default URL for mail is set in the environment configuration file:
+The default URL for mail is set in the environment configuration file `production.rb` or `development.rb`.
 
     config.action_mailer.default_url_options = { host: 'site@example.com' }
 
@@ -85,11 +82,9 @@ An SMS service is needed if you want to be able to send SMS notifications. This 
 
 You will need to install the application locally, before which you can then deploy to your Heroku account.
 
-1. Application install
 
 Install Ruby on Rails 7, Ruby > 3.0.0, and PostgreSQL. Then `bundle install` to install the necessary gems.
 
-2. Setup the database.
 
 To setup the database, which gets its configuration from `db/database.yml`:
 
@@ -101,15 +96,13 @@ For development use, there is seed data that can be loaded if you want to see th
 
 In production, Heroku will configure settings when you initially deploy.
 
-3. Edit the config file `config/initializers/constants.rb`, accordingly.
 
-4. Update the Sources.
+Edit the config file `config/initializers/constants.rb`, accordingly.
+
 
 When taking reservations, users select from a drop down where they heard about the event. The choices are hard-coded as an Enum in `reservation.rb` and should be configured to fit your own community.
 
     enum :heard_about_source, { facebook: 1, safeway_flyer: 6, christmas_tree_lot_flyer: 7, nextdoor: 2, newspaper: 8, roadside_sign: 3, 'Town & Country reader board': 9, word_of_mouth: 4, email_reminder_from_us: 5, other: 99 }
-
-5. Startup
 
 To start up the application:
 
@@ -117,9 +110,7 @@ To start up the application:
     % rails s
 
 
-6. Configure admin users
-
-Users in the application are only necessary for management of the event. The initial adminstrator/owner user should be created directly in the console.
+Configure admin users for management access. The initial adminstrator/owner user should be created directly in the console.
 
     %  User.create(email: 'admin email', password: 'admin password', role: 'administrator')
 
@@ -127,8 +118,6 @@ Users in the application are only necessary for management of the event. The ini
 Once the initial user is setup, you can manage the user roles (`viewer`, `editor`, `administrator`) through the UI, after any user signs up at `/sign_up`. The ability to sign up is configured in `initializers/clearance.rb`
 
     config.allow_sign_up = true
-
-6. Add a worker
 
 The application does a lot of background work in the handling of emails and routing, such as sending a confirmation email when a reservation is made, or cancellation email, if cancelled, so you will need a Worker enabled. The worker will look for jobs that are stored in your database in the `delayed_jobs` table.
 
