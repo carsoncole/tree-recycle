@@ -154,9 +154,12 @@ With a driver secret key of `happy`: `/driver/key=happy`. So the URL for accessi
     https://example.com/driver?key=happy
 
 
-### Sending marketing emails
+### Marketing emails
 
-Marketing emails can be sent in Settings and there are two configured (Marketing Email #1, Marketing Email #2). The batch email size refers to the number of emails to send at a time. Depending on your mail provider, you may want to set this to a number that does not exceed any daily sending limit. If sending through Gmail, the estimated limit is 500 per day. When you send a batch, it will send the next set (if any) of emails that have not already been sent the email, so there will be no duplicates. It is reflected in a reservation when marketing emails have been sent. It is also reflected in the reservation log.
+
+You can send marketing emails through the Settings section, where two email templates (Marketing Email #1, Marketing Email #2), one followed by the other, are available. You can modify `/views/marketing_mailer/marketing_email_1.html.haml` and `/views/marketing_mailer/marketing_email_2.html.haml`, and their `.text.haml` versions.
+
+The batch email size determines the number of emails sent at once. It's crucial to set this number within your mail provider's daily sending limit; for example, Gmail has an estimated limit of 500 emails per day. When you send a batch, the system will send the next set of emails that haven't been sent yet, ensuring no duplicates. This information is visible in the reservation and reservation log once marketing emails have been sent.
 
 
 ## Mapping
@@ -204,7 +207,6 @@ On Heroku, you need to provide the master key so the file can be decrypted. You 
 Rollbar.io is integrated for error monitoring, This can be easily replaced with other services. The configuration file is `config/initializers/rollbar.rb` and the access token is stored in the Rails credentials file, which is the only thing that needs to be updated for it to work within your own Rollbar account. Rollbar is free for 5,000 errors a month, which should easily cover it.
 
 To remove Rollbar completely, removed from the ```Gemfile``` and ```initializers/rollbar.rb```.
-
 
 
 ## Installation on Heroku

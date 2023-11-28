@@ -1,6 +1,11 @@
 $scout-red: #CE1126;
 $scout-blue: #003F87;
 
+form label {
+  font-weight: 700;
+}
+
+
 @mixin font-important {
   font-size: 10px;
   font-weight: 600;

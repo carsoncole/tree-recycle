@@ -54,8 +54,6 @@ class Reservation < ApplicationRecord
   after_update -> { broadcast_prepend_to "reservation-status-changes", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? }
   after_update -> { broadcast_prepend_to "picked_up_reservations", partial: 'admin/reservations/reservation', target: 'reservations-table-body' }, if: -> (obj) { obj.saved_change_to_status? && obj.status == 'picked_up'}
 
-
-
   def self.open?
     Setting.first_or_create.is_reservations_open?
   end
@@ -161,12 +159,20 @@ class Reservation < ApplicationRecord
 
   # archived reservations that 1) have not been sent marketing, 2) are not pending (pending_pickup, picked_up, missing)
   def self.reservations_to_send_marketing_emails(attribute)
-    reservations_to_send =
-      Reservation.not_active.
-      where("LOWER(email) NOT IN (?)", Reservation.pending.map { |r| r.email.downcase } ).
-      where(attribute.to_sym => false).
-      where(no_emails: false).
-      order(:email)
+
+    # conditional required since result will be empty if there are no pending
+    reservations_to_send = if Reservation.pending.empty?
+        Reservation.not_active.
+        where(attribute.to_sym => false).
+        where(no_emails: false).
+        order(:email)
+    else
+        Reservation.not_active.
+        where("LOWER(email) NOT IN (?)", Reservation.pending.map { |r| r.email.downcase } ).
+        where(attribute.to_sym => false).
+        where(no_emails: false).
+        order(:email)
+    end
   end
 
   def routed_manually?

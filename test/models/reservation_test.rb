@@ -128,4 +128,17 @@ class ReservationTest < ActiveSupport::TestCase
     reservation = create(:reservation_with_coordinates, is_routed: false, phone: '(206) 123-1234')
     assert_equal '+12061231234', reservation.phone
   end
+
+  test "recipients of marketing emails" do
+    assert_empty Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent')
+
+    remind_me_reservations = create_list(:remind_me, 10)
+    assert_equal 10, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
+
+    confirmed_reservations = create_list(:reservation, 3)
+    assert_equal 10, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
+
+    archived_reservations = create_list(:archived_with_coordinates_reservation, 5)
+    assert_equal 15, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
+  end
 end

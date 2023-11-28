@@ -1,7 +1,6 @@
 desc 'send marketing emails to last years tree reservations'
 
 namespace :marketing do
-
   # these marketing emails will not send to reservations with { no_emails: true }
 
   # send emails to archived reservations that don't have new reservations with same email or log indicating already sent
