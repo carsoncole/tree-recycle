@@ -178,7 +178,6 @@ Maps of all pickups within a route are available in `Routes` in the adminstratio
 Zones are made up of Routes and are used for organizational purposes so that Zone leaders can be defined to oversee groups of Routes.
 
 
-
 ## Secret credentials
 
 The app maintains application secrets in a credential file within the codebase at `/credentials.yml.enc`. The secrets include passwords and keys to access email providers, Twilio and more. You will add your own secrets to this file, which will be encrypted, and then deployed within your codebase to be used in Production on Heroku.

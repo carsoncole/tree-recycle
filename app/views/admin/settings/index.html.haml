@@ -72,7 +72,7 @@
           .section
             .row
               .col-lg-4
-                %h3#content Site content
+                %h3#content Website
               .col-lg-8
                 .table-responsive
                   %table.table.settings
@@ -99,6 +99,22 @@
                             %i.bi.bi-check-lg
                           - else
                             %i.bi.bi-x-lg
+
+      .row
+        .col-lg-10
+          .section
+            .row
+              .col-lg-4
+                %h3#mapping Mapping
+              .col-lg-8
+                .table-responsive
+                  %table.table.settings
+                    %tr
+                      %th Lookup service
+                      %td.text-end
+                        = Geocoder.config[:lookup].to_s.humanize
+
+
       .row
         .col-lg-10
           .section
@@ -181,6 +197,8 @@
                           Email batch size
                         %td
                           = setting.email_batch_quantity
+
+
 
       .row
         .col-lg-10

@@ -1,3 +1,5 @@
+#FIXME make db username generic
+
 default: &default
   host: localhost
   adapter: postgresql
