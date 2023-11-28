@@ -28,13 +28,14 @@
       .mb-4
         = f.label :email, class: 'form-label'
         = f.email_field :email, class: 'form-control', required: true
+        .form-text.text-muted For pickup reminders and receipts
 
     .col-lg-6
       .mb-4
-        = f.label :phone, class: 'form-label'
-        %span.form-text.text-muted Optional. Mobile preferred
+        = f.label :mobile, class: 'form-label'
+        %span.form-text.text-muted Optional, but Recommended
         = f.text_field :phone, class: 'form-control'
-        .form-text.text-muted In case we can't find your tree and need to contact you
+        .form-text.text-muted We'll text only if your tree isn't located.
 
   .row
     .col-lg-12
