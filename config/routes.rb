@@ -97,6 +97,7 @@ Rails.application.routes.draw do
     delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'
     delete 'reservations/destroy-unconfirmed' => 'reservations#destroy_unconfirmed', as: 'destroy_unconfirmed_reservations'
     post 'reservations/destroy-reservations' => 'reservations#destroy_reservations', as: 'destroy_reservations'
+    delete 'reservations/destroy-logs' => 'logs#destroy', as: 'destroy_all_logs'
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
       resources :donations
       get 'logs' => 'logs#reservation_index', as: 'logs'
