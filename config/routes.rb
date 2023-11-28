@@ -80,9 +80,6 @@ Rails.application.routes.draw do
     resources :drivers
     get 'logs' => 'logs#index', as: :logs
     resources :messages, only: [:index, :create, :destroy ]
-    resources :donations do
-      post 'send-donation-receipt' => 'donations#send_donation_receipt', as: 'send_donation_receipt'
-    end
     resources :marketing, only: [ :index ]
     resources :remind_mes, only: [ :index, :destroy ]
 
@@ -94,10 +91,14 @@ Rails.application.routes.draw do
     resources :points, only: [:create, :update, :destroy, :edit]
     delete 'reservations/archive-all' => 'reservations#post_event_archive', as: 'post_event_archive_reservations'
     delete 'reservations/destroy-all' => 'reservations#destroy_all', as: 'destroy_all_reservations'
+    delete 'donations/destroy-all' => 'donations#destroy_all', as: 'destroy_all_donations'
     delete 'reservations/destroy-all-archived' => 'reservations#destroy_all_archived', as: 'destroy_all_archived_reservations'
     delete 'reservations/destroy-unconfirmed' => 'reservations#destroy_unconfirmed', as: 'destroy_unconfirmed_reservations'
     post 'reservations/destroy-reservations' => 'reservations#destroy_reservations', as: 'destroy_reservations'
     delete 'reservations/destroy-logs' => 'logs#destroy', as: 'destroy_all_logs'
+    resources :donations do
+      post 'send-donation-receipt' => 'donations#send_donation_receipt', as: 'send_donation_receipt'
+    end
     resources :reservations, only: [ :index, :show, :edit, :update, :destroy, :archive ] do
       resources :donations
       get 'logs' => 'logs#reservation_index', as: 'logs'

@@ -75,6 +75,15 @@ class Admin::DonationsController < Admin::AdminController
     end
   end
 
+  def destroy_all
+    if current_user.administrator?
+      Donation.destroy_all
+      redirect_to admin_operations_path, notice: 'All Donations destroyed'
+    else
+      redirect_to admin_operations_path, alert: 'Unauthorized. Adminstrator access is required.', status: :unauthorized
+    end
+  end
+
   def send_donation_receipt
     donation = Donation.find(params[:donation_id])
     donation.update(is_receipt_email_sent: false)

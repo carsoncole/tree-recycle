@@ -4,6 +4,7 @@ class Admin::OperationsController < Admin::AdminController
     @reservations_count = Reservation.count
     @unconfirmed_reservations_count = Reservation.unconfirmed.count
     @logs_count = Log.count
+    @donations_count = Donation.count
   end
 
   def update

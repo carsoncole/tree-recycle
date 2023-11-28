@@ -71,7 +71,20 @@
           %tr
             %th
               %p
-                Destroy Logs
+                Destroy All
+                = surround("(", ")") do
+                  = @donations_count
+                Donation records
+
+            %td
+
+            %td.action-button
+              = button_to "DESTROY ALL DONATIONS", admin_destroy_all_donations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all donation records' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+
+          %tr
+            %th
+              %p
+                Destroy All
                 = surround("(", ")") do
                   = @logs_count
                 logs
@@ -79,7 +92,7 @@
             %td
 
             %td.action-button
-              = button_to "DESTROY ALL", admin_destroy_all_logs_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Logs' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+              = button_to "DESTROY ALL LOGS", admin_destroy_all_logs_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Logs' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
 
           %tr
             %th
@@ -92,4 +105,4 @@
             %td
 
             %td.action-button
-              = button_to "DESTROY ALL", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+              = button_to "DESTROY ALL RESERVATIONS", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations, but not donation records' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
