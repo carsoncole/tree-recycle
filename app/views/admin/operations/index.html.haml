@@ -1,4 +1,4 @@
-#operations.container
+#operations.container.mb-5
   .row
     .col-lg-12
       %h1
@@ -10,6 +10,7 @@
           %i.bi.bi-arrow-left
           Settings
 
+      %p.text-muted Administrator access required to perform these functions
   .row
     .col-lg-12
       .table-responsive
@@ -106,3 +107,5 @@
 
             %td.action-button
               = button_to "DESTROY ALL RESERVATIONS", admin_destroy_all_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This is IRREVERSIBLE and will DESTROY all Reservations, but not donation records' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+
+

@@ -18,7 +18,11 @@ class Admin::AnalyticsController < Admin::AdminController
     @total_donations = Donation.current_event.sum(:amount)
 
     @total_offline_donations = @total_donations - @total_donations_online
-    @average_offline_donation = @total_offline_donations / @total_cash_check_reservations_count.to_f
+    @average_offline_donation = if @total_cash_check_reservations_count == 0
+      0
+    else
+      @total_offline_donations / @total_cash_check_reservations_count.to_f
+    end
 
     online_donations_ordered = Donation.where("donations.created_at > ?", Date.today - 6.months).online.joins(:reservation).order(:amount).where.not("reservations.status IN (99)")
     
