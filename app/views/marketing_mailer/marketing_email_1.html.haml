@@ -17,7 +17,10 @@
                 = 'Hello ' + @reservation.name + ','
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
-              It's our 26th year of recycling Christmas trees on Bainbridge, and we wanted you to know that we'll be picking up trees on
+              It's our
+              = succeed("th") do
+                = Date.today.year - 1997
+              year of recycling Christmas trees on Bainbridge, and we wanted you to know that we'll be picking up trees on
               = succeed(".") do
                 = nice_long_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
 
