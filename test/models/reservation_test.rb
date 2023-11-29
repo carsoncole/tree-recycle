@@ -29,6 +29,10 @@ class ReservationTest < ActiveSupport::TestCase
     assert_equal reservation.status, 'unconfirmed'
   end
 
+  test "downcasing email" do
+    assert_equal 'downcased@example.com', create(:reservation, email: 'DownCased@example.com').email
+  end
+
   test "name validation" do
     reservation = build(:reservation_with_coordinates, name: nil)
     assert_not reservation.valid?

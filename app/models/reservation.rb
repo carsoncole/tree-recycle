@@ -27,6 +27,7 @@ class Reservation < ApplicationRecord
   attribute :is_routed, :boolean, default: true
 
   before_save :normalize_phone!
+  before_save :downcase_email!
 
   after_commit :route_reservation, if: ->(obj){ obj.geocoded? && obj.is_routed? && (obj.saved_change_to_latitude? && (obj.persisted? || obj.route_id.nil?)) }
 
