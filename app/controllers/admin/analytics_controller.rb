@@ -1,6 +1,6 @@
 class Admin::AnalyticsController < Admin::AdminController
   def index
-    @sources = Reservation.current_event.not_archived.where.not(heard_about_source: nil).heard_about_sources
+    @sources = Reservation.current_event.pending.where.not(heard_about_source: nil).heard_about_sources
     @sources_count = Reservation.current_event.not_archived.where.not(heard_about_source: nil).group(:heard_about_source).count.sort_by {|_key, value| value}.reverse
     @donation_counts = Donation.current_event.group(:form).sum(:amount)
     @reservations_count = Reservation.not_archived.count
@@ -13,7 +13,7 @@ class Admin::AnalyticsController < Admin::AdminController
 
     @total_no_donation_reservations_count = Reservation.current_event.pending.no_donation.count
 
-    @total_cash_check_reservations_count = Reservation.current_event.not_archived.where.not(id: Donation.current_event.all.map {|d| d.reservation_id}).count - @total_no_donation_reservations_count
+    @total_cash_check_reservations_count = Reservation.current_event.pending.where.not(id: Donation.current_event.all.map {|d| d.reservation_id}).count - @total_no_donation_reservations_count
 
     @total_donations = Donation.current_event.sum(:amount)
 
@@ -32,9 +32,9 @@ class Admin::AnalyticsController < Admin::AdminController
 
     @average_online_donation = @total_donations_online / @donation_online_count
 
-    @zone_counts = Reservation.where("reservations.created_at > ?", Date.today - 6.months).not_archived.joins(route: [:zone]).group('zones.name').count
+    @zone_counts = Reservation.where("reservations.created_at > ?", Date.today - 6.months).pending.joins(route: [:zone]).group('zones.name').count
 
-    @route_counts = Reservation.where("reservations.created_at > ?", Date.today - 6.months).not_archived.joins(:route).group('routes.name').count.sort_by {|_key, value| value}.reverse
+    @route_counts = Reservation.where("reservations.created_at > ?", Date.today - 6.months).pending.joins(:route).group('routes.name').count.sort_by {|_key, value| value}.reverse
 
     @recycler_counts = Reservation.current_event.pending.group(:years_recycling).count
     @recycler_counts.each {|key, count| @recycler_counts[key] = (count / @reservations_count.to_f * 100).round(1) }

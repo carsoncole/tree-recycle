@@ -84,14 +84,14 @@
         .col-lg-12
           %h3 Total reservations
           - t = 0
-          - values = Reservation.current_event.not_archived.group_by_day(:created_at).count.each_with_object({}) { |(k, v), a| t += v; a[k] = t }
+          - values = Reservation.current_event.pending.group_by_day(:created_at).count.each_with_object({}) { |(k, v), a| t += v; a[k] = t }
           = line_chart values 
 
 
       .row.mb-5
         .col-lg-12
           %h3 Reservations by day
-          = line_chart Reservation.current_event.not_archived.group_by_day(:created_at).count
+          = line_chart Reservation.current_event.pending.group_by_day(:created_at).count
 
 
       .row.mb-5
