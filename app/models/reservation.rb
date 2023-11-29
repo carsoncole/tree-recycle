@@ -194,15 +194,29 @@ class Reservation < ApplicationRecord
     Reservation.merge_unarchived_with_archived!
     Rails.logger.info "Archived all data."
 
-    # disable geocoding / routing
-    Reservation.update_all(is_geocoded: false, is_routed: false)
+    # disable geocoding/routing and reset marketing emails
+    Reservation.update_all(is_geocoded: false, is_routed: false, is_marketing_email_1_sent: false, is_marketing_email_2_sent: false)
   end
 
 
   private
 
+  def merge_in_archived!
+    if existing_archived = Reservation.not_active.where(email: self.email).where.not(id: self.id).first
+      self.update_column(:years_recycling,  self.years_recycling + existing_archived.years_recycling)
+      existing_archived.donations.update_all(reservation_id: self.id)
+      existing_archived.destroy
+    else
+      nil
+    end
+  end
+
   def normalize_phone!
     self.phone = Phonelib.parse(phone).full_e164.presence if phone.present?
+  end
+
+  def downcase_email!
+    self.email = self.email.downcase
   end
 
   def log_unconfirmed!
