@@ -28,23 +28,6 @@
               %i.bi.bi-trash-fill
               Destroy
 
-          %hr
-
-          = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a confirmation email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
-            %i.bi.bi-send
-            Re-send confirmed pickup email
-          %br
-          - if @reservation.pending_pickup?
-            = link_to admin_reservation_path(@reservation, send_pickup_reminder_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a pickp reminder email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
-              %i.bi.bi-send
-              Re-send pickup reminder email
-            %br
-          - if @reservation.donated_online?
-            - @reservation.donations.each do |donation|
-              = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt to the email on the donation record.' } do
-                %i.bi.bi-send
-                Resend donation receipt -
-                = number_to_currency(donation.amount)
 
 
       .col-lg-2.main
@@ -288,12 +271,17 @@
                       = link_to admin_reservation_path(@reservation, send_confirmed_reservation_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a confirmation email. This WILL NOT send if a confirmation email has already been sent. To send again, deselect this flag in the settings for this reservation.' } do
                         %i.bi.bi-send
                   %tr
-                    %th Reminder email sent?
+                    %th Pickup reminder email sent?
                     %td
                       - if @reservation.is_pickup_reminder_email_sent?
                         %i.bi.bi-check-lg
                       - else
                         %i.bi.bi-x-lg
+
+                      - if @reservation.pending_pickup?
+                        = link_to admin_reservation_path(@reservation, send_pickup_reminder_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will resend a pickup reminder email. This WILL NOT send if a pickp reminder email has already been sent. To send again, deselect this flag in the settings.' } do
+                          %i.bi.bi-send
+
 
                 %tr
                   %th Marketing Email #1 email sent?
