@@ -21,6 +21,7 @@ class Reservation < ApplicationRecord
   scope :unrouted, -> { where(route_id: nil) }
   scope :routed, -> { where.not(route_id: nil) }
   scope :not_polygon_routed, -> { where.not(route_id: nil).where.not(is_route_polygon: true)}
+  scope :current_event, -> { where("created_at > ?", Date.today - 6.months)}
 
   validates :name, :email, presence: true
 
