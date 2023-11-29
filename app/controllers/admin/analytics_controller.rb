@@ -11,7 +11,7 @@ class Admin::AnalyticsController < Admin::AdminController
 
     @total_donations_online = Donation.where("donations.created_at > ?", Date.today - 6.months).online.joins(:reservation).where.not("reservations.status IN (99)").sum(:amount)
 
-    @total_no_donation_reservations_count = Reservation.current_event.no_donation.count
+    @total_no_donation_reservations_count = Reservation.current_event.pending.no_donation.count
 
     @total_cash_check_reservations_count = Reservation.current_event.not_archived.where.not(id: Donation.current_event.all.map {|d| d.reservation_id}).count - @total_no_donation_reservations_count
 
@@ -36,7 +36,7 @@ class Admin::AnalyticsController < Admin::AdminController
 
     @route_counts = Reservation.where("reservations.created_at > ?", Date.today - 6.months).not_archived.joins(:route).group('routes.name').count.sort_by {|_key, value| value}.reverse
 
-    @recycler_counts = Reservation.current_event.not_archived.group(:years_recycling).count
+    @recycler_counts = Reservation.current_event.pending.group(:years_recycling).count
     @recycler_counts.each {|key, count| @recycler_counts[key] = (count / @reservations_count.to_f * 100).round(1) }
   end
 end
