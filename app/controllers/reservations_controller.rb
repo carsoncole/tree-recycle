@@ -89,7 +89,7 @@ class ReservationsController < ApplicationController
     @search = params[:search]&.strip
     if @search
       if @search.match(/^\d+/) && @search.length > 3 + @search.match(/^\d+/).to_s.length  # does it start with a number (house) and is there more than a number?
-        @reservations = Reservation.where("street ILIKE ?", "%#{Reservation.sanitize_sql_like(@search)}%").limit(2)
+        @reservations = Reservation.active.where("street ILIKE ?", "%#{Reservation.sanitize_sql_like(@search)}%").limit(2)
       else
         @result = "Search should start with a house number"
       end
