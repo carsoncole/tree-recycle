@@ -4,6 +4,12 @@ FactoryBot.define do
     street { '215 Ericksen Ave NE' }
     email { Faker::Name.first_name.downcase + '.' + Faker::Name.last_name.downcase + '@example.com' }
 
+
+    after :create do |reservation|
+      create :donation, reservation: reservation
+    end
+
+
     factory :reservation_with_bad_address do
       street { Faker::Address.street_name }
       status { 0 }
@@ -28,10 +34,11 @@ FactoryBot.define do
       route
     end
 
-    factory :archived_with_coordinates_reservation do
+    factory :archived_reservation do
       status { :archived }
       latitude { 47.6259654 }
       longitude { -122.517533 }
+      is_routed { false }
     end
   end
 end
