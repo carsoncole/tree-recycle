@@ -142,7 +142,21 @@ class ReservationTest < ActiveSupport::TestCase
     confirmed_reservations = create_list(:reservation, 3)
     assert_equal 10, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
 
-    archived_reservations = create_list(:archived_with_coordinates_reservation, 5)
+    archived_reservations = create_list(:archived_reservation, 5)
     assert_equal 15, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
+  end
+
+  test "merging archived with newly placed reservations" do
+    archived_reservations = create_list(:archived_reservation, 2)
+    assert_equal 2, Reservation.archived.count
+    new_reservation_by_prior_customer = create(:reservation_with_coordinates, email: archived_reservations[0].email)
+
+    # archived years recycling should be carried over
+    assert_equal 1, Reservation.archived.count
+    assert_equal 1, Reservation.active.count
+    assert_equal 2, Reservation.active.first.years_recycling
+
+    # archived donations should be carried over
+    assert_equal 2, Reservation.active.first.donations.count
   end
 end

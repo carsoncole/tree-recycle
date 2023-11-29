@@ -46,8 +46,11 @@ class Reservation < ApplicationRecord
   after_commit :log_picked_up!, if: ->(obj){ obj.picked_up? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_cancelled!, if: ->(obj){ obj.cancelled? && obj.saved_change_to_status? && obj.persisted? }
   after_commit :log_missing!, if: ->(obj){ obj.missing? && obj.saved_change_to_status? && obj.persisted? }
-  after_commit :log_archived!, if: ->(obj){ obj.archived? && obj.saved_change_to_status? && obj.persisted? }
+  after_commit :log_archived!, if: ->(obj){ obj.archived? && obj.saved_change_to_status? && obj.persisted? }, on: :update
   after_commit :log_remind_me!, if: ->(obj){ obj.remind_me? && obj.saved_change_to_status? && obj.persisted? }
+
+  # merging in old record
+  after_save :merge_in_archived!, if: ->(obj){ obj.pending_pickup? && obj.saved_change_to_status? && obj.persisted? }
 
   # turbo stream
   # after_update ReservationCallbacks

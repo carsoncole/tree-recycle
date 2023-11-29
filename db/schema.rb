@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_11_183801) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_161530) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -148,6 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_183801) do
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["phone", "status"], name: "index_reservations_on_phone_and_status"
     t.index ["route_id"], name: "index_reservations_on_route_id"
+    t.index ["status", "email"], name: "index_reservations_on_status_and_email"
     t.index ["status", "route_id"], name: "index_reservations_on_status_and_route_id"
     t.index ["status"], name: "index_reservations_on_status"
     t.index ["street"], name: "index_reservations_on_street"
