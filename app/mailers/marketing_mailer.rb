@@ -13,6 +13,15 @@ class MarketingMailer < ApplicationMailer
     headers['List-Unsubscribe'] = "<#{unsubscribe_url}>"
   end
 
+  # Email to all reservations that are Remind Mes
+  def remind_me_we_are_live_email
+    return if @reservation.is_remind_me_we_are_live_email_sent?
+    return if Reservation.pending.where(email: @reservation.email).any?
+    mail(to: @reservation.email, subject: "We are now taking tree pickup reservations")
+    @reservation.logs.create(message: 'Remind Me we are live email sent.')
+    @reservation.update(is_remind_me_we_are_live_email_sent: true)
+  end
+
   # redundant, but is a safety check
   def stop_delivery_if_disabled
     if !setting.is_emailing_enabled? || @reservation&.no_emails?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_29_194626) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_202547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -144,6 +144,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_194626) do
     t.boolean "is_pickup_reminder_email_sent", default: false
     t.string "admin_notes"
     t.integer "years_recycling", default: 1
+    t.boolean "is_remind_me_we_are_live_email_sent", default: false
     t.index ["email"], name: "index_reservations_on_email"
     t.index ["name"], name: "index_reservations_on_name"
     t.index ["phone", "status"], name: "index_reservations_on_phone_and_status"

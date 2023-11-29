@@ -1,0 +1,50 @@
+%table(style="width:100%; border:0;cellspacing:0;cellpadding:0")
+  %tr(style='padding: 0;border:0')
+    %td(style="width: 100%;padding: 0;border:0")
+      %table(style="max-width:800px;margin-left: auto;margin-right: auto;")
+        %tr
+          %td(style="text-align:left;padding: 0;border:0")
+            %div(style='text-align:center;margin-left: auto;margin-right:auto;margin-top: 16px;margin-bottom:0')
+              = image_tag 'tree.png', width:200
+
+
+            %h1(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; font-weight: 300; font-size: 40px; margin: 20px auto 70px auto;text-align: center;padding: 0;line-height: 1.5;")
+              We are live!
+
+
+            - if @reservation.name.present? && @reservation.name.downcase != 'no name provided'
+              %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+                = 'Hello,'
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+              Season's greetings! We're excited to inform you, as per your request for a reminder, that our reservation site for tree recycling is now active. Take a moment to register your address today at
+              = link_to "#{SITE_URL}", "#{SITE_URL}"
+              if you'd like us to pick up your tree.
+
+            %table(width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 20px")
+              %tr
+                %td
+                  %table(cellspacing="0" cellpadding="0")
+                    %tr
+                      %td(syle="border-radius: 2px" bgcolor="#ED2939" width="100%" style='text-align:center;')
+                        %a(href="#{new_reservation_url(reservation_id: @reservation.id)}" target="_blank" style="padding: 8px 12px; border: 1px solid #ED2939;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff !important;text-decoration: none;font-weight:bold;display: inline-block;")
+                          Register for a tree pickup
+
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+              We don't want to pester you so we'll only send this reminder once.
+
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
+              Our pick up date is on
+              = succeed(".") do
+                = nice_long_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 60px; padding: 0;")
+              Thank You,
+              %br
+              Bainbridge Troop 1564 and Troop 1804
+
+            = render 'unsubscribe'
+
+            = render 'shared/mailer_footer'

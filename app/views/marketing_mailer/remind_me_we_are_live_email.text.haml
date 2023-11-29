@@ -1,0 +1,15 @@
+We are live!
+
+Season's greetings! We're excited to inform you, as per your request for a reminder, that our reservation site for tree recycling is now active. Take a moment to register your address today at
+= link_to "#{SITE_URL}", "#{SITE_URL}"
+
+We don't want to pester you so we'll only send this reminder once.
+
+Our pick up date is on
+= succeed(".") do
+  = nice_long_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
+
+Thank You, Bainbridge Island Troop 1564 and Troop 1804
+
+To unsubscribe, please visit
+= reservation_unsubscribe_url(@reservation)

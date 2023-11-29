@@ -161,6 +161,11 @@ class Reservation < ApplicationRecord
     count
   end
 
+  def self.reservations_to_send_we_are_live_to_remind_mes
+    Reservation.remind_me.where.not(is_remind_me_we_are_live_email_sent: true).where("email NOT IN (?)", Reservation.pending.map{|r| r.email })
+  end
+
+
   # archived reservations that 1) have not been sent marketing, 2) are not pending (pending_pickup, picked_up, missing)
   def self.reservations_to_send_marketing_emails(attribute)
 

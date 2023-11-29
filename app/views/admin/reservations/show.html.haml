@@ -298,6 +298,18 @@
                     - else
                       %i.bi.bi-x-lg
                 %tr
+                  %th Marketing Email 'We are live!' sent?
+                  %td
+                    - if @reservation.is_remind_me_we_are_live_email_sent?
+                      %i.bi.bi-check-lg
+                    - else
+                      %i.bi.bi-x-lg
+
+
+
+
+
+                %tr
                   %th Log
                   %td
                     = turbo_frame_tag @reservation do

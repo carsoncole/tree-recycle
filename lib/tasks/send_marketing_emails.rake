@@ -4,6 +4,9 @@ namespace :marketing do
   # these marketing emails will not send to reservations with { no_emails: true }
 
   # send emails to archived reservations that don't have new reservations with same email or log indicating already sent
+
+
+
   task :send_email_1_to_archived_customers => :environment do
     Rails.logger.info 'Starting task to send marketing email 1'
 
