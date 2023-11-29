@@ -65,7 +65,7 @@ class ReservationTest < ActiveSupport::TestCase
     assert_not_equal reservation.latitude, lat
     assert reservation.geocoded?
     assert_not_equal lat, reservation.latitude
-    assert_equal 0.476401120180451e2, reservation.latitude
+    assert_equal 47.640112018045, reservation.latitude
   end
 
   test "no geocoding of new reservation with coordinates provided" do
