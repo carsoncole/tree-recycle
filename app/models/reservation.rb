@@ -211,7 +211,7 @@ class Reservation < ApplicationRecord
   private
 
   def merge_in_archived!
-    if existing_archived = Reservation.not_active.where(email: self.email).where.not(id: self.id).first
+    if existing_archived = Reservation.archived.where(email: self.email).where.not(id: self.id).first
       self.update_column(:years_recycling,  self.years_recycling + existing_archived.years_recycling)
       existing_archived.donations.update_all(reservation_id: self.id)
       existing_archived.destroy
