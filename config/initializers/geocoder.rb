@@ -11,6 +11,8 @@ Geocoder.configure(
     }
   }
 
+Aws.config.update({region: 'us-west-2'})
+
   # ip_lookup: :ipinfo_io,      # name of IP address geocoding service (symbol)
   # language: :en,              # ISO-639 language code
   # use_https: false,           # use HTTPS for lookup requests? (if supported)
@@ -36,4 +38,3 @@ Geocoder.configure(
 )
 
 
-Aws.config.update({region: 'us-west-2'})

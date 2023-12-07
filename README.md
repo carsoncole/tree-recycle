@@ -32,7 +32,8 @@ A Redis addon must be enabled on Heroku to provide the live functionality such a
 
 ### Mapping service
 
-A mapping service is required to provide geocoding and geofencing services. Amazon Location Service mapping is configured by default but this can be changed in ``` config/intializers/geocoder.rb```.
+A mapping service is required to provide geocoding and geofencing services.
+
 
 For the Amazon Locations Service, you'll need an AWS account. Create a Place Index and give it a name, ie. 'tree_recycle', with the data provider 'Esri' with a single use.  You'll then need API credentials which you can obtain in your main profile under 'Security Credentials'.
 
@@ -44,6 +45,28 @@ lookups:
     access_key_id: SOMEKEY
     secret_access_key: aSecretAccessKey
 ```
+
+Update the geocoder config file with the mapping service in ``` config/intializers/geocoder.rb```.  When you create a Place Index, note the AWS region it was created in and update it accordingly in this config file.
+
+```ruby
+Geocoder.configure(
+  # Geocoding options
+  timeout: 10,                 # geocoding service timeout (secs)
+  # lookup: :nominatim,         # name of geocoding service (symbol)
+  lookup: :amazon_location_service,
+  amazon_location_service: {
+    index_name: 'tree_recycle',
+    api_key: {
+      access_key_id: Rails.application.credentials.lookups.amazon_location_service.access_key_id,
+      secret_access_key: Rails.application.credentials.lookups.amazon_location_service.secret_access_key
+    }
+  }
+
+Aws.config.update({region: 'us-west-2'})
+```
+
+
+
 ### USPS
 
 USPS API access is needed for address verification (https://www.usps.com/business/web-tools-apis/). A required key should be configured in the credentials `config/credentials.yml.enc` file.
