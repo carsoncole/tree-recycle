@@ -34,7 +34,7 @@ A Redis addon must be enabled on Heroku to provide the live functionality such a
 
 A mapping service is required to provide geocoding and geofencing services. Amazon Location Service mapping is configured by default but this can be changed in ``` config/intializers/geocoder.rb```.
 
-For the Amazone Locations Service, you'll need an AWS account. Create a Place Index and give it a name, ie. 'tree_recycle', with the data provider 'Esri' with a single use.  You'll then need API credentials which you can obtain in your main profile under 'Security Credentials'.
+For the Amazon Locations Service, you'll need an AWS account. Create a Place Index and give it a name, ie. 'tree_recycle', with the data provider 'Esri' with a single use.  You'll then need API credentials which you can obtain in your main profile under 'Security Credentials'.
 
 Your API credentials should then be configured in your credentials file `config/credentials.yml.enc`.
 
