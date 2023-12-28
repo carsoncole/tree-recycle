@@ -304,6 +304,15 @@
                       %i.bi.bi-check-lg
                     - else
                       %i.bi.bi-x-lg
+                %tr
+                  %th Missing tree email sent?
+                  %td
+                    - if @reservation.is_missing_tree_email_sent?
+                      %i.bi.bi-check-lg
+                      = link_to admin_reservation_path(@reservation, send_missing_tree_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will send a missing tree email, if it has already NOT been sent. To send again, deselect this flag in settings.' } do
+                        %i.bi.bi-send
+                    - else
+                      %i.bi.bi-x-lg
 
 
 

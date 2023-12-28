@@ -54,6 +54,9 @@ class Admin::ReservationsController < Admin::AdminController
       elsif params[:send_pickup_reminder_email]
         ReservationsMailer.with(reservation: @reservation).pick_up_reminder_email.deliver_later
         redirect_to admin_reservation_url(@reservation), notice: 'Pick-up reminder email queued for sending. The email will not be sent if the reservation is flagged as already having been sent this email.'
+      elsif params[:send_missing_tree_email]
+        @reservation.send_missing_email!(override: true)
+        redirect_to admin_reservation_url(@reservation), notice: 'Missing tree email queued for sending. The email will not be sent if the reservation is flagged as already having been sent this email.'
       elsif @reservation.update(reservation_params)
         redirect_to admin_reservation_url(@reservation)
       else
@@ -208,6 +211,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :no_sms, :is_routed, :unit, :is_geocoded, :is_confirmed_reservation_email_sent, :is_marketing_email_1_sent, :is_marketing_email_2_sent, :is_pickup_reminder_email_sent, :admin_notes, :heard_about_source, :years_recycling, :is_remind_me_we_are_live_email_sent)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :no_sms, :is_routed, :unit, :is_geocoded, :is_confirmed_reservation_email_sent, :is_marketing_email_1_sent, :is_marketing_email_2_sent, :is_pickup_reminder_email_sent, :admin_notes, :heard_about_source, :years_recycling, :is_remind_me_we_are_live_email_sent, :is_missing_tree_email_sent)
     end
 end

@@ -38,7 +38,9 @@ class ReservationsMailer < ApplicationMailer
 
   def missing_tree_email
     return if @reservation.no_emails? || !setting.is_emailing_enabled
+    return if @reservation.is_missing_tree_email_sent?
     mail(to: @reservation.email, subject: "We can not find your tree")
     @reservation.logs.create(message: 'Missing tree email sent.')
+    @reservation.update(is_missing_tree_email_sent: true)
   end
 end
