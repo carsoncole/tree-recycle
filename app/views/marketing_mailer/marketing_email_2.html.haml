@@ -16,14 +16,13 @@
 
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
-              We noticed you have not signed up this year for a tree pickup, so we wanted to reach out with this last friendly reminder that we will be picking up trees 
-              on
+              We hope this message finds you well. As the new year begins, we wanted to remind you that the tree pickup service provided by Bainbridge Island Scout Troops 1564 and 1804 is scheduled for
               = succeed(".") do
                 = Time.parse(EVENT_DATE_AND_PICKUP_TIME).strftime("%B %e at %l:%M %p")
 
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 30px; padding: 0;")
-              If you would like us to pick up your tree again this year, please register on our website
+              It appears that you haven't signed up for this year's tree pickup yet, and we didn't want you to miss the opportunity. To ensure a hassle-free experience, please take a moment to register on our website by visiting
               = succeed(".") do
                 = link_to "https://treerecycle.net", new_reservation_url(reservation_id: @reservation.id)
 
@@ -39,26 +38,38 @@
                             Register for a tree pickup
 
 
-            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
-              Once registered we will send you a confirmation email and then pick up your tree on
-              = succeed(".") do
-                = nice_long_date(Time.parse(EVENT_DATE_AND_PICKUP_TIME))
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0; padding: 0;")
+              Here's a quick overview of the process:
 
-            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 40px; padding: 0;")
-              The deadline for reserving a pickup is
+            %ol(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5;font-weight:400; padding-left: 1.2em;margin-bottom: 20px")
+              %li
+                %span(style="font-weight:800")
+                  Register for a Tree Pickup:
+                Simply visit our website and complete the registration process.
+
+              %li
+                %span(style="font-weight:800")
+                  Confirmation Email:
+                Once registered, you will receive a confirmation email detailing the pickup logistics.
+              %li
+                %span(style="font-weight:800")
+                  Scheduled Pickup:
+                Our dedicated scouts will be on standby to collect your tree on Saturday, January 6, 2024.
+
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+              Please note that the deadline for reserving a pickup slot is
               = succeed(".") do
                 = Time.parse(EVENT_SIGN_UP_DEADLINE).strftime("%B %e at %l:%M %p")
-              If you have any questions, please contact us at
-              = succeed(", ") do 
-                = mail_to setting.contact_email
-              = succeed(", ") do 
-                = link_to setting.contact_phone, "tel:#{setting.contact_phone}"
-              or an SMS to 
-              = succeed(".") do 
-                = Rails.application.credentials.twilio.production.number.to_s
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+              Your participation not only supports our Scout troops but also contributes to the environmentally friendly disposal of Christmas trees in our community.
+
+            %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
+              Thank you for considering our tree pickup service. We appreciate your support.
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 60px; padding: 0;")
-              Thank You,
+              Warm regards,,
               %br
               Bainbridge Island Scout Troop 1564 and Troop 1804
 
