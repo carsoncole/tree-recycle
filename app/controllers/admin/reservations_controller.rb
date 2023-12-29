@@ -55,7 +55,7 @@ class Admin::ReservationsController < Admin::AdminController
         ReservationsMailer.with(reservation: @reservation).pick_up_reminder_email.deliver_later
         redirect_to admin_reservation_url(@reservation), notice: 'Pick-up reminder email queued for sending. The email will not be sent if the reservation is flagged as already having been sent this email.'
       elsif params[:send_missing_tree_email]
-        @reservation.send_missing_email!(override: true)
+        @reservation.send_missing_email!(true)
         redirect_to admin_reservation_url(@reservation), notice: 'Missing tree email queued for sending. The email will not be sent if the reservation is flagged as already having been sent this email.'
       elsif @reservation.update(reservation_params)
         redirect_to admin_reservation_url(@reservation)

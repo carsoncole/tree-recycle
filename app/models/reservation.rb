@@ -123,8 +123,8 @@ class Reservation < ApplicationRecord
     Sms.new.send_with_object(self, message)
   end
 
-  def send_missing_email!
-    return if self.phone.present?
+  def send_missing_email!(override=false)
+    return if self.phone.present? && !override
     ReservationsMailer.with(reservation: self).missing_tree_email.deliver_later
   end
 
