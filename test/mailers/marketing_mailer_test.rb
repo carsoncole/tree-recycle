@@ -40,6 +40,6 @@ class MarketingMailerTest < ActionMailer::TestCase
     # assert_equal ["me@example.com"], email.from
     assert_equal [reservation.email], email.to
     assert_equal "Last call! Tree recycling #{nice_long_date_short(Time.parse(EVENT_DATE_AND_PICKUP_TIME))}", email.subject
-    assert email.html_part.body.to_s.include? "We noticed you have not signed up this year"
+    assert email.html_part.body.to_s.include? "We hope this message finds you well."
   end
 end

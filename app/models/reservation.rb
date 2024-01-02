@@ -121,6 +121,7 @@ class Reservation < ApplicationRecord
 
     # Hi there! It's Bainbridge Tree Recycle. We're having trouble finding your tree for pickup. Our drivers are currently out collecting trees, and we want to make sure yours is on the list. Let us know by replying to this text ASAP. Thanks! Reply 'STOP' to opt out.
     Sms.new.send_with_object(self, message)
+    self.logs.create(category: 'missing_tree_sms', message: 'Missing tree SMS sent')
   end
 
   def send_missing_email!(override=false)
@@ -207,6 +208,17 @@ class Reservation < ApplicationRecord
     Reservation.update_all(is_geocoded: false, is_routed: false, is_marketing_email_1_sent: false, is_marketing_email_2_sent: false)
   end
 
+  def last_missing_tree_status
+    logs.missing_tree_status.order(:created_at).last
+  end
+
+  def last_missing_tree_sms
+    logs.missing_tree_sms.order(:created_at).last
+  end
+
+  def last_missing_tree_email
+    logs.missing_tree_email.order(:created_at).last
+  end
 
   private
 
@@ -241,7 +253,7 @@ class Reservation < ApplicationRecord
   end
 
   def log_missing!
-    logs.create(message: 'Pickup attempted. Tree not found.')
+    logs.create(category: 'missing_tree_status', message: 'Pickup attempted. Tree not found.')
   end
 
   def log_cancelled!

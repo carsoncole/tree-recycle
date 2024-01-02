@@ -71,10 +71,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    root 'admin#index'
     get 'operations/index' => 'operations#index', as: 'operations'
     patch 'operations/update'
-
-    root 'reservations#index'
     get '/routes/map-all' => 'routes#map_all', as: 'routes_map_all'
     resources :zones
     resources :drivers

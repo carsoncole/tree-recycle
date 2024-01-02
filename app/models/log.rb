@@ -1,6 +1,8 @@
 class Log < ApplicationRecord
   belongs_to :reservation
 
+  enum category: { general: 1, missing_tree_status: 5, missing_tree_email: 7, missing_tree_sms: 8 }, _default: "general"
+
   after_create_commit -> { broadcast_prepend_to "logs", partial: "admin/logs/log" }
 
   def self.email_count_last_24_hours
