@@ -25,7 +25,9 @@ class ReservationsMailer < ApplicationMailer
   def pick_up_reminder_email
     return if @reservation.no_emails? || !setting.is_emailing_enabled
     return if @reservation.is_pickup_reminder_email_sent?
-    mail(to: @reservation.email, subject: 'Reminder to put out your tree')
+    subject = 'Reminder to put out your tree'
+    subject = 'RESEND-CORRECTED: ' + subject if @reservation.is_door_hanger
+    mail(to: @reservation.email, subject: subject)
     @reservation.logs.create(message: 'Pick up reminder email sent.')
     @reservation.update(is_pickup_reminder_email_sent: true)
   end
