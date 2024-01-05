@@ -5,6 +5,25 @@ class Admin::ReservationsTest < ApplicationSystemTestCase
     @reservation = create(:reservation_with_coordinates, is_routed: false)
   end
 
+  test "visiting the index and viewing various statuses" do
+    system_test_signin(:editor)
+
+    visit admin_reservations_path
+    within "#status-menu" do
+      click_on "Pending pickup"
+      click_on "Picked up"
+      click_on "Missing"
+      click_on "Cancelled"
+      click_on "Unconfirmed"
+      click_on "Archived"
+      click_on "Un-Routed"
+      click_on "Manually Geocoded"
+      click_on "Manually Routed"
+      click_on "Not Polygon Routed"
+      click_on "Duplicates"
+    end
+  end
+
   test "show basic" do
     system_test_signin(:editor)
 

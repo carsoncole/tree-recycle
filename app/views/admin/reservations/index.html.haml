@@ -11,7 +11,7 @@
   .row
     .col-lg-2
       - unless action_name == 'search'
-        %section.menu
+        %section.menu#status-menu
           %h3 Status
           = link_to "All", admin_reservations_path(live: true), class: 'link'
           %br
@@ -55,6 +55,10 @@
           = surround("(",")") do 
             = @count_not_polygon_routed
           %br
+          = link_to "Duplicates", admin_reservations_path(duplicate: true), class: 'link'
+          = surround("(",")") do
+            = @count_duplicate
+          %br
           = link_to "Remind Mes", admin_reservations_path(remind_me: true), class: 'link'
           = surround("(",")") do
             = @count_remind_me
@@ -96,6 +100,9 @@
 
 
       .pagination= pagy_bootstrap_nav(@pagy, pagy_id: 'pagination').html_safe
+
+      - if params[:duplicate].present?
+        %p.my-3.font-bold ** Duplicates are reservatioins with exact latitude/longitude matches. In addition to reservations that have been made more than once, this will also exist for multi-tenant properies where more than one resident has signed up. It is recommened that reservations be reviewed, and duplicates are deleted.
 
       .table-responsive-xxl
         %table.table#reservations-table
