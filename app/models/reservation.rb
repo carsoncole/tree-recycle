@@ -22,7 +22,7 @@ class Reservation < ApplicationRecord
   scope :routed, -> { where.not(route_id: nil) }
   scope :not_polygon_routed, -> { where.not(route_id: nil).where.not(is_route_polygon: true)}
   scope :current_event, -> { where("created_at > ?", Date.today - 6.months)}
-  scope :duplicate, -> { joins("LEFT OUTER JOIN reservations r on reservations.latitude = r.latitude AND reservations.longitude = r.longitude AND reservations.id <> r.id").where("reservations.status = 1 and r.status = 1").distinct("reservations.id") }
+  scope :duplicate, -> { joins("LEFT OUTER JOIN reservations r on reservations.latitude = r.latitude AND reservations.longitude = r.longitude AND reservations.id <> r.id").where("reservations.status = 1 and r.status = 1").distinct("reservations.id").order("reservations.latitude, reservations.longitude") }
 
   validates :name, :email, presence: true
 
