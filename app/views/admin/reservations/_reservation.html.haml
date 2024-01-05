@@ -9,16 +9,18 @@
       %i.bi.bi-cash
     - elsif reservation.no_donation?
   %td.status= reservation_status(reservation)
-  %td.map-links
+  %td.contact
+    = reservation.email
+    %br
+    = reservation.phone
+  %td.route
     - if reservation.coordinates.present?
       = link_to reservation.street, "https://maps.apple.com/?q=#{reservation.latitude},#{reservation.longitude}", target: '_blank'
       = link_to "https://www.google.com/maps/place/#{reservation.latitude},#{reservation.longitude}", target: '_blank' do
         %i.bi.bi-google
     - else
       = reservation.street
-
-
-  %td.route
+    %br
     - if reservation.route_id?
       = link_to admin_reservations_path(route_id: reservation.route_id) do
         = reservation&.route&.name

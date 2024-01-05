@@ -102,7 +102,7 @@
       .pagination= pagy_bootstrap_nav(@pagy, pagy_id: 'pagination').html_safe
 
       - if params[:duplicate].present?
-        %p.my-3.font-bold ** Duplicates are reservatioins with exact latitude/longitude matches. In addition to reservations that have been made more than once, this will also exist for multi-tenant properies where more than one resident has signed up. It is recommened that reservations be reviewed, and duplicates are deleted.
+        %p.my-3.font-bold ** Duplicates are reservations with exact latitude/longitude matches. In addition to reservations that have been made more than once, this will also exist for multi-tenant properies where more than one resident has signed up. It is recommened that reservations be reviewed, and duplicates are deleted.
 
       .table-responsive-xxl
         %table.table#reservations-table
@@ -110,8 +110,8 @@
             %tr
               %th Name
               %th
-              %th Street
-              %th Route
+              %th
+              %th Address/Route
               %th
           %tbody#reservations-table-body
             - if params[:missing]
