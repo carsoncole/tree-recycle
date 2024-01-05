@@ -1,19 +1,30 @@
 .container
   .row
-    .col-lg-6.border.rounded.p-4
-      %h2 Missing
-      %table.table.mb-0
-        %tr
-          %th Reservation
-          %th Missing
-          %th SMS
-          %th Email
-        - @missing_reservations.each do |r|
+    .col-lg-6
+      %div.border.rounded.p-4.mb-3
+        %h2 Missing
+        %p.text-muted * Updates on newly missing reservations. Refresh for new status.
+        %table.table.mb-0
+          %thead
+            %tr
+              %th Reservation
+              %th Missing
+              %th SMS
+              %th Email
+          %tbody#reservations-missing
+            = turbo_stream_from "missing"
+    .col-lg-1
+    .col-lg-3
+      %div.border.rounded.p-4.mb-3
+        %h2 Status
+
+        %table.table.mb-0
           %tr
-            %td= link_to r.name, admin_reservation_path(r)
-            %td= nice_short_date_time(r&.last_missing_tree_status&.created_at) if r.last_missing_tree_status
-            %td= nice_short_date_time(r&.last_missing_tree_sms&.created_at) if r.last_missing_tree_sms
-            %td
-              = nice_short_date_time(r&.last_missing_tree_email&.created_at) if r.last_missing_tree_email
-              = link_to admin_reservation_path(r, send_missing_tree_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will send a missing tree email, if it has already NOT been sent. To send again, deselect this flag in settings.' } do
-                %i.bi.bi-send
+            %th Picked up
+            %td.text-end= @count_picked_up
+          %tr
+            %th Pending
+            %td.text-end= @count_pending_pickups
+          %tr
+            %th Missing
+            %td.text-end= @count_missing
