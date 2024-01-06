@@ -9,9 +9,10 @@
             %tr
               %th Reservation
               %th Missing
-              %th SMS
-              %th Email
+              %th SMS/Email
+              %th
           %tbody#reservations-missing
+            = render partial: 'reservation', collection: @reservations
             = turbo_stream_from "missing"
     .col-lg-1
     .col-lg-3

@@ -1,8 +1,13 @@
-%tr
-  %td= link_to reservation.name, admin_reservation_path(reservation)
-  %td= nice_short_date_time(reservation&.last_missing_tree_status&.created_at) if reservation.last_missing_tree_status
-  %td= nice_short_date_time(reservation&.last_missing_tree_sms&.created_at) if reservation.last_missing_tree_sms
-  %td
+%tr(id= "reservation_#{reservation.id}" )
+  %td.p-1= link_to reservation.name, admin_reservation_path(reservation)
+  %td.p-1= nice_short_date_time(reservation&.last_missing_tree_status&.created_at) if reservation.last_missing_tree_status
+  %td.p-1
+    = nice_short_date_time(reservation&.last_missing_tree_sms&.created_at) if reservation.last_missing_tree_sms
+    %br
     = nice_short_date_time(reservation&.last_missing_tree_email&.created_at) if reservation.last_missing_tree_email
+  %td.p-1
+    = reservation.phone
+    %br
+    = reservation.email
     = link_to admin_reservation_path(reservation, send_missing_tree_email: true), method: :patch, data: { 'turbo-method': :patch, 'turbo-confirm': 'Are you sure? This will send a missing tree email, if it has already NOT been sent. To send again, deselect this flag in settings.' } do
       %i.bi.bi-send
