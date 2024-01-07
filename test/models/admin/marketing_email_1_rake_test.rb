@@ -31,19 +31,19 @@ class MarketingEmailRakeTest < ActiveSupport::TestCase
     sleep 4
     ActionMailer::Base.deliveries = []
 
-    assert_equal 2, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
-    assert_equal 4, Reservation.reservations_to_send_marketing_emails('is_marketing_email_2_sent').count
+    assert_equal 3, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
+    assert_equal 5, Reservation.reservations_to_send_marketing_emails('is_marketing_email_2_sent').count
 
     assert_equal 0, ActionMailer::Base.deliveries.count
     TreeRecycle::Application.load_tasks
 
-    assert_difference "enqueued_jobs.size", 2 do
+    assert_difference "enqueued_jobs.size", 3 do
       Rake::Task['marketing:send_email_1_to_archived_customers'].invoke
     end
     sleep 1
 
     # assert_equal 4, ActionMailer::Base.deliveries.count # count of emails to be sent
-    assert_difference "enqueued_jobs.size", 4 do
+    assert_difference "enqueued_jobs.size", 5 do
       Rake::Task['marketing:send_email_2_to_archived_customers'].invoke
     end
     # sleep 2

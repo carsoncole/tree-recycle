@@ -136,14 +136,11 @@ class ReservationTest < ActiveSupport::TestCase
   test "recipients of marketing emails" do
     assert_empty Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent')
 
-    remind_me_reservations = create_list(:remind_me, 10)
-    assert_equal 10, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
-
     confirmed_reservations = create_list(:reservation, 3)
-    assert_equal 10, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
+    assert_equal 0, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
 
     archived_reservations = create_list(:archived_reservation, 5)
-    assert_equal 15, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
+    assert_equal 5, Reservation.reservations_to_send_marketing_emails('is_marketing_email_1_sent').count
   end
 
   test "merging archived with newly placed reservations" do

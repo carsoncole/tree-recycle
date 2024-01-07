@@ -214,6 +214,6 @@ class Admin::ReservationsController < Admin::AdminController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :no_sms, :is_routed, :unit, :is_geocoded, :is_confirmed_reservation_email_sent, :is_marketing_email_1_sent, :is_marketing_email_2_sent, :is_pickup_reminder_email_sent, :admin_notes, :heard_about_source, :years_recycling, :is_remind_me_we_are_live_email_sent, :is_missing_tree_email_sent)
+      params.require(:reservation).permit(:name, :email, :phone, :street, :city, :state, :zip, :country, :notes, :latitude, :longitude, :route_id, :status, :no_emails, :no_sms, :is_routed, :unit, :is_geocoded, :is_confirmed_reservation_email_sent, :is_marketing_email_1_sent, :is_marketing_email_2_sent, :is_pickup_reminder_email_sent, :admin_notes, :heard_about_source, :years_recycling, :is_missing_tree_email_sent)
     end
 end

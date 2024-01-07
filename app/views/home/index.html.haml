@@ -10,13 +10,6 @@
           .recycle Recycle
       .sub-line
         = HOME_PAGE_LEAD
-
-
-  - if setting.is_remind_mes_enabled?
-    #remind-me.row
-      .col-lg-8.offset-lg-2
-        = render 'remind_me'
-
   .row
     .col-md-12
       %div{class: setting.is_reservations_open? ? '' : 'mute-all' }

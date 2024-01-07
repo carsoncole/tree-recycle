@@ -8,14 +8,7 @@
   %article
     .col-lg-8
       %p.text-muted The following mass emails will only be sent once per each email. Each year, archived reservations will need to be reset to enable resending.
-      .mb-4
-        = button_to "Send 'We are now taking reservations' to Remind Mes", admin_marketing_send_we_are_live_path, class: 'btn btn-primary mb-1', data: { 'turbo-confirm': "Are you sure? This will send out emails to all remind me's, excluding any that have made a new reservation. This will only be sent once." }
-        %p
-          = surround("- ", " -") do
-            %strong= Reservation.reservations_to_send_we_are_live_to_remind_mes.count
-          available for sending
-          %br
-          Email to all reservations signed up as a Remind Me, excluding any that have made a new reservation.
+
       .mb-4
         = button_to "Send Marketing Email #1", admin_marketing_send_email_1_path, class: 'btn btn-primary mb-1', data: { 'turbo-confirm': 'Are you sure? This will send out emails, limited in quantity by the batch size setting, to archived reservations that do not have current pending reservations with the same email address. Reservations sent this mailing will be flagged to avoid sending the same email twice. '}
         %p

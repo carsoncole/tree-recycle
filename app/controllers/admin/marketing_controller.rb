@@ -1,19 +1,5 @@
 class Admin::MarketingController < Admin::AdminController
   def index
-    @remind_mes_count = Reservation.remind_me.count
-  end
-
-
-  def send_we_are_live
-    if current_user.administrator?
-      Reservation.reservations_to_send_we_are_live_to_remind_mes.each do |r|
-        MarketingMailer.with(reservation: r).remind_me_we_are_live_email.deliver_later
-      end
-
-      redirect_to admin_marketing_index_path, notice: "We are live email to Remind Mes has been queued."
-    else
-      redirect_to admin_marketing_index_path, notice: 'Unauthorized. Administrator access is required.'
-    end
   end
 
   def send_marketing_email_1

@@ -26,9 +26,4 @@ class Admin::MarketingControllerTest < ActionDispatch::IntegrationTest
     get admin_marketing_index_path
     assert_redirected_to sign_in_path
   end
-
-  test "sending we are live email to remind mes" do
-    post admin_marketing_send_we_are_live_path(as: @administrator)
-    assert_redirected_to admin_marketing_index_path
-  end
 end
