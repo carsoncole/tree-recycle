@@ -17,7 +17,7 @@
         %table.table.table-borderless.settings
           %tr
             %th
-              %p.mb-1 Post-Event Archive
+              %p Post-Event Archive
               .text-sm.text-muted.mb-3 This archiving process will clean-up reservations, keeping only those that have not unsubscribed from marketing, and those that have participated within the last 4 years in preparation of your next event. This will ensure there are no duplicate (same email) reservations and that they are set to have marketing emails sent at the next event.
               .text-muted
                 This will destroy reservations that
@@ -37,6 +37,16 @@
 
             %td.action-button
               = button_to "ARCHIVE ALL", admin_post_event_archive_reservations_path, method: :delete, data: { "turbo-method": :delete, turbo_confirm: 'Are you sure? This will 1) destroy all unconfirmed reservations, 2) destroy all archived reservations that unsubscribed to marketing emails, 3) archives all reservations, destroying any older duplicates, and 4) disables all geocoding/routing on reservations. This should normally be done at the end of every event.' }, class: 'btn btn-danger', disabled: current_user.administrator? ? false : true
+
+
+
+          %tr
+            %th
+              %p Reset campaign emailing
+              %p.text-muted Campaign emails will only be sent to Archived reservations and only once. Reseting here will allow for new sends.
+            %td
+            %td
+              = button_to "Reset Archived campaigns", admin_marketing_reset_sent_campaigns_path, class: 'btn btn-warning', data: { 'turbo-confirm': 'Are you sure? This will reset the flags on reservations that have been sent marketing emails, to enable the sending of these same marketing emails anew. '}
 
           %tr
             %th

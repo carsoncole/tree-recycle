@@ -159,8 +159,10 @@ class Admin::ReservationsController < Admin::AdminController
 
   def post_event_archive
     if current_user.administrator?
-      Reservation.process_post_event!
-      redirect_to admin_operations_path, notice: 'All Reservation data has been archived.'
+      TreeRecycle::Application.load_tasks
+      Rake::Task['post_event:reset_and_archive_data'].invoke
+
+      redirect_to admin_reservations_path, notice: 'All Reservation data has been archived.'
     else
       redirect_to admin_operations_path, alert: 'Unauthorized. Editor or Adminstrator access is required.', status: :unauthorized
     end

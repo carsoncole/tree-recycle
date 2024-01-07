@@ -201,7 +201,7 @@ class Reservation < ApplicationRecord
     !is_routed
   end
 
-  def self.process_post_event!
+  def self.process_post_event_reservations!
     # destroy unsubscribed archived (we don't destroy unsubscribed current)
     Reservation.archived.unsubscribed.where(no_emails: true).destroy_all
     Rails.logger.info "Destroyed unsubscribed."

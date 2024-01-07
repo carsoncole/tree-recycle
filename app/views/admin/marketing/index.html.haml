@@ -35,15 +35,9 @@
           Email to all reservations that are 'Pending Pickup'
 
   %hr
-    %div
-      .mb-4
-        .mb-2= button_to "Reset Archived reservations for campaigns", admin_marketing_reset_sent_campaigns_path, class: 'btn btn-warning', data: { 'turbo-confirm': 'Are you sure? This will reset the flags on reservations that have been sent marketing emails, to enable the sending of these same marketing emails anew. '}
-        %p Campaign emails will only be sent to Archived reservations and only once. Reseting here will allow for new sends.
-
-  %hr
 
   %div
-    .mb-4
+    .mb-1
       %p
         %span.fw-bold Email count last 24 hours:
         = Log.email_count_last_24_hours
@@ -53,7 +47,7 @@
       .row.g-3.align-items-center.mb-4
         .col-lg-2.fw-bold
           = f.label :email_batch_quantity
-        .col-lg-2
+        .col-lg-1
           = f.text_field :email_batch_quantity, class: 'form-control'
         .col-lg-4
           = f.submit 'Update', class: 'btn btn-primary mb-1'

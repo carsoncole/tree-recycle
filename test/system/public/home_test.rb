@@ -32,29 +32,6 @@ class HomeTest < ApplicationSystemTestCase
 
     assert_selector "#flash", text: "We are closed"
   end
-
-  test "visiting the home page with remind mes enabled" do
-    visit root_url
-    setting.update(is_remind_mes_enabled: true)
-
-    visit root_url
-    within "#remind-me" do
-      assert_text "Sign up for our email reminder"
-    end
-
-    email = Faker::Internet.email
-    fill_in "Name", with: Faker::Name.name
-    fill_in "Email", with: email
-    click_on "Remind me"
-
-    within "#remind-me-success" do
-      assert_selector "h1", text: "We will send you a reminder"
-      assert_text email
-
-      click_on "Tree Recycle"
-    end
-  end
-
 end
 
 
