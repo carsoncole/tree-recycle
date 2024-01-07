@@ -213,7 +213,7 @@ class Reservation < ApplicationRecord
     # destroy older than 4 years (not pariticipated in last 4 annual events)
     Reservation.archived.each do |r|
       if r.events.any?
-        r.destroy if r.events.order(:date).last.date < ( Time.now - 4.years )
+        r.destroy if r.events.order(:date).last.date < ( Time.now - 4.years ) && r.created_at < Time.now - 2.years
       end
     end
 
