@@ -26,7 +26,7 @@ class ReservationTest < ActiveSupport::TestCase
     reservation.save
     assert reservation.geocoded?
     assert_equal 1, reservation.logs.count
-    assert_equal reservation.status, 'unconfirmed'
+    assert_equal reservation.status, 'pending_pickup'
   end
 
   test "downcasing email" do
@@ -101,22 +101,46 @@ class ReservationTest < ActiveSupport::TestCase
 
   test "merging unarchived with archived" do
     create_list(:reservation_with_coordinates, 10, status: :pending_pickup, is_routed: false)
-    create_list(:remind_me, 5)
+    create_list(:reservation_picked_up, 5)
     assert_equal 15, Reservation.not_archived.count
-    assert_difference 'Reservation.archived.count', 10 do
+    assert_difference 'Reservation.archived.count', 15 do
       Reservation.merge_unarchived_with_archived!
     end
   end
 
   test "process post event" do
-    create_list(:reservation_with_coordinates, 10, status: :pending_pickup, is_routed: false)
-    create_list(:remind_me, 10)
-    assert_equal 10, Reservation.active.count # pending pickups: 10
-    assert_equal 10, Reservation.not_active.count # remind mes: 10
-    assert_difference "Reservation.active.count", -10 do
+    new_reservations = create_list(:reservation_picked_up, 10, is_pickup_reminder_email_sent: true)
+    reservation_1 = create(:reservation_picked_up, email: 'duplicity@gmail.com', is_missing_tree_email_sent: true)
+    reservation_2 = create(:reservation_picked_up, email: new_reservations[1].email, is_marketing_email_1_sent: true)
+
+    archived_reservations = create_list(:archived_reservation, 10, is_marketing_email_1_sent: true, is_marketing_email_2_sent: true)
+    create(:archived_reservation, email: 'duplicity@gmail.com')
+    create(:archived_reservation, email: archived_reservations[1].email)
+    create(:archived_reservation, email: archived_reservations[1].email)
+    create(:archived_reservation, email: archived_reservations[2].email)
+
+    create_list(:unsubscribed_reservation, 5)
+    create_list(:unconfirmed_reservation, 3)
+
+    assert_equal 12, Reservation.picked_up.count
+    assert_equal 19, Reservation.archived.count
+    assert_equal 5, Reservation.unsubscribed.count
+    assert_equal 3, Reservation.unconfirmed.count
+    assert_equal 4, Reservation.duplicate_email.count
+
+    assert_difference "Reservation.active.count", -12 do
       Reservation.process_post_event!
     end
-    assert_equal 20, Reservation.not_active.count # remind_mes: 10 + archived: 10
+    assert_empty Reservation.unconfirmed
+    assert_empty Reservation.unsubscribed
+    assert_empty Reservation.active
+    assert_equal 21, Reservation.archived.count
+    assert_empty Reservation.where(is_marketing_email_1_sent: true)
+    assert_empty Reservation.where(is_marketing_email_2_sent: true)
+    assert_empty Reservation.duplicate_email
+    assert_equal reservation_1, Reservation.where(email: 'duplicity@gmail.com').first
+
+    assert_empty Reservation.where(is_marketing_email_1_sent: true).or(Reservation.where(is_marketing_email_2_sent: true)).or(Reservation.where(is_confirmed_reservation_email_sent: true)).or(Reservation.where(is_missing_tree_email_sent: true)).or(Reservation.where(is_pickup_reminder_email_sent: true))
   end
 
   test "normalizig of phone" do

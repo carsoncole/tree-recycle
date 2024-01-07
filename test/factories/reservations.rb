@@ -2,13 +2,13 @@ FactoryBot.define do
   factory :reservation do
     name { Faker::Name.name }
     street { '215 Ericksen Ave NE' }
-    email { Faker::Name.first_name.downcase + '.' + Faker::Name.last_name.downcase + '@example.com' }
+    email { Faker::Internet.unique.email }
+    status { :pending_pickup }
 
 
     after :create do |reservation|
       create :donation, reservation: reservation
     end
-
 
     factory :reservation_with_bad_address do
       street { Faker::Address.street_name }
@@ -22,16 +22,21 @@ FactoryBot.define do
     factory :reservation_with_coordinates do
       latitude { 47.6259654 }
       longitude { -122.517533 }
-      status { 1 }
-    end
+      status { :pending_pickup }
 
-    factory :remind_me do
-      street { nil }
-      status { :remind_me }
+      factory :reservation_picked_up do
+        status { :picked_up }
+        is_routed { false }
+        is_geocoded { false }
+      end
     end
 
     factory :reservation_with_route do
       route
+    end
+
+    factory :unconfirmed_reservation do
+      status { :unconfirmed }
     end
 
     factory :archived_reservation do
@@ -39,6 +44,12 @@ FactoryBot.define do
       latitude { 47.6259654 }
       longitude { -122.517533 }
       is_routed { false }
+
+      factory :unsubscribed_reservation do
+        no_emails { true }
+      end
+
+
     end
   end
 end

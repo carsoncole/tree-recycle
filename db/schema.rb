@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_06_234050) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_07_082842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -73,6 +73,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_06_234050) do
     t.datetime "updated_at", null: false
     t.boolean "is_leader"
     t.index ["zone_id"], name: "index_drivers_on_zone_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.uuid "reservation_id", null: false
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "logs", force: :cascade do |t|
@@ -145,7 +152,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_06_234050) do
     t.boolean "is_pickup_reminder_email_sent", default: false
     t.string "admin_notes"
     t.integer "years_recycling", default: 1
-    t.boolean "is_remind_me_we_are_live_email_sent", default: false
     t.boolean "is_missing_tree_email_sent", default: false
     t.index ["email"], name: "index_reservations_on_email"
     t.index ["name"], name: "index_reservations_on_name"

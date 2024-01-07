@@ -17,9 +17,21 @@
         %table.table.table-borderless.settings
           %tr
             %th
-              %p Archive all Reservation data
-              %p.text-muted
-                This will 1) destroy all unconfirmed reservations, 2) destroy all archived reservations that unsubscribed to marketing emails, 3) archives all reservations, destroying any older duplicates, and 4) disables all geocoding/routing on reservations. This should normally be done at the end of every event.
+              %p.mb-1 Post-Event Archive
+              .text-sm.text-muted.mb-3 This archiving process will clean-up reservations, keeping only those that have not unsubscribed from marketing, and those that have participated within the last 4 years in preparation of your next event. This will ensure there are no duplicate (same email) reservations and that they are set to have marketing emails sent at the next event.
+              .text-muted
+                This will destroy reservations that
+                %ul
+                  %li unsubscribed from emails (usually done after getting a marketing email),
+                  %li are unconfirmed (never completed reserving),
+                  %li have not signed up within the last 4 years;
+                  %li have duplicates (same emails).
+              .text-muted
+                This will then
+                %ul
+                  %li archive all picked up reservations,
+                  %li reset all email sent flags,
+                  %li disables all geocoding/routing on reservations.
 
             %td
 

@@ -17,14 +17,15 @@ class Reservation < ApplicationRecord
 
 
   scope :pending, -> { where.not(status: ['archived', 'cancelled', 'unconfirmed', 'remind_me'])}
-  scope :active, -> { where.not(status: ['archived', 'remind_me'])}
-  scope :not_active, -> { where(status: ['archived', 'remind_me'])}
+  scope :active, -> { where.not(status: ['archived', 'remind_me', 'unconfirmed'])}
+  scope :not_active, -> { where(status: ['archived', 'remind_me', 'unconfirmed'])}
   scope :unrouted, -> { where(route_id: nil) }
   scope :routed, -> { where.not(route_id: nil) }
   scope :not_polygon_routed, -> { where.not(route_id: nil).where.not(is_route_polygon: true)}
   scope :current_event, -> { where("created_at > ?", Date.today - 6.months)}
   scope :duplicate, -> { joins("LEFT OUTER JOIN reservations r on reservations.latitude = r.latitude AND reservations.longitude = r.longitude AND reservations.id <> r.id").where("reservations.status = 1 and r.status = 1").distinct("reservations.id").order("reservations.latitude, reservations.longitude") }
   scope :unsubscribed, -> { where(no_emails: true) }
+  scope :duplicate_email, -> { joins("join reservations r on reservations.email = r.email AND reservations.id <> r.id").uniq{ |obj| obj.email } }
 
   validates :name, :email, presence: true
 
@@ -153,11 +154,21 @@ class Reservation < ApplicationRecord
     Reservation.archived.destroy_all
   end
 
-  # merges active with not-active (archived + remind mes) reservations
+  # merges active with not-active (archived + remind mes) reservations, leaving reservations with unique emails
   def self.merge_unarchived_with_archived!
+    Reservation.clear_archive_email_duplicates!
+
     Reservation.active.not_unconfirmed.each do |r|
       Reservation.not_active.where(email: r.email).destroy_all
       r.archived!
+    end
+  end
+
+  def self.clear_archive_email_duplicates!
+    duplicate_emails = Reservation.archived.duplicate_email.map {|r| r.email }
+    duplicate_emails.each do |e|
+      final = Reservation.archived.where(email: e).order(:created_at).last
+      Reservation.archived.where(email: e).where.not(id: final.id).destroy_all
     end
   end
 
@@ -167,11 +178,6 @@ class Reservation < ApplicationRecord
     query.destroy_all
     count
   end
-
-  def self.reservations_to_send_we_are_live_to_remind_mes
-    Reservation.remind_me.where.not(is_remind_me_we_are_live_email_sent: true).where("email NOT IN (?)", Reservation.pending.map{|r| r.email })
-  end
-
 
   # archived reservations that 1) have not been sent marketing, 2) are not pending (pending_pickup, picked_up, missing)
   def self.reservations_to_send_marketing_emails(attribute)
@@ -196,21 +202,27 @@ class Reservation < ApplicationRecord
   end
 
   def self.process_post_event!
+    # destroy unsubscribed archived (we don't destroy unsubscribed current)
+    Reservation.archived.unsubscribed.where(no_emails: true).destroy_all
+    Rails.logger.info "Destroyed unsubscribed."
+
     # destroy unconfirmed
     Reservation.unconfirmed.destroy_all
     Rails.logger.info "Destroyed unconfirmed reservations."
 
-    # destroy unsubscribed
-    Reservation.archived.where(no_emails: true).destroy_all
-    Reservation.remind_me.where(no_emails: true).destroy_all
-    Rails.logger.info "Destroyed archived and remind me emails that unsubscribed."
+    # destroy older than 4 years (not pariticipated in last 4 annual events)
+    Reservation.archived.each do |r|
+      if r.events.any?
+        r.destroy if r.events.order(:date).last.date < ( Time.now - 4.years )
+      end
+    end
 
     # merge records, deleting older duplicate archived records
     Reservation.merge_unarchived_with_archived!
     Rails.logger.info "Archived all data."
 
-    # disable geocoding/routing and reset marketing emails
-    Reservation.update_all(is_geocoded: false, is_routed: false, is_marketing_email_1_sent: false, is_marketing_email_2_sent: false)
+    # reset marketing emails
+    Reservation.clear_email_campaign_flags!
   end
 
   def last_missing_tree_status
@@ -223,6 +235,16 @@ class Reservation < ApplicationRecord
 
   def last_missing_tree_email
     logs.missing_tree_email.order(:created_at).last
+  end
+
+  def self.clear_email_campaign_flags!
+    Reservation.update_all(
+      is_marketing_email_1_sent: false,
+      is_marketing_email_2_sent: false,
+      is_pickup_reminder_email_sent: false,
+      is_confirmed_reservation_email_sent: false,
+      is_missing_tree_email_sent: false
+      )
   end
 
   private

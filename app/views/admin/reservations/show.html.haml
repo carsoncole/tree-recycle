@@ -245,7 +245,20 @@
                             = link_to admin_donation_send_donation_receipt_path(donation_id: donation.id), method: :post, data: { 'turbo-method': :post, 'turbo-confirm': 'Are you sure? This will re-send a donation receipt.' } do
                               %i.bi.bi-send
 
-        %section#donations
+          %section#events
+            .row
+              .col-lg-12
+                %h3 Events
+                %table.table.table-borderless
+                  %tbody
+                    %tr
+                      %th.text-left Prior events they have participated:
+                      %td.text-right
+                        - @reservation.events.order(:date).each do |e|
+                          = nice_date(e.date)
+                          %br
+
+        %section#misc
           .row
             .col-lg-12
               %h3 Misc
@@ -294,13 +307,6 @@
                   %th Marketing Email #2 email sent?
                   %td
                     - if @reservation.is_marketing_email_2_sent?
-                      %i.bi.bi-check-lg
-                    - else
-                      %i.bi.bi-x-lg
-                %tr
-                  %th Marketing Email 'We are live!' sent?
-                  %td
-                    - if @reservation.is_remind_me_we_are_live_email_sent?
                       %i.bi.bi-check-lg
                     - else
                       %i.bi.bi-x-lg
