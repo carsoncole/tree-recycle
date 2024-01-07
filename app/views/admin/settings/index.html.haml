@@ -236,22 +236,49 @@
           .section
             .row
               .col-lg-4
-                %h3#campaigns Email
+                %h3#messaging Messaging
               .col-lg-8
-                - if setting.is_emailing_enabled
+                %div.mb-5
+                  - if setting.is_emailing_enabled
+                    .row.mb-1
+                      .col-lg-5
+                        .fw-bold Email is delivering
+                      .col-lg-4
+                        - if current_user.administrator?
+                          .text-end
+                            = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}, source: 'marketing'), method: :patch, class: 'btn btn-sm btn-danger'
+                  - else
+                    .row.mb-1
+                      .col-lg-5
+                        .fw-bold Email is stopped
+                      .col-lg-4
+                        - if current_user.administrator?
+                          .text-end
+                            = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}, source: 'marketing'), method: :patch, class: 'btn btn-sm btn-danger'
+
+
                   .row
-                    .col-lg-5
-                      .fw-bold Email is delivering
-                    .col-lg-4
-                      - if current_user.administrator?
-                        = button_to "Stop", admin_setting_path(setting, setting: {is_emailing_enabled: false}, source: 'marketing'), method: :patch, class: 'btn btn-danger'
-                - else
+                    %p * This controls all automated email sending, except for donation receipts.
+
+
+
+                %div.mb-7
+                  - if setting.is_sms_enabled
+                    .row.mb-1
+                      .col-lg-5
+                        .fw-bold SMS is delivering
+                      .col-lg-4
+                        - if current_user.administrator?
+                          .text-end
+                            = button_to "Stop", admin_setting_path(setting, setting: {is_sms_enabled: false}, source: 'marketing'), method: :patch, class: 'btn btn-sm btn-danger'
+                  - else
+                    .row.mb-1
+                      .col-lg-5
+                        .fw-bold SMS sending stopped
+                      .col-lg-4
+                        - if current_user.administrator?
+                          .text-end
+                            = button_to "Start", admin_setting_path(setting, setting: {is_sms_enabled: true}, source: 'marketing'), method: :patch, class: 'btn btn-sm btn-danger'
+
                   .row
-                    .col-lg-5
-                      .fw-bold Email is stopped
-                    .col-lg-4
-                      - if current_user.administrator?
-                        = button_to "Start", admin_setting_path(setting, setting: {is_emailing_enabled: true}, source: 'marketing'), method: :patch, class: 'btn btn-danger'
-
-
-
+                    %p * This controls automated sending of SMS's. This does not stop manual sending.

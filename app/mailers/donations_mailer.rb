@@ -3,9 +3,11 @@ class DonationsMailer < ApplicationMailer
   after_action :stop_delivery_if_disabled
 
   def stop_delivery_if_disabled
-    unless setting.is_emailing_enabled
-      mail.perform_deliveries = false
-    end
+    # Disabled since a receipt should go out if a donation is made, whenever
+    #
+    # unless setting.is_emailing_enabled
+    #   mail.perform_deliveries = false
+    # end
   end
 
   def receipt_email

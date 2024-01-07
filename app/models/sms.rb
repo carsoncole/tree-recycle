@@ -14,6 +14,7 @@ class Sms
 
   def send_with_object(obj, message)
     begin
+      return if !Setting.first.is_sms_enabled
       return unless obj.phone.present?
       return if obj.respond_to?(:no_sms) && obj.no_sms?
 
