@@ -7,6 +7,7 @@ class Reservation < ApplicationRecord
   has_one :zone, through: :route
   has_many :donations, dependent: :nullify
   has_many :logs, dependent: :destroy
+  has_many :events, dependent: :destroy
 
   enum :donation, { online_donation: 1, cash_or_check_donation: 2, no_donation: 3 }
   enum :status, { unconfirmed: 0, pending_pickup: 1, picked_up: 2, missing: 3, cancelled: 4, archived: 99, remind_me: 999 }, default: :unconfirmed
