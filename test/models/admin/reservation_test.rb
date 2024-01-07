@@ -23,7 +23,7 @@ class Admin::ReservationTest < ActiveSupport::TestCase
     assert_equal 4, Reservation.duplicate_email.count
 
     assert_difference "Reservation.active.count", -12 do
-      Reservation.process_post_event!
+      Reservation.process_post_event_reservations!
     end
     assert_empty Reservation.unconfirmed
     assert_empty Reservation.unsubscribed
