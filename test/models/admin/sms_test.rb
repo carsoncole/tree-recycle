@@ -1,7 +1,9 @@
 require "test_helper"
 
 class Admin::SmsTest < ActiveSupport::TestCase
-
+  setup do
+    Setting.first_or_create(is_sms_enabled: true)
+  end
 
   test "sending a sms to a reservation with a number" do 
     reservation = create(:reservation_with_coordinates, is_routed: false, no_emails: true, phone: '+12054517216')
