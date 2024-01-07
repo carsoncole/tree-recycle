@@ -27,8 +27,8 @@ class Admin::ReservationsController < Admin::AdminController
       @pagy, @reservations = pagy(Reservation.archived.includes(:route).order(created_at: :desc))
     elsif params[:duplicate]
       @pagy, @reservations = pagy(Reservation.duplicate.includes(:route).order(created_at: :desc))
-    elsif params[:remind_me]
-      @pagy, @reservations = pagy(Reservation.remind_me.order(created_at: :desc))
+    elsif params[:unsubscribed]
+      @pagy, @reservations = pagy(Reservation.unsubscribed.order(created_at: :desc))
     else
       @pagy, @reservations = pagy(Reservation.active.not_unconfirmed.includes(:route).order(created_at: :desc))
     end
@@ -42,8 +42,8 @@ class Admin::ReservationsController < Admin::AdminController
     @count_not_polygon_routed = Reservation.active.not_polygon_routed.count
     @count_not_geocoded = Reservation.active.where(is_geocoded: false).count
     @count_is_not_routed = Reservation.active.where(is_routed: false).count
-    @count_remind_me = Reservation.remind_me.count
     @count_duplicate = Reservation.duplicate.count
+    @count_unsubscribed = Reservation.unsubscribed.count
   end
 
   def edit

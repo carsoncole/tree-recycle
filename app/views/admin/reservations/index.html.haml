@@ -59,9 +59,9 @@
           = surround("(",")") do
             = @count_duplicate
           %br
-          = link_to "Remind Mes", admin_reservations_path(remind_me: true), class: 'link'
+          = link_to "Unsubsribed", admin_reservations_path(unsubscribed: true), class: 'link'
           = surround("(",")") do
-            = @count_remind_me
+            = @count_unsubscribed
 
 
         %section.menu
