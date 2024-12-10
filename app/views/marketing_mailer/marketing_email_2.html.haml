@@ -54,7 +54,9 @@
               %li
                 %span(style="font-weight:800")
                   Scheduled Pickup:
-                Our dedicated scouts will be on standby to collect your tree on Saturday, January 6, 2024.
+                Our dedicated scouts will be on standby to collect your tree on
+                = succeed(".") do
+                  = Time.parse(EVENT_DATE_AND_PICKUP_TIME).strftime("%B %e at %l:%M %p")
 
 
             %p(style="font-family:'SF UI Display Medium',system,-apple-system,-webkit-system-font,'SFNSText','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif !important; box-sizing: border-box; line-height: 1.5; font-weight:400; font-size: 16px; font-weight: normal; margin: 0 0 20px; padding: 0;")
